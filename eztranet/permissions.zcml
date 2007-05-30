@@ -1,0 +1,20 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+
+<zope:permission id="eztranet.Manage" title="Editer le projet" />
+<zope:permission id="eztranet.project.ViewProject" title="Voir le projet" />
+<zope:permission id="eztranet.project.EditProject" title="Editer le projet" />
+
+<zope:role id="eztranet.Administrator" title="Administrateur" />
+<zope:role id="eztranet.project.Manager" title="Manager" />
+<zope:role id="eztranet.project.Member" title="Membre" />
+
+<zope:grant role="eztranet.Administrator" permission="eztranet.Manage" />
+<zope:grant role="eztranet.Administrator" permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.Administrator" permission="eztranet.project.EditProject" />
+
+<zope:grant role="eztranet.project.Manager" permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.project.Manager" permission="eztranet.project.EditProject" />
+
+<zope:grant role="eztranet.project.Member" permission="eztranet.project.ViewProject" />
+
+</configure>

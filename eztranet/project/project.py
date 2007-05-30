@@ -1,0 +1,130 @@
+# -*- coding: utf-8 -*-
+from zope.interface import implements
+from zope.app.folder.folder import Folder
+from zope.component import adapts, getAllUtilitiesRegisteredFor
+from zope.app.folder.interfaces import IFolder
+from zope.schema.interfaces import IVocabularyFactory, IVocabularyTokenized, ISource
+from zope.component.interface import nameToInterface, interfaceToName
+from zope.schema.vocabulary import SimpleTerm
+from zope.interface.declarations import alsoProvides, noLongerProvides
+from zope.proxy import removeAllProxies
+from zope.app.container.interfaces import INameChooser
+from zope.app.container.contained import NameChooser
+from zope.component.factory import Factory
+from zope.app.component.hooks import getSite
+from zope.app.file.file import File
+from zope.app.file.image import Image
+from zope.app.file.interfaces import IImage
+
+import string
+
+from interfaces import *
+
+
+class ProjectContainer(Folder):
+  "a project container"
+  implements(IProjectContainer)
+  __name__=__parent__=None
+
+ProjectContainerFactory = Factory(ProjectContainer)
+    
+class Project(Folder):
+    implements(IProject,IFolder)
+    title=u""
+    description=u""
+    __name__=__parent__=None
+    def __init__(self, title=None, description=None):
+        self.title = title
+        self.description = description
+        super(Project, self).__init__()
+
+ProjectFactory = Factory(Project)
+
+class ProjectItem(object):
+    implements(IProjectItem)
+    title=u""
+    description=u""
+    __name__=__parent__=None
+    def __init__(self, title=None, description=None):
+        self.title = title
+        self.description = description
+        super(ProjectItem, self).__init__()
+
+ProjectItemFactory = Factory(ProjectItem)
+
+class ProjectNameChooser(NameChooser):
+    u"""
+    adapter that allows to choose the __name__ of a project
+    """
+    implements(INameChooser)
+    adapts(IProject)
+    def chooseName(self, name, project):
+        if not name and project is None:
+            raise "ProjectNameChooser Error"
+        if name:
+            rawname = name
+        if project is not None and len(project.title)>0:
+            rawname = project.title
+        return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+    def checkName(self, name, project):
+        if project.__parent__ is not None and name in project.__parent__ and project is not project.__parent__['name']:
+            return False
+        else :
+            return True
+            
+class ProjectItemNameChooser(NameChooser):
+    u"""
+    adapter that allows to choose the __name__ of a projectitem
+    """
+    implements(INameChooser)
+    adapts(IProjectItem)
+    def chooseName(self, name, projectitem):
+        if not name and projectitem is None:
+            raise "ProjectItemNameChooser Error"
+        if name:
+            rawname = name
+        if projectitem is not None and len(projectitem.title)>0:
+            rawname = projectitem.title
+        return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+    def checkName(self, name, project):
+        if projectitem.__parent__ is not None and name in projectitem.__parent__ and projectitem is not projectitem.__parent__['name']:
+            return False
+        else :
+            return True
+
+class ProjectImage(Image, ProjectItem):
+    pass
+
+class ProjectVideo(ProjectItem):
+    pass
+        
+class SearchableTextOfProject(object):
+    u"""
+    l'adapter qui permet d'indexer les projects
+    """
+    implements(ISearchableTextOfProject)
+    adapts(IProject)
+    def __init__(self, context):
+        self.context = context
+    def getSearchableText(self):
+        sourcetext = texttoindex = self.context.title + " " + self.context.description
+        for word in sourcetext.split():        
+            for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
+                texttoindex += subword + " "
+        return texttoindex
+
+class SearchableTextOfProjectItem(object):
+    u"""
+    l'adapter qui permet d'indexer les projects
+    """
+    implements(ISearchableTextOfProjectItem)
+    adapts(IProjectItem)
+    def __init__(self, context):
+        self.context = context
+    def getSearchableText(self):
+        sourcetext = texttoindex = self.context.title + " " + self.context.description
+        for word in sourcetext.split():        
+            for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
+                texttoindex += subword + " "
+        return texttoindex
+

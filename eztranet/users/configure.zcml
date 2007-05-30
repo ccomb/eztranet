@@ -1,0 +1,40 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+
+<zope:class class=".users.EztranetUser">
+  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser zope.app.authentication.principalfolder.IInternalPrincipal" />
+  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser zope.app.authentication.principalfolder.IInternalPrincipal" />
+</zope:class>
+
+
+<browser:page
+    class=".browser.ProjectGranting"
+    for="zope.annotation.interfaces.IAnnotatable"
+    permission="eztranet.Manage"
+    name="permissions.html"
+    template="granting.pt"
+    menu="zmi_actions"
+    title="Permissions"
+/>
+
+
+<browser:page
+    class=".browser.UserAdd"
+    for="zope.app.container.interfaces.IAdding"
+    permission="eztranet.Manage"
+    name="new_user.html"
+
+    menu="zmi_actions"
+    title="Nouvel Utilisateur"
+/>
+
+<zope:adapter factory=".users.UserNameChooser" />
+
+<!-- juste pour la ZMI -->
+<browser:addMenuItem
+    title="Nouvel Utilisateur"
+    class=".browser.UserAdd"
+    permission="zope.ManageContent"
+    view="new_user.html"
+/>
+
+</configure>
