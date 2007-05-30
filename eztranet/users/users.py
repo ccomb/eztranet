@@ -33,7 +33,7 @@ class EztranetUser(InternalPrincipal):
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
     implements(IEztranetUser)
-    IsAdmin=False
+    IsAdmin=None
     def __getattr__(self, name):
         if name == 'IsAdmin':
             srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site

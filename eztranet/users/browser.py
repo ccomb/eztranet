@@ -4,7 +4,7 @@ from zope.component import getUtility, getAllUtilitiesRegisteredFor
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 #from zope.security.proxy import removeSecurityProxy
-from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
+from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
 from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal
 from zope.app.container.interfaces import INameChooser
 from zope.app.file.interfaces import IFile
@@ -46,7 +46,6 @@ class EztranetUserAdd(AddForm):
     label=u"Adding a user"
     def create(self, data):
         u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
-        #user=InternalPrincipal("", "", "")
         user=EztranetUser("","","")
         u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
         applyChanges(user, self.form_fields, data)
@@ -55,4 +54,17 @@ class EztranetUserAdd(AddForm):
         return user
 
 
+class EztranetUserView(DisplayForm):
+    u"""
+    The view class for viewing a user
+    """
+    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
+    label=u"Viewing a user"
+
+class EztranetUserEdit(EditForm):
+    u"""
+    The view class for editing a user
+    """
+    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
+    label=u"Editing a user"
 

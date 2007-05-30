@@ -6,7 +6,7 @@ from zope.index.text.interfaces import ISearchableText
 from zope.interface import Attribute, Interface
 from zope.interface.interfaces import IInterface
 from zope.app.file.interfaces import IFile
-from zope.app.authentication.principalfolder import IInternalPrincipal, IInternalPrincipalContained
+from zope.app.authentication.principalfolder import IInternalPrincipal, IInternalPrincipalContainer, IInternalPrincipalContained
 
 
 class IEztranetUser(IInternalPrincipal):
