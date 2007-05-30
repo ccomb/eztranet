@@ -42,7 +42,7 @@ class EztranetUserAdd(AddForm):
     u"""
     The view class for adding a user
     """
-    form_fields=Fields(IEztranetUser)
+    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
     label=u"Adding a user"
     def create(self, data):
         u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
