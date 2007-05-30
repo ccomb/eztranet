@@ -27,24 +27,24 @@ from zope.publisher.browser import TestRequest
 import string
 
 from interfaces import *
-   
+
 class EztranetUser(InternalPrincipal):
     u"""
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
     implements(IEztranetUser)
-    IsAdmin=None
     def __getattr__(self, name):
         if name == 'IsAdmin':
             srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
-            return srm.getSetting(role, user).getName()=="Allow"
-        else:
-            return super(EztranetUser, self).__getattr__(name)
+            return srm.getSetting("eztranet.Administrator", self.login).getName()=="Allow"
+        return super(EztranetUser, self).__getattr__(name)
     def __setattr__(self, name, value):
         if name == 'IsAdmin':
+            srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
             if value:
-                srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
-                srm.assignRoleToPrincipal("eztranet.Administrator", self)
+                srm.assignRoleToPrincipal("eztranet.Administrator", self.login)
+            else :
+                srm.unsetRoleForPrincipal("eztranet.Administrator", self.login)
         else:
             super(EztranetUser, self).__setattr__(name, value)
 
@@ -59,7 +59,7 @@ def initial_setup(site):
     site['authentication']['users'] = users
     sm.registerUtility(users, IAuthenticatorPlugin, name="users")
     # activate the auth plugins in the pau
-    pau.authenticatorPlugins = (users.__name__)
+    pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
     #activate the wanted credential plugins
     pau.credentialsPlugins = ( "No Challenge if Authenticated", "Session Credentials" )
 

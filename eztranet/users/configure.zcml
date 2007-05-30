@@ -43,7 +43,7 @@
 <browser:addMenuItem
     title="Nouvel Utilisateur"
     class=".browser.EztranetUserAdd"
-    permission="zope.ManageContent"
+    permission="eztranet.Manage"
     view="new_user.html"
 />
 
