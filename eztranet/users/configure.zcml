@@ -18,21 +18,21 @@
 
 
 <browser:page
-    class=".browser.UserAdd"
+    class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"
     permission="eztranet.Manage"
     name="new_user.html"
 
-    menu="zmi_actions"
-    title="Nouvel Utilisateur"
+    
+
 />
 
-<zope:adapter factory=".users.UserNameChooser" />
+<!-- <zope:adapter factory=".users.UserNameChooser" /> -->
 
 <!-- juste pour la ZMI -->
 <browser:addMenuItem
     title="Nouvel Utilisateur"
-    class=".browser.UserAdd"
+    class=".browser.EztranetUserAdd"
     permission="zope.ManageContent"
     view="new_user.html"
 />

@@ -32,7 +32,7 @@ class EztranetUser(InternalPrincipal):
     u"""
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
-    #implements(IEztranetUser)
+    implements(IInternalPrincipal)
     IsAdmin=False
     def __mmmmgetattr__(self, name):
         if name == 'IsAdmin':

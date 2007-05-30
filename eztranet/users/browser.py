@@ -7,6 +7,8 @@ from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
 from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal
 from zope.app.container.interfaces import INameChooser
+from zope.app.file.interfaces import IFile
+from zope.app.file.file import File
 
 from users import EztranetUser
 from interfaces import *
@@ -36,20 +38,25 @@ class ProjectGranting(Granting):
         else:
             return False
 
-class UserAdd(AddForm):
+class EztranetUserAdd(AddForm):
     u"""
     The view class for adding a user
     """
-    form_fields=Fields(IInternalPrincipal)
+    form_fields=Fields(IInternalPrincipal).omit('__name__', '__parent__')
     label=u"Adding a user"
     def create(self, data):
         u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
-        self.user=EztranetUser("", "", "")
+        #user=InternalPrincipal("", "", "")
+        user=InternalPrincipal("","","")
         u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
-        applyChanges(self.user, self.form_fields, data)
+        applyChanges(user, self.form_fields, data)
         u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
-        self.context.contentName=INameChooser(self.user).chooseName(self.user.title, self.user)
-        return self.user
+        print self        
+        print dir(self)
+        print self.context
+        print dir(self.context)
+        #self.context.contentName=INameChooser(user).chooseName(user.title, user)
+        return user
 
 
 
