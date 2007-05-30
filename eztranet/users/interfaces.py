@@ -9,7 +9,7 @@ from zope.app.file.interfaces import IFile
 from zope.app.authentication.principalfolder import IInternalPrincipal, IInternalPrincipalContained
 
 
-class IEztranetUser(Interface):
+class IEztranetUser(IInternalPrincipal):
     u"""
     A user of the eztranet. This is an extended Principal
     """

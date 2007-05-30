@@ -1,8 +1,8 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
 <zope:class class=".users.EztranetUser">
-  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser zope.app.authentication.principalfolder.IInternalPrincipal" />
-  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser zope.app.authentication.principalfolder.IInternalPrincipal" />
+  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
+  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
 </zope:class>
 
 
@@ -27,7 +27,7 @@
 
 />
 
-<!-- <zope:adapter factory=".users.UserNameChooser" /> -->
+<zope:adapter factory=".users.UserNameChooser" />
 
 <!-- juste pour la ZMI -->
 <browser:addMenuItem

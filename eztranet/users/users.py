@@ -32,20 +32,17 @@ class EztranetUser(InternalPrincipal):
     u"""
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
-    implements(IInternalPrincipal)
+    implements(IEztranetUser)
     IsAdmin=False
-    def __mmmmgetattr__(self, name):
+    def __getattr__(self, name):
         if name == 'IsAdmin':
-            print "GET"
             srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
             return srm.getSetting(role, user).getName()=="Allow"
         else:
             return super(EztranetUser, self).__getattr__(name)
-    def __mmmmmsetattr__(self, name, value):
+    def __setattr__(self, name, value):
         if name == 'IsAdmin':
-            print "SET = %s" % value
             if value:
-                print "ADMIN"
                 srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
                 srm.assignRoleToPrincipal("eztranet.Administrator", self)
         else:
@@ -71,7 +68,7 @@ class UserNameChooser(NameChooser):
     adapter that allows to choose the __name__ of a user
     """
     implements(INameChooser)
-    adapts(IInternalPrincipal)
+    adapts(IEztranetUser)
     def chooseName(self, name, user):
         if not name and user is None:
             raise "UserNameChooser Error"
