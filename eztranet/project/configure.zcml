@@ -45,7 +45,7 @@
 />
 <!-- VIEW -->
 <browser:page
-    name="index.html"
+    name="view.html"
     for=".interfaces.IProject"
     class=".browser.ProjectView"
     permission="eztranet.project.ViewProject"
@@ -80,7 +80,7 @@
 />
 <!-- VIEW -->
 <browser:page
-    name="index.html"
+    name="view.html"
     for=".interfaces.IProjectItem"
     class=".browser.ProjectItemView"
     permission="eztranet.project.ViewProject"
@@ -111,7 +111,7 @@
 
 <!-- Project Container view -->
 <browser:page
-    name="index.html"
+    name="view.html"
     for=".interfaces.IProjectContainer"
     class=".browser.ProjectContainerView"
     template="projectcontainer.pt"
