@@ -33,7 +33,7 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectAdd"
     permission="eztranet.Manage"
-    menu="my_actions" title="new project"
+    menu="eztranet_actions" title="new project"
 />
 <!-- EDIT -->
 <browser:page
@@ -41,7 +41,7 @@
     for=".interfaces.IProject"
     class=".browser.ProjectEdit"
     permission="eztranet.project.EditProject"
-    menu="my_actions" title="Edit"
+    menu="eztranet_actions" title="Edit"
 />
 <!-- VIEW -->
 <browser:page
@@ -49,7 +49,7 @@
     for=".interfaces.IProject"
     class=".browser.ProjectView"
     permission="eztranet.project.ViewProject"
-    menu="my_actions" title="View"
+    menu="eztranet_actions" title="View"
 />
 
 
@@ -60,7 +60,7 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectImageAdd"
     permission="eztranet.project.EditProject"
-    menu="my_actions" title="nouvel ensemble d'images"
+    menu="eztranet_actions" title="nouvelle image"
 />
 <!-- ADD -->
 <browser:page
@@ -68,7 +68,7 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectVideoAdd"
     permission="eztranet.project.EditProject"
-    menu="my_actions" title="nouvelle vidéo"
+    menu="eztranet_actions" title="nouvelle vidéo"
 />
 <!-- EDIT -->
 <browser:page
@@ -76,7 +76,7 @@
     for=".interfaces.IProjectItem"
     class=".browser.ProjectItemEdit"
     permission="eztranet.project.EditProject"
-    menu="my_actions" title="Modifier"
+    menu="eztranet_actions" title="Modifier"
 />
 <!-- VIEW -->
 <browser:page
@@ -84,7 +84,7 @@
     for=".interfaces.IProjectItem"
     class=".browser.ProjectItemView"
     permission="eztranet.project.ViewProject"
-    menu="my_actions" title="Voir"
+    menu="eztranet_actions" title="Voir"
 />
 
 
@@ -93,19 +93,19 @@
     title="nouvelle vidéo"
     action="+/eztranet.ProjectVideo"
     for=".interfaces.IProject"
-    menu="my_actions"
+    menu="eztranet_actions"
 />
 <browser:menuItem
     title="nouvelle image"
     action="+/eztranet.ProjectItem"
     for=".interfaces.IProject"
-    menu="my_actions"
+    menu="eztranet_actions"
 />
 <browser:menuItem
     title="nouveau dossier"
     action="+/project.Project"
     for=".interfaces.IProjectContainer"
-    menu="my_actions"
+    menu="eztranet_actions"
 />
 
 
@@ -116,7 +116,7 @@
     class=".browser.ProjectContainerView"
     template="projectcontainer.pt"
     permission="eztranet.project.ViewProject"
-    menu="my_actions" title="View"
+    menu="eztranet_actions" title="View"
 />
 
 <!-- juste pour la ZMI -->

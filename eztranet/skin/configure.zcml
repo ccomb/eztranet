@@ -7,7 +7,6 @@
     type="zope.publisher.interfaces.browser.IBrowserSkinType"
 />
 
-
 <!-- a browser view is not intended to be published, while browser pages are. -->
 <!--  IItemMapping is implemented by StandardMacros. With it we provide access to...???? -->
 
@@ -33,17 +32,45 @@
 <!-- Ici on définit un menu.
 Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu
-    id="my_actions"
+    id="eztranet_actions"
     title="My actions Menu"
 />
+<browser:menu
+    id="main_menu"
+    title="Main Menu"
+/>
+<browser:menuItems for="*" menu="main_menu">
+    <menuItem title="Accueil" action="/" />
+    <menuItem title="Utilisateurs" action="/" />
+    <menuItem title="Projets" action="/" />
+</browser:menuItems>
+<!-- The viewlet manager that manages the page header (logo, etc.) -->
+<!-- <browser:viewletManager
+    name="eztranet.header"
+    for="*"
+    permission="zope.View"
+    class=".browser.HeaderViewletManager"
+/> -->
+<zope:adapter
+    name="eztranet.logo"
+    factory=".browser.LogoProvider"
+    permission="zope.View"
+/>
+<browser:viewlet
+    name="eztranet.main_menu"
+    template="main_menu.pt"
+    permission="zope.View"
+/>
+
 
 <browser:resource name="main.css" file="main.css" permission="zope.Public" layer=".interfaces.IEztranetSkin" />
-
 
 <zope:adapter
     name="pagetitle"
     factory=".browser.PageTitleContentProvider"
     permission="zope.Public"
 />
+
+
 
 </configure>

@@ -8,20 +8,23 @@
 <zope:role id="eztranet.project.Manager" title="Manager" />
 <zope:role id="eztranet.project.Member" title="Membre" />
 
+<!-- ADMIN -->
 <zope:grant role="eztranet.Administrator" permission="eztranet.Manage" />
 <zope:grant role="eztranet.Administrator" permission="eztranet.project.ViewProject" />
 <zope:grant role="eztranet.Administrator" permission="eztranet.project.EditProject" />
-
-<zope:grant role="eztranet.project.Manager" permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.project.Manager" permission="eztranet.project.EditProject" />
-
-<zope:grant role="eztranet.project.Member" permission="eztranet.project.ViewProject" />
-
 <zope:grant role="eztranet.Administrator" permission="zope.View" />
 <zope:grant role="eztranet.Administrator" permission="zope.Public" />
 <zope:grant role="eztranet.Administrator" permission="zope.ManageContent" />
 <zope:grant role="eztranet.Administrator" permission="zope.ManageServices" />
 <zope:grant role="eztranet.Administrator" permission="zope.ManageSite" />
 <zope:grant role="eztranet.Administrator" permission="zope.Security" />
+
+<!-- PROJECT MANAGER -->
+<zope:grant role="eztranet.project.Manager" permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.project.Manager" permission="eztranet.project.EditProject" />
+
+<!-- PROJECT MEMBER -->
+<zope:grant role="eztranet.project.Member" permission="eztranet.project.ViewProject" />
+
 
 </configure>

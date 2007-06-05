@@ -1,0 +1,13 @@
+
+ul#main_menu {
+    list-style-type: none;
+    background-color: purple;
+}
+ul#main_menu li {
+    display: inline;
+    color: white;
+}
+ul#main_menu a {
+    color: white;
+    font-weight: bold;
+}
