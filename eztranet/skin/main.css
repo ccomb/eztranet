@@ -11,3 +11,37 @@ ul#main_menu a {
     color: white;
     font-weight: bold;
 }
+
+
+/*  Styles for xmltree */
+#navtreecontents a {
+       cursor: pointer;
+       height: 20px;
+}
+
+#navtreecontents loading {
+       display: block;
+       padding-left: 31px;
+       height: 18px;
+}
+
+#navtreecontents expand {
+       background-repeat: no-repeat;
+       padding-left: 14px;
+       display: inline;
+       cursor: pointer;
+                }
+
+#navtreecontents icon {
+       background-repeat: no-repeat;
+       padding-left: 20px;
+       display: inline;
+       cursor: auto;
+                }
+
+#navtreecontents collection {
+       display: block;
+       margin-left: 10px;
+/*     border: red solid 1pt;  */
+       height: auto;
+}

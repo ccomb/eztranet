@@ -20,7 +20,7 @@
     layer=".interfaces.IEztranetSkin"
 />
 
-<!-- Ensuite on décide que la macro particulière dont le nom est "page" correspond à la vue/macro/template MyMainMacro -->
+<!-- Ensuite on décide que la macro particulière dont le nom est "mymainmacro" correspond à la vue/macro/template MyMainMacro -->
 <browser:view
     name="mymainmacro"
     for="*"
@@ -51,6 +51,29 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
     permission="zope.View"
     class=".browser.HeaderViewletManager"
 /> -->
+
+<!-- Reuse the xmltree view from Rotterdam -->
+<configure package="zope.app.rotterdam">
+  <browser:resource
+      name="pl.gif"
+      file="pl.gif"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:resource
+      name="mi.gif"
+      file="mi.gif"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:resource
+      name="xmltree.js"
+      file="xmltree.js"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:page
+      for="*"
+      name="navigation_macros"
+      permission="zope.View"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
+      template="navigation_macros.pt" />
+</configure>
+
 <zope:adapter
     name="eztranet.logo"
     factory=".browser.LogoProvider"

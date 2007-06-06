@@ -12,10 +12,12 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
 <link rel="stylesheet" type="text/css" href="/@@/main.css"/>
+
+<metal:tree use-macro="context/@@standard_macros/navigation_tree_js" />
+
 </head>
 
-
-<body>
+<body tal:attributes="onload body_onload | nothing">
 
 <!-- Logo -->
 <img src="#" alt="logo" id="logo" tal:define="logo provider:eztranet.logo" tal:attributes="src logo/url; alt logo/title; title logo/title" />
@@ -36,14 +38,16 @@
 <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
 
-
 <!-- breadcrumb -->
 <tal:block condition="python: 'main_page' not in dir(view)" repeat="breadcrumb context/@@absolute_url/breadcrumbs">
     <a tal:attributes="href string:${breadcrumb/url}/" tal:content="breadcrumb/name" tal:condition="repeat/breadcrumb/index">item</a>
     <tal:block condition="python: repeat['breadcrumb'].index() and not repeat['breadcrumb'].end()" content="string: → "/>
 </tal:block>
 
-              
+<!-- navigation tree -->
+<metal:tree use-macro="context/@@standard_macros/navigation_tree_box" />
+
+
 <div metal:define-slot="body">
 Here, the page content
 </div>

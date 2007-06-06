@@ -25,7 +25,7 @@ class MyOwnStandardMacros(StandardMacros):
     Elle donne la liste des vues/macros disponibles dans la vue my_macros.
     (Celles-ci sont définies/inscrites dans ZCML)
     """
-    macro_pages=("mymainmacro",)
+    macro_pages=('mymainmacro', 'navigation_macros') #navigation_macros is for xmltree from rotterdam
 
 class MyMainMacro(BrowserView):
     """
