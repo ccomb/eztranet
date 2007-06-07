@@ -1,8 +1,8 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
 <zope:class class=".project.ProjectContainer">
-  <require permission="zope.View"          interface=".interfaces.IProjectContainer" />
-  <require permission="zope.ManageContent" set_schema=".interfaces.IProjectContainer" />
+  <require permission="zope.Public"          interface=".interfaces.IProjectContainer" />
+  <require permission="eztranet.Manage" set_schema=".interfaces.IProjectContainer" />
 </zope:class>
 
 <zope:class class=".project.Project">
@@ -29,7 +29,7 @@
 <!-- Project views -->
 <!-- ADD -->
 <browser:page
-    name="eztranet.Project"
+    name="eztranet.add.Project"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectAdd"
     permission="eztranet.Manage"
@@ -56,7 +56,7 @@
 <!-- ProjectItem views -->
 <!-- ADD -->
 <browser:page
-    name="eztranet.ProjectImage"
+    name="eztranet.add.ProjectImage"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectImageAdd"
     permission="eztranet.project.EditProject"
@@ -64,7 +64,7 @@
 />
 <!-- ADD -->
 <browser:page
-    name="eztranet.ProjectVideo"
+    name="eztranet.add.ProjectVideo"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectVideoAdd"
     permission="eztranet.project.EditProject"
@@ -91,19 +91,19 @@
 
 <browser:menuItem
     title="nouvelle vidéo"
-    action="+/eztranet.ProjectVideo"
+    action="+/eztranet.add.ProjectVideo"
     for=".interfaces.IProject"
     menu="eztranet_actions"
 />
 <browser:menuItem
     title="nouvelle image"
-    action="+/eztranet.ProjectItem"
+    action="+/eztranet.add.ProjectItem"
     for=".interfaces.IProject"
     menu="eztranet_actions"
 />
 <browser:menuItem
-    title="nouveau dossier"
-    action="+/project.Project"
+    title="nouveau projet"
+    action="+/eztranet.add.Project"
     for=".interfaces.IProjectContainer"
     menu="eztranet_actions"
 />
@@ -124,21 +124,21 @@
     title="nouveau projet"
     class=".project.Project"
     permission="eztranet.Manage"
-    view="eztranet.Project"
+    view="eztranet.add.Project"
 />
 <!-- juste pour la ZMI -->
 <browser:addMenuItem
     title="nouvelle image"
     class=".project.ProjectImage"
     permission="eztranet.project.EditProject"
-    view="eztranet.ProjectImage"
+    view="eztranet.add.ProjectImage"
 />
 <!-- juste pour la ZMI -->
 <browser:addMenuItem
     title="nouvelle vidéo"
     class=".project.ProjectVideo"
     permission="eztranet.project.EditProject"
-    view="eztranet.ProjectVideo"
+    view="eztranet.add.ProjectVideo"
 />
 
 <browser:menuItems

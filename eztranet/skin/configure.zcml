@@ -1,11 +1,12 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
+<include package=".rotterdamtree" />
+
 <!-- on register l'interface IEztranetSkin avec un nom et un type -->
 <zope:interface
     name="EztranetSkin"
     interface=".interfaces.IEztranetSkin"
-    type="zope.publisher.interfaces.browser.IBrowserSkinType"
-/>
+    type="zope.publisher.interfaces.browser.IBrowserSkinType" />
 
 <!-- a browser view is not intended to be published, while browser pages are. -->
 <!--  IItemMapping is implemented by StandardMacros. With it we provide access to...???? -->
@@ -17,8 +18,7 @@
     class=".standardmacros.MyOwnStandardMacros"
     permission="zope.Public"
     allowed_interface="zope.interface.common.mapping.IItemMapping"
-    layer=".interfaces.IEztranetSkin"
-/>
+    layer=".interfaces.IEztranetSkin" />
 
 <!-- Ensuite on décide que la macro particulière dont le nom est "mymainmacro" correspond à la vue/macro/template MyMainMacro -->
 <browser:view
@@ -26,24 +26,20 @@
     for="*"
     class=".standardmacros.MyMainMacro"
     layer=".interfaces.IEztranetSkin"
-    permission="zope.Public"
-/>
+    permission="zope.Public" />
 
 <!-- Ici on définit un menu.
 Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu
     id="eztranet_actions"
-    title="My actions Menu"
-/>
+    title="My actions Menu" />
 <browser:menu
     id="main_menu"
-    title="Main Menu"
-/>
-<browser:menuItems for="*" menu="main_menu">
-    <menuItem title="Accueil" action="/" />
-    <menuItem title="Utilisateurs" action="/" />
-    <menuItem title="Projets" action="/" />
-</browser:menuItems>
+    title="Main Menu" />
+
+
+
+
 <!-- The viewlet manager that manages the page header (logo, etc.) -->
 <!-- <browser:viewletManager
     name="eztranet.header"
@@ -52,37 +48,19 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
     class=".browser.HeaderViewletManager"
 /> -->
 
-<!-- Reuse the xmltree view from Rotterdam -->
-<configure package="zope.app.rotterdam">
-  <browser:resource
-      name="pl.gif"
-      file="pl.gif"
-      layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:resource
-      name="mi.gif"
-      file="mi.gif"
-      layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:resource
-      name="xmltree.js"
-      file="xmltree.js"
-      layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:page
-      for="*"
-      name="navigation_macros"
-      permission="zope.View"
-      layer="eztranet.skin.interfaces.IEztranetSkin"
-      template="navigation_macros.pt" />
-</configure>
 
 <zope:adapter
     name="eztranet.logo"
     factory=".browser.LogoProvider"
-    permission="zope.View"
-/>
+    permission="zope.View" />
 
 
 
-<browser:resource name="main.css" file="main.css" permission="zope.Public" layer=".interfaces.IEztranetSkin" />
+<browser:resource
+    name="main.css"
+    file="main.css"
+    permission="zope.Public"
+    layer=".interfaces.IEztranetSkin" />
 
 <zope:adapter
     name="pagetitle"

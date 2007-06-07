@@ -8,6 +8,8 @@ from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.app.component.hooks import getSite
 from zope.component import createObject
 from zope.publisher.browser import BrowserView
+from zope.app.publisher.interfaces.browser import IBrowserMenu
+from zope.app.publisher.browser.menu import BrowserMenu
 
 from interfaces import *
 
@@ -49,4 +51,5 @@ class LogoProvider(object):
     def render(self):
         u"Instead of rendering HTML, we return a dict with what we want to be traversed in TALES"
         return { 'url':self.url, 'title': self.title, 'alt':self.title }
+
 

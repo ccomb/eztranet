@@ -1,40 +1,48 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
+<zope:adapter factory="zope.app.security.LogoutSupported" />
+
 <zope:class class=".users.EztranetUser">
   <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
 </zope:class>
 
-
 <browser:page
-    class=".browser.ProjectGranting"
-    for="zope.annotation.interfaces.IAnnotatable"
+    name="users.html"
+    for="*"
+    class=".browser.EztranetUsers"
     permission="eztranet.Manage"
-    name="permissions.html"
-    template="granting.pt"
-    menu="zmi_actions"
-    title="Permissions"
+    menu="main_menu" title="Utilisateurs"
 />
 
 <browser:page
+    name="permissions.html"
+    class=".browser.ProjectGranting"
+    for="eztranet.project.interfaces.IProject"
+    permission="eztranet.Manage"
+    template="granting.pt"
+    menu="eztranet_actions" title="Permissions"
+/>
+
+<browser:page
+    name="new_user.html"
     class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"
     permission="eztranet.Manage"
-    name="new_user.html"
 />
 
 <browser:page
+    name="view_user.html"
     class=".browser.EztranetUserView"
     for=".interfaces.IEztranetUser"
     permission="eztranet.Manage"
-    name="view_user.html"
     menu="zmi_views" title="view user"
 />
 <browser:page
+    name="edit_user.html"
     class=".browser.EztranetUserEdit"
     for=".interfaces.IEztranetUser"
     permission="eztranet.Manage"
-    name="edit_user.html"
     menu="zmi_views" title="edit user"
 />
 <zope:adapter factory=".users.UserNameChooser" />

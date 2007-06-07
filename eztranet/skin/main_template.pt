@@ -18,7 +18,10 @@
 </head>
 
 <body tal:attributes="onload body_onload | nothing">
-
+<div id="login_logout">
+<span tal:condition="python:request.principal.id!='zope.anybody'" tal:content="request/principal/id"></span>
+<tal:block replace="structure context/@@login_logout" />
+</div>
 <!-- Logo -->
 <img src="#" alt="logo" id="logo" tal:define="logo provider:eztranet.logo" tal:attributes="src logo/url; alt logo/title; title logo/title" />
 

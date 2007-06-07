@@ -33,7 +33,7 @@ class ProjectAdd(AddForm):
     """
     form_fields=Fields(IProject).omit('__name__', '__parent__')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Adding an project"
+    label=u"New project"
     def create(self, data):
         u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
         self.project=Project()

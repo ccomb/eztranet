@@ -1,0 +1,35 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+
+<!-- Reuse in eztranet skin the xmltree from Rotterdam -->
+  <browser:resource
+      name="pl.gif"
+      file="pl.gif"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:resource
+      name="mi.gif"
+      file="mi.gif"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:resource
+      name="xmltree.js"
+      file="xmltree.js"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <browser:page
+      for="*"
+      name="rotterdamtree"
+      permission="zope.View"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
+      template="rotterdamtree.pt" />
+  <browser:pages
+      for="zope.app.container.interfaces.IReadContainer"
+      permission="zope.View"
+      class=".xmlobject.ReadContainerXmlObjectView"
+      layer="eztranet.skin.interfaces.IEztranetSkin">
+    <browser:page
+        name="children.xml"
+        attribute="children" />
+    <browser:page
+        name="singleBranchTree.xml"
+        attribute="singleBranchTree" />
+  </browser:pages>
+
+</configure>
