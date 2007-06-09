@@ -55,11 +55,11 @@ def initial_setup(site):
     sm = site.getSiteManager()
     # create and register the PAU (Pluggable Auth Utility)
     pau = PluggableAuthentication()
-    site['authentication'] = pau
+    sm['authentication'] = pau
     sm.registerUtility(pau, IAuthentication)
     # and the auth plugin
     users = PrincipalFolder()
-    site['authentication']['users'] = users
+    sm['authentication']['users'] = users
     sm.registerUtility(users, IAuthenticatorPlugin, name="users")
     # activate the auth plugins in the pau
     pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
