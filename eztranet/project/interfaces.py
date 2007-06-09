@@ -6,6 +6,7 @@ from zope.index.text.interfaces import ISearchableText
 from zope.interface import Attribute, Interface
 from zope.interface.interfaces import IInterface
 from zope.app.file.interfaces import IFile
+from zope.app.folder.interfaces import IFolder
 
 class IProject(IContainer, IContained):
     u"""
@@ -16,18 +17,19 @@ class IProject(IContainer, IContained):
     title=TextLine(title=u'titre', description=u'Titre du projet')
     description = Text(title=u"description", description=u"Description du projet", required=False, max_length=1000)
 
-  
+
 class IProjectItem(Interface):
     u"""
     a project item (image or video)
     """
+    containers("eztranet.project.interfaces.IProject")
     title=TextLine(title=u'titre', description=u'Titre du projet', required=False)
     description = Text(title=u"description", description=u"Description de l'article", required=False, max_length=1000)
 
-class IProjectImage(Interface):
+class IProjectImage(IProjectItem):
     u"marker interface to tell this is a project image"
 
-class IProjectVideo(Interface):
+class IProjectVideo(IProjectItem):
     u"marker interface for project video"
 
 class IProjectContainer(IContainer, IContained):

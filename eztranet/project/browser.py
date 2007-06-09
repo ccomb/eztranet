@@ -10,6 +10,7 @@ from zope.app.form.browser import TextAreaWidget
 from zope.app.form.browser.itemswidgets import MultiCheckBoxWidget
 from zope.app.form.browser.interfaces import ITerms, ISourceQueryView
 from zope.component import getAdapter, createObject, adapts, getUtility
+from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import INameChooser
 from zope.proxy import removeAllProxies
 from zope.formlib.form import Actions, Action, getWidgetsData
@@ -17,6 +18,7 @@ from zope.copypastemove import ContainerItemRenamer
 from zope.app.intid.interfaces import IIntIds
 from zope.schema.vocabulary import SimpleTerm
 from zope.app.file.interfaces import IImage
+from zope.security.checker import canAccess, canWrite
 
 import string, urllib
 
@@ -81,13 +83,18 @@ class ProjectView(BrowserPage):
     def __init__(self, context, request):
         self.context, self.request = context, request
 
-class ProjectContainerView(object):
+class ProjectContainerView(Contents):
     u"""
     la vue du container de projects.
     """
-    label = u"List des projets"
-    def getprojects(self):
-        return ( (urllib.quote(proj[0]),proj[1]) for proj in self.context.items() )
+    label = u"List de vos projets"
+    __call__ = ViewPageTemplateFile('projectcontainer.pt')
+    def listContentInfo(self):
+        u"""
+        reuse the original, but remove those not permitted
+        """
+        info = super(ProjectContainerView, self).listContentInfo()
+        return [ i for i in info if canAccess(i['object'], 'title') ]
 
 
 

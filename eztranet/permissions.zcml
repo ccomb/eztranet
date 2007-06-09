@@ -1,6 +1,6 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser" xmlns:meta="http://namespaces.zope.org/meta">
 
-<zope:permission id="eztranet.Manage" title="Editer le projet" />
+<zope:permission id="eztranet.Manage" title="Administrateur Eztranet" />
 <zope:permission id="eztranet.project.ViewProject" title="Voir le projet" />
 <zope:permission id="eztranet.project.EditProject" title="Editer le projet" />
 

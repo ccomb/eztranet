@@ -13,4 +13,5 @@ class IEztranetUser(IInternalPrincipal):
     u"""
     A user of the eztranet. This is an extended Principal
     """
+    containers(IInternalPrincipalContainer)
     IsAdmin = Bool(u"Administrateur")

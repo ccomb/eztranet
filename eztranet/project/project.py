@@ -10,37 +10,37 @@ from zope.interface.declarations import alsoProvides, noLongerProvides
 from zope.proxy import removeAllProxies
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.contained import NameChooser
+from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
 from zope.app.component.hooks import getSite
 from zope.app.file.file import File
 from zope.app.file.image import Image
 from zope.app.file.interfaces import IImage
-
+from persistent import Persistent
 import string
 
 from interfaces import *
 
 
-class ProjectContainer(Folder):
+class ProjectContainer(BTreeContainer):
   "a project container"
   implements(IProjectContainer)
   __name__=__parent__=None
 
 ProjectContainerFactory = Factory(ProjectContainer)
     
-class Project(Folder):
-    implements(IProject,IFolder)
+class Project(BTreeContainer):
+    implements(IProject)
     title=u""
     description=u""
     __name__=__parent__=None
     def __init__(self, title=None, description=None):
-        self.title = title
-        self.description = description
+        self.title, self.description = title, description
         super(Project, self).__init__()
 
 ProjectFactory = Factory(Project)
 
-class ProjectItem(object):
+class ProjectItem(Persistent):
     implements(IProjectItem)
     title=u""
     description=u""

@@ -23,6 +23,7 @@ from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.app.component.hooks import getSite
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.publisher.browser import TestRequest
+from zope.component.factory import Factory
 
 import string
 
@@ -47,6 +48,8 @@ class EztranetUser(InternalPrincipal):
                 srm.unsetRoleForPrincipal("eztranet.Administrator", self.login)
         else:
             super(EztranetUser, self).__setattr__(name, value)
+
+EztranetUserFactory=Factory(EztranetUser)
 
 def initial_setup(site):
     sm = site.getSiteManager()
