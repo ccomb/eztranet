@@ -22,14 +22,14 @@
     menu="eztranet_actions" title="Permissions" />
 
 <browser:page
-    name="new_user.html"
+    name="eztranet.User"
     class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"
     permission="eztranet.Manage" />
 <browser:menuItem
     menu="eztranet_actions"
     title="Nouvel Utilisateur"
-    action="+/new_user.html"
+    action="+/eztranet.User"
     for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 
 <zope:adapter factory=".users.UserNameChooser" />
@@ -44,7 +44,7 @@
     title="Eztranet User"
     factory="eztranet.EztranetUser"
     permission="eztranet.Manage"
-    view="new_user.html" />
+    view="eztranet.User" />
 <browser:page
     name="view_user.html"
     class=".browser.EztranetUserView"
