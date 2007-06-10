@@ -5,10 +5,12 @@
 <zope:class class=".users.EztranetUser">
   <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <zope:class class=".users.EztranetUsersContainer">
   <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUsersContainer" />
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUsersContainer" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <zope:subscriber handler=".users.EztranetUserAdded" />
 <zope:subscriber handler=".users.EztranetUserRemoved" />
