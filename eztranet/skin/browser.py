@@ -35,7 +35,7 @@ class PageTitleContentProvider(object):
 
 class LogoProvider(object):
     u"""
-    The view that provides the logo and accessories
+    The view that provides the logo and its html accessories
     """
     implements(IContentProvider)
     adapts(Interface, IDefaultBrowserLayer, Interface)
@@ -66,8 +66,8 @@ class EztranetMainMenu(object):
     def update(self):
         site = getSite()
         self.menuitems = [ { 'name':i, 'url':AbsoluteURL(site[i], self.request)()} for i in site.keys() if i not in ['logo'] ]
-        users = queryUtility(IAuthenticatorPlugin, name="users", context=site, default=None)
-        if users and canAccess(users, 'items'):
+        users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
+        if users and canAccess(users, '__name__'):
             self.menuitems.append({'name': u"Utilisateurs", 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
     def render(self):
         return self.menuitems

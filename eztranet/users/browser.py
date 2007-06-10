@@ -19,7 +19,7 @@ from interfaces import *
 
 class ProjectGranting(Granting):
     def get_all_users(self):
-        users = getUtility(IAuthenticatorPlugin, name="users")
+        users = getUtility(IAuthenticatorPlugin, name="EztranetUsers")
         return users.keys()
     def get_eztranet_roles(self):
         roles = getAllUtilitiesRegisteredFor(IRole)
@@ -57,7 +57,6 @@ class EztranetUserAdd(AddForm):
         self.context.contentName=INameChooser(user).chooseName(user.title, user)
         return user
 
-
 class EztranetUserView(DisplayForm):
     u"""
     The view class for viewing a user
@@ -72,3 +71,9 @@ class EztranetUserEdit(EditForm):
     form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
     label=u"Editing a user"
 
+class EztranetUsers(Contents):
+    u"""
+    The list of users
+    """
+    def supportsRename(self):
+        return False

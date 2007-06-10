@@ -3,7 +3,7 @@ from zope.app.folder.folder import Folder
 from zope.interface import implements, Interface
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
 from zope.component import adapter, adapts
-from zope.app.container.interfaces import IObjectAddedEvent
+from zope.app.container.interfaces import IObjectAddedEvent, IObjectRemovedEvent
 from zope.event import notify
 from zope.app.intid.interfaces import IIntIds
 from zope.app.intid import IntIds
@@ -13,12 +13,11 @@ from zope.component import createObject
 from zope.app.generations.utility import findObjectsProviding
 from zope.app.authentication import PluggableAuthentication
 from zope.app.security.interfaces import IAuthentication
-from zope.app.authentication.principalfolder import PrincipalFolder
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.component import getUtility
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.contained import NameChooser
-from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal
+from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal, PrincipalFolder
 from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.app.component.hooks import getSite
 from zope.traversing.browser.absoluteurl import AbsoluteURL
@@ -28,6 +27,10 @@ from zope.component.factory import Factory
 import string
 
 from interfaces import *
+
+class EztranetUsersContainer(PrincipalFolder):
+    implements(IEztranetUsersContainer)
+    __name__=__parent__=None
 
 class EztranetUser(InternalPrincipal):
     u"""
@@ -57,6 +60,18 @@ def EztranetUserAdded(user, event):
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
     srm.assignRoleToPrincipal("eztranet.Member", user.login)
 
+@adapter(IEztranetUser, IObjectRemovedEvent)
+def EztranetUserRemoved(user, event):
+    u"""
+    A subscriber that do the necessary after a user has been added
+    We loop on every project and remove role assignment.
+    """
+    for project in getSite()['projects'].values():
+        rolemanager = IPrincipalRoleManager(project)
+        roles = rolemanager.getRolesForPrincipal(user.login)
+        for role in roles:
+            rolemanager.unsetRoleForPrincipal(role[0], user.login)
+
 def initial_setup(site):
     sm = site.getSiteManager()
     # create and register the PAU (Pluggable Auth Utility)
@@ -64,9 +79,9 @@ def initial_setup(site):
     sm['authentication'] = pau
     sm.registerUtility(pau, IAuthentication)
     # and the auth plugin
-    users = PrincipalFolder()
-    sm['authentication']['users'] = users
-    sm.registerUtility(users, IAuthenticatorPlugin, name="users")
+    users = EztranetUsersContainer()
+    sm['authentication']['EztranetUsers'] = users
+    sm.registerUtility(users, IAuthenticatorPlugin, name="EztranetUsers")
     # activate the auth plugins in the pau
     pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
     #activate the wanted credential plugins

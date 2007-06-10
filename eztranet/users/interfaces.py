@@ -7,11 +7,14 @@ from zope.interface import Attribute, Interface
 from zope.interface.interfaces import IInterface
 from zope.app.file.interfaces import IFile
 from zope.app.authentication.principalfolder import IInternalPrincipal, IInternalPrincipalContainer, IInternalPrincipalContained
+from zope.app.authentication.interfaces import IAuthenticatorPlugin
 
+class IEztranetUsersContainer(IInternalPrincipalContainer, IAuthenticatorPlugin, IContainer, IContained):
+    contains("eztranet.users.interfaces.IEztranetUser")
 
 class IEztranetUser(IInternalPrincipal):
     u"""
     A user of the eztranet. This is an extended Principal
     """
-    containers(IInternalPrincipalContainer)
+    containers(IEztranetUsersContainer)
     IsAdmin = Bool(u"Administrateur")

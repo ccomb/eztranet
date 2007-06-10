@@ -6,9 +6,28 @@
   <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
 </zope:class>
+<zope:class class=".users.EztranetUsersContainer">
+  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUsersContainer" />
+  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUsersContainer" />
+</zope:class>
 <zope:subscriber handler=".users.EztranetUserAdded" />
+<zope:subscriber handler=".users.EztranetUserRemoved" />
 
-    
+<browser:containerViews
+       for=".interfaces.IEztranetUsersContainer"
+       add="eztranet.Manage" />
+<browser:page
+    name="contents.html"
+    class=".browser.EztranetUsers"
+    for=".interfaces.IEztranetUsersContainer"
+    template="userscontainer.pt"
+    permission="eztranet.Manage" />
+
+<zope:utility
+    component=".users.EztranetUsersContainer"
+    name="EztranetUsers"
+    permission="eztranet.Manage"
+    provides="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 <browser:page
     name="permissions.html"
     class=".browser.ProjectGranting"
@@ -16,7 +35,6 @@
     permission="eztranet.Manage"
     template="granting.pt"
     menu="eztranet_actions" title="Permissions" />
-
 <browser:page
     name="eztranet.User"
     class=".browser.EztranetUserAdd"
@@ -30,7 +48,11 @@
 
 
 <zope:adapter factory=".users.UserNameChooser" />
-
+<zope:utility
+    component=".users.EztranetUsersContainer"
+    name="EztranetUsers"
+    permission="eztranet.Manage"
+    provides="zope.app.authentication.interfaces.IAuthenticatorPlugin" />
 <zope:utility
     component=".users.EztranetUserFactory"
     name="eztranet.EztranetUser"
