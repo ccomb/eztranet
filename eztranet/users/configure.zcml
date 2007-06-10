@@ -12,7 +12,7 @@
     for="*"
     class=".browser.EztranetUsers"
     permission="eztranet.Manage"
-    menu="main_menu" title="Utilisateurs" />
+    menu="main_menu" title="utilisateurs" />
 <browser:page
     name="permissions.html"
     class=".browser.ProjectGranting"
@@ -31,6 +31,7 @@
     title="Nouvel Utilisateur"
     action="+/eztranet.User"
     for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
+
 
 <zope:adapter factory=".users.UserNameChooser" />
 

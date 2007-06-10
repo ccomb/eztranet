@@ -19,7 +19,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <browser:containerViews
-       for=".project.Project"
+       for=".interfaces.IProject"
        contents="eztranet.project.ViewProject"
        add="eztranet.Manage" />
 
