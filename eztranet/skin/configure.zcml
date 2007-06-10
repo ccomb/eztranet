@@ -32,30 +32,18 @@
 Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu
     id="eztranet_actions"
-    title="My actions Menu" />
-<browser:menu
-    id="main_menu"
-    title="Main Menu" />
+    title="Eztranet actions Menu" />
 
-
-
-
-<!-- The viewlet manager that manages the page header (logo, etc.) -->
-<!-- <browser:viewletManager
-    name="eztranet.header"
-    for="*"
-    permission="zope.View"
-    class=".browser.HeaderViewletManager"
-/> -->
 
 
 <zope:adapter
     name="eztranet.logo"
     factory=".browser.LogoProvider"
     permission="zope.View" />
-
-
-
+<zope:adapter
+    name="eztranet.main_menu"
+    factory=".browser.EztranetMainMenu"
+    permission="zope.View" />
 <browser:resource
     name="main.css"
     file="main.css"

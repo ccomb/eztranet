@@ -7,12 +7,8 @@
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
 </zope:class>
 <zope:subscriber handler=".users.EztranetUserAdded" />
-<browser:page
-    name="users.html"
-    for="*"
-    class=".browser.EztranetUsers"
-    permission="eztranet.Manage"
-    menu="main_menu" title="utilisateurs" />
+
+    
 <browser:page
     name="permissions.html"
     class=".browser.ProjectGranting"

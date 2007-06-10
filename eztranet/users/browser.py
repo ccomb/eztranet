@@ -16,17 +16,6 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 from users import EztranetUser
 from interfaces import *
 
-class EztranetUsers(Contents):
-    u"""
-    La page de config des utilisateurs
-    Cette page est inscrite pour tous les objets, il vaudrait mieux
-    l'inscrire uniquement pour un objet config persistant.
-    """
-    __call__ = ViewPageTemplateFile('users.pt')
-    def __init__(self, context, request):
-        u"we change the context so that we work directly on the auth plugin"
-        self.context = getUtility(IAuthenticatorPlugin, name="users")
-        self.request = request
 
 class ProjectGranting(Granting):
     def get_all_users(self):

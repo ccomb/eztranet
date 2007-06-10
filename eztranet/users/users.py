@@ -57,7 +57,6 @@ def EztranetUserAdded(user, event):
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
     srm.assignRoleToPrincipal("eztranet.Member", user.login)
 
-
 def initial_setup(site):
     sm = site.getSiteManager()
     # create and register the PAU (Pluggable Auth Utility)

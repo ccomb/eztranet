@@ -17,4 +17,7 @@ class IEztranetSiteManagerSetEvent(IObjectEvent):
     The subscriber must create the objects and utilities required to running the site
     in particular the IntId, the catalog and indices, the trash, etc.
     """ 
-
+class IConfigurator(object):
+    u"""
+    The interface of the root dummy configuration object
+    """
