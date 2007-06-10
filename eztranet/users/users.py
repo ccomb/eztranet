@@ -51,6 +51,13 @@ class EztranetUser(InternalPrincipal):
 
 EztranetUserFactory=Factory(EztranetUser)
 
+@adapter(IEztranetUser, IObjectAddedEvent)
+def EztranetUserAdded(user, event):
+    u"a subscriber that do the necessary after a user has been added"
+    srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
+    srm.assignRoleToPrincipal("eztranet.Member", user.login)
+
+
 def initial_setup(site):
     sm = site.getSiteManager()
     # create and register the PAU (Pluggable Auth Utility)

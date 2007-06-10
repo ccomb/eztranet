@@ -1,14 +1,17 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser" xmlns:meta="http://namespaces.zope.org/meta">
 
-<zope:permission id="eztranet.Manage" title="Administrateur Eztranet" />
-<zope:permission id="eztranet.project.ViewProject" title="Voir le projet" />
-<zope:permission id="eztranet.project.EditProject" title="Editer le projet" />
+<zope:permission id="eztranet.View" title="Eztranet Member" />
+<zope:permission id="eztranet.Manage" title="Eztranet Administrateur" />
+<zope:permission id="eztranet.project.ViewProject" title="View project" />
+<zope:permission id="eztranet.project.EditProject" title="Edit project" />
 
-<zope:role id="eztranet.Administrator" title="Administrateur" />
+<zope:role id="eztranet.Administrator" title="Eztranet Administrator" />
+<zope:role id="eztranet.Member" title="Eztranet Member" />
 <zope:role id="eztranet.project.Manager" title="Manager" />
 <zope:role id="eztranet.project.Member" title="Membre" />
 
 <!-- EZTRANET ADMIN -->
+<zope:grant role="eztranet.Administrator" permission="eztranet.View" />
 <zope:grant role="eztranet.Administrator" permission="eztranet.Manage" />
 <zope:grant role="eztranet.Administrator" permission="eztranet.project.ViewProject" />
 <zope:grant role="eztranet.Administrator" permission="eztranet.project.EditProject" />
@@ -18,6 +21,9 @@
 <zope:grant role="eztranet.Administrator" permission="zope.ManageServices" />
 <zope:grant role="eztranet.Administrator" permission="zope.ManageSite" />
 <zope:grant role="eztranet.Administrator" permission="zope.Security" />
+
+<!-- EZTRANET MEMBER -->
+<zope:grant role="eztranet.Member" permission="eztranet.View" />
 
 <!-- PROJECT MANAGER -->
 <zope:grant role="eztranet.project.Manager" permission="eztranet.project.ViewProject" />

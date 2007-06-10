@@ -1,7 +1,7 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
 <zope:class class=".project.ProjectContainer">
-  <require permission="zope.Public"          interface=" zope.app.container.interfaces.IReadContainer" />
+  <require permission="eztranet.View"          interface=" zope.app.container.interfaces.IReadContainer" />
   <require permission="eztranet.Manage"      interface=" zope.app.container.interfaces.IWriteContainer" />
   <require permission="eztranet.Manage" set_schema=".interfaces.IProjectContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
@@ -19,7 +19,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <browser:containerViews
-       for=".interfaces.IProject"
+       for=".project.Project"
        contents="eztranet.project.ViewProject"
        add="eztranet.Manage" />
 

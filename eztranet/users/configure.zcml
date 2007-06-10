@@ -6,7 +6,7 @@
   <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
   <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
 </zope:class>
-
+<zope:subscriber handler=".users.EztranetUserAdded" />
 <browser:page
     name="users.html"
     for="*"
@@ -20,23 +20,18 @@
     permission="eztranet.Manage"
     template="granting.pt"
     menu="eztranet_actions" title="Permissions" />
+
 <browser:page
     name="new_user.html"
     class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"
     permission="eztranet.Manage" />
-<browser:page
-    name="view_user.html"
-    class=".browser.EztranetUserView"
-    for=".interfaces.IEztranetUser"
-    permission="eztranet.Manage"
-    menu="zmi_views" title="view user" />
-<browser:page
-    name="edit_user.html"
-    class=".browser.EztranetUserEdit"
-    for=".interfaces.IEztranetUser"
-    permission="eztranet.Manage"
-    menu="zmi_views" title="edit user" />
+<browser:menuItem
+    menu="eztranet_actions"
+    title="Nouvel Utilisateur"
+    action="+/new_user.html"
+    for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
+
 <zope:adapter factory=".users.UserNameChooser" />
 
 <zope:utility
@@ -50,5 +45,17 @@
     factory="eztranet.EztranetUser"
     permission="eztranet.Manage"
     view="new_user.html" />
+<browser:page
+    name="view_user.html"
+    class=".browser.EztranetUserView"
+    for=".interfaces.IEztranetUser"
+    permission="eztranet.Manage"
+    menu="zmi_views" title="view user" />
+<browser:page
+    name="edit_user.html"
+    class=".browser.EztranetUserEdit"
+    for=".interfaces.IEztranetUser"
+    permission="eztranet.Manage"
+    menu="zmi_views" title="edit user" />
 
 </configure>
