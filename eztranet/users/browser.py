@@ -63,13 +63,19 @@ class EztranetUserView(DisplayForm):
     """
     form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
     label=u"Viewing a user"
+    def __init__(self, context, request):
+        self.context, self.request = context, request
+        self.label = self.context.login
 
 class EztranetUserEdit(EditForm):
     u"""
     The view class for editing a user
     """
-    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
+    form_fields=Fields(IEztranetUser).select('password','title','IsAdmin')
     label=u"Editing a user"
+    def __init__(self, context, request):
+        self.context, self.request = context, request
+        self.label = self.context.login
 
 class EztranetUsers(Contents):
     u"""

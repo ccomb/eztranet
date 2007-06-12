@@ -23,7 +23,7 @@ class PageTitleContentProvider(object):
     adapts(Interface, IDefaultBrowserLayer, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
-        self._sitename = getSite().__name__
+        self._sitename = getSite().__name__ or "Zope3"
     def update(self):
         u"on récupère le nom du contexte s'il en a un"
         if hasattr(self.context,'__name__') and self.context.__name__ is not None:

@@ -37,6 +37,7 @@ class EztranetUser(InternalPrincipal):
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
     implements(IEztranetUser)
+    passwordManagerName = 'MD5'
     def __getattr__(self, name):
         if name == 'IsAdmin':
             srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
@@ -98,8 +99,8 @@ class UserNameChooser(NameChooser):
             raise "UserNameChooser Error"
         if name:
             rawname = name
-        if user is not None and len(user.title)>0:
-            rawname = user.title
+        if user is not None and len(user.login)>0:
+            rawname = user.login
         return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
     def checkName(self, name, project):
         if user.__parent__ is not None and name in user.__parent__ and user is not user.__parent__['name']:

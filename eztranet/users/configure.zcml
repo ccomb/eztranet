@@ -47,6 +47,16 @@
     title="Nouvel Utilisateur"
     action="+/eztranet.User"
     for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
+<browser:menuItem
+    menu="eztranet_actions"
+    title="Modifier Utilisateur"
+    action="edit_user.html"
+    for="eztranet.users.interfaces.IEztranetUser" />
+<browser:menuItem
+    menu="eztranet_actions"
+    title="Voir Utilisateur"
+    action="index.html"
+    for="eztranet.users.interfaces.IEztranetUser" />
 
 
 <zope:adapter factory=".users.UserNameChooser" />
@@ -67,7 +77,7 @@
     permission="eztranet.Manage"
     view="eztranet.User" />
 <browser:page
-    name="view_user.html"
+    name="index.html"
     class=".browser.EztranetUserView"
     for=".interfaces.IEztranetUser"
     permission="eztranet.Manage"
