@@ -33,7 +33,9 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
 <browser:menu
     id="eztranet_actions"
     title="Eztranet actions Menu" />
-
+<browser:menu
+    id="eztranet_addings"
+    title="Eztranet adding Menu" />
 
 
 <zope:adapter
@@ -49,7 +51,11 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
     file="main.css"
     permission="zope.Public"
     layer=".interfaces.IEztranetSkin" />
-
+<browser:resource
+    name="functions.js"
+    file="functions.js"
+    permission="zope.Public"
+    layer=".interfaces.IEztranetSkin" />
 <zope:adapter
     name="pagetitle"
     factory=".browser.PageTitleContentProvider"

@@ -93,10 +93,14 @@ class ProjectItemNameChooser(NameChooser):
             return True
 
 class ProjectImage(Image, ProjectItem):
-    pass
+    __parent__=__name__=None
+    title=description=u""
+    implements(IProjectImage)
 
 class ProjectVideo(ProjectItem):
-    pass
+    __parent__=__name__=None
+    title=description=u""
+    implements(IProjectVideo)
         
 class SearchableTextOfProject(object):
     u"""

@@ -26,6 +26,7 @@
 <zope:class class=".project.ProjectImage">
   <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
   <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
+  <implements interface="..download.interfaces.IDownloadable" />
 </zope:class>
 
 <zope:class class=".project.ProjectVideo">
@@ -45,7 +46,7 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectAdd"
     permission="eztranet.Manage"
-    menu="eztranet_actions" title="new project" />
+    menu="eztranet_addings" title="new project" />
 <!-- EDIT -->
 <browser:page
     name="edit.html"
@@ -67,14 +68,14 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectImageAdd"
     permission="eztranet.project.EditProject"
-    menu="eztranet_actions" title="nouvelle image" />
+    menu="eztranet_addings" title="nouvelle image" />
 <!-- ADD -->
 <browser:page
     name="eztranet.add.ProjectVideo"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectVideoAdd"
     permission="eztranet.project.EditProject"
-    menu="eztranet_actions" title="nouvelle vidéo" />
+    menu="eztranet_addings" title="nouvelle vidéo" />
 <!-- EDIT -->
 <browser:page
     name="detail.html"
@@ -85,26 +86,38 @@
 <!-- VIEW -->
 <browser:page
     name="view.html"
-    for=".interfaces.IProjectItem"
-    class=".browser.ProjectItemView"
+    for=".interfaces.IProjectImage"
+    class=".browser.ProjectImageView"
     permission="eztranet.project.ViewProject"
     menu="eztranet_actions" title="Voir" />
+<browser:page
+    name="view.html"
+    for=".interfaces.IProjectVideo"
+    class=".browser.ProjectVideoView"
+    permission="eztranet.project.ViewProject"
+    menu="eztranet_actions" title="Voir" />
+
 
 <browser:menuItem
     title="nouvelle vidéo"
     action="+/eztranet.add.ProjectVideo"
     for=".interfaces.IProject"
-    menu="eztranet_actions" />
+    menu="eztranet_addings" />
 <browser:menuItem
     title="nouvelle image"
-    action="+/eztranet.add.ProjectItem"
+    action="+/eztranet.add.ProjectImage"
     for=".interfaces.IProject"
-    menu="eztranet_actions" />
+    menu="eztranet_addings" />
 <browser:menuItem
     title="nouveau projet"
     action="+/eztranet.add.Project"
     for=".interfaces.IProjectContainer"
-    menu="eztranet_actions" />
+    menu="eztranet_addings" />
+<browser:menuItem
+    title="nouveau sous-projet"
+    action="+/eztranet.add.Project"
+    for=".interfaces.IProject"
+    menu="eztranet_addings" />
 
 
 <!-- Project Container view -->

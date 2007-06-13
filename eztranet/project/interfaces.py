@@ -18,7 +18,7 @@ class IProject(IContainer, IContained):
     description = Text(title=u"description", description=u"Description du projet", required=False, max_length=1000)
 
 
-class IProjectItem(Interface):
+class IProjectItem(IContained):
     u"""
     a project item (image or video)
     """

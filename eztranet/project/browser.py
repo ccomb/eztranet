@@ -19,8 +19,9 @@ from zope.app.intid.interfaces import IIntIds
 from zope.schema.vocabulary import SimpleTerm
 from zope.app.file.interfaces import IImage
 from zope.security.checker import canAccess, canWrite
-
-import string, urllib
+from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
+import string
+from zope.app.form.browser.textwidgets import escape
 
 from interfaces import *
 from project import Project, ProjectImage, ProjectVideo
@@ -118,7 +119,7 @@ class ProjectImageAdd(AddForm):
         return self.image
 
 class ProjectItemEdit(EditForm):
-    label="Modification de l'image"
+    label="Modification de l'item"
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -133,7 +134,7 @@ class ProjectItemEdit(EditForm):
         if string.lower(oldname)!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/index.html")
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
     def validate(self, action, data):
         #on récupère les données du formulaire et on remplit data
         getWidgetsData(self.widgets, 'form', data)
@@ -151,13 +152,30 @@ class ProjectItemEdit(EditForm):
             return ("Le nom <i>"+newname+"</i> est en conflit avec un autre objet",)
         return super(ProjectItemEdit, self).validate(action, data)
 
-class ProjectItemView(BrowserPage):
+class ProjectImageView(BrowserPage):
     u"la vue qui permet d'afficher un ensemble d'images"
-    label="Ensemble d'images"
+    label="Image"
     __call__=ViewPageTemplateFile("image.pt")
     def __init__(self, context, request):
         self.context, self.request = context, request
+    def wantedWidth(self):
+        width = self.context.getImageSize()[0]
+        if width > 800:
+            width=800
+        return width
+    def originalWidth(self):
+        return self.context.getImageSize()[0]
+    def description(self):
+        if not self.context.description:
+            return None
+        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
+class ProjectVideoView(BrowserPage):
+    u"la vue qui permet d'afficher une video"
+    label="Vidéo"
+    __call__=ViewPageTemplateFile("video.pt")
+    def __init__(self, context, request):
+        self.context, self.request = context, request
 
 
 class ProjectVideoAdd(AddForm):

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    xmlns:metal="http://xml.zope.org/namespaces/metal" 
+    xml:lang="en" lang="en"
+    metal:use-macro="context/@@standard_macros/page"
+>
+
+<body>
+
+<div id="body" metal:fill-slot="body">
+
+<h1><span tal:content="context/title">Image</span> (<span tal:content="context/__parent__/title">Project</span>)</h1>
+
+<p tal:content="structure view/description">brief description of the image</p>
+
+<div id="image_toolbar">
+    <a href="#" tal:condition="python: view.originalWidth() > view.wantedWidth()" onclick="toggle_image_size(800,1000)" tal:attributes="onclick string:toggle_image_size(${view/wantedWidth}, ${view/originalWidth})">zoom +/-</a>
+    <a href="#" tal:attributes="href string:${context/@@absolute_url}/@@download.html">télécharger</a>
+</div>
+
+<img id="main_image" width="800" src="#" alt="image"
+    tal:attributes="src context/@@absolute_url; alt context/title; width view/wantedWidth" />
+
+</div>
+
+</body>
+</html>

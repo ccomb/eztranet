@@ -45,3 +45,6 @@ ul#main_menu a {
 /*     border: red solid 1pt;  */
        height: auto;
 }
+
+
+div#image_toolbar a { margin-right: 10px; color: red; text-decoration: none;  }
