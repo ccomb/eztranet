@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    xmlns:metal="http://xml.zope.org/namespaces/metal" 
+    xml:lang="en" lang="en"
+    metal:use-macro="context/@@standard_macros/page"
+>
+
+<body>
+
+<div id="body" metal:fill-slot="body">
+
+<h1><span tal:content="context/title">Image</span> (<span tal:content="context/__parent__/title">Project</span>)</h1>
+
+<p tal:content="structure view/description">brief description of the image</p>
+
+<div id="image_toolbar">
+    <a href="#" tal:attributes="href string:${context/@@absolute_url}/@@download.html">télécharger</a>
+</div>
+
+
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="400" height="300">
+	<param name="allowScriptAccess" value="sameDomain" />
+	<param name="movie" value="/@@/flowplayer.swf" />
+	<param name="quality" value="high" />
+	<param name="scale" value="noScale" />
+	<param name="wmode" value="transparent" />
+    <param name="flashvars" tal:attributes="value string:config={ videoFile: '..${view/getPath}', loop: false }" />
+</object>
+
+
+</div>
+
+</body>
+</html>

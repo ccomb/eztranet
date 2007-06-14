@@ -66,12 +66,8 @@ class ProjectNameChooser(NameChooser):
         if project is not None and len(project.title)>0:
             rawname = project.title
         return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-    def checkName(self, name, project):
-        if project.__parent__ is not None and name in project.__parent__ and project is not project.__parent__['name']:
-            return False
-        else :
-            return True
-            
+
+
 class ProjectItemNameChooser(NameChooser):
     u"""
     adapter that allows to choose the __name__ of a projectitem
@@ -86,18 +82,14 @@ class ProjectItemNameChooser(NameChooser):
         if projectitem is not None and len(projectitem.title)>0:
             rawname = projectitem.title
         return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-    def checkName(self, name, project):
-        if projectitem.__parent__ is not None and name in projectitem.__parent__ and projectitem is not projectitem.__parent__['name']:
-            return False
-        else :
-            return True
+
 
 class ProjectImage(Image, ProjectItem):
     __parent__=__name__=None
     title=description=u""
     implements(IProjectImage)
 
-class ProjectVideo(ProjectItem):
+class ProjectVideo(File, ProjectItem):
     __parent__=__name__=None
     title=description=u""
     implements(IProjectVideo)

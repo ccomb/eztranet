@@ -102,8 +102,4 @@ class UserNameChooser(NameChooser):
         if user is not None and len(user.login)>0:
             rawname = user.login
         return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-    def checkName(self, name, project):
-        if user.__parent__ is not None and name in user.__parent__ and user is not user.__parent__['name']:
-            return False
-        else :
-            return True
+

@@ -5,6 +5,7 @@ from zope.publisher.browser import BrowserPage
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.traversing.browser.absoluteurl import AbsoluteURL
+from zope.traversing.api import getPath
 from zope.app.form import CustomWidgetFactory
 from zope.app.form.browser import TextAreaWidget
 from zope.app.form.browser.itemswidgets import MultiCheckBoxWidget
@@ -97,33 +98,44 @@ class ProjectContainerView(Contents):
         info = super(ProjectContainerView, self).listContentInfo()
         return [ i for i in info if canAccess(i['object'], 'title') ]
 
-
-
-
 class ProjectImageAdd(AddForm):
     u"""
-    The view class for adding an ProjectImage
+    The view class for adding a ProjectImage
     """
-    form_fields=Fields(IProjectItem, IImage).omit('__name__', '__parent__', 'contentType')
+    form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"nouvelle image"
     def create(self, data):
-        u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
         self.image=ProjectImage()
-        u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
         applyChanges(self.image, self.form_fields, data)
         if not self.image.title:
             self.image.title = self.request.form['form.data'].filename
-        u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
-        self.context.contentName=INameChooser(self.image).chooseName(self.image.title, self.image)
+        self.image.__parent__ = self.context.context
+        self.context.contentName=INameChooser(self.context.context).chooseName(self.image.title, self.image)
         return self.image
 
+
+class ProjectVideoAdd(AddForm):
+    u"""
+    The view class for adding a ProjectVideo
+    """
+    form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__', 'contentType')
+    form_fields['description'].custom_widget=CustomTextWidget
+    label=u"Ajout d'une vidéo"
+    def create(self, data):
+        self.video=ProjectVideo()
+        applyChanges(self.video, self.form_fields, data)
+        if not self.video.title:
+            self.video.title = self.request.form['form.data'].filename
+        self.context.contentName=INameChooser(self.context.context).chooseName(self.video.title, self.video)
+        return self.video
+
 class ProjectItemEdit(EditForm):
-    label="Modification de l'item"
+    label="Modification"
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
-        self.form_fields=Fields(IProjectItem).omit('__name__', '__parent__')
+        self.form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__')
         self.form_fields['description'].custom_widget=CustomTextWidget
         super(ProjectItemEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
@@ -152,12 +164,17 @@ class ProjectItemEdit(EditForm):
             return ("Le nom <i>"+newname+"</i> est en conflit avec un autre objet",)
         return super(ProjectItemEdit, self).validate(action, data)
 
-class ProjectImageView(BrowserPage):
+class ProjectItemView(BrowserPage):
+    def description(self):
+        if not self.context.description:
+            return None
+        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
+
+
+class ProjectImageView(ProjectItemView):
     u"la vue qui permet d'afficher un ensemble d'images"
     label="Image"
     __call__=ViewPageTemplateFile("image.pt")
-    def __init__(self, context, request):
-        self.context, self.request = context, request
     def wantedWidth(self):
         width = self.context.getImageSize()[0]
         if width > 800:
@@ -165,32 +182,12 @@ class ProjectImageView(BrowserPage):
         return width
     def originalWidth(self):
         return self.context.getImageSize()[0]
-    def description(self):
-        if not self.context.description:
-            return None
-        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
-class ProjectVideoView(BrowserPage):
-    u"la vue qui permet d'afficher une video"
+class ProjectVideoView(ProjectItemView):
+    u"la vue qui permet d'afficher un ensemble d'images"
     label="Vidéo"
     __call__=ViewPageTemplateFile("video.pt")
-    def __init__(self, context, request):
-        self.context, self.request = context, request
+    def getPath(self):
+        return getPath(self.context)
 
-
-class ProjectVideoAdd(AddForm):
-    u"""
-    The view class for adding a ProjectVideo
-    """
-    form_fields=Fields(IProjectItem).omit('__name__', '__parent__')
-    form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Ajout d'une vidéo"
-    def create(self, data):
-        u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
-        self.video=ProjectVideo()
-        u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
-        applyChanges(self.video, self.form_fields, data)
-        u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
-        self.context.contentName=INameChooser(self.video).chooseName(self.video.title, self.video)
-        return self.video
 

@@ -30,8 +30,9 @@
 </zope:class>
 
 <zope:class class=".project.ProjectVideo">
-  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem" />
-  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem" />
+  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
+  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
+  <implements interface="..download.interfaces.IDownloadable" />
 </zope:class>
 
 <zope:adapter factory=".project.SearchableTextOfProject" />
@@ -165,6 +166,10 @@
 <zope:utility
       component=".project.ProjectContainerFactory"
       name="eztranet.ProjectContainer" />
-
+<browser:resource
+    name="flowplayer.swf"
+    file="flowplayer.swf"
+    permission="zope.Public"
+    layer="..skin.interfaces.IEztranetSkin" />
 
 </configure>
