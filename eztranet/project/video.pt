@@ -15,18 +15,18 @@
 
 <p tal:content="structure view/description">brief description of the image</p>
 
-<div id="image_toolbar">
+<div id="video_toolbar">
     <a href="#" tal:attributes="href string:${context/@@absolute_url}/@@download.html">télécharger</a>
 </div>
 
 
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="400" height="300">
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="640" height="480">
 	<param name="allowScriptAccess" value="sameDomain" />
 	<param name="movie" value="/@@/flowplayer.swf" />
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
-    <param name="flashvars" tal:attributes="value string:config={ videoFile: '..${view/getPath}', loop: false }" />
+    <param name="flashvars" tal:attributes="value string:config={ initialScale:'orig', videoFile: '..${view/getPath}', loop: false, progressBarColor1: '0xFF0000', progressBarColor1: '0xFF00FF' }" />
 </object>
 
 

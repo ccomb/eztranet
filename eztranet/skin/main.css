@@ -1,3 +1,4 @@
+body { background: purple; }
 
 ul#main_menu {
     list-style-type: none;
@@ -46,5 +47,6 @@ ul#main_menu a {
        height: auto;
 }
 
-
+div#video_toolbar { background: white; width: 640px; }
+div#video_toolbar a { margin-right: 10px; color: red; text-decoration: none;  }
 div#image_toolbar a { margin-right: 10px; color: red; text-decoration: none;  }
