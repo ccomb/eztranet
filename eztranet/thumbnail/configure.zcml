@@ -1,0 +1,18 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+
+<zope:class class=".thumbnail.Thumbnail">
+    <require permission="eztranet.thumbnail.view" interface=".interfaces.IThumbnail" />
+    <require permission="eztranet.thumbnail.view" set_schema=".interfaces.IThumbnail" />
+</zope:class>
+
+<zope:adapter factory=".thumbnail.Thumbnail" trusted="yes" />
+
+
+<browser:view
+    name="thumbnail"
+    for=".interfaces.IThumbnailed"
+    class=".browser.ThumbnailView"
+    permission="eztranet.thumbnail.view" />
+
+
+</configure>

@@ -11,7 +11,6 @@ class DownloadView(BrowserView):
     """
     def __call__(self):
         filename = "filecontent"
-        print type(self.context)
         if ILocation.providedBy(self.context):
             filename = self.context.__name__
         tmpfile = NamedTemporaryFile()

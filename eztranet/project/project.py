@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
 from zope.app.folder.folder import Folder
-from zope.component import adapts, getAllUtilitiesRegisteredFor
+from zope.component import adapts, getAllUtilitiesRegisteredFor, adapter
 from zope.app.folder.interfaces import IFolder
 from zope.schema.interfaces import IVocabularyFactory, IVocabularyTokenized, ISource
 from zope.component.interface import nameToInterface, interfaceToName
@@ -17,8 +17,8 @@ from zope.app.file.file import File
 from zope.app.file.image import Image
 from zope.app.file.interfaces import IImage
 from persistent import Persistent
-import string
-
+import string, os
+from tempfile import NamedTemporaryFile
 from interfaces import *
 
 
@@ -93,7 +93,7 @@ class ProjectVideo(File, ProjectItem):
     __parent__=__name__=None
     title=description=u""
     implements(IProjectVideo)
-        
+
 class SearchableTextOfProject(object):
     u"""
     l'adapter qui permet d'indexer les projects
@@ -123,4 +123,18 @@ class SearchableTextOfProjectItem(object):
             for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
                 texttoindex += subword + " "
         return texttoindex
+
+@adapter(IProjectImage)
+def ProjectImageThumbnailer(image):
+    return image.data
+    
+@adapter(IProjectVideo)
+def ProjectVideoThumbnailer(video):
+    u"faudrait faire ça dans un thread"
+    tmpfile = NamedTemporaryFile()
+    tmpfile.write(video.data)
+    tmpfile.flush()
+    thumbnail = os.popen("ffmpeg -i %s -vcodec png -vframes 1 -an -f rawvideo -" % tmpfile.name).read()
+    tmpfile.close()
+    return thumbnail
 

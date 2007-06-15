@@ -26,19 +26,25 @@
 <zope:class class=".project.ProjectImage">
   <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
   <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..download.interfaces.IDownloadable" />
+  <implements interface="..thumbnail.interfaces.IThumbnailed" />
 </zope:class>
 
 <zope:class class=".project.ProjectVideo">
   <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
   <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..download.interfaces.IDownloadable" />
+  <implements interface="..thumbnail.interfaces.IThumbnailed" />
 </zope:class>
 
 <zope:adapter factory=".project.SearchableTextOfProject" />
 <zope:adapter factory=".project.SearchableTextOfProjectItem" />
 <zope:adapter factory=".project.ProjectNameChooser" />
 <zope:adapter factory=".project.ProjectItemNameChooser" />
+<zope:adapter factory=".project.ProjectImageThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
+<zope:adapter factory=".project.ProjectVideoThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 
 <!-- Project views -->
 <!-- ADD -->
@@ -166,10 +172,12 @@
 <zope:utility
       component=".project.ProjectContainerFactory"
       name="eztranet.ProjectContainer" />
+      
 <browser:resource
     name="flowplayer.swf"
     file="flowplayer.swf"
     permission="zope.Public"
     layer="..skin.interfaces.IEztranetSkin" />
+
 
 </configure>

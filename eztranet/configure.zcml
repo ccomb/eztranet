@@ -9,13 +9,14 @@
 </zope:class>
 
 
-<zope:subscriber handler=".eztranet.newEztranetSiteAdded" />
-<zope:subscriber handler=".eztranet.EztranetInitialSetup" />
-
 <include package=".skin" />
 <include package=".users" />
 <include package=".download" />
+<include package=".thumbnail" />
 <include package=".project" />
+
+<zope:subscriber handler=".eztranet.newEztranetSiteAdded" />
+<zope:subscriber handler=".eztranet.EztranetInitialSetup" />
 
 
 <browser:addMenuItem

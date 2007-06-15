@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
-from zope.publisher.browser import BrowserPage
+from zope.publisher.browser import BrowserPage, BrowserView
 from zope.publisher.interfaces.browser import IBrowserRequest
 from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.traversing.browser.absoluteurl import AbsoluteURL
@@ -190,4 +190,8 @@ class ProjectVideoView(ProjectItemView):
     def getPath(self):
         return getPath(self.context)
 
-
+class Thumbnail(BrowserView):
+    def __call__(self):
+        if not self.context.thumbnail:
+            self.context.compute_thumbnail()
+        return self.context.thumbnail
