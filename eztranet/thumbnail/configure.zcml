@@ -14,5 +14,6 @@
     class=".browser.ThumbnailView"
     permission="eztranet.thumbnail.view" />
 
+<zope:subscriber handler=".thumbnail.ThumbnailedModified" />
 
 </configure>

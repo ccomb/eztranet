@@ -15,7 +15,7 @@
 
 <p tal:content="structure view/description">brief description of the image</p>
 
-<img width="320" src="#" alt="thumbnail" tal:attributes="src string:${context/@@absolute_url}/@@thumbnail" />
+<img src="#" alt="thumbnail" tal:attributes="src string:${context/@@absolute_url}/@@thumbnail" />
 
 <div id="image_toolbar">
     <a href="#" tal:condition="python: view.originalWidth() > view.wantedWidth()" onclick="toggle_image_size(800,1000)" tal:attributes="onclick string:toggle_image_size(${view/wantedWidth}, ${view/originalWidth})">zoom +/-</a>

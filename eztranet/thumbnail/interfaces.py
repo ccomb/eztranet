@@ -14,6 +14,8 @@ class IThumbnail(Interface):
     This is the same interface as an Image object
     """
     thumbnail = Attribute("the thumbnail of the object")
+    def compute_thumbnail():
+        pass
 
 class IThumbnailer(Interface):
     u"""

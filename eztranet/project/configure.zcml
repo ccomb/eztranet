@@ -24,16 +24,16 @@
        add="eztranet.Manage" />
 
 <zope:class class=".project.ProjectImage">
-  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
-  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IImage" />
+  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectImage" />
+  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectImage" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..download.interfaces.IDownloadable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />
 </zope:class>
 
 <zope:class class=".project.ProjectVideo">
-  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
-  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectItem zope.app.file.interfaces.IFile" />
+  <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectVideo" />
+  <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectVideo" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..download.interfaces.IDownloadable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />
@@ -46,14 +46,16 @@
 <zope:adapter factory=".project.ProjectImageThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 <zope:adapter factory=".project.ProjectVideoThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 
+<zope:subscriber handler=".project.ProjectVideoAdded" />
+<zope:subscriber handler=".project.ProjectVideoModified" />
+
 <!-- Project views -->
 <!-- ADD -->
 <browser:page
     name="eztranet.add.Project"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectAdd"
-    permission="eztranet.Manage"
-    menu="eztranet_addings" title="new project" />
+    permission="eztranet.Manage" />
 <!-- EDIT -->
 <browser:page
     name="edit.html"
@@ -74,15 +76,13 @@
     name="eztranet.add.ProjectImage"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectImageAdd"
-    permission="eztranet.project.EditProject"
-    menu="eztranet_addings" title="nouvelle image" />
+    permission="eztranet.project.EditProject" />
 <!-- ADD -->
 <browser:page
     name="eztranet.add.ProjectVideo"
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectVideoAdd"
-    permission="eztranet.project.EditProject"
-    menu="eztranet_addings" title="nouvelle vidéo" />
+    permission="eztranet.project.EditProject" />
 <!-- EDIT -->
 <browser:page
     name="detail.html"
@@ -103,7 +103,13 @@
     class=".browser.ProjectVideoView"
     permission="eztranet.project.ViewProject"
     menu="eztranet_actions" title="Voir" />
-
+<browser:page
+    name="flv"
+    for=".interfaces.IProjectVideo"
+    class=".browser.ProjectVideoView"
+    attribute="callFlashView"
+    permission="eztranet.project.ViewProject"
+    menu="eztranet_actions" title="Voir flash" />
 
 <browser:menuItem
     title="nouvelle vidéo"
@@ -126,6 +132,11 @@
     for=".interfaces.IProject"
     menu="eztranet_addings" />
 
+<zope:adapter
+    name="eztranet.project.flashvideo"
+    factory=".flashpreview.FlashContentProvider"
+    permission="eztranet.project.ViewProject"
+/>
 
 <!-- Project Container view -->
 <browser:page

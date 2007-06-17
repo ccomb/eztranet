@@ -23,6 +23,8 @@ from zope.security.checker import canAccess, canWrite
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 import string
 from zope.app.form.browser.textwidgets import escape
+from zope.app.file.browser.file import FileView
+from zope.app.file import File
 
 from interfaces import *
 from project import Project, ProjectImage, ProjectVideo
@@ -102,7 +104,7 @@ class ProjectImageAdd(AddForm):
     u"""
     The view class for adding a ProjectImage
     """
-    form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__', 'contentType')
+    form_fields=Fields(IProjectImage).omit('__name__', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"nouvelle image"
     def create(self, data):
@@ -119,7 +121,7 @@ class ProjectVideoAdd(AddForm):
     u"""
     The view class for adding a ProjectVideo
     """
-    form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__', 'contentType')
+    form_fields=Fields(IProjectVideo).omit('__name__', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"Ajout d'une vidéo"
     def create(self, data):
@@ -135,7 +137,7 @@ class ProjectItemEdit(EditForm):
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
-        self.form_fields=Fields(IProjectItem, IFile).omit('__name__', '__parent__')
+        self.form_fields=Fields(IProjectItem).omit('__name__', '__parent__')
         self.form_fields['description'].custom_widget=CustomTextWidget
         super(ProjectItemEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
@@ -172,7 +174,7 @@ class ProjectItemView(BrowserPage):
 
 
 class ProjectImageView(ProjectItemView):
-    u"la vue qui permet d'afficher un ensemble d'images"
+    u"la vue qui permet d'afficher une image"
     label="Image"
     __call__=ViewPageTemplateFile("image.pt")
     def wantedWidth(self):
@@ -183,15 +185,19 @@ class ProjectImageView(ProjectItemView):
     def originalWidth(self):
         return self.context.getImageSize()[0]
 
-class ProjectVideoView(ProjectItemView):
-    u"la vue qui permet d'afficher un ensemble d'images"
+class ProjectVideoView(FileView):
+    u"la vue qui permet d'afficher une video"
     label="Vidéo"
     __call__=ViewPageTemplateFile("video.pt")
+    def __init__(self, context, request):
+        self.context, self.request = context, request
+    def description(self):
+        if not self.context.description:
+            return None
+        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
     def getPath(self):
         return getPath(self.context)
+    def callFlashView(self):
+        self.context = File(self.context.flash_video)
+        return self.show()
 
-class Thumbnail(BrowserView):
-    def __call__(self):
-        if not self.context.thumbnail:
-            self.context.compute_thumbnail()
-        return self.context.thumbnail

@@ -8,7 +8,8 @@ from zope.component.interface import nameToInterface, interfaceToName
 from zope.schema.vocabulary import SimpleTerm
 from zope.interface.declarations import alsoProvides, noLongerProvides
 from zope.proxy import removeAllProxies
-from zope.app.container.interfaces import INameChooser
+from zope.app.container.interfaces import INameChooser, IObjectAddedEvent, IObjectRemovedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
@@ -18,8 +19,11 @@ from zope.app.file.image import Image
 from zope.app.file.interfaces import IImage
 from persistent import Persistent
 import string, os
-from tempfile import NamedTemporaryFile
+import PIL.Image
+from StringIO import StringIO
+from tempfile import NamedTemporaryFile, TemporaryFile
 from interfaces import *
+from flashpreview import compute_flashvideo
 
 
 class ProjectContainer(BTreeContainer):
@@ -85,14 +89,15 @@ class ProjectItemNameChooser(NameChooser):
 
 
 class ProjectImage(Image, ProjectItem):
+    implements(IProjectImage)
     __parent__=__name__=None
     title=description=u""
-    implements(IProjectImage)
 
 class ProjectVideo(File, ProjectItem):
+    implements(IProjectVideo)
     __parent__=__name__=None
     title=description=u""
-    implements(IProjectVideo)
+    flash_video = flash_video_tempfile = None
 
 class SearchableTextOfProject(object):
     u"""
@@ -126,15 +131,30 @@ class SearchableTextOfProjectItem(object):
 
 @adapter(IProjectImage)
 def ProjectImageThumbnailer(image):
-    return image.data
+    tmp=StringIO()
+    i = PIL.Image.open(StringIO(image.data))
+    i.thumbnail((150,150))
+    i.save(tmp, "png")
+    return tmp.getvalue()
+
+
     
 @adapter(IProjectVideo)
 def ProjectVideoThumbnailer(video):
-    u"faudrait faire ça dans un thread"
+    u"convert the video to png, without audio, with only 1 frame, with a delay of 3 seconds"
     tmpfile = NamedTemporaryFile()
     tmpfile.write(video.data)
     tmpfile.flush()
-    thumbnail = os.popen("ffmpeg -i %s -vcodec png -vframes 1 -an -f rawvideo -" % tmpfile.name).read()
+    thumbnail = os.popen("ffmpeg -i %s -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % tmpfile.name).read()
     tmpfile.close()
-    return thumbnail
+    return ProjectImageThumbnailer(Image(thumbnail))
+
+@adapter(IProjectVideo, IObjectAddedEvent)
+def ProjectVideoAdded(video, event):
+    video.flash_video_tempfile = compute_flashvideo(video)
+
+@adapter(IProjectVideo, IObjectModifiedEvent)
+def ProjectVideoModified(video, event):
+    video.flash_video_tempfile = compute_flashvideo(video)
+
 
