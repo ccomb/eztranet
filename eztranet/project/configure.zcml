@@ -48,6 +48,7 @@
 
 <zope:subscriber handler=".project.ProjectVideoAdded" />
 <zope:subscriber handler=".project.ProjectVideoModified" />
+<zope:subscriber handler=".project.ProjectVideoRemoved" />
 
 <!-- Project views -->
 <!-- ADD -->
@@ -131,7 +132,7 @@
     action="+/eztranet.add.Project"
     for=".interfaces.IProject"
     menu="eztranet_addings" />
-
+    
 <zope:adapter
     name="eztranet.project.flashvideo"
     factory=".flashpreview.FlashContentProvider"

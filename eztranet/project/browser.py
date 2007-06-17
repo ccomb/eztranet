@@ -117,6 +117,7 @@ class ProjectImageAdd(AddForm):
         return self.image
 
 
+
 class ProjectVideoAdd(AddForm):
     u"""
     The view class for adding a ProjectVideo

@@ -8,7 +8,7 @@ from zope.component.interface import nameToInterface, interfaceToName
 from zope.schema.vocabulary import SimpleTerm
 from zope.interface.declarations import alsoProvides, noLongerProvides
 from zope.proxy import removeAllProxies
-from zope.app.container.interfaces import INameChooser, IObjectAddedEvent, IObjectRemovedEvent
+from zope.app.container.interfaces import INameChooser, IObjectRemovedEvent, IObjectAddedEvent, IObjectRemovedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
@@ -157,4 +157,9 @@ def ProjectVideoAdded(video, event):
 def ProjectVideoModified(video, event):
     video.flash_video_tempfile = compute_flashvideo(video)
 
-
+@adapter(IProjectVideo, IObjectRemovedEvent)
+def ProjectVideoRemoved(video, event):
+    tmpfile = video.flash_video_tempfile
+    for file in tmpfile, tmpfile+".OK", tmpfile+'.FAILED': 
+        if os.path.exists(file):
+            os.remove(file)
