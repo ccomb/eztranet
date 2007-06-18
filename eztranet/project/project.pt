@@ -52,10 +52,6 @@
         </metal:block> -->
       <tal:block tal:condition="view/normalButtons">
 Action sur les éléments sélectionnés : 
-        <input type="submit" name="container_rename_button" value="Rename"
-               i18n:attributes="value container-rename-button"
-               tal:condition="view/supportsRename"
-               />
         <input type="submit" name="container_cut_button" value="Cut"
                i18n:attributes="value container-cut-button"
                tal:condition="view/supportsCut"
@@ -105,18 +101,21 @@ Action sur les éléments sélectionnés :
                i18n:attributes="value container-cancel-button"
                />
       </div>
-      
+        
+         <div class="item">
+            <a href=".."><img class="up" src="/@@/up.png" /></a>
+            <span><a href="..">..</a></span>
+              <span class="itemsize">remonter d'un niveau</span>
+         </div>
+         
         <metal:block tal:define="supportsRename view/supportsRename" tal:repeat="item container_contents">
          <div class="item" tal:define="oddrow repeat/item/odd; url item/url; id_quoted item/id/url:quote">
-            <a href="#" tal:attributes="href string:${url}/@@view.html"><img href="#" tal:attributes="src string:${url}/@@thumbnail" /></a>
+            <a href="#" tal:attributes="href string:${url}/@@view.html"><img src="#" tal:attributes="src item/object/@@thumbnail_url" /></a>
             <input type="checkbox" class="noborder" name="ids:list" id="#" value="#" tal:attributes="value item/id; id item/cb_id; checked request/ids_checked|nothing;"/>
-            <span tal:condition="item/rename">
-                <input name="new_value:list" tal:attributes="value item/id" />
-                <input type="hidden" name="rename_ids:list" value="" tal:attributes="value item/rename" />
-            </span>
-            <span tal:condition="not:item/rename">
-                  <a href="#" tal:attributes="href string:${url}/@@view.html" tal:content="item/id">foo</a>
-            </span>
+
+
+                  <a href="#" tal:attributes="href string:${url}/@@view.html" tal:content="item/object/title | item/id">foo</a>
+
               <span class="itemtitle" tal:condition="item/plaintitle" tal:content="item/title|default" i18n:translate="">&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="itemsize" tal:content="item/size/sizeForDisplay|nothing" i18n:translate="">&nbsp;</span>
             <div class="itemcreated" tal:define="created item/created|default" tal:content="string: Créé : ${created}" i18n:translate="">&nbsp;</div>

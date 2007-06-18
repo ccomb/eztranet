@@ -24,7 +24,7 @@ from StringIO import StringIO
 from tempfile import NamedTemporaryFile, TemporaryFile
 from interfaces import *
 from flashpreview import compute_flashvideo
-
+from eztranet.thumbnail.interfaces import IThumbnail
 
 class ProjectContainer(BTreeContainer):
   "a project container"
@@ -60,8 +60,8 @@ class ProjectNameChooser(NameChooser):
     u"""
     adapter that allows to choose the __name__ of a project
     """
-    implements(INameChooser)
     adapts(IProjectContainer)
+    implements(INameChooser)
     def chooseName(self, name, project):
         if name:
             return name
@@ -77,8 +77,8 @@ class ProjectItemNameChooser(NameChooser):
     u"""
     adapter that allows to choose the __name__ of a projectitem
     """
-    implements(INameChooser)
     adapts(IProject)
+    implements(INameChooser)
     def chooseName(self, name, projectitem):   
         if name:
             return name
@@ -104,8 +104,8 @@ class SearchableTextOfProject(object):
     u"""
     l'adapter qui permet d'indexer les projects
     """
-    implements(ISearchableTextOfProject)
     adapts(IProject)
+    implements(ISearchableTextOfProject)
     def __init__(self, context):
         self.context = context
     def getSearchableText(self):
@@ -119,8 +119,8 @@ class SearchableTextOfProjectItem(object):
     u"""
     l'adapter qui permet d'indexer les projects
     """
-    implements(ISearchableTextOfProjectItem)
     adapts(IProjectItem)
+    implements(ISearchableTextOfProjectItem)
     def __init__(self, context):
         self.context = context
     def getSearchableText(self):
@@ -130,18 +130,30 @@ class SearchableTextOfProjectItem(object):
                 texttoindex += subword + " "
         return texttoindex
 
+
+class ProjectThumbnail(object):
+    u"adapter from a project to a thumbnail"
+    adapts(IProject)
+    implements(IThumbnail)
+    image = None
+    url = '/@@/folder.png'
+    def __init__(self, context):
+        self.context = context
+    def compute_thumbnail(self):
+        pass
+
 @adapter(IProjectImage)
 def ProjectImageThumbnailer(image):
+    u"thumbnail creator for ProjectImage"
     tmp=StringIO()
     i = PIL.Image.open(StringIO(image.data))
     i.thumbnail((150,150))
     i.save(tmp, "png")
     return tmp.getvalue()
 
-
-    
 @adapter(IProjectVideo)
 def ProjectVideoThumbnailer(video):
+    u"thumbnail creator for ProjectVideo"
     u"convert the video to png, without audio, with only 1 frame, with a delay of 3 seconds"
     tmpfile = NamedTemporaryFile()
     tmpfile.write(video.data)

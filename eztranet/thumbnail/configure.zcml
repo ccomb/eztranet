@@ -7,13 +7,23 @@
 
 <zope:adapter factory=".thumbnail.Thumbnail" trusted="yes" />
 
+<browser:view
+    name="thumbnail_image"
+    for=".interfaces.IThumbnailed"
+    class=".browser.ThumbnailImageView"
+    permission="eztranet.thumbnail.view" />
 
 <browser:view
-    name="thumbnail"
+    name="thumbnail_url"
     for=".interfaces.IThumbnailed"
-    class=".browser.ThumbnailView"
+    class=".browser.ThumbnailUrlView"
     permission="eztranet.thumbnail.view" />
 
 <zope:subscriber handler=".thumbnail.ThumbnailedModified" />
 
+<browser:resource
+    name="default_thumbnail.png"
+    file="default_thumbnail.png"
+    permission="zope.Public"
+    layer="..skin.interfaces.IEztranetSkin" />
 </configure>

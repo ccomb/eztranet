@@ -50,3 +50,9 @@ ul#main_menu a {
 div#video_toolbar { background: white; width: 640px; }
 div#video_toolbar a { margin-right: 10px; color: red; text-decoration: none;  }
 div#image_toolbar a { margin-right: 10px; color: red; text-decoration: none;  }
+
+div.item { float: left; width: 200px; height: 15em; text-align: center; width: 200px; overflow: hidden; }
+div.item a { display: block; text-decoration: none; }
+a img { border: none; }
+.itemcreated, .itemmodified, .itemsize { font-size: 75%; }
+img.up { margin-top: 15px; }

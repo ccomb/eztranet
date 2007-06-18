@@ -6,22 +6,16 @@
   <require permission="eztranet.Manage" set_schema=".interfaces.IProjectContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
-<browser:containerViews
-       for=".interfaces.IProjectContainer"
-       contents="eztranet.project.ViewProject"
-       add="eztranet.Manage" />
+
        
 <zope:class class=".project.Project">
   <require permission="eztranet.project.ViewProject"          attributes="title description" />
   <require permission="eztranet.project.EditProject" set_attributes="title description" />
   <require permission="eztranet.project.ViewProject"          interface=" zope.app.container.interfaces.IReadContainer" />
-  <require permission="eztranet.project.EditProject"          interface=" zope.app.container.interfaces.IWriteContainer" />  
+  <require permission="eztranet.project.EditProject"          interface=" zope.app.container.interfaces.IWriteContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="..thumbnail.interfaces.IThumbnailed" />
 </zope:class>
-<browser:containerViews
-       for=".interfaces.IProject"
-       contents="eztranet.project.ViewProject"
-       add="eztranet.Manage" />
 
 <zope:class class=".project.ProjectImage">
   <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectImage" />
@@ -45,12 +39,19 @@
 <zope:adapter factory=".project.ProjectItemNameChooser" />
 <zope:adapter factory=".project.ProjectImageThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 <zope:adapter factory=".project.ProjectVideoThumbnailer" provides="eztranet.thumbnail.interfaces.IThumbnailer" />
+<zope:adapter factory=".project.ProjectThumbnail" />
 
 <zope:subscriber handler=".project.ProjectVideoAdded" />
 <zope:subscriber handler=".project.ProjectVideoModified" />
 <zope:subscriber handler=".project.ProjectVideoRemoved" />
 
 <!-- Project views -->
+<browser:containerViews
+       for=".interfaces.IProject"
+       add="eztranet.project.EditProject" />
+<browser:containerViews
+       for=".interfaces.IProjectContainer"
+       add="eztranet.Manage" />
 <!-- ADD -->
 <browser:page
     name="eztranet.add.Project"
@@ -65,12 +66,14 @@
     permission="eztranet.project.EditProject"
     menu="eztranet_actions" title="Edit" />
 <!-- VIEW -->
-<browser:page
-    name="view.html"
+<browser:pages
     for=".interfaces.IProject"
     class=".browser.ProjectView"
-    permission="eztranet.project.ViewProject"
-    menu="eztranet_actions" title="View" />
+    permission="eztranet.project.ViewProject">
+    <page name="index.html" menu="eztranet_actions" title="View" />
+    <page name="view.html" />
+    <page name="contents.html" />
+</browser:pages>
 <!-- ProjectItem views -->
 <!-- ADD -->
 <browser:page
@@ -86,7 +89,7 @@
     permission="eztranet.project.EditProject" />
 <!-- EDIT -->
 <browser:page
-    name="detail.html"
+    name="edit.html"
     for=".interfaces.IProjectItem"
     class=".browser.ProjectItemEdit"
     permission="eztranet.project.EditProject"
@@ -139,13 +142,14 @@
 />
 
 <!-- Project Container view -->
-<browser:page
-    name="index.html"
+<browser:pages
     for=".interfaces.IProjectContainer"
     class=".browser.ProjectContainerView"
-    permission="zope.Public"
-    menu="eztranet_actions" title="View" />
-
+    permission="zope.Public" >
+    <page name="index.html" menu="eztranet_actions" title="View" />
+    <page name="view.html" />
+    <page name="contents.html" />
+</browser:pages>
 <!-- juste pour la ZMI -->
 <browser:addMenuItem
     title="Eztranet Project"
@@ -189,6 +193,15 @@
     file="flowplayer.swf"
     permission="zope.Public"
     layer="..skin.interfaces.IEztranetSkin" />
-
+<browser:resource
+    name="folder.png"
+    file="folder.png"
+    permission="zope.Public"
+    layer="..skin.interfaces.IEztranetSkin" />
+<browser:resource
+    name="up.png"
+    file="up.png"
+    permission="zope.Public"
+    layer="..skin.interfaces.IEztranetSkin" />
 
 </configure>

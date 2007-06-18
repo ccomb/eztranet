@@ -13,20 +13,22 @@ class Thumbnail(object):
     """
     implements(IThumbnail)
     adapts(IThumbnailed)
-    thumbnail = None
+    image = url = None
     def __init__(self, context):
         self.context = self.__parent__ = context
         if 'eztranet.thumbnail' not in IAnnotations(context):
-            self.thumbnail = IAnnotations(context)['eztranet.thumbnail'] = None
-        self.thumbnail = IAnnotations(context)['eztranet.thumbnail']
-        if self.thumbnail is None:
+            self.image = IAnnotations(context)['eztranet.thumbnail'] = None
             self.compute_thumbnail()
+        self.image = IAnnotations(context)['eztranet.thumbnail']
+
     def compute_thumbnail(self):
-        thumbnail = getAdapter(removeAllProxies(self.context), IThumbnailer)
+        try:
+            thumbnail = getAdapter(removeAllProxies(self.context), IThumbnailer)
+        except:
+            thumbnail = None
         if thumbnail is not None:
-            self.thumbnail = IAnnotations(self.context)['eztranet.thumbnail'] = Image(thumbnail)
-        else:
-            raise NotImplementedError, "Objects that want to provide a thumbnail must provide an IThumbnailer adapter."
+            self.image = IAnnotations(self.context)['eztranet.thumbnail'] = Image(thumbnail)
+
 
 @adapter(IThumbnailed, IObjectModifiedEvent)
 def ThumbnailedModified(object, event):

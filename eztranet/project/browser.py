@@ -56,8 +56,6 @@ class ProjectEdit(EditForm):
         super(ProjectEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
     def handle_edit_action(self, action, data):
-        import pprint
-        pprint.pprint( data )
         # First do the base class edit handling
         super(ProjectEdit, self).handle_edit_action.success(data)
         # then rename the object in the parent container and redirect to it
@@ -82,7 +80,7 @@ class ProjectContainerView(Contents):
     la vue du container de projects.
     """
     label = u"List de vos projets"
-    __call__ = ViewPageTemplateFile('projectcontainer.pt')
+    __call__ = ViewPageTemplateFile('project.pt')
     def listContentInfo(self):
         u"""
         reuse the original, but remove those not permitted

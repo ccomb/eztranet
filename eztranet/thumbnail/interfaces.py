@@ -11,9 +11,13 @@ class IThumbnailed(Interface):
 class IThumbnail(Interface):
     u"""
     interface offered by an object that has a thumbnail.
-    This is the same interface as an Image object
+    Implementations can decide to provides either the thumbnail, or the URL,
+    or both.
+    'url' is good for static resource images (to be cached),
+    'image' can be used for a generated thumbnail that have no view nor URL
     """
-    thumbnail = Attribute("the thumbnail of the object")
+    image = Attribute("The Image object corresponding to the thumbnail")
+    url = Attribute("The URL of a thumbnail")
     def compute_thumbnail():
         pass
 
