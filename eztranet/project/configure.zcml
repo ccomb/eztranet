@@ -109,8 +109,7 @@
     for=".interfaces.IProjectVideo"
     class=".browser.ProjectVideoView"
     attribute="callFlashView"
-    permission="eztranet.project.ViewProject"
-    menu="eztranet_actions" title="Voir flash" />
+    permission="eztranet.project.ViewProject" />
 
 <browser:menuItem
     title="nouvelle vidéo"

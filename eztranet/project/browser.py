@@ -41,12 +41,9 @@ class ProjectAdd(AddForm):
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"New project"
     def create(self, data):
-        u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
         self.project=Project()
-        u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
         applyChanges(self.project, self.form_fields, data)
-        u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
-        self.context.contentName=INameChooser(self.project).chooseName(self.project.title, self.project)
+        self.context.contentName=INameChooser(self.context.context).chooseName(self.project.title, self.project)
         return self.project
 
 class ProjectEdit(EditForm):
@@ -59,28 +56,21 @@ class ProjectEdit(EditForm):
         super(ProjectEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
     def handle_edit_action(self, action, data):
+        import pprint
+        pprint.pprint( data )
+        # First do the base class edit handling
         super(ProjectEdit, self).handle_edit_action.success(data)
+        # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
-        newname=string.lower(INameChooser(self.context).chooseName(u"",self.context))
-        if string.lower(oldname)!=newname:
+        newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
+        INameChooser(self.context.__parent__).checkName(newname,self.context)
+        if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
-    def validate(self, action, data):
-        u"on récupère les données du formulaire et on remplit data"
-        getWidgetsData(self.widgets, 'form', data)
-        u"on crée un objet temporaire pour tester le nouveau nom"
-        dummy=Project()
-        u"on applique le formulaire au nouveau"
-        applyChanges(dummy, self.form_fields, data)
-        u"on calcule le nouveau nom avec le dummy (un peu loourdingue)"
-        newname = INameChooser(dummy).chooseName(u"",dummy)
-        u"s'il existe déjà on retourne une erreur"
-        if newname in list(self.context.__parent__.keys()) and self.context != self.context.__parent__[newname]:
-            return ("The name <i>"+newname+"</i> conflicts with another Project",)
-        return super(ProjectEdit, self).validate(action, data)
 
-class ProjectView(BrowserPage):
+
+class ProjectView(Contents):
     u"la vue qui permet d'afficher un project"
     label="View of an Project"
     __call__=ViewPageTemplateFile("project.pt")
@@ -143,29 +133,16 @@ class ProjectItemEdit(EditForm):
         super(ProjectItemEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
     def handle_edit_action(self, action, data):
-        super(ProjectItemEdit, self).handle_edit_action.success(data)
+        # First do the base class edit handling
+        super(ProjectEdit, self).handle_edit_action.success(data)
+        # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
-        newname=string.lower(INameChooser(self.context).chooseName(u"",self.context))
-        if string.lower(oldname)!=newname:
+        newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
+        INameChooser(self.context.__parent__).checkName(newname,self.context)
+        if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
-    def validate(self, action, data):
-        #on récupère les données du formulaire et on remplit data
-        getWidgetsData(self.widgets, 'form', data)
-        # on vire le champ d'upload s'il est vide pour éviter d'écraser le fichier par du vide
-        #if not data['data']:
-        #    self.form_fields = self.form_fields.omit('data')
-        #on crée un objet temporaire pour tester le nouveau nom
-        dummy=ProjectImage()
-        #on applique le formulaire au nouveau
-        applyChanges(dummy, self.form_fields, data)
-        #on calcule le nouveau nom avec le dummy (un peu loourdingue)
-        newname = INameChooser(dummy).chooseName(u"",dummy)
-        #s'il existe déjà on retourne une erreur
-        if newname in list(self.context.__parent__.keys()) and self.context != self.context.__parent__[newname]:
-            return ("Le nom <i>"+newname+"</i> est en conflit avec un autre objet",)
-        return super(ProjectItemEdit, self).validate(action, data)
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
 
 class ProjectItemView(BrowserPage):
     def description(self):

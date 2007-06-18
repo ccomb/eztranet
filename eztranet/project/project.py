@@ -61,15 +61,16 @@ class ProjectNameChooser(NameChooser):
     adapter that allows to choose the __name__ of a project
     """
     implements(INameChooser)
-    adapts(IProject)
+    adapts(IProjectContainer)
     def chooseName(self, name, project):
-        if not name and project is None:
-            raise "ProjectNameChooser Error"
         if name:
-            rawname = name
+            return name
         if project is not None and len(project.title)>0:
             rawname = project.title
-        return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+            newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+            self.checkName(newname, project) 
+            return newname
+        raise "ProjectNameChooser Error"
 
 
 class ProjectItemNameChooser(NameChooser):
@@ -77,16 +78,16 @@ class ProjectItemNameChooser(NameChooser):
     adapter that allows to choose the __name__ of a projectitem
     """
     implements(INameChooser)
-    adapts(IProjectItem)
-    def chooseName(self, name, projectitem):
-        if not name and projectitem is None:
-            raise "ProjectItemNameChooser Error"
+    adapts(IProject)
+    def chooseName(self, name, projectitem):   
         if name:
-            rawname = name
+            return name
         if projectitem is not None and len(projectitem.title)>0:
             rawname = projectitem.title
-        return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-
+            newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+            self.checkName(newname, projectitem)
+            return newname
+        raise "ProjectItemNameChooser Error"
 
 class ProjectImage(Image, ProjectItem):
     implements(IProjectImage)
