@@ -28,6 +28,7 @@
 <zope:class class=".project.ProjectVideo">
   <require permission="eztranet.project.ViewProject"          interface=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.EditProject" set_schema=".interfaces.IProjectVideo" />
+    <require permission="eztranet.project.EditProject" set_attributes="flash_video_tempfile flash_video" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..download.interfaces.IDownloadable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />

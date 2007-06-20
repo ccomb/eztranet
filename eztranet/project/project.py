@@ -85,21 +85,20 @@ class ProjectItemNameChooser(NameChooser):
         if projectitem is not None and len(projectitem.title)>0:
             rawname = projectitem.title
             newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-            self.checkName(newname, projectitem)
             return newname
         raise "ProjectItemNameChooser Error"
 
 class ProjectImage(ProjectItem, Image):
     implements(IProjectImage)
-    __parent__=__name__=None
-    title=description=u""
+    __parent__ = __name__ = None
+    title = description = u""
 
 class ProjectVideo(ProjectItem, File):
     implements(IProjectVideo)
-    __parent__=__name__=None
-    title=description=u""
+    __parent__ = __name__ = None
+    title = description = u""
     flash_video = flash_video_tempfile = None
-
+        
 class SearchableTextOfProject(object):
     u"""
     l'adapter qui permet d'indexer les projects
@@ -164,10 +163,12 @@ def ProjectVideoThumbnailer(video):
 
 @adapter(IProjectVideo, IObjectAddedEvent)
 def ProjectVideoAdded(video, event):
+    u"warning, here the object is NOT security proxied"
     video.flash_video_tempfile = compute_flashvideo(video)
 
 @adapter(IProjectVideo, IObjectModifiedEvent)
 def ProjectVideoModified(video, event):
+    u"warning, here the object IS security proxied"
     video.flash_video_tempfile = compute_flashvideo(video)
 
 @adapter(IProjectVideo, IObjectRemovedEvent)

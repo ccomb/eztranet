@@ -132,12 +132,12 @@ class ProjectItemEdit(EditForm):
         #template=ViewPageTemplateFile("project_form.pt")
     def handle_edit_action(self, action, data):
         # First do the base class edit handling
-        super(ProjectEdit, self).handle_edit_action.success(data)
+        super(ProjectItemEdit, self).handle_edit_action.success(data)
         # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
         newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
-        INameChooser(self.context.__parent__).checkName(newname,self.context)
         if oldname!=newname:
+            INameChooser(self.context.__parent__).checkName(newname,self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
