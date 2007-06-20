@@ -175,7 +175,7 @@
     <menuItem title="Permissions" action="permissions.html" />
 </browser:menuItems>
 <browser:menuItems menu="zmi_views" for="eztranet.project.interfaces.IProjectItem">
-    <menuItem title="edit" action="detail.html" />
+    <menuItem title="edit" action="edit.html" />
 </browser:menuItems>
 
 <zope:utility

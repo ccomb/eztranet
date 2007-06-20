@@ -89,12 +89,12 @@ class ProjectItemNameChooser(NameChooser):
             return newname
         raise "ProjectItemNameChooser Error"
 
-class ProjectImage(Image, ProjectItem):
+class ProjectImage(ProjectItem, Image):
     implements(IProjectImage)
     __parent__=__name__=None
     title=description=u""
 
-class ProjectVideo(File, ProjectItem):
+class ProjectVideo(ProjectItem, File):
     implements(IProjectVideo)
     __parent__=__name__=None
     title=description=u""
