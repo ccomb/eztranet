@@ -68,7 +68,6 @@ class ProjectNameChooser(NameChooser):
         if project is not None and len(project.title)>0:
             rawname = project.title
             newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
-            self.checkName(newname, project) 
             return newname
         raise "ProjectNameChooser Error"
 
@@ -169,7 +168,9 @@ def ProjectVideoAdded(video, event):
 @adapter(IProjectVideo, IObjectModifiedEvent)
 def ProjectVideoModified(video, event):
     u"warning, here the object IS security proxied"
-    video.flash_video_tempfile = compute_flashvideo(video)
+    if event.descriptions and 'data' in event.descriptions[0].attributes:
+        # we compute the flash video only if we uploaded something
+        video.flash_video_tempfile = compute_flashvideo(video)
 
 @adapter(IProjectVideo, IObjectRemovedEvent)
 def ProjectVideoRemoved(video, event):

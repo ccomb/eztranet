@@ -71,8 +71,8 @@
     for=".interfaces.IProject"
     class=".browser.ProjectView"
     permission="eztranet.project.ViewProject">
-    <page name="index.html" menu="eztranet_actions" title="View" />
-    <page name="view.html" />
+    <page name="view.html" menu="eztranet_actions" title="View" />
+    <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>
 <!-- ProjectItem views -->
@@ -102,6 +102,7 @@
     class=".browser.ProjectImageView"
     permission="eztranet.project.ViewProject"
     menu="eztranet_actions" title="Voir" />
+    
 <browser:page
     name="view.html"
     for=".interfaces.IProjectVideo"
@@ -147,8 +148,8 @@
     for=".interfaces.IProjectContainer"
     class=".browser.ProjectContainerView"
     permission="zope.Public" >
-    <page name="index.html" menu="eztranet_actions" title="View" />
-    <page name="view.html" />
+    <page name="view.html" menu="eztranet_actions" title="View" />
+    <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>
 <!-- juste pour la ZMI -->

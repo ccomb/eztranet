@@ -2,6 +2,9 @@
     i18n:domain="zope">
 <body>
 <div metal:fill-slot="body">
+
+<p tal:content="structure view/description">brief description of the project</p>
+
   <div metal:define-macro="contents">
 
     <form name="containerContentsForm" method="post" action="."
@@ -109,12 +112,12 @@ Action sur les éléments sélectionnés :
          </div>
          
         <metal:block tal:define="supportsRename view/supportsRename" tal:repeat="item container_contents">
-         <div class="item" tal:define="oddrow repeat/item/odd; url item/url; id_quoted item/id/url:quote">
-            <a href="#" tal:attributes="href string:${url}/@@view.html"><img src="#" tal:attributes="src item/object/@@thumbnail_url" /></a>
+         <div class="item" tal:define="url item/url; id_quoted item/id/url:quote">
+            <a href="#" tal:attributes="href string:${url}/view.html"><img src="#" tal:attributes="src item/object/@@thumbnail_url" /></a>
             <input type="checkbox" class="noborder" name="ids:list" id="#" value="#" tal:attributes="value item/id; id item/cb_id; checked request/ids_checked|nothing;"/>
 
 
-                  <a href="#" tal:attributes="href string:${url}/@@view.html" tal:content="item/object/title | item/id">foo</a>
+                  <a href="#" tal:attributes="href string:${url}/view.html" tal:content="item/object/title | item/id">foo</a>
 
               <span class="itemtitle" tal:condition="item/plaintitle" tal:content="item/title|default" i18n:translate="">&nbsp;&nbsp;&nbsp;&nbsp;</span>
               <span class="itemsize" tal:content="item/size/sizeForDisplay|nothing" i18n:translate="">&nbsp;</span>

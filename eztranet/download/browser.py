@@ -2,7 +2,7 @@
 from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 from zope.location.interfaces import ILocation
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryFile
 import os
 
 class DownloadView(BrowserView):
@@ -13,11 +13,12 @@ class DownloadView(BrowserView):
         filename = "filecontent"
         if ILocation.providedBy(self.context):
             filename = self.context.__name__
-        tmpfile = NamedTemporaryFile()
+        tmpfile = TemporaryFile()
         tmpfile.write(self.context.data)
-        tmpfile.flush()
+        tmpfile.seek(0)
         self.request.response.setHeader('Content-disposition', 'attachment; filename=%s' % filename)
-        self.request.response.setHeader('Content-length', os.path.getsize(tmpfile.name))
-        return tmpfile.file
+        self.request.response.setHeader('Content-length', self.context.getSize())
+        self.request.response.setHeader('Content-Type', self.context.contentType)
+        return tmpfile.read()
 
 

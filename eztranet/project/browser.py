@@ -61,7 +61,7 @@ class ProjectEdit(EditForm):
         # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
         newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
-        INameChooser(self.context.__parent__).checkName(newname,self.context)
+        #INameChooser(self.context.__parent__).checkName(newname,self.context)
         if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
@@ -74,6 +74,10 @@ class ProjectView(Contents):
     __call__=ViewPageTemplateFile("project.pt")
     def __init__(self, context, request):
         self.context, self.request = context, request
+    def description(self):
+        if not self.context.description:
+            return None
+        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
 class ProjectContainerView(Contents):
     u"""
