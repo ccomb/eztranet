@@ -43,18 +43,18 @@
     for="zope.app.container.interfaces.IAdding"
     permission="eztranet.Manage" />
 <browser:menuItem
-    menu="eztranet_actions"
+    menu="eztranet_addings"
     title="Nouvel Utilisateur"
     action="+/eztranet.User"
     for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 <browser:menuItem
     menu="eztranet_actions"
-    title="Modifier Utilisateur"
+    title="Modifier"
     action="edit_user.html"
     for="eztranet.users.interfaces.IEztranetUser" />
 <browser:menuItem
     menu="eztranet_actions"
-    title="Voir Utilisateur"
+    title="Voir"
     action="index.html"
     for="eztranet.users.interfaces.IEztranetUser" />
 

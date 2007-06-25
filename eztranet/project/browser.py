@@ -23,7 +23,7 @@ from zope.security.checker import canAccess, canWrite
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 import string
 from zope.app.form.browser.textwidgets import escape
-from zope.app.file.browser.file import FileView
+from zope.app.file.browser.file import FileView, FileUpload
 from zope.app.file import File
 
 from interfaces import *
@@ -83,8 +83,9 @@ class ProjectContainerView(Contents):
     u"""
     la vue du container de projects.
     """
-    label = u"List de vos projets"
+    label = u"Projets"
     __call__ = ViewPageTemplateFile('project.pt')
+    description = u"Voici la liste de vos différents projets"
     def listContentInfo(self):
         u"""
         reuse the original, but remove those not permitted
@@ -146,6 +147,9 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
 
+class ProjectItemUpload(FileUpload):
+    pass
+
 class ProjectItemView(BrowserPage):
     def description(self):
         if not self.context.description:
@@ -159,8 +163,8 @@ class ProjectImageView(ProjectItemView):
     __call__=ViewPageTemplateFile("image.pt")
     def wantedWidth(self):
         width = self.context.getImageSize()[0]
-        if width > 800:
-            width=800
+        if width > 590:
+            width=590
         return width
     def originalWidth(self):
         return self.context.getImageSize()[0]

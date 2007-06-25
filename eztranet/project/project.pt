@@ -1,7 +1,7 @@
 <html metal:use-macro="context/@@standard_macros/view"
     i18n:domain="zope">
 <body>
-<div metal:fill-slot="body">
+<div id="body" metal:fill-slot="body">
 
 <p tal:content="structure view/description">brief description of the project</p>
 

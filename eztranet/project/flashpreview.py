@@ -59,13 +59,13 @@ class FlashContentProvider(object):
             return u"La compression flash a échoué.<br/>Vous pouvez néanmoins télécharger la vidéo d'origine."
         if self.context.flash_video_tempfile == 'OK':
             return """
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="640" height="480">
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="590" height="442">
 	<param name="allowScriptAccess" value="sameDomain" />
 	<param name="movie" value="/@@/flowplayer.swf" />
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
-    <param name="flashvars" value="config={ initialScale:'orig', videoFile: '../%s/@@flv', loop: false }" />
+    <param name="flashvars" value="config={ initialScale:'orig', videoFile: '..%s/@@flv', loop: false }" />
 </object>
 """ % getPath(self.context)
         else:        

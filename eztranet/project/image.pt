@@ -11,7 +11,7 @@
 
 <div id="body" metal:fill-slot="body">
 
-<h1><span tal:content="context/title">Image</span> (<span tal:content="context/__parent__/title">Project</span>)</h1>
+<h3><span tal:content="context/title">Image</span> (<span tal:content="context/__parent__/title">Project</span>)</h3>
 
 <p tal:content="structure view/description">brief description of the image</p>
 

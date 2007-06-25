@@ -28,7 +28,7 @@
   <metal:tree define-macro="navigation_tree_box">
     <!-- Ugly is better than lobotomized. -->
       <div class="box" id="navigationTree">
-        <h4 i18n:translate="">Navigation</h4>
+
         <div xmlns="http://www.zope.org/zope3xmltree"
              id="navtreecontents"
              class="body"

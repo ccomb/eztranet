@@ -65,13 +65,13 @@
     for=".interfaces.IProject"
     class=".browser.ProjectEdit"
     permission="eztranet.project.EditProject"
-    menu="eztranet_actions" title="Edit" />
+    menu="eztranet_actions" title="Modifier" />
 <!-- VIEW -->
 <browser:pages
     for=".interfaces.IProject"
     class=".browser.ProjectView"
     permission="eztranet.project.ViewProject">
-    <page name="view.html" menu="eztranet_actions" title="View" />
+    <page name="view.html" menu="eztranet_actions" title="Voir" />
     <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>
@@ -95,6 +95,13 @@
     class=".browser.ProjectItemEdit"
     permission="eztranet.project.EditProject"
     menu="eztranet_actions" title="Modifier" />
+<browser:page
+    name="upload.html"
+    for=".interfaces.IProjectItem"
+    class=".browser.ProjectItemUpload"
+    permission="eztranet.project.EditProject"
+    template="upload.pt"
+    menu="eztranet_actions" title="Téléverser" />
 <!-- VIEW -->
 <browser:page
     name="view.html"
@@ -148,7 +155,7 @@
     for=".interfaces.IProjectContainer"
     class=".browser.ProjectContainerView"
     permission="zope.Public" >
-    <page name="view.html" menu="eztranet_actions" title="View" />
+    <page name="view.html" menu="eztranet_actions" title="Voir" />
     <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>
@@ -203,6 +210,11 @@
 <browser:resource
     name="up.png"
     file="up.png"
+    permission="zope.Public"
+    layer="..skin.interfaces.IEztranetSkin" />
+<browser:resource
+    name="loading.gif"
+    file="loading.gif"
     permission="zope.Public"
     layer="..skin.interfaces.IEztranetSkin" />
 

@@ -35,10 +35,10 @@ class IProjectVideo(IProjectItem, IFile):
     flash_video_tempfile = Attribute("Path of the target compressed file, or status of the compression")
 
 class IProjectContainer(IContainer, IContained):
-  u"""
-  a toplevel container for the projects should only contain projects or items
-  """
-  contains(IProject)
+    u"""
+    a toplevel container for the projects should only contain projects or items
+    """
+    contains(IProject)
 
 class ISearchableTextOfProject(ISearchableText):
     u"""

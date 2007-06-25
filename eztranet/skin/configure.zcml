@@ -51,6 +51,9 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
     file="main.css"
     permission="zope.Public"
     layer=".interfaces.IEztranetSkin" />
+<browser:resourceDirectory
+    name="images"
+    directory="images" />
 <browser:resource
     name="functions.js"
     file="functions.js"
