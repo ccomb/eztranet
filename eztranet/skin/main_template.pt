@@ -21,8 +21,6 @@
 <body tal:attributes="onload body_onload | nothing">
 
 
-
-
 <!-- navigation tree -->
 <metal:tree use-macro="context/@@standard_macros/navigation_tree_box" />
 
@@ -78,7 +76,7 @@ Here, the page content
 </div>
 
 </div><!-- main -->
-<div id="author">extranet <a href="http://gorfou.fr">réalisé sur mesure par Gorfou</a></div>
+<div id="author"><a href="http://gorfou.fr">réalisé sur mesure par un Gorfou</a></div>
 
 </body>
 

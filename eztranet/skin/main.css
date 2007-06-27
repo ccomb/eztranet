@@ -120,5 +120,5 @@ div#buttons { position: absolute; bottom: 0; }
 a img { border: none; }
 .itemcreated, .itemmodified, .itemsize { font-size: 75%; }
 img.up { margin-top: 15px; }
-div#author { position: fixed; top: 1%; right: 1%; font-size: 70%; }
+div#author { position: absolute; margin-top: 66px; margin-left: 30%; font-size: 60%; }
 div.page_error { color: yellow; margin: 5px; font-weight: bold; }
