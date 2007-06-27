@@ -39,6 +39,7 @@ class IProjectContainer(IContainer, IContained):
     a toplevel container for the projects should only contain projects or items
     """
     contains(IProject)
+    title=TextLine(title=u'titre', description=u'Titre du conteneur de projets')
 
 class ISearchableTextOfProject(ISearchableText):
     u"""

@@ -3,6 +3,7 @@
 <zope:class class=".project.ProjectContainer">
   <require permission="eztranet.View"          interface=" zope.app.container.interfaces.IReadContainer" />
   <require permission="eztranet.Manage"      interface=" zope.app.container.interfaces.IWriteContainer" />
+  <require permission="eztranet.View"          attributes="title" />
   <require permission="eztranet.Manage" set_schema=".interfaces.IProjectContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>

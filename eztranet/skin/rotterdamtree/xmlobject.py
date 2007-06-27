@@ -102,7 +102,7 @@ class ReadContainerXmlObjectView(BrowserView):
         keys = list(container.keys())
 
         # include the site manager
-        keys.append(u'++etc++site')
+        #keys.append(u'++etc++site')
 
         for name in keys:
 
@@ -113,14 +113,12 @@ class ReadContainerXmlObjectView(BrowserView):
 
             iconUrl = self.getIconUrl(item)
             item_len = self.getLengthOf(item)
+            if hasattr(container[name], 'title'):
+                name = container[name].title
             if item_len >= 0:
-                result.append(xmlEscape(
-                    u'<collection name=%s length=%s icon_url=%s/>',
-                    name, item_len, iconUrl))
+                result.append(xmlEscape(u'<collection name=%s length=%s icon_url=%s/>', name, item_len, iconUrl))
             else:
-                result.append(xmlEscape(
-                    u'<item name=%s icon_url=%s/>',
-                    name, iconUrl))
+                result.append(xmlEscape(u'<item name=%s icon_url=%s/>', name, iconUrl))
 
         return u' '.join(result)
 
@@ -175,7 +173,7 @@ class ReadContainerXmlObjectView(BrowserView):
                 keys = []
 
             # include the site manager
-            keys.append(u'++etc++site')
+            #keys.append(u'++etc++site')
 
             for name in keys:
                 # Only include items we can traverse to
