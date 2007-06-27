@@ -65,7 +65,7 @@ class EztranetMainMenu(object):
         self.context, self.request, self.view = context, request, view
     def update(self):
         site = getSite()
-        self.menuitems = [ { 'name':i, 'url':AbsoluteURL(site[i], self.request)()} for i in site.keys() if i not in ['logo'] ]
+        self.menuitems = [ { 'name':site[i].title, 'url':AbsoluteURL(site[i], self.request)()} for i in site.keys() if i not in ['logo'] ]
         users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
         if users and canAccess(users, '__name__'):
             self.menuitems.append({'name': u"Utilisateurs", 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
