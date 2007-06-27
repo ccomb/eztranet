@@ -3,107 +3,49 @@
 <body>
 <div id="body" metal:fill-slot="body">
 
+<h1 tal:content="context/title | nothing">contexte</h1>
+
 <p tal:content="structure view/description">brief description of the project</p>
 
-  <div metal:define-macro="contents">
+<div metal:define-macro="contents">
+<form name="containerContentsForm" method="post" action="." tal:attributes="action request/URL" tal:define="container_contents view/listContentInfo">
 
-    <form name="containerContentsForm" method="post" action="."
-          tal:attributes="action request/URL"
-          tal:define="container_contents view/listContentInfo">
-
-      <input type="hidden" name="type_name" value=""
-             tal:attributes="value request/type_name"
-             tal:condition="request/type_name|nothing"
-             />
-      <input type="hidden" name="retitle_id" value=""
-             tal:attributes="value request/retitle_id"
-             tal:condition="request/retitle_id|nothing"
-             />
-
-      <div class="page_error"
-           tal:condition="view/error"
-           tal:content="view/error"
-           i18n:translate="">
-        Error message
-      </div>
-
-      <div id="sortable" class="listing" summary="Content listing"
-             i18n:attributes="summary">
-
-<!--         <thead>
-          <tr>
-            <th>&nbsp;</th>
-            <th i18n:translate="">Name</th>
-            <th i18n:translate="">Title</th>
-            <th i18n:translate="">Size</th>
-            <th i18n:translate="">Created</th>
-            <th i18n:translate="">Modified</th>
-          </tr>
-        </thead> -->
-
-
-
-<!--         <metal:block tal:condition="view/hasAdding">
-        <tr tal:define="names_required context/@@+/nameAllowed"
-            tal:condition="python:names_required and request.has_key('type_name')">
-          <td></td>
-          <td><input name="new_value" id="focusid" value="" /></td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        </metal:block> -->
+  <div id="buttons">
       <tal:block tal:condition="view/normalButtons">
-Action sur les éléments sélectionnés : 
-        <input type="submit" name="container_cut_button" value="Cut"
-               i18n:attributes="value container-cut-button"
-               tal:condition="view/supportsCut"
-               />
-        <input type="submit" name="container_copy_button" value="Copy"
-               i18n:attributes="value container-copy-button"
-               tal:condition="view/supportsCopy"
-               />
-        <input type="submit" name="container_paste_button" value="Paste"
-               tal:condition="view/hasClipboardContents"
-               i18n:attributes="value container-paste-button"
-               />
-        <input type="submit" name="container_delete_button" value="Delete"
-               i18n:attributes="value container-delete-button"
-               tal:condition="view/supportsDelete"
-               i18n:domain="zope"
-               />
+        <input type="submit" name="container_cut_button" value="Cut" i18n:attributes="value container-cut-button" tal:condition="view/supportsCut" />
+        <input type="submit" name="container_copy_button" value="Copy" i18n:attributes="value container-copy-button" tal:condition="view/supportsCopy" />
+        <input type="submit" name="container_paste_button" value="Paste" tal:condition="view/hasClipboardContents" i18n:attributes="value container-paste-button" />
+        <input type="submit" name="container_delete_button" value="Delete" i18n:attributes="value container-delete-button" tal:condition="view/supportsDelete" i18n:domain="zope" />
 
         <div tal:condition="view/hasAdding" tal:omit-tag="">
-        <div tal:omit-tag=""
+          <div tal:omit-tag=""
              tal:define="adding nocall:context/@@+;
                          addingInfo adding/addingInfo;
                          has_custom_add_view adding/hasCustomAddView;
                          names_required adding/nameAllowed"
              tal:condition="adding/isSingleMenuItem">
-          <input type="submit" name="container_add_button" value="Add"
-                 i18n:attributes="value add-button"
-                 i18n:domain="zope"
-               />
-          <input type="text" name="single_new_value" id="focusid"
-                 tal:condition="python:names_required and not has_custom_add_view"
-                 i18n:domain="zope"
-               />
-          <input type="hidden" name="single_type_name"
-               value=""
-               tal:attributes="value python:addingInfo[0]['action']"
-               />
-        </div>
+            <input type="submit" name="container_add_button" value="Add" i18n:attributes="value add-button" i18n:domain="zope" />
+            <input type="text" name="single_new_value" id="focusid" tal:condition="python:names_required and not has_custom_add_view" i18n:domain="zope" />
+            <input type="hidden" name="single_type_name" value="" tal:attributes="value python:addingInfo[0]['action']" />
+          </div>
         </div>
       </tal:block>
-      
-            <div tal:condition="view/specialButtons">
-        <input type="submit" value="Apply"
-               i18n:attributes="value container-apply-button"
-               />
-        <input type="submit" name="container_cancel_button" value="Cancel"
-               i18n:attributes="value container-cancel-button"
-               />
+      <div tal:condition="view/specialButtons">
+        <input type="submit" value="Apply" i18n:attributes="value container-apply-button" />
+        <input type="submit" name="container_cancel_button" value="Cancel" i18n:attributes="value container-cancel-button" />
       </div>
+  </div>
+
+
+
+      <input type="hidden" name="type_name" value="" tal:attributes="value request/type_name" tal:condition="request/type_name|nothing" />
+      <input type="hidden" name="retitle_id" value="" tal:attributes="value request/retitle_id" tal:condition="request/retitle_id|nothing" />
+
+      <div class="page_error" tal:condition="view/error" tal:content="view/error" i18n:translate="">
+        Error message
+      </div>
+
+      <div id="sortable" class="listing" summary="Content listing" i18n:attributes="summary">
         
          <div class="item">
             <a href=".."><img class="up" src="/@@/up.png" /></a>
@@ -132,8 +74,7 @@ Action sur les éléments sélectionnés :
 
 
 
-
-    </form>
+</form>
 
     <script type="text/javascript"><!--
         if (document.containerContentsForm.new_value)
@@ -141,8 +82,8 @@ Action sur les éléments sélectionnés :
         //-->
     </script>
 
-  </div>
+</div> <!-- contents -->
 
-</div>
+</div> <!-- body -->
 </body>
 </html>

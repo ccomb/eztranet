@@ -1,5 +1,5 @@
 body {
-background: #666699;
+background: #6C77AE;
 color: #C6CCE7;
 background-image: url(/@@/images/fond.png);
 background-repeat: repeat-x;
@@ -15,16 +15,17 @@ padding-left: 5px;
 div#login_logout {
 position: absolute;
 top: 3%;
-left: 3%;
+left: -20%;
 }
 
 div#main {
-float: left;
-margin-top: 22px;
-width: 590px;
-background-image: url(/@@/images/fondmain.png);
-background-repeat: no-repeat;
-border: solid 2px #4F4F77;
+position: absolute;
+margin-top: 20px;
+margin-left: 22%;
+width: 720px;
+min-height: 400px;
+background: #6C77AD url(/@@/images/fondmain.png) no-repeat;
+border: solid 2px #586498;
 }
 
 div#breadcrumb {
@@ -34,21 +35,22 @@ padding-left: 5px;
 }
 
 div#navigationTree {
-background: #52527A;
-float: left;
-width: 200px;
+position: absolute;
+background: #586498;
+width: 400px;
 margin-top: 112px;
-margin-left: 10%;
+margin-left: 5%;
 overflow: hidden;
 }
 ul#main_menu {
 list-style-type: none;
 margin-bottom: 7px;
 margin-top: 65px;
-margin-left: 170px;
+margin-left: 230px;
 }
 ul#main_menu li {
     display: inline;
+    padding: 10px;
 }
 ul#main_menu a {
     font-weight: bold;
@@ -90,23 +92,22 @@ margin-top: 10px;
 #navtreecontents collection { display: block; margin-left: 10px; height: auto; }
 
 div#video_toolbar {
-background: white;
+background: #6C77AE;
 width: 100%;
 }
 div#video_toolbar a {
 margin-right: 10px;
-color: orange;
+color: #c6cce7;
 text-decoration: none;
 }
 div#image_toolbar a {
 margin-right: 10px;
-color: orange;
+color: #c6cce7;
 text-decoration: none;
 }
 
 div.item {
 float: left;
-
 height: 15em;
 text-align: center;
 overflow: hidden;
@@ -115,6 +116,9 @@ margin-right: 10px;
 div.item a {
 display: block;
 }
+div#buttons { position: absolute; bottom: 0; }
 a img { border: none; }
 .itemcreated, .itemmodified, .itemsize { font-size: 75%; }
 img.up { margin-top: 15px; }
+div#author { position: fixed; top: 1%; right: 1%; font-size: 70%; }
+div.page_error { color: yellow; margin: 5px; font-weight: bold; }

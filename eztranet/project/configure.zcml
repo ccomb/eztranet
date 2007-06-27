@@ -59,13 +59,6 @@
     for="zope.app.container.interfaces.IAdding"
     class=".browser.ProjectAdd"
     permission="eztranet.Manage" />
-<!-- EDIT -->
-<browser:page
-    name="edit.html"
-    for=".interfaces.IProject"
-    class=".browser.ProjectEdit"
-    permission="eztranet.project.EditProject"
-    menu="eztranet_actions" title="Modifier" />
 <!-- VIEW -->
 <browser:pages
     for=".interfaces.IProject"
@@ -75,6 +68,13 @@
     <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>
+<!-- EDIT -->
+<browser:page
+    name="edit.html"
+    for=".interfaces.IProject"
+    class=".browser.ProjectEdit"
+    permission="eztranet.project.EditProject"
+    menu="eztranet_actions" title="Modifier" />
 <!-- ProjectItem views -->
 <!-- ADD -->
 <browser:page
@@ -155,7 +155,7 @@
     for=".interfaces.IProjectContainer"
     class=".browser.ProjectContainerView"
     permission="zope.Public" >
-    <page name="view.html" menu="eztranet_actions" title="Voir" />
+    <page name="view.html" />
     <page name="index.html" />
     <page name="contents.html" />
 </browser:pages>

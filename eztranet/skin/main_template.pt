@@ -48,12 +48,12 @@
 <!-- breadcrumb -->
 <div id="breadcrumb">
 <tal:block condition="python: 'main_page' not in dir(view)" repeat="breadcrumb context/@@absolute_url/breadcrumbs">
-    <a tal:attributes="href string:${breadcrumb/url}/" tal:content="breadcrumb/name" tal:condition="repeat/breadcrumb/index">item</a>
+    <a tal:attributes="href string:${breadcrumb/url}/view.html" tal:content="breadcrumb/name" tal:condition="repeat/breadcrumb/index">item</a>
     <tal:block condition="python: repeat['breadcrumb'].index() and not repeat['breadcrumb'].end()" content="string: → "/>
 </tal:block>
 </div>
 
-<h1 tal:content="context/title | nothing">contexte</h1>
+
 
 <!-- Action menu -->
 <ul id="eztranet_actions">
@@ -78,6 +78,7 @@ Here, the page content
 </div>
 
 </div><!-- main -->
+<div id="author">extranet <a href="http://gorfou.fr">réalisé sur mesure par Gorfou</a></div>
 
 </body>
 

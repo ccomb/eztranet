@@ -25,6 +25,7 @@ import string
 from zope.app.form.browser.textwidgets import escape
 from zope.app.file.browser.file import FileView, FileUpload
 from zope.app.file import File
+from zope.dublincore.interfaces import IDCTimes
 
 from interfaces import *
 from project import Project, ProjectImage, ProjectVideo
@@ -65,7 +66,19 @@ class ProjectEdit(EditForm):
         if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
+
+def project_sorting(p1, p2):
+    u"We put projects in the beginning, and order by date, most recent first"
+    if IProject.providedBy(p1['object']) and IProjectItem.providedBy(p2['object']):
+        return -1
+    if IProject.providedBy(p2['object']) and IProjectItem.providedBy(p1['object']):
+        return 1
+    if IDCTimes(p1['object']).created > IDCTimes(p2['object']).created:
+        return -1
+    else:
+        return 1
+    return 0
 
 
 class ProjectView(Contents):
@@ -78,6 +91,13 @@ class ProjectView(Contents):
         if not self.context.description:
             return None
         return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
+    def listContentInfo(self):
+        contentinfo = super(ProjectView, self).listContentInfo()
+        try:
+            contentinfo.sort(project_sorting)
+        except:
+            pass
+        return contentinfo
 
 class ProjectContainerView(Contents):
     u"""
@@ -91,7 +111,12 @@ class ProjectContainerView(Contents):
         reuse the original, but remove those not permitted
         """
         info = super(ProjectContainerView, self).listContentInfo()
-        return [ i for i in info if canAccess(i['object'], 'title') ]
+        ret = [ i for i in info if canAccess(i['object'], 'title') ]
+        try:
+            ret.sort(project_sorting)
+        except:
+            pass
+        return ret
 
 class ProjectImageAdd(AddForm):
     u"""
@@ -145,7 +170,7 @@ class ProjectItemEdit(EditForm):
             INameChooser(self.context.__parent__).checkName(newname,self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/edit.html")
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
 class ProjectItemUpload(FileUpload):
     pass
@@ -163,8 +188,8 @@ class ProjectImageView(ProjectItemView):
     __call__=ViewPageTemplateFile("image.pt")
     def wantedWidth(self):
         width = self.context.getImageSize()[0]
-        if width > 590:
-            width=590
+        if width > 720:
+            width=720
         return width
     def originalWidth(self):
         return self.context.getImageSize()[0]

@@ -18,7 +18,7 @@ from zope.app.file.file import File
 from zope.app.file.image import Image
 from zope.app.file.interfaces import IImage
 from persistent import Persistent
-import string, os
+import os
 import PIL.Image
 from StringIO import StringIO
 from tempfile import NamedTemporaryFile, TemporaryFile
@@ -67,7 +67,7 @@ class ProjectNameChooser(NameChooser):
             return name
         if project is not None and len(project.title)>0:
             rawname = project.title
-            newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+            newname = unicode.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
             return newname
         raise "ProjectNameChooser Error"
 
@@ -83,7 +83,7 @@ class ProjectItemNameChooser(NameChooser):
             return name
         if projectitem is not None and len(projectitem.title)>0:
             rawname = projectitem.title
-            newname = string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+            newname = unicode.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
             return newname
         raise "ProjectItemNameChooser Error"
 

@@ -23,8 +23,8 @@ class IProjectItem(IContained):
     a project item (image or video)
     """
     containers("eztranet.project.interfaces.IProject")
-    title = TextLine(title=u'titre', description=u'Titre du projet', required=False)
-    description = Text(title=u"description", description=u"Description de l'article", required=False, max_length=1000)
+    title = TextLine(title=u'nom de fichier', description=u'Nom du fichier', required=False)
+    description = Text(title=u"description", description=u"Description du fichier", required=False, max_length=1000)
 
 class IProjectImage(IProjectItem, IImage):
     u"marker interface to tell this is a project image"

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, string
+import os
 from threading import Thread, Timer
 from tempfile import mkstemp
 from zope.contentprovider.interfaces import IContentProvider
@@ -8,6 +8,7 @@ from zope.component import adapts
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.traversing.api import getPath
 from zope.proxy import removeAllProxies
+import urllib
 
 class FlashConverterThread(Thread):
     u"""
@@ -58,15 +59,15 @@ class FlashContentProvider(object):
         if self.context.flash_video_tempfile == 'FAILED':
             return u"La compression flash a échoué.<br/>Vous pouvez néanmoins télécharger la vidéo d'origine."
         if self.context.flash_video_tempfile == 'OK':
-            return """
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="590" height="442">
+            return u"""
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="720" height="540">
 	<param name="allowScriptAccess" value="sameDomain" />
 	<param name="movie" value="/@@/flowplayer.swf" />
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
-    <param name="flashvars" value="config={ initialScale:'orig', videoFile: '..%s/@@flv', loop: false }" />
+    <param name="flashvars" value="config={ initialScale:'fit', videoFile: '..%s/@@flv', loop: false }" />
 </object>
-""" % getPath(self.context)
+""" % urllib.quote(urllib.quote(getPath(self.context).encode('utf-8'))) # needs double quoting !! (half a day to find that)
         else:        
             return "Compressing..."
