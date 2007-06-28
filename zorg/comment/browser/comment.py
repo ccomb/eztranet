@@ -38,7 +38,7 @@ def getFullName(principal_id) :
         Returns the id if the full name cannot be found.
     """
     try :
-        return zapi.principals().getPrincipal(principal_id).title
+        return zapi.principals().getPrincipal(principal_id).id
     except (PrincipalLookupError, AttributeError) :
         return principal_id
         
