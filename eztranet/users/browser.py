@@ -46,8 +46,8 @@ class EztranetUserAdd(AddForm):
     u"""
     The view class for adding a user
     """
-    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
-    label=u"Adding a user"
+    form_fields=Fields(IEztranetUser).select('login','password','IsAdmin')
+    label=u"Nouvel utilisateur"
     def create(self, data):
         u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
         user=EztranetUser("","","")
@@ -61,8 +61,8 @@ class EztranetUserView(DisplayForm):
     u"""
     The view class for viewing a user
     """
-    form_fields=Fields(IEztranetUser).select('login','password','title','IsAdmin')
-    label=u"Viewing a user"
+    form_fields=Fields(IEztranetUser).select('login','IsAdmin')
+    label=u"Utilisateur"
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login
@@ -71,8 +71,8 @@ class EztranetUserEdit(EditForm):
     u"""
     The view class for editing a user
     """
-    form_fields=Fields(IEztranetUser).select('password','title','IsAdmin')
-    label=u"Editing a user"
+    form_fields=Fields(IEztranetUser).select('password','IsAdmin')
+    label=u"Modification utilisateur"
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login
