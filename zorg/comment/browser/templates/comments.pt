@@ -1,0 +1,36 @@
+<html metal:use-macro="context/@@standard_macros/view"
+    i18n:domain="zope">
+<body>
+<div metal:fill-slot="body">
+
+   <p tal:condition="view/comments"><span tal:content="python: len(view.comments)">X</span> Comments</p>
+   <p tal:condition="not: view/comments">Add the First Comment</p>
+
+   <div id="comments" tal:content="structure view/render">
+    
+   </div>
+   
+   <form action="./@@addcomment.html"
+     method="post"
+     >
+
+
+    <div class="row">
+      <div class="label" i18n:translate="">Add Comment</div>
+      <div class="field">
+        <textarea name="text" rows="12" cols="45"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="controls">
+        <input type="submit" name="save" value="Add Comment"
+            i18n:attributes="value save-comment-button"/>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+</body>
+</html>

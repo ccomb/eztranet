@@ -1,0 +1,69 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  i18n_domain="zorg.comment">
+
+  <!-- comment -->
+  <class class=".comments.Comment">
+    <factory id="comment.interfaces.IComment" />
+    <implements 
+        interface="zope.annotation.interfaces.IAttributeAnnotatable"
+        />
+    <require
+        permission="zope.Public"
+        interface=".IComment"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".IComment"
+        />
+  </class>
+
+
+  <!-- comments -->
+  <class class=".comments.CommentsForAnnotableComments">
+    <factory id="comment.interfaces.IComments" />
+    <require
+        permission="zope.Public"
+        interface=".IReadComments"
+        />
+    <require
+        permission="zope.View"
+        interface=".IAddComments"
+        />
+    <require
+        permission="zope.View"
+        interface=".IEditComments"
+        />    
+    <require
+        permission="zope.View"
+        interface=".IDeleteComments"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema=".IComment"
+        />
+  </class>
+  
+  <class class="zope.app.file.File">
+    <implements 
+        interface="zorg.comment.IAttributeAnnotableComments"
+        />
+        
+  </class>
+
+  <class class="zope.app.folder.Folder">
+    <implements 
+        interface="zorg.comment.IAttributeAnnotableComments"
+        />
+  </class>
+  
+  <adapter
+      provides=".IComments"
+      factory=".comments.CommentsForAnnotableComments"
+      for="zope.annotation.interfaces.IAnnotatable"
+      trusted="True" />
+      
+
+   <include package=".browser" />
+   
+</configure>
