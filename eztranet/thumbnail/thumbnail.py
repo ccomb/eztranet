@@ -32,5 +32,5 @@ class Thumbnail(object):
 
 @adapter(IThumbnailed, IObjectModifiedEvent)
 def ThumbnailedModified(object, event):
-    if event.descriptions and 'data' in event.descriptions[0].attributes:
+    if event.descriptions and hasattr(event.descriptions[0],'attributes') and 'data' in event.descriptions[0].attributes:
         IThumbnail(object).compute_thumbnail()

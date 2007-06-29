@@ -5,11 +5,12 @@
 
    <p tal:condition="view/comments"><span tal:content="python: len(view.comments)">X</span> Commentaires</p>
    <p tal:condition="not: view/comments">Ajouter le premier commentaire</p>
+   <div class="page_error" tal:condition="view/error | nothing" tal:content="view/error">error</div>
 
    <div id="comments" tal:content="structure view/render">
-    
+
    </div>
-   
+
    <form action="./@@addcomment.html"
      method="post"
      >

@@ -4,4 +4,28 @@
     name="EztranetSkin"
 />
 
+
+  <!-- comments -->
+  <zope:class class="zorg.comment.comments.CommentsForAnnotableComments">
+    <require
+        permission="eztranet.project.ViewProject"
+        interface="zorg.comment.IReadComments"
+        />
+    <require
+        permission="eztranet.project.ViewProject"
+        interface="zorg.comment.IAddComments"
+        />
+    <require
+        permission="eztranet.project.EditProject"
+        interface="zorg.comment.IEditComments"
+        />    
+    <require
+        permission="eztranet.project.EditProject"
+        interface="zorg.comment.IDeleteComments"
+        />
+    <require
+        permission="zope.ManageContent"
+        set_schema="zorg.comment.IComment"
+        />
+  </zope:class>
 </configure>

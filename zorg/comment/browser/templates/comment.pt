@@ -7,10 +7,11 @@
 <span tal:content="view/info/when">
         12:45 
 </span>
-<br/>
-<br/>
-<div tal:content="structure view/info/text">
+
+(<a href="#" tal:attributes="href string: ${request/URL}?del=${view/info/key}">supprimer</a>)
+
+<div class="comment" tal:content="structure view/info/text">
     Content 
 </div>
-<br/>
+
 <hr/>

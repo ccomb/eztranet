@@ -27,6 +27,7 @@ from zope.publisher.browser import TestRequest
 from zope.publisher.browser import BrowserView
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
+from zope.proxy import removeAllProxies
 
 from zorg.comment import IComments
 
@@ -75,23 +76,30 @@ class ListComments(BrowserView) :
         self.comments = IComments(self.context)
         
     def render(self) :
-    
+        delkey = None
+        if False and 'del' in self.request.form: # removal of comments (disabled)
+            for key, value in self.comments.items() :
+                if str(key) == self.request.form['del']:
+                    del self.comments[key]
+            
         result = ['<div id="comments">']
         
         comments = self.comments
         for key, value in comments.items() :
+
             info = self.info = dict()
             dc = IZopeDublinCore(value)
             info['key'] = key
             info['who'] = ", ".join(getFullName(x) for x in dc.creators)
             info['when'] = dc.created
             info['text'] = unicode(value.data, encoding="utf-8")
-            
+
             result.append(self._comment())
         
         result.append('</div>')
         
         return "".join(result)
+        
         
         
 class AddComment(BrowserView) :
