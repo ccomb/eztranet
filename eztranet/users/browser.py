@@ -83,3 +83,11 @@ class EztranetUsers(Contents):
     """
     def supportsRename(self):
         return False
+    def removeObjects(self):
+        ppal_id = unicode(self.request.principal.id)
+        ids_to_remove = []
+        if 'ids' in self.request.form:
+            ids_to_remove = self.request.form['ids']
+        if ppal_id in ids_to_remove:
+            ids_to_remove.remove(ppal_id)
+        super(EztranetUsers, self).removeObjects()
