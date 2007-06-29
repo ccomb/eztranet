@@ -8,7 +8,6 @@
         12:45 
 </span>
 
-(<a href="#" tal:attributes="href string: ${request/URL}?del=${view/info/key}">supprimer</a>)
 
 <div class="comment" tal:content="structure view/info/text">
     Content 
