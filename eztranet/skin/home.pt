@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html 
+    xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:tal="http://xml.zope.org/namespaces/tal" 
+    xmlns:metal="http://xml.zope.org/namespaces/metal" 
+    xml:lang="en" lang="en"
+    metal:use-macro="context/@@standard_macros/page"
+>
+
+<body>
+
+<div id="body" metal:fill-slot="body">
+
+<div style="text-align: center; margin-top: 5%">
+<p>Bienvenue sur l'extranet de Purple Productions.</p>
+<p>L'arborescence ci-contre vous permet d'accéder à vos projets.</p>
+</div>
+
+</div>
+
+</body>
+</html>

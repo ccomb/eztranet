@@ -413,8 +413,11 @@ function createNavigationTreeNode(source, basePath, deep) {
 
         var navTreeNode = new navigationTreeNode(newelem);
         var elemPath;
+        var elemName;
         var elemTitle;
+
         if (source.getAttribute('isroot') != null) {
+                elemName = source.getAttribute('name');
                 elemTitle = source.getAttribute('name');
                 //elemPath = basePath;
                 // set base url for virtual host support
@@ -425,8 +428,9 @@ function createNavigationTreeNode(source, basePath, deep) {
                 docNavTree.appendChild(newelem);
                 }
         else {
-                elemTitle = source.getAttribute('name');
-                elemPath = basePath + elemTitle + '/';
+                elemName = source.getAttribute('name');
+                elemTitle = source.getAttribute('title');
+                elemPath = basePath + elemName + '/';
                 }
         navTreeNode.setPath(elemPath);
 

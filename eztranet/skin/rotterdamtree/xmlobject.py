@@ -113,12 +113,13 @@ class ReadContainerXmlObjectView(BrowserView):
 
             iconUrl = self.getIconUrl(item)
             item_len = self.getLengthOf(item)
+            title = name
             if hasattr(container[name], 'title'):
-                name = container[name].title
+                title = container[name].title
             if item_len >= 0:
-                result.append(xmlEscape(u'<collection name=%s length=%s icon_url=%s/>', name, item_len, iconUrl))
+                result.append(xmlEscape(u'<collection name=%s length=%s icon_url=%s title=%s />', name, item_len, iconUrl, title))
             else:
-                result.append(xmlEscape(u'<item name=%s icon_url=%s/>', name, iconUrl))
+                result.append(xmlEscape(u'<item name=%s icon_url=%s title=%s />', name, iconUrl, title))
 
         return u' '.join(result)
 
@@ -176,6 +177,9 @@ class ReadContainerXmlObjectView(BrowserView):
             #keys.append(u'++etc++site')
 
             for name in keys:
+                title = name
+                if hasattr(item[name], 'title'):
+                    title = item[name].title
                 # Only include items we can traverse to
                 subItem = traverse(item, name, None)
                 iconUrl = self.getIconUrl(subItem)
@@ -185,17 +189,17 @@ class ReadContainerXmlObjectView(BrowserView):
                     # with the ++etc++site case
                     if subItem == oldItem:
                         subItems.append(xmlEscapeWithCData(
-                            u'<collection name=%s length=%s '
+                            u'<collection title=%s name=%s length=%s '
                             u'icon_url=%s>%s</collection>', 
-                            name, subitem_len, iconUrl, result))
+                            title, name, subitem_len, iconUrl, result))
                     else:
                         subItems.append(xmlEscape(
-                            u'<collection name=%s length=%s '
+                            u'<collection title=%s name=%s length=%s '
                             u'icon_url=%s/>',
-                            name, subitem_len, iconUrl))
+                            title, name, subitem_len, iconUrl))
                 else:
                     subItems.append(xmlEscape(
-                        u'<item name=%s icon_url=%s />', name, iconUrl))
+                        u'<item title=%s name=%s icon_url=%s />', title, name, iconUrl))
 
             result = u' '.join(subItems)
             oldItem = item

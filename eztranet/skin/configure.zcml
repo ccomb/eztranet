@@ -28,6 +28,14 @@
     layer=".interfaces.IEztranetSkin"
     permission="zope.Public" />
 
+<browser:pages
+    for="eztranet.interfaces.IEztranetSite"
+    layer=".interfaces.IEztranetSkin"
+    permission="zope.Public" >
+    <page name="index.html" template="home.pt" />
+    <page name="view.html" template="home.pt" />
+</browser:pages>
+    
 <!-- Ici on définit un menu.
 Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu
