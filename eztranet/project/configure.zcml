@@ -97,13 +97,7 @@
     class=".browser.ProjectItemEdit"
     permission="eztranet.project.EditProject"
     menu="eztranet_actions" title="Modifier" />
-<browser:page
-    name="upload.html"
-    for=".interfaces.IProjectItem"
-    class=".browser.ProjectItemUpload"
-    permission="eztranet.project.EditProject"
-    template="upload.pt"
-    menu="eztranet_actions" title="Téléverser" />
+
 <!-- VIEW -->
 <browser:page
     name="view.html"

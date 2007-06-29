@@ -122,7 +122,7 @@ class ProjectImageAdd(AddForm):
     u"""
     The view class for adding a ProjectImage
     """
-    form_fields=Fields(IProjectImage).omit('__name__', '__parent__', 'contentType')
+    form_fields=Fields(IProjectImage).omit('__name__', 'title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"nouvelle image"
     def create(self, data):
@@ -140,9 +140,16 @@ class ProjectVideoAdd(AddForm):
     u"""
     The view class for adding a ProjectVideo
     """
-    form_fields=Fields(IProjectVideo).omit('__name__', '__parent__', 'contentType')
+    form_fields=Fields(IProjectVideo).omit('__name__','title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"Ajout d'une vidéo"
+    extra_script = u"""
+    document.getElementById('form.actions.add').onclick= function() {
+    var p = document.createElement('p')
+    p.innerHTML = "<p><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>";
+    document.getElementById('main').appendChild(p);
+    }
+    """
     def create(self, data):
         self.video=ProjectVideo()
         applyChanges(self.video, self.form_fields, data)
@@ -172,8 +179,6 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
-class ProjectItemUpload(FileUpload):
-    pass
 
 class ProjectItemView(BrowserPage):
     def description(self):
