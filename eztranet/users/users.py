@@ -67,11 +67,13 @@ def EztranetUserRemoved(user, event):
     A subscriber that do the necessary after a user has been added
     We loop on every project and remove role assignment.
     """
-    for project in getSite()['projects'].values():
-        rolemanager = IPrincipalRoleManager(project)
-        roles = rolemanager.getRolesForPrincipal(user.login)
-        for role in roles:
-            rolemanager.unsetRoleForPrincipal(role[0], user.login)
+    site = getSite()
+    if 'projects' in site:
+        for project in getSite()['projects'].values():
+            rolemanager = IPrincipalRoleManager(project)
+            roles = rolemanager.getRolesForPrincipal(user.login)
+            for role in roles:
+                rolemanager.unsetRoleForPrincipal(role[0], user.login)
 
 def initial_setup(site):
     sm = site.getSiteManager()
