@@ -66,7 +66,7 @@ class FlashContentProvider(object):
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
-    <param name="flashvars" value="config={ initialScale:'fit', videoFile: '..%s/@@flv', loop: false }" />
+    <param name="flashvars" value="config={ initialScale:'orig', videoFile: '..%s/@@flv', loop: false }" />
 </object>
 """ % urllib.quote(urllib.quote(getPath(self.context).encode('utf-8'))) # needs double quoting !! (half a day to find that)
         else:        
