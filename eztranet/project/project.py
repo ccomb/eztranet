@@ -168,9 +168,12 @@ def ProjectVideoAdded(video, event):
 @adapter(IProjectVideo, IObjectModifiedEvent)
 def ProjectVideoModified(video, event):
     u"warning, here the object IS security proxied"
-    if event.descriptions and 'data' in event.descriptions[0].attributes:
-        # we compute the flash video only if we uploaded something
-        video.flash_video_tempfile = compute_flashvideo(video)
+    try:
+        if 'data' in event.descriptions[0].attributes:
+            # we compute the flash video only if we uploaded something
+            video.flash_video_tempfile = compute_flashvideo(video)
+    except:
+        return
 
 @adapter(IProjectVideo, IObjectRemovedEvent)
 def ProjectVideoRemoved(video, event):
