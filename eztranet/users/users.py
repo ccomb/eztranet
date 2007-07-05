@@ -103,5 +103,5 @@ class UserNameChooser(NameChooser):
             rawname = name
         if user is not None and len(user.login)>0:
             rawname = user.login
-        return string.lower(rawname).strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
+        return rawname.strip().replace(' ','-').replace(u'/',u'-').lstrip('+@')
 
