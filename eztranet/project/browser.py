@@ -125,6 +125,12 @@ class ProjectImageAdd(AddForm):
     form_fields=Fields(IProjectImage).omit('__name__', 'title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"nouvelle image"
+    extra_script = u"""
+    document.open()
+    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
+    document.close()
+    document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
+    """
     def create(self, data):
         self.image=ProjectImage()
         applyChanges(self.image, self.form_fields, data)
