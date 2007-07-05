@@ -117,9 +117,9 @@ class ReadContainerXmlObjectView(BrowserView):
             if hasattr(container[name], 'title'):
                 title = container[name].title
             if item_len >= 0:
-                result.append(xmlEscape(u'<collection name=%s length=%s icon_url=%s title=%s />', name, item_len, iconUrl, title))
+                result.append(xmlEscape(u'<collection name=%s length=%s icon_url="" title=%s />', name, item_len, title))
             else:
-                result.append(xmlEscape(u'<item name=%s icon_url=%s title=%s />', name, iconUrl, title))
+                result.append(xmlEscape(u'<item name=%s icon_url="" title=%s />', name, title))
 
         return u' '.join(result)
 
@@ -190,16 +190,16 @@ class ReadContainerXmlObjectView(BrowserView):
                     if subItem == oldItem:
                         subItems.append(xmlEscapeWithCData(
                             u'<collection title=%s name=%s length=%s '
-                            u'icon_url=%s>%s</collection>', 
-                            title, name, subitem_len, iconUrl, result))
+                            u'icon_url="">%s</collection>', 
+                            title, name, subitem_len, result))
                     else:
                         subItems.append(xmlEscape(
                             u'<collection title=%s name=%s length=%s '
-                            u'icon_url=%s/>',
-                            title, name, subitem_len, iconUrl))
+                            u'icon_url=""/>',
+                            title, name, subitem_len))
                 else:
                     subItems.append(xmlEscape(
-                        u'<item title=%s name=%s icon_url=%s />', title, name, iconUrl))
+                        u'<item title=%s name=%s icon_url="" />', title, name))
 
             result = u' '.join(subItems)
             oldItem = item
@@ -208,8 +208,8 @@ class ReadContainerXmlObjectView(BrowserView):
         iconUrl = self.getIconUrl(oldItem)
         result = xmlEscapeWithCData(
                   u'<collection name=%s baseURL=%s length=%s '
-                  u'icon_url=%s isroot="">%s</collection>',
-                  rootName, baseURL, len(oldItem), iconUrl, result)
+                  u'icon_url="" isroot="">%s</collection>',
+                  rootName, baseURL, len(oldItem), result)
 
         self.request.response.setHeader('Content-Type', 'text/xml')
         setNoCacheHeaders(self.request.response)
