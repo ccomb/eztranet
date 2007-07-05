@@ -145,7 +145,7 @@ def ProjectImageThumbnailer(image):
     u"thumbnail creator for ProjectImage"
     tmp=StringIO()
     i = PIL.Image.open(StringIO(image.data))
-    i.thumbnail((150,150))
+    i.thumbnail((120,120))
     i.save(tmp, "png")
     return tmp.getvalue()
 
