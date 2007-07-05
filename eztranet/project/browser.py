@@ -147,12 +147,10 @@ class ProjectVideoAdd(AddForm):
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"Ajout d'une vidéo"
     extra_script = u"""
-    document.getElementById('form.actions.add').onclick= function() {
-    var p = document.createElement('p')
-    p.innerHTML = "<p><img id='loading' src='' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>";
-    document.getElementById('main').appendChild(p);
-    document.getElementById('loading').src='/@@/loading.gif';
-    }
+    document.open()
+    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
+    document.close()
+    document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
     def create(self, data):
         self.video=ProjectVideo()
