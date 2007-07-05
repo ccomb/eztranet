@@ -24,7 +24,7 @@ position: absolute;
 margin-top: 20px;
 margin-left: 22%;
 width: 720px;
-min-height: 400px;
+min-height: 700px;
 background: #6C77AD url(/@@/images/fondmain.png) no-repeat;
 border: solid 2px #586498;
 }
@@ -88,9 +88,9 @@ margin-top: 10px;
 /*  Styles for xmltree */
 #navtreecontents a { cursor: pointer; height: 20px; }
 #navtreecontents loading { display: block; padding-left: 31px; height: 18px; }
-#navtreecontents expand { background-repeat: no-repeat; padding-left: 14px; display: inline; cursor: pointer; }
+#navtreecontents expand { background-repeat: no-repeat; padding-left: 4px; display: inline; cursor: pointer; }
 #navtreecontents icon { background-repeat: no-repeat; padding-left: 20px; display: inline;  cursor: auto; }
-#navtreecontents collection { display: block; margin-left: 10px; height: auto; }
+#navtreecontents collection { display: block; margin-left: 8px; height: auto; }
 
 div#video_toolbar {
 background: #6C77AE;
@@ -116,6 +116,7 @@ margin-right: 10px;
 }
 div.item a {
 display: block;
+font-weight: bold;
 }
 div#buttons { position: absolute; bottom: 0; }
 a img { border: none; }
