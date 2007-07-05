@@ -28,6 +28,7 @@ from zope.publisher.browser import BrowserView
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
 from zope.proxy import removeAllProxies
+from zope.security.checker import canAccess
 
 from zorg.comment import IComments
 
@@ -77,7 +78,7 @@ class ListComments(BrowserView) :
         
     def render(self) :
         delkey = None
-        if False and 'del' in self.request.form: # removal of comments (disabled)
+        if 'del' in self.request.form: # removal of comments (disabled)
             for key, value in self.comments.items() :
                 if str(key) == self.request.form['del']:
                     del self.comments[key]
@@ -99,7 +100,10 @@ class ListComments(BrowserView) :
         result.append('</div>')
         
         return "".join(result)
-        
+    def removable(self):
+        if canAccess(self.comments, '__delitem__'):
+            return True
+        return False
         
         
 class AddComment(BrowserView) :

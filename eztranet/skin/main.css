@@ -8,7 +8,7 @@ background-repeat: repeat-x;
 a { text-decoration: none; color: #C6CCE7; }
 a:hover { color: #F9F9FC; }
 h1 {
-font-size: 150%;
+font-size: 200%;
 margin: 5px;
 padding-left: 5px;
 }
@@ -127,4 +127,4 @@ div.page_error { color: yellow; margin: 5px; font-weight: bold; }
 div#comments { font-size: 85%; }
 div#comments div div { color: white; font-size: 150%; }
 div.comment { margin: 0.7em; }
-li a#nb_comments { color: yellow; }
+div.nb_comments, div a.nb_comments { color: yellow; font-size: 90%;}

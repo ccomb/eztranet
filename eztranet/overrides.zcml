@@ -16,11 +16,11 @@
         interface="zorg.comment.IAddComments"
         />
     <require
-        permission="eztranet.project.EditProject"
+        permission="eztranet.Manage"
         interface="zorg.comment.IEditComments"
         />    
     <require
-        permission="eztranet.project.EditProject"
+        permission="eztranet.Manage"
         interface="zorg.comment.IDeleteComments"
         />
     <require
