@@ -9,8 +9,8 @@
 
 <zope:role id="eztranet.Administrator" title="Eztranet Administrator" />
 <zope:role id="eztranet.Member" title="Eztranet Member" />
-<zope:role id="eztranet.project.Manager" title="Project Manager" />
-<zope:role id="eztranet.project.Member" title="Project Member" />
+<zope:role id="eztranet.project.Manager" title="modifier" />
+<zope:role id="eztranet.project.Member" title="voir" />
 
 <!-- EZTRANET ADMIN -->
 <zope:grant role="eztranet.Administrator" permission="eztranet.View" />

@@ -11,12 +11,12 @@
 <form action="" method="POST">
 <table>
 <tr>
-    <th>Utilisateur</th>
+    <th></th>
     <th tal:repeat="role roles" tal:content="role/title"></th>
 </tr>
 <tr tal:repeat="user view/get_all_users">
     <td tal:content="user">user</td>
-    <td tal:repeat="role roles" ><input type="checkbox" tal:attributes="name role/id; value user; checked python:view.assigned(role.id,user)" name="role" value="user"/></td>
+    <td tal:repeat="role roles" align="center" ><input type="checkbox" tal:attributes="name role/id; value user; checked python:view.assigned(role.id,user)" name="role" value="user"/></td>
 </tr>
 </table>
 <input type="submit" name="GRANT_SUBMIT" value="Change" i18n:attributes="value grant-submit" />
@@ -24,83 +24,7 @@
 
 
 </tal:block>
-<!--   <p tal:define="status view/status"
-     tal:condition="status"
-     tal:content="status" i18n:translate=""/>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-  <form action="" method="POST">
-  
-    <div tal:content="structure view/principal_widget">...</div>
-
-    <div tal:condition="view/principal">
-
-      <h2 i18n:translate="">Grants for the selected principal</h2>
-      <input type="submit" name="GRANT_SUBMIT" value="Change" 
-             i18n:attributes="value grant-submit" />
-
-      <table width="100%" border="0">
-        <tr>
-          <td valign="top">
-            <table class="matrix">
-              <tr>
-                <td i18n:translate=""><strong>Roles</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Allow</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Unset</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Deny</strong>&nbsp;</td>
-              </tr>
-              <tr tal:repeat="widget view/roles">
-                <td valign="top" nowrap>
-                  <div class="label">
-                    <label for="field.name" title="The widget's hint"
-                           tal:attributes="for widget/name; title widget/hint"
-                           tal:content="widget/label"
-                           i18n:translate="">The Label</label>
-                  </div>
-                </td>
-                <tal:block tal:content="structure widget">
-                  roles widget
-                </tal:block>
-              </tr>
-              <tr>
-                <td colspan="2"><a href="#top" i18n:translate="">^ top</a></td>
-              </tr>
-            </table>
-          </td>
-          <td valign="top">
-            <table class="matrix">
-              <tr>
-                <td i18n:translate=""><strong>Permissions</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Allow</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Unset</strong>&nbsp;</td>
-                <td i18n:translate=""><strong>Deny</strong>&nbsp;</td>
-              </tr>
-              <tr tal:repeat="widget view/permissions">
-                <td valign="top" nowrap>
-                  <div class="label">
-                    <label for="field.name" title="The widget's hint"
-                           tal:attributes="for widget/name; title widget/hint"
-                           tal:content="widget/label"
-                           i18n:translate="">The Label</label>
-                  </div>
-                </td>
-                <tal:block tal:content="structure widget">
-                  permission widget
-                </tal:block>
-              </tr>
-              <tr>
-                <td colspan="2"><a href="#top" i18n:translate="">^ top</a></td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-      <input type="submit" name="GRANT_SUBMIT" value="Change" 
-             i18n:attributes="value grant-submit" />
-
-    </div>
-  </form> -->
 </div>
 </body>
 </html>
