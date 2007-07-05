@@ -31,10 +31,10 @@
           <tr>
             <th>&nbsp;</th>
             <th i18n:translate="">Name</th>
-            <th i18n:translate="">Title</th>
+
 
             <th i18n:translate="">Created</th>
-            <th i18n:translate="">Modified</th>
+
           </tr>
         </thead>
 
@@ -45,8 +45,6 @@
             tal:condition="python:names_required and request.has_key('type_name')">
           <td></td>
           <td><input name="new_value" id="focusid" value="" /></td>
-          <td></td>
-          <td></td>
           <td></td>
         </tr>
         </metal:block>
@@ -63,7 +61,7 @@
                                      id item/cb_id;
                                      checked request/ids_checked|nothing;"/>
             </td>
-            <td><a href="#"
+            <td width='100'><a href="#"
                  tal:attributes="href
                                  string:${url}/@@SelectedManagementView.html"
                  tal:content="structure item/icon|default">
@@ -80,39 +78,15 @@
                                  string:${url}/@@SelectedManagementView.html"
                      tal:content="item/id"
                      >foo</a
-                  ><a href="#"
-                     tal:attributes="href
-                         string:${request/URL}?rename_ids:list=${id_quoted}"
-                     tal:condition="supportsRename"
-                     >&nbsp;&nbsp;</a
-                ></span
+                  ></span
                ></td>
-            <td>
-              <input name="new_value" id="focusid"
-                     tal:attributes="value item/title|nothing"
-                     tal:condition="item/retitle"
-                     />
-              <a href="#"
-                 tal:attributes="href
-                                 string:${request/URL}?retitle_id=${id_quoted}"
-                 tal:condition="item/retitleable"
-                 tal:content="item/title|default"
-                 i18n:translate=""
-                 >&nbsp;&nbsp;&nbsp;&nbsp;</a>
-              <span
-                 tal:condition="item/plaintitle"
-                 tal:content="item/title|default"
-                 i18n:translate=""
-                 >&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </td>
+
 
 
             <td><span tal:define="created item/created|default"
                       tal:content="created"
                       i18n:translate="">&nbsp;</span></td>
-            <td><span tal:define="modified item/modified|default"
-                      tal:content="modified"
-                      i18n:translate="">&nbsp;</span></td>
+
           </tr>
         </metal:block>
 

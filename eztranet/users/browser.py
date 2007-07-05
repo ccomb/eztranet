@@ -55,7 +55,7 @@ class EztranetUserAdd(AddForm):
         applyChanges(user, self.form_fields, data)
         u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
         self.context.contentName=INameChooser(user).chooseName(user.title, user)
-	user.title = user.login
+        user.title = user.login
         return user
 
 class EztranetUserView(DisplayForm):

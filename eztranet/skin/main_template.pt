@@ -58,6 +58,9 @@
 <li tal:repeat="item context/@@view_get_menu/eztranet_actions">
     <a href="#" tal:attributes="href item/action; class item/selected" tal:content="item/title">action1</a>
 </li>
+<tal:block tal:define="IComments nocall:modules/zorg.comment.interfaces/IComments; IAttributeAnnotableComments nocall:modules/zorg.comment.interfaces/IAttributeAnnotableComments" tal:condition="python: IAttributeAnnotableComments.providedBy(context)">
+<li tal:define="nb python: len(IComments(context)); s python: 2%(nb+1)/2 * 's'" tal:condition="nb"><a id="nb_comments" href="@@comments.html" tal:content="string: ${nb} commentaire${s}">X commentaires</a></li>
+</tal:block>
 <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
 

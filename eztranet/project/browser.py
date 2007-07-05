@@ -132,6 +132,9 @@ class ProjectImageAdd(AddForm):
             self.image.title = self.request.form['form.data'].filename
         self.image.__parent__ = self.context.context
         self.context.contentName=INameChooser(self.context.context).chooseName(self.image.title, self.image)
+        while self.context.contentName in self.context.__parent__:
+            self.context.contentName = self.context.contentName + ".new"
+            self.image.title = self.image.title + ".new"
         return self.image
 
 
@@ -146,8 +149,9 @@ class ProjectVideoAdd(AddForm):
     extra_script = u"""
     document.getElementById('form.actions.add').onclick= function() {
     var p = document.createElement('p')
-    p.innerHTML = "<p><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>";
+    p.innerHTML = "<p><img id='loading' src='' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>";
     document.getElementById('main').appendChild(p);
+    document.getElementById('loading').src='/@@/loading.gif';
     }
     """
     def create(self, data):
@@ -156,6 +160,9 @@ class ProjectVideoAdd(AddForm):
         if not self.video.title:
             self.video.title = self.request.form['form.data'].filename
         self.context.contentName=INameChooser(self.context.context).chooseName(self.video.title, self.video)
+        while self.context.contentName in self.context.__parent__:
+            self.context.contentName = self.context.contentName + ".new"
+            self.video.title = self.video.title + ".new"
         return self.video
 
 class ProjectItemEdit(EditForm):

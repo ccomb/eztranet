@@ -3,7 +3,7 @@
 <body>
 <div metal:fill-slot="body">
 
-   <p tal:condition="view/comments"><span tal:content="python: len(view.comments)">X</span> Commentaires</p>
+   <p></p>
    <p tal:condition="not: view/comments">Ajouter le premier commentaire</p>
    <div class="page_error" tal:condition="view/error | nothing" tal:content="view/error">error</div>
 

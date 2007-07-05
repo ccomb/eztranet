@@ -126,3 +126,4 @@ div.page_error { color: yellow; margin: 5px; font-weight: bold; }
 div#comments { font-size: 85%; }
 div#comments div div { color: white; font-size: 150%; }
 div.comment { margin: 0.7em; }
+li a#nb_comments { color: #32343b; }
