@@ -21,8 +21,9 @@ left: -20%;
 
 div#main {
 position: absolute;
-margin-top: 20px;
+top: 28px;
 margin-left: 22%;
+padding-bottom: 10px;
 width: 720px;
 min-height: 700px;
 background: #6C77AD url(/@@/images/fondmain.png) no-repeat;
@@ -39,7 +40,7 @@ div#navigationTree {
 position: absolute;
 background: #586498;
 width: 400px;
-margin-top: 112px;
+top: 119px;
 margin-left: 5%;
 overflow: hidden;
 }
