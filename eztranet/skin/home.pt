@@ -11,9 +11,43 @@
 
 <div id="body" metal:fill-slot="body">
 
-<div style="text-align: center; margin-top: 5%">
-<p>Bienvenue sur l'extranet de Purple Productions.</p>
-<p>L'arborescence ci-contre vous permet d'accéder à vos projets.</p>
+<div style="margin-top: 5%">
+
+<div style="width: 100%; text-align: right"><a href="http://gorfou.fr" style="color: yellow; font-weight: bold">(Retour vers Gorfou)</a><br/>
+Pour installer cette application dans votre entreprise ou la faire adapter,<br/>contactez Christophe Combelles au 06 08 955 845
+</div>
+
+<h2>Votre youtube™ privé !</h2>
+<p>Eztranet est un petit <b>extranet</b> fabriqué pour les besoins spécifiques des sociétés de <b>production vidéo</b>.
+Il permet de publier des images et des vidéos de manière ultra-simplifiée, 
+afin de recueillir les commentaires des clients avant finalisation du projet. Aucune formation n'est nécessaire pour l'utiliser.</p>
+
+<h3>Fonctionnalités :</h3>
+<p>
+- création de comptes utilisateurs pour les chefs de projet et pour le client final<br/>
+- création de dossiers avec droits séparés (on ne voit que ses propres projets)<br/>
+- upload de photos et vidéos avec création automatique d'une vignette d'aperçu<br/>
+- gestion d'un petit texte descriptif pour les projets, photos et vidéos<br/>
+- transcodage automatique des vidéos (tous formats) en flash™ pour prévisualisation<br/>
+- gestion des commentaires individuels sur projets, photos, vidéos<br/>
+</p>
+<h3>Démo :</h3>
+<p>
+Démarrez en cliquant sur « <a href="@@login.html">Connexion</a> » ou « <a href="projects" style="color: yellow"><u>Projets</u></a> » avec le user/pass : <b>admin/eztranet</b>.
+Vous êtes alors administrateur et vous pouvez créer des comptes limités et les restreindre à un projet particulier en cliquant sur « Permissions » dans le projet en question. 
+Si le mot de passe a été changé et que vous n'arrivez plus à vous connecter, contactez : ccomb à gorfou.fr<br/>
+
+</p>
+<h3>Prix, licence, technologie :</h3>
+<p>
+Eztranet est distribué sous licence GPL, par conséquent il est <b>gratuit et open-source</b>. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
+Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 3 avec sa base de données objets (testé sur zope 3.3.1).
+</p>
+<h3>Code source</h3>
+<p>
+<b><a href="http://gorfou.fr/eztranet/eztranet_1.0.tar.gz">eztranet_1.0.tar.gz</a></b><br/>
+le packaging est encore basique, l'application sera « eggifiée » à terme. Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses dépendances pour le transcodage), puis ajouter un EztranetSite depuis la ZMI (via ++skin++Debug), et créer au moins compte dans le dossier EztranetUsers (dans le Site Manager).
+</p>
 </div>
 
 </div>
