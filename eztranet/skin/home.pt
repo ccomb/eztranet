@@ -45,7 +45,7 @@ Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 
 </p>
 <h3>Code source</h3>
 <p>
-<b><a href="http://gorfou.fr/eztranet/eztranet_1.0.tar.gz">eztranet_1.0.tar.gz</a></b><br/>
+<b><a href="http://gorfou.fr/eztranet/">eztranet</a></b><br/>
 le packaging est encore basique, l'application sera « eggifiée » à terme. Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses dépendances pour le transcodage), puis ajouter un EztranetSite depuis la ZMI (via ++skin++Debug), et créer au moins compte dans le dossier EztranetUsers (dans le Site Manager).
 </p>
 </div>
