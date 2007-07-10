@@ -1,30 +1,15 @@
 # -*- coding: utf-8 -*-
-from zope.app.folder.folder import Folder
-from zope.interface import implements, Interface
-from zope.app.component.site import LocalSiteManager, SiteManagerContainer
+from zope.interface import implements
 from zope.component import adapter, adapts
-from zope.app.container.interfaces import IObjectAddedEvent, IObjectRemovedEvent
-from zope.event import notify
-from zope.app.intid.interfaces import IIntIds
-from zope.app.intid import IntIds
-from zope.app.catalog.catalog import Catalog, ICatalog
-from zope.app.catalog.text import TextIndex
-from zope.component import createObject
-from zope.app.generations.utility import findObjectsProviding
-from zope.app.authentication import PluggableAuthentication
-from zope.app.security.interfaces import IAuthentication
-from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.component import getUtility
-from zope.app.container.interfaces import INameChooser
+from zope.app.container.interfaces import IObjectAddedEvent, IObjectRemovedEvent, INameChooser
 from zope.app.container.contained import NameChooser
-from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal, PrincipalFolder
-from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
-from zope.app.component.hooks import getSite
-from zope.traversing.browser.absoluteurl import AbsoluteURL
-from zope.publisher.browser import TestRequest
+from zope.app.authentication import PluggableAuthentication
+from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.component.factory import Factory
-
-import string
+from zope.app.authentication.principalfolder import InternalPrincipal, PrincipalFolder
+from zope.app.security.interfaces import IAuthentication
+from zope.app.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.app.component.hooks import getSite
 
 from interfaces import *
 

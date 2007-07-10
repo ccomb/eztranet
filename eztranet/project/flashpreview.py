@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 import os
-from threading import Thread, Timer
+from threading import Thread
 from tempfile import mkstemp
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import Interface, implements
 from zope.component import adapts
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.traversing.api import getPath
 from zope.proxy import removeAllProxies
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 import urllib

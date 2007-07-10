@@ -17,17 +17,11 @@ $Id: comment.py 38895 2005-10-07 15:09:36Z dominikhuber $
 """
 __docformat__ = 'restructuredtext'
 
-import zope
-
-from zope.interface import implements
-from zope.component import adapts
 from zope.dublincore.interfaces import IZopeDublinCore
 from zope.app import zapi
-from zope.publisher.browser import TestRequest
 from zope.publisher.browser import BrowserView
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
-from zope.proxy import removeAllProxies
 from zope.security.checker import canAccess
 
 from zorg.comment import IComments

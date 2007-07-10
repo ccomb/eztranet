@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-from zope.traversing.browser.absoluteurl import SiteAbsoluteURL, AbsoluteURL
-from zope.viewlet.manager import ViewletManagerBase
+from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.app.component.hooks import getSite
-from zope.component import createObject, getUtility, adapts, queryUtility
-from zope.publisher.browser import BrowserView
-from zope.app.publisher.interfaces.browser import IBrowserMenu
-from zope.app.publisher.browser.menu import BrowserMenu
-from zope.app.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.component import adapts, queryUtility
 from zope.security.checker import canAccess
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 from zope.location.interfaces import ILocation
 from tempfile import TemporaryFile
-import os
 
 class DownloadView(BrowserView):
     u"""

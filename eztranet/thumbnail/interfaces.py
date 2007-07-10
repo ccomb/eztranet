@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from zope.interface import Interface, Attribute
-from zope.app.file.interfaces import IImage
 
 class IThumbnailed(Interface):
     u"""

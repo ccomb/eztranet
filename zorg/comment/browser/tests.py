@@ -1,20 +1,13 @@
 import unittest
 
 import zope
-import zope.component
 
 from zope.testing import doctest, doctestunit
-from zope.app.testing import ztapi
 from zope.app.testing.setup import placefulSetUp, placefulTearDown
 from zope.app.file import File
 from zope.app.folder import rootFolder
 
-from zope.interface import classImplements
-from zope.app import zapi
-
-
 from zorg.comment.testing import commentSetUp
-from zorg.comment import IAttributeAnnotableComments
 
 
 def buildTestFile() :

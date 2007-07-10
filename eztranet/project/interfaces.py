@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
-from zope.schema import List, TextLine, URI, Text, Choice, List
+from zope.schema import TextLine, Text
 from zope.index.text.interfaces import ISearchableText
-from zope.interface import Attribute, Interface
-from zope.interface.interfaces import IInterface
+from zope.interface import Attribute
 from zope.app.file.interfaces import IFile, IImage
-from zope.app.folder.interfaces import IFolder
 
 class IProject(IContainer, IContained):
     u"""

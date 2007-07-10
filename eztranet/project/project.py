@@ -1,27 +1,18 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
-from zope.app.folder.folder import Folder
-from zope.component import adapts, getAllUtilitiesRegisteredFor, adapter
-from zope.app.folder.interfaces import IFolder
-from zope.schema.interfaces import IVocabularyFactory, IVocabularyTokenized, ISource
-from zope.component.interface import nameToInterface, interfaceToName
-from zope.schema.vocabulary import SimpleTerm
-from zope.interface.declarations import alsoProvides, noLongerProvides
-from zope.proxy import removeAllProxies
+from zope.component import adapts, adapter
 from zope.app.container.interfaces import INameChooser, IObjectRemovedEvent, IObjectAddedEvent, IObjectRemovedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
-from zope.app.component.hooks import getSite
 from zope.app.file.file import File
 from zope.app.file.image import Image
-from zope.app.file.interfaces import IImage
 from persistent import Persistent
 import os
 import PIL.Image
 from StringIO import StringIO
-from tempfile import NamedTemporaryFile, TemporaryFile
+from tempfile import NamedTemporaryFile
 from interfaces import *
 from flashpreview import compute_flashvideo
 from eztranet.thumbnail.interfaces import IThumbnail

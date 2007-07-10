@@ -1,29 +1,18 @@
 # -*- coding: utf-8 -*-
-from zope.interface import implements
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
-from zope.publisher.browser import BrowserPage, BrowserView
-from zope.publisher.interfaces.browser import IBrowserRequest
+from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.traversing.api import getPath
-from zope.app.form import CustomWidgetFactory
 from zope.app.form.browser import TextAreaWidget
-from zope.app.form.browser.itemswidgets import MultiCheckBoxWidget
-from zope.app.form.browser.interfaces import ITerms, ISourceQueryView
-from zope.component import getAdapter, createObject, adapts, getUtility
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import INameChooser
-from zope.proxy import removeAllProxies
 from zope.formlib.form import Actions, Action, getWidgetsData
 from zope.copypastemove import ContainerItemRenamer
-from zope.app.intid.interfaces import IIntIds
-from zope.schema.vocabulary import SimpleTerm
-from zope.app.file.interfaces import IImage
-from zope.security.checker import canAccess, canWrite
+from zope.security.checker import canAccess
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
-import string
 from zope.app.form.browser.textwidgets import escape
-from zope.app.file.browser.file import FileView, FileUpload
+from zope.app.file.browser.file import FileView
 from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
 

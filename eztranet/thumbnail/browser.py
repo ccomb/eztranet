@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-from zope.interface import Interface
-from zope.publisher.browser import BrowserView, BrowserPage
+from zope.publisher.browser import BrowserView
 from zope.app.file.browser.image import ImageData
-from zope.app.file.image import Image
-from zope.location.interfaces import ILocation
 from zope.traversing.browser.absoluteurl import absoluteURL
-import os
 
 from interfaces import *
 

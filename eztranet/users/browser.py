@@ -3,15 +3,9 @@ from zope.app.securitypolicy.browser.granting import Granting
 from zope.component import getUtility, getAllUtilitiesRegisteredFor
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
-from zope.security.proxy import removeSecurityProxy
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
-from zope.app.authentication.principalfolder import InternalPrincipal, IInternalPrincipal
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
-from zope.app.file.interfaces import IFile
-from zope.app.file.file import File
-from zope.publisher.browser import BrowserPage
-from zope.app.pagetemplate import ViewPageTemplateFile
 
 from users import EztranetUser
 from interfaces import *

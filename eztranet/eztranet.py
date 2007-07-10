@@ -12,12 +12,8 @@ from zope.app.catalog.catalog import Catalog, ICatalog
 from zope.app.catalog.text import TextIndex
 from zope.component import createObject
 from zope.app.generations.utility import findObjectsProviding
-from zope.app.authentication import PluggableAuthentication
-from zope.app.security.interfaces import IAuthentication
-from zope.app.authentication.principalfolder import PrincipalFolder
 from project.interfaces import ISearchableTextOfProject
 from project.interfaces import ISearchableTextOfProjectItem
-from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from users import users
 
 class EztranetSiteManagerSetEvent(object):

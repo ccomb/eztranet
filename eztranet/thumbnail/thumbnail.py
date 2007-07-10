@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
-from zope.component import adapts, queryAdapter, getAdapter, adapter
+from zope.component import adapts, getAdapter, adapter
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.app.file.image import Image
