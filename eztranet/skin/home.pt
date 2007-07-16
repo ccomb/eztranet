@@ -40,7 +40,7 @@ Si le mot de passe a été changé et que vous n'arrivez plus à vous connecter,
 </p>
 <h3>Prix, licence, technologie :</h3>
 <p>
-Eztranet est distribué sous licence GPL, par conséquent il est <b>gratuit et open-source</b>. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
+Eztranet est distribué sous licence GPL v2. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
 Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 3 avec sa base de données objets (testé sur zope 3.3.1).
 </p>
 <h3>Code source</h3>
