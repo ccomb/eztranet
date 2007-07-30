@@ -19,7 +19,7 @@ class FlashConverterThread(Thread):
         self.origname, self.targetname = origname, targetname
         super(FlashConverterThread, self).__init__()
     def run(self):
-        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', self.origname, '-ar', '22050', '-b', '800', self.targetname):
+        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', self.origname, '-ar', '22050', '-b', '1600', self.targetname):
             os.remove(self.origname)
             open(self.targetname+".FAILED", 'a').close() #touch
             return
