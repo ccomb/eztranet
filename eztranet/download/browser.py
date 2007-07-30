@@ -2,6 +2,7 @@
 from zope.publisher.browser import BrowserView
 from zope.location.interfaces import ILocation
 from tempfile import TemporaryFile
+from zope.app.pagetemplate.urlquote import URLQuote 
 
 class DownloadView(BrowserView):
     u"""
@@ -14,7 +15,7 @@ class DownloadView(BrowserView):
         tmpfile = TemporaryFile()
         tmpfile.write(self.context.data)
         tmpfile.seek(0)
-        self.request.response.setHeader('Content-disposition', 'attachment; filename=%s' % filename.encode('utf-8'))
+        self.request.response.setHeader('Content-disposition', 'attachment; filename="%s"' % filename.encode('utf-8'))
         self.request.response.setHeader('Content-length', self.context.getSize())
         self.request.response.setHeader('Content-Type', self.context.contentType)
         return tmpfile.read()

@@ -15,6 +15,7 @@ from zope.app.form.browser.textwidgets import escape
 from zope.app.file.browser.file import FileView
 from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
+from zope.contenttype import guess_content_type
 
 from interfaces import *
 from project import Project, ProjectImage, ProjectVideo
@@ -126,10 +127,11 @@ class ProjectImageAdd(AddForm):
         if not self.image.title:
             self.image.title = self.request.form['form.data'].filename
         self.image.__parent__ = self.context.context
-        self.context.contentName=INameChooser(self.context.context).chooseName(self.image.title, self.image)
+        self.context.contentName=INameChooser(self.context.context).chooseName(None, self.image)
         while self.context.contentName in self.context.__parent__:
-            self.context.contentName = self.context.contentName + ".new"
-            self.image.title = self.image.title + ".new"
+            self.context.contentName = "new-" + self.context.contentName
+            self.image.title = "new-" + self.image.title
+        self.image.contentType = guess_content_type(self.image.title, self.image.data)[0]
         return self.image
 
 
@@ -152,10 +154,12 @@ class ProjectVideoAdd(AddForm):
         applyChanges(self.video, self.form_fields, data)
         if not self.video.title:
             self.video.title = self.request.form['form.data'].filename
-        self.context.contentName=INameChooser(self.context.context).chooseName(self.video.title, self.video)
+        self.video.__parent__ = self.context.context
+        self.context.contentName=INameChooser(self.context.context).chooseName(None, self.video)
         while self.context.contentName in self.context.__parent__:
-            self.context.contentName = self.context.contentName + ".new"
-            self.video.title = self.video.title + ".new"
+            self.context.contentName = "new-" + self.context.contentName
+            self.video.title = "new-" + self.video.title
+        self.video.contentType = guess_content_type(self.video.title, self.video.data)[0]
         return self.video
 
 class ProjectItemEdit(EditForm):
