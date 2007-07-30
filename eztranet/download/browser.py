@@ -2,7 +2,6 @@
 from zope.publisher.browser import BrowserView
 from zope.location.interfaces import ILocation
 from tempfile import TemporaryFile
-from zope.app.pagetemplate.urlquote import URLQuote 
 
 class DownloadView(BrowserView):
     u"""
