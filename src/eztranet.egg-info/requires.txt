@@ -18,4 +18,5 @@ zope.app.keyreference
 zope.app.catalog
 zope.testing
 zope.app.testing
-zope.app.securitypolicy
+zope.securitypolicy
+zope.contentprovider

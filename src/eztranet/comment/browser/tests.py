@@ -7,7 +7,7 @@ from zope.app.testing.setup import placefulSetUp, placefulTearDown
 from zope.app.file import File
 from zope.app.folder import rootFolder
 
-from zorg.comment.testing import commentSetUp
+from eztranet.comment.testing import commentSetUp
 
 
 def buildTestFile() :
@@ -36,7 +36,7 @@ def test_suite():
              'TestRequest': zope.publisher.browser.TestRequest}
  
     return unittest.TestSuite((
-        doctest.DocTestSuite("zorg.comment.browser.comment", 
+        doctest.DocTestSuite("eztranet.comment.browser.comment", 
                                 setUp=setUpBrowserTests, 
                                 tearDown=tearDownBrowserTests,
                                 optionflags=optionflags

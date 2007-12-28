@@ -29,10 +29,10 @@ from zope.lifecycleevent import Attributes, Sequence
 from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
 from zope.location import Location
 
-from zorg.comment import IAnnotableComments
-from zorg.comment import IComment
-from zorg.comment import IComments
-from zorg.comment import ICommentSequence
+from eztranet.comment import IAnnotableComments
+from eztranet.comment import IComment
+from eztranet.comment import IComments
+from eztranet.comment import ICommentSequence
 
 commentsKey = 'comment.comments'
 

@@ -1,5 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-  <include package="zorg.comment" />
+  <include package="eztranet.comment" />
 
 </configure>

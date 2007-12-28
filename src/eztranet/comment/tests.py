@@ -23,7 +23,7 @@ from zope.testing import doctest, doctestunit
 from zope.app import zapi
 from zope.app.testing import ztapi
 
-from zorg.comment.testing import placelesssetup
+from eztranet.comment.testing import placelesssetup
   
 
 

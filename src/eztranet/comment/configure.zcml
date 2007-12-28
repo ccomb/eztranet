@@ -1,6 +1,6 @@
 <configure
   xmlns="http://namespaces.zope.org/zope"
-  i18n_domain="zorg.comment">
+  i18n_domain="eztranet.comment">
 
   <!-- comment -->
   <class class=".comments.Comment">
@@ -46,14 +46,14 @@
   
   <class class="zope.app.file.File">
     <implements 
-        interface="zorg.comment.IAttributeAnnotableComments"
+        interface="eztranet.comment.IAttributeAnnotableComments"
         />
         
   </class>
 
   <class class="zope.app.folder.Folder">
     <implements 
-        interface="zorg.comment.IAttributeAnnotableComments"
+        interface="eztranet.comment.IAttributeAnnotableComments"
         />
   </class>
   

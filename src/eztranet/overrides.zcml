@@ -6,26 +6,26 @@
 
 
   <!-- comments -->
-  <zope:class class="zorg.comment.comments.CommentsForAnnotableComments">
+  <zope:class class="eztranet.comment.comments.CommentsForAnnotableComments">
     <require
         permission="eztranet.project.ViewProject"
-        interface="zorg.comment.IReadComments"
+        interface="eztranet.comment.IReadComments"
         />
     <require
         permission="eztranet.project.ViewProject"
-        interface="zorg.comment.IAddComments"
+        interface="eztranet.comment.IAddComments"
         />
     <require
         permission="eztranet.Manage"
-        interface="zorg.comment.IEditComments"
+        interface="eztranet.comment.IEditComments"
         />    
     <require
         permission="eztranet.Manage"
-        interface="zorg.comment.IDeleteComments"
+        interface="eztranet.comment.IDeleteComments"
         />
     <require
         permission="zope.ManageContent"
-        set_schema="zorg.comment.IComment"
+        set_schema="eztranet.comment.IComment"
         />
   </zope:class>
 </configure>

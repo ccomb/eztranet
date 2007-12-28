@@ -1,12 +1,12 @@
 <configure 
    xmlns="http://namespaces.zope.org/browser"
    xmlns:zope="http://namespaces.zope.org/zope"
-   i18n_domain="zorg.comment"
+   i18n_domain="eztranet.comment"
    >
 
     <page		
       name="comments.html"
-      for="zorg.comment.IAttributeAnnotableComments"
+      for="eztranet.comment.IAttributeAnnotableComments"
       class=".comment.ListComments"
       template="./templates/comments.pt"
       permission="zope.View"
@@ -15,7 +15,7 @@
            
     <page		
       name="addcomment.html"
-      for="zorg.comment.IAttributeAnnotableComments"
+      for="eztranet.comment.IAttributeAnnotableComments"
       class=".comment.AddComment"
       attribute="addComment"
       permission="zope.View" />

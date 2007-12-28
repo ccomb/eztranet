@@ -32,15 +32,15 @@ def commentSetUp(test=None) :
         [IAttributeAnnotatable], IAnnotations)
 
     # comment.comments adapter
-    from zorg.comment.comments import CommentsForAnnotableComments
-    from zorg.comment import IComments
+    from eztranet.comment.comments import CommentsForAnnotableComments
+    from eztranet.comment import IComments
     zope.component.provideAdapter(CommentsForAnnotableComments, provides=IComments)
     
     # make DublinCore work
     
     from zope.app.file import File
-    from zorg.comment.comments import Comment
-    from zorg.comment.interfaces import IAttributeAnnotableComments
+    from eztranet.comment.comments import Comment
+    from eztranet.comment.interfaces import IAttributeAnnotableComments
     
     from zope.dublincore.interfaces import IZopeDublinCore
     from zope.dublincore.annotatableadapter import ZDCAnnotatableAdapter

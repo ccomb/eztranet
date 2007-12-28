@@ -46,7 +46,8 @@ setup(name='eztranet',
                         # tests only
                         'zope.testing',
                         'zope.app.testing',
-                        'zope.app.securitypolicy',
+                        'zope.securitypolicy',
+                        'zope.contentprovider'
                         ],
       entry_points = """
       [console_scripts]

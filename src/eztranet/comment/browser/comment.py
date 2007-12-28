@@ -24,7 +24,7 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
 from zope.security.checker import canAccess
 
-from zorg.comment import IComments
+from eztranet.comment import IComments
 
 
 def getFullName(principal_id) :
@@ -42,7 +42,7 @@ def getFullName(principal_id) :
 class ListComments(BrowserView) :
     """ A simple list view for comments.
     
-    >>> from zorg.comment.browser.tests import buildTestFile
+    >>> from eztranet.comment.browser.tests import buildTestFile
     >>> file = buildTestFile()
     
     

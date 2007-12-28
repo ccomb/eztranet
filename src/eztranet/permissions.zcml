@@ -1,44 +1,76 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser" xmlns:meta="http://namespaces.zope.org/meta">
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:meta="http://namespaces.zope.org/meta">
 
-<zope:permission id="eztranet.View" title="Eztranet Member" />
-<zope:permission id="eztranet.Manage" title="Eztranet Administrateur" />
-<zope:permission id="eztranet.project.ViewProject" title="View project" />
-<zope:permission id="eztranet.project.EditProject" title="Edit project" />
-<zope:permission id="eztranet.thumbnail.view" title="View Thumbnail" />
-<zope:permission id="eztranet.thumbnail.write" title="Write Thumbnail" />
+<zope:permission id="eztranet.View"
+                 title="Eztranet Member" />
+<zope:permission id="eztranet.Manage"
+                 title="Eztranet Administrateur" />
+<zope:permission id="eztranet.project.ViewProject"
+                 title="View project" />
+<zope:permission id="eztranet.project.EditProject"
+                 title="Edit project" />
+<zope:permission id="eztranet.thumbnail.view"
+                 title="View Thumbnail" />
+<zope:permission id="eztranet.thumbnail.write"
+                 title="Write Thumbnail" />
 
-<zope:role id="eztranet.Administrator" title="Eztranet Administrator" />
-<zope:role id="eztranet.Member" title="Eztranet Member" />
-<zope:role id="eztranet.project.Manager" title="modifier" />
-<zope:role id="eztranet.project.Member" title="voir" />
+<zope:role id="eztranet.Administrator"
+           title="Eztranet Administrator" />
+<zope:role id="eztranet.Member"
+           title="Eztranet Member" />
+<zope:role id="eztranet.project.Manager"
+           title="modifier" />
+<zope:role id="eztranet.project.Member"
+           title="voir" />
 
 <!-- EZTRANET ADMIN -->
-<zope:grant role="eztranet.Administrator" permission="eztranet.View" />
-<zope:grant role="eztranet.Administrator" permission="eztranet.Manage" />
-<zope:grant role="eztranet.Administrator" permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.Administrator" permission="eztranet.project.EditProject" />
-<zope:grant role="eztranet.Administrator" permission="zope.View" />
-<zope:grant role="eztranet.Administrator" permission="zope.Public" />
-<zope:grant role="eztranet.Administrator" permission="zope.ManageContent" />
-<zope:grant role="eztranet.Administrator" permission="zope.ManageServices" />
-<zope:grant role="eztranet.Administrator" permission="zope.ManageSite" />
-<zope:grant role="eztranet.Administrator" permission="zope.Security" />
-<zope:grant role="eztranet.Administrator" permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.Administrator" permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.View" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.Manage" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.project.EditProject" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.View" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.Public" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.ManageContent" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.ManageServices" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.ManageSite" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.Security" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.thumbnail.view" />
+<zope:grant role="eztranet.Administrator"
+            permission="eztranet.thumbnail.write" />
 
 <!-- EZTRANET MEMBER -->
-<zope:grant role="eztranet.Member" permission="eztranet.View" />
+<zope:grant role="eztranet.Member"
+            permission="eztranet.View" />
 
 <!-- PROJECT MANAGER -->
-<zope:grant role="eztranet.project.Manager" permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.project.Manager" permission="eztranet.project.EditProject" />
-<zope:grant role="eztranet.project.Manager" permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.project.Manager" permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.project.Manager"
+            permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.project.Manager"
+            permission="eztranet.project.EditProject" />
+<zope:grant role="eztranet.project.Manager"
+            permission="eztranet.thumbnail.view" />
+<zope:grant role="eztranet.project.Manager"
+            permission="eztranet.thumbnail.write" />
 
 <!-- PROJECT MEMBER -->
-<zope:grant role="eztranet.project.Member" permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.project.Member" permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.project.Member" permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.project.Member"
+            permission="eztranet.project.ViewProject" />
+<zope:grant role="eztranet.project.Member"
+            permission="eztranet.thumbnail.view" />
+<zope:grant role="eztranet.project.Member"
+            permission="eztranet.thumbnail.write" />
 
 
 </configure>
