@@ -1,0 +1,7 @@
+
+      [console_scripts]
+      eztranet-debug = eztranet.startup:interactive_debug_prompt
+      eztranet-ctl = eztranet.startup:zdaemon_controller
+      [paste.app_factory]
+      main = eztranet.startup:application_factory
+      
