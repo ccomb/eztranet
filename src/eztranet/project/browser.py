@@ -12,6 +12,7 @@ from zope.copypastemove import ContainerItemRenamer
 from zope.security.checker import canAccess
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 from zope.app.form.browser.textwidgets import escape
+from zope.app.file.browser.image import ImageData
 from zope.app.file.browser.file import FileView
 from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
@@ -149,6 +150,7 @@ class ProjectVideoAdd(AddForm):
     document.close()
     document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
+
     def create(self, data):
         self.video=ProjectVideo()
         applyChanges(self.video, self.form_fields, data)
@@ -165,12 +167,14 @@ class ProjectVideoAdd(AddForm):
 class ProjectItemEdit(EditForm):
     label="Modification"
     actions = Actions(Action('Apply', success='handle_edit_action'), )
+
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.form_fields=Fields(IProjectItem).omit('__name__', '__parent__')
         self.form_fields['description'].custom_widget=CustomTextWidget
         super(ProjectItemEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
+
     def handle_edit_action(self, action, data):
         # First do the base class edit handling
         super(ProjectItemEdit, self).handle_edit_action.success(data)
@@ -183,23 +187,23 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
-
 class ProjectItemView(BrowserPage):
     def description(self):
         if not self.context.description:
             return None
         return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
-
 class ProjectImageView(ProjectItemView):
     u"la vue qui permet d'afficher une image"
     label="Image"
     __call__=ViewPageTemplateFile("image.pt")
+
     def wantedWidth(self):
         width = self.context.getImageSize()[0]
         if width > 720:
             width=720
         return width
+
     def originalWidth(self):
         return self.context.getImageSize()[0]
 
@@ -207,14 +211,18 @@ class ProjectVideoView(FileView):
     u"la vue qui permet d'afficher une video"
     label="Vidéo"
     __call__=ViewPageTemplateFile("video.pt")
+
     def __init__(self, context, request):
         self.context, self.request = context, request
+
     def description(self):
         if not self.context.description:
             return None
         return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
+
     def getPath(self):
         return getPath(self.context)
+
     def callFlashView(self):
         self.context = File(self.context.flash_video)
         return self.show()

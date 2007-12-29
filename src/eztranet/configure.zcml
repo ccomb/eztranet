@@ -26,6 +26,7 @@
   <include package="zope.contentprovider" />
   <include package="zope.app.container" />
   <include package="zope.app.file" />
+  <include package="zope.dublincore" />
 
   <!-- Add your own component registrations here -->
 <include file="permissions.zcml" />

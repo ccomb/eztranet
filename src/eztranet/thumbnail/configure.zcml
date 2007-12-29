@@ -1,29 +1,30 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser">
 
 <zope:class class=".thumbnail.Thumbnail">
-    <require permission="eztranet.thumbnail.view" interface=".interfaces.IThumbnail" />
-    <require permission="eztranet.thumbnail.view" set_schema=".interfaces.IThumbnail" />
+    <require permission="eztranet.thumbnail.view"
+             interface=".interfaces.IThumbnail" />
+    <require permission="eztranet.thumbnail.view"
+             set_schema=".interfaces.IThumbnail" />
 </zope:class>
 
-<zope:adapter factory=".thumbnail.Thumbnail" trusted="yes" />
+<zope:adapter factory=".thumbnail.Thumbnail"
+              trusted="yes" />
 
-<browser:view
-    name="thumbnail_image"
-    for=".interfaces.IThumbnailed"
-    class=".browser.ThumbnailImageView"
-    permission="eztranet.thumbnail.view" />
+<browser:view name="thumbnail_image"
+              for=".interfaces.IThumbnailed"
+              class=".browser.ThumbnailImageView"
+              permission="eztranet.thumbnail.view" />
 
-<browser:view
-    name="thumbnail_url"
-    for=".interfaces.IThumbnailed"
-    class=".browser.ThumbnailUrlView"
-    permission="eztranet.thumbnail.view" />
+<browser:view name="thumbnail_url"
+              for=".interfaces.IThumbnailed"
+              class=".browser.ThumbnailUrlView"
+              permission="eztranet.thumbnail.view" />
 
 <zope:subscriber handler=".thumbnail.ThumbnailedModified" />
 
-<browser:resource
-    name="default_thumbnail.png"
-    file="default_thumbnail.png"
-    permission="zope.Public"
-    layer="..skin.interfaces.IEztranetSkin" />
+<browser:resource name="default_thumbnail.png"
+                  file="default_thumbnail.png"
+                  permission="zope.Public"
+                  layer="..skin.interfaces.IEztranetSkin" />
 </configure>

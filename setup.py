@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(name='eztranet',
 
       # Fill in project info below
-      version='0.1',
+      version='1.1dev',
       description="",
       long_description="",
       keywords='',
@@ -49,7 +49,8 @@ setup(name='eztranet',
                         'zope.securitypolicy',
                         'zope.contentprovider',
                         'zope.app.file',
-                        'zope.app.container'
+                        'zope.app.container',
+                        'zope.dublincore'
                         ],
       entry_points = """
       [console_scripts]

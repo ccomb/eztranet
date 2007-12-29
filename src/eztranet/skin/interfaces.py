@@ -10,4 +10,3 @@ class IEztranetSkin(IDefaultBrowserLayer):
   So it is registered for IBrowserSkinType in ZCML.
   This skin is activated by default with overrides zcml
   """
-

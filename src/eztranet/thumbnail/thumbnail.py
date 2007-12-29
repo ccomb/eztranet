@@ -4,7 +4,7 @@ from zope.component import adapts, getAdapter, adapter
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.app.file.image import Image
-from zope.proxy import removeAllProxies
+from zope.security.proxy import removeSecurityProxy
 from interfaces import *
 
 class Thumbnail(object):
@@ -23,7 +23,7 @@ class Thumbnail(object):
 
     def compute_thumbnail(self):
         try:
-            thumbnail = getAdapter(removeAllProxies(self.context), IThumbnailer)
+            thumbnail = getAdapter(removeSecurityProxy(self.context), IThumbnailer)
         except:
             thumbnail = None
         if thumbnail is not None:

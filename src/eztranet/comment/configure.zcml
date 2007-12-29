@@ -1,69 +1,43 @@
-<configure
-  xmlns="http://namespaces.zope.org/zope"
-  i18n_domain="eztranet">
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="eztranet">
 
-  <!-- comment -->
-  <class class=".comments.Comment">
-    <factory id="comment.interfaces.IComment" />
-    <implements 
-        interface="zope.annotation.interfaces.IAttributeAnnotatable"
-        />
-    <require
-        permission="zope.Public"
-        interface=".IComment"
-        />
-    <require
-        permission="zope.ManageContent"
-        set_schema=".IComment"
-        />
-  </class>
+<!-- comment -->
+<class class=".comments.Comment">
+  <factory id="comment.interfaces.IComment" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <require permission="zope.Public"
+           interface=".IComment" />
+  <require permission="zope.ManageContent"
+           set_schema=".IComment" />
+</class>
 
+<!-- comments -->
+<class class=".comments.CommentsForAnnotatableComments">
+  <factory id="comment.interfaces.IComments" />
+  <require permission="zope.Public"
+           interface=".IReadComments" />
+  <require permission="zope.View"
+           interface=".IAddComments" />
+  <require permission="zope.View"
+           interface=".IEditComments" />    
+  <require permission="zope.View"
+           interface=".IDeleteComments" />
+  <require permission="zope.ManageContent"
+           set_schema=".IComment" />
+</class>
 
-  <!-- comments -->
-  <class class=".comments.CommentsForAnnotatableComments">
-    <factory id="comment.interfaces.IComments" />
-    <require
-        permission="zope.Public"
-        interface=".IReadComments"
-        />
-    <require
-        permission="zope.View"
-        interface=".IAddComments"
-        />
-    <require
-        permission="zope.View"
-        interface=".IEditComments"
-        />    
-    <require
-        permission="zope.View"
-        interface=".IDeleteComments"
-        />
-    <require
-        permission="zope.ManageContent"
-        set_schema=".IComment"
-        />
-  </class>
-  
-  <class class="zope.app.file.File">
-    <implements 
-        interface="eztranet.comment.IAttributeAnnotatableComments"
-        />
-        
-  </class>
+<class class="zope.app.file.File">
+  <implements  interface="eztranet.comment.IAttributeAnnotatableComments" />
+</class>
+ <class class="zope.app.folder.Folder">
+  <implements 
+      interface="eztranet.comment.IAttributeAnnotatableComments" />
+</class>
 
-  <class class="zope.app.folder.Folder">
-    <implements 
-        interface="eztranet.comment.IAttributeAnnotatableComments"
-        />
-  </class>
-  
-  <adapter
-      provides=".IComments"
-      factory=".comments.CommentsForAnnotatableComments"
-      for="zope.annotation.interfaces.IAnnotatable"
-      trusted="True" />
-      
-
-   <include package=".browser" />
-   
+<adapter provides=".IComments"
+         factory=".comments.CommentsForAnnotatableComments"
+         for="zope.annotation.interfaces.IAnnotatable"
+         trusted="True" />
+  <include package=".browser" />
+ 
 </configure>

@@ -6,7 +6,7 @@ from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import Interface, implements
 from zope.component import adapts
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.proxy import removeAllProxies
+from zope.security.proxy import removeSecurityProxy
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 import urllib
 
@@ -42,7 +42,7 @@ class FlashContentProvider(object):
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
     def update(self):
-        context = removeAllProxies(self.context)
+        context = removeSecurityProxy(self.context)
         status_or_file = context.flash_video_tempfile
         if status_or_file != None and status_or_file != 'OK' and status_or_file != 'FAILED':
             if os.path.exists(context.flash_video_tempfile+".OK"):

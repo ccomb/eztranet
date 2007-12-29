@@ -2,20 +2,17 @@
 from zope.publisher.browser import BrowserView
 from zope.app.file.browser.image import ImageData
 from zope.traversing.browser.absoluteurl import absoluteURL
-
+from zope.security.proxy import removeSecurityProxy
 from interfaces import *
 
-class ThumbnailImageView(BrowserView, ImageData):
+class ThumbnailImageView(ImageData, BrowserView):
     u"""
     The thumbnail view of an object
     """
     def __call__(self):
-        u"""A full day to find this single line:
-        We must change the context here and not in the __init__ !
-        """
         thumbnail = IThumbnail(self.context)
         if thumbnail.image is not None:
-            self.context = thumbnail.image
+            self.context = removeSecurityProxy(thumbnail.image)
             return self.show()
         return None
 

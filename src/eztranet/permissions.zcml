@@ -49,10 +49,15 @@
             permission="eztranet.thumbnail.view" />
 <zope:grant role="eztranet.Administrator"
             permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.Administrator"
+            permission="zope.app.dublincore.view" />
+
 
 <!-- EZTRANET MEMBER -->
 <zope:grant role="eztranet.Member"
             permission="eztranet.View" />
+<zope:grant role="eztranet.Member"
+            permission="zope.app.dublincore.view" />
 
 <!-- PROJECT MANAGER -->
 <zope:grant role="eztranet.project.Manager"
@@ -63,6 +68,8 @@
             permission="eztranet.thumbnail.view" />
 <zope:grant role="eztranet.project.Manager"
             permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.project.Manager"
+            permission="zope.app.dublincore.view" />
 
 <!-- PROJECT MEMBER -->
 <zope:grant role="eztranet.project.Member"
@@ -71,6 +78,8 @@
             permission="eztranet.thumbnail.view" />
 <zope:grant role="eztranet.project.Member"
             permission="eztranet.thumbnail.write" />
+<zope:grant role="eztranet.project.Member"
+            permission="zope.app.dublincore.view" />
 
 
 </configure>
