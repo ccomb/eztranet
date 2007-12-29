@@ -29,7 +29,7 @@ from zope.lifecycleevent import Attributes, Sequence
 from zope.lifecycleevent import ObjectCreatedEvent, ObjectModifiedEvent
 from zope.location import Location
 
-from eztranet.comment import IAnnotableComments
+from eztranet.comment import IAnnotatableComments
 from eztranet.comment import IComment
 from eztranet.comment import IComments
 from eztranet.comment import ICommentSequence
@@ -157,10 +157,10 @@ class Comments(Location, Persistent):
 
 
 
-class CommentsForAnnotableComments(Location):
+class CommentsForAnnotatableComments(Location):
     """Annotate comments."""
 
-    adapts(IAnnotableComments,)
+    adapts(IAnnotatableComments,)
     implements(IComments)
 
     def __init__(self, context):

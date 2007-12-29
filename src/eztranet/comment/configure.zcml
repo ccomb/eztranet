@@ -1,6 +1,6 @@
 <configure
   xmlns="http://namespaces.zope.org/zope"
-  i18n_domain="eztranet.comment">
+  i18n_domain="eztranet">
 
   <!-- comment -->
   <class class=".comments.Comment">
@@ -20,7 +20,7 @@
 
 
   <!-- comments -->
-  <class class=".comments.CommentsForAnnotableComments">
+  <class class=".comments.CommentsForAnnotatableComments">
     <factory id="comment.interfaces.IComments" />
     <require
         permission="zope.Public"
@@ -46,20 +46,20 @@
   
   <class class="zope.app.file.File">
     <implements 
-        interface="eztranet.comment.IAttributeAnnotableComments"
+        interface="eztranet.comment.IAttributeAnnotatableComments"
         />
         
   </class>
 
   <class class="zope.app.folder.Folder">
     <implements 
-        interface="eztranet.comment.IAttributeAnnotableComments"
+        interface="eztranet.comment.IAttributeAnnotatableComments"
         />
   </class>
   
   <adapter
       provides=".IComments"
-      factory=".comments.CommentsForAnnotableComments"
+      factory=".comments.CommentsForAnnotatableComments"
       for="zope.annotation.interfaces.IAnnotatable"
       trusted="True" />
       

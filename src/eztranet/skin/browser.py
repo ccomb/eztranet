@@ -23,6 +23,8 @@ class PageTitleContentProvider(object):
         u"on récupère le nom du contexte s'il en a un"
         if hasattr(self.context,'__name__') and self.context.__name__ is not None:
             self._pagetitle = self.context.__name__ + " - " + self._sitename
+            if self.context.__name__ == 'eztranet':
+                self._pagetitle = 'Eztranet : votre extranet photo video'
         else:
             self._pagetitle = self._sitename
     def render(self):

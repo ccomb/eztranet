@@ -8,7 +8,7 @@ from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.component.factory import Factory
 from zope.app.authentication.principalfolder import InternalPrincipal, PrincipalFolder
 from zope.app.security.interfaces import IAuthentication
-from zope.app.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.app.component.hooks import getSite
 
 from interfaces import *
@@ -74,6 +74,12 @@ def initial_setup(site):
     pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
     #activate the wanted credential plugins
     pau.credentialsPlugins = ( "No Challenge if Authenticated", "Session Credentials" )
+    # create an admin user to be able to log in
+    admin = EztranetUser('admin', 'eztranet', 'MD5')
+    # grant him the admin role
+    srm = IPrincipalRoleManager(site)
+    srm.assignRoleToPrincipal("eztranet.Administrator", admin.login)
+    users['admin'] = admin
 
 class UserNameChooser(NameChooser):
     u"""

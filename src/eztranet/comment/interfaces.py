@@ -36,15 +36,15 @@ class IReadComments(IEnumerableMapping):
 
 
 
-class IAnnotableComments(IAnnotatable):
-    """This interface marks components that should provide annotable comments.
+class IAnnotatableComments(IAnnotatable):
+    """This interface marks components that should provide annotatable comments.
     
     Components has to provide a annotations mechanismu."""
 
 
 
-class IAttributeAnnotableComments(IAnnotableComments, IAttributeAnnotatable):
-    """This interface marks components that should provide attribute annotable comments."""
+class IAttributeAnnotatableComments(IAnnotatableComments, IAttributeAnnotatable):
+    """This interface marks components that should provide attribute annotatable comments."""
 
 
 

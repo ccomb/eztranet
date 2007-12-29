@@ -3,7 +3,7 @@
 <body>
 <div id="body" metal:fill-slot="body">
 
-<tal:block tal:define="IComments nocall:modules/zorg.comment.interfaces/IComments; IAttributeAnnotableComments nocall:modules/zorg.comment.interfaces/IAttributeAnnotableComments" tal:condition="python: IAttributeAnnotableComments.providedBy(context)">
+<tal:block tal:define="IComments nocall:modules/eztranet.comment.interfaces/IComments; IAttributeAnnotatableComments nocall:modules/eztranet.comment.interfaces/IAttributeAnnotatableComments" tal:condition="python: IAttributeAnnotatableComments.providedBy(context)">
 <div class="nb_comments" tal:define="nb python: len(IComments(context)); s python: 2%(nb+1)/2 * 's'" tal:condition="nb"><a class="nb_comments" href="@@comments.html" tal:content="string: ${nb} commentaire${s}">X commentaires</a></div>
 </tal:block>
 

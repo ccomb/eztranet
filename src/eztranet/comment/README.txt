@@ -6,19 +6,19 @@ This package can be used to comment components. The provided functionality relie
 on the annotations mechanism. We implement a subject that we are going to
 comment afterward:
 
-    >>> from zope.container.contained import Contained
+    >>> from zope.app.container.contained import Contained
     >>> from zope.interface import implements
-    >>> from zorg.comment import IAttributeAnnotableComments
+    >>> from eztranet.comment import IAttributeAnnotatableComments
 
     >>> class Subject(Contained):
-    ...     implements(IAttributeAnnotableComments)
+    ...     implements(IAttributeAnnotatableComments)
     ...     pass
 
     >>> subject = Subject()
 
 The comment annotated comments can be retrieved by an adaption to IComments:
 
-    >>> from zorg.comment import IComments
+    >>> from eztranet.comment import IComments
 
     >>> comments = IComments(subject)
 
@@ -81,10 +81,10 @@ We add a few more comments...:
 ... and check the read methods:
 
     >>> comments[1] # doctest: +ELLIPSIS
-    <zorg.comment.comments.Comment...>
+    <eztranet.comment.comments.Comment...>
 
     >>> comments.get(1) # doctest: +ELLIPSIS
-    <zorg.comment.comments.Comment...>
+    <eztranet.comment.comments.Comment...>
 
     >>> 1 in comments
     True
@@ -105,11 +105,11 @@ We add a few more comments...:
 
     >>> pprint(comments.items()) # doctest: +ELLIPSIS
     [(1,
-      <zorg.comment.comments.Comment...>),
+      <eztranet.comment.comments.Comment...>),
      (2,
-      <zorg.comment.comments.Comment...>),
+      <eztranet.comment.comments.Comment...>),
      (3,
-      <zorg.comment.comments.Comment...>)]
+      <eztranet.comment.comments.Comment...>)]
 
     >>> len(comments)
     3

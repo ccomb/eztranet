@@ -16,7 +16,7 @@
   <require permission="eztranet.project.EditProject"          interface=" zope.app.container.interfaces.IWriteContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />
-  <implements interface="eztranet.comment.IAttributeAnnotableComments" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
 </zope:class>
 
 <zope:class class=".project.ProjectImage">

@@ -17,36 +17,37 @@
 Pour installer cette application dans votre entreprise ou la faire adapter,<br/>contactez Christophe Combelles au 06 08 955 845
 </div>
 
-<h2>Votre youtube™ privé !</h2>
+<h2>Un extranet pour votre production vidéo / photo</h2>
 <p>Eztranet est un petit <b>extranet</b> fabriqué pour les besoins spécifiques des sociétés de <b>production vidéo</b>.
 Il permet de publier des images et des vidéos de manière ultra-simplifiée, 
 afin de recueillir les commentaires des clients avant finalisation du projet. Aucune formation n'est nécessaire pour l'utiliser.</p>
 
 <h3>Fonctionnalités :</h3>
+<ul>
+<li>création de comptes utilisateurs pour les chefs de projet et pour le client final</li>
+<li>création de dossiers avec droits séparés (on ne voit que ses propres projets)</li>
+<li>upload de photos et vidéos avec création automatique d'une vignette d'aperçu</li>
+<li>gestion d'un petit texte descriptif pour les projets, photos et vidéos</li>
+<li>transcodage automatique des vidéos (tous formats) en flash™ pour prévisualisation</li>
+<li>possibilité de télécharger la vidéo originale même après trancodage</li>
+<li>gestion des commentaires individuels sur projets, photos, vidéos</li>
+</ul>
+<h2>Démo :</h2>
 <p>
-- création de comptes utilisateurs pour les chefs de projet et pour le client final<br/>
-- création de dossiers avec droits séparés (on ne voit que ses propres projets)<br/>
-- upload de photos et vidéos avec création automatique d'une vignette d'aperçu<br/>
-- gestion d'un petit texte descriptif pour les projets, photos et vidéos<br/>
-- transcodage automatique des vidéos (tous formats) en flash™ pour prévisualisation<br/>
-- gestion des commentaires individuels sur projets, photos, vidéos<br/>
-</p>
-<h3>Démo :</h3>
-<p>
-Démarrez en cliquant sur « <a href="@@login.html">Connexion</a> » ou « <a href="projects" style="color: yellow"><u>Projets</u></a> » avec le user/pass : <b>admin/eztranet</b>.
+Vous y êtes ! Il vous suffit de cliquer sur « <a href="@@login.html">Connexion</a> » ou « <a href="projects" style="color: yellow"><u>Projets</u></a> » avec le user/pass : <b>admin/eztranet</b>.
 Vous êtes alors administrateur et vous pouvez créer des comptes limités et les restreindre à un projet particulier en cliquant sur « Permissions » dans le projet en question. 
 Si le mot de passe a été changé et que vous n'arrivez plus à vous connecter, contactez : ccomb à gorfou.fr<br/>
 
 </p>
-<h3>Prix, licence, technologie :</h3>
+<h3>Licence, technologie :</h3>
 <p>
-Eztranet est distribué sous licence GPL v2. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
-Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 3 avec sa base de données objets (testé sur zope 3.3.1).
+Eztranet est un <b>logiciel libre</b> distribué sous licence GPL v2. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
+Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 3 avec sa base de données objets (conçu sur zope 3.3.1).
 </p>
 <h3>Code source</h3>
 <p>
-<b><a href="http://gorfou.fr/eztranet/">eztranet</a></b><br/>
-le packaging est encore basique, l'application sera « eggifiée » à terme. Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses dépendances pour le transcodage), puis ajouter un EztranetSite depuis la ZMI (via ++skin++Debug), et créer au moins compte dans le dossier EztranetUsers (dans le Site Manager).
+<b><a href="http://gorfou.fr/eztranet/">http://gorfou.fr/eztranet/</a></b><br/>
+Le packaging est encore basique, l'application sera « eggifiée » à terme. Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses dépendances pour le transcodage), puis ajouter un objet EztranetSite depuis la ZMI (via ++skin++Rotterdam).
 </p>
 </div>
 

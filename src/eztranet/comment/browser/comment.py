@@ -23,6 +23,7 @@ from zope.publisher.browser import BrowserView
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
 from zope.security.checker import canAccess
+from zope.security.interfaces import ForbiddenAttribute
 
 from eztranet.comment import IComments
 
@@ -45,7 +46,7 @@ class ListComments(BrowserView) :
     >>> from eztranet.comment.browser.tests import buildTestFile
     >>> file = buildTestFile()
     
-    
+    >>> from zope.publisher.browser import TestRequest
     >>> AddComment(file, TestRequest()).addComment("A comment")
     >>> AddComment(file, TestRequest()).addComment("Another comment")
     
@@ -53,11 +54,13 @@ class ListComments(BrowserView) :
     >>> print comments.render()
     <div id="comments"><a name="comment1"></a>
     ...
-    <div>A comment</div>
+    ...
+    <div class="comment">A comment</div>
     ...
     <a name="comment2"></a>
     ...
-    <div>Another comment</div>
+    ...
+    <div class="comment">Another comment</div>
     ...
     
    
@@ -95,9 +98,11 @@ class ListComments(BrowserView) :
         
         return "".join(result)
     def removable(self):
-        if canAccess(self.comments, '__delitem__'):
-            return True
-        return False
+        try:
+            if canAccess(self.comments, '__delitem__'):
+                return True
+        except ForbiddenAttribute:
+            return False
         
         
 class AddComment(BrowserView) :

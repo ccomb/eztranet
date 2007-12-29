@@ -98,7 +98,7 @@ class SearchableTextOfProject(object):
     def __init__(self, context):
         self.context = context
     def getSearchableText(self):
-        sourcetext = texttoindex = self.context.title + " " + self.context.description
+        sourcetext = texttoindex = (self.context.title or "") + " " + (self.context.description or "")
         for word in sourcetext.split():        
             for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
                 texttoindex += subword + " "
@@ -113,7 +113,7 @@ class SearchableTextOfProjectItem(object):
     def __init__(self, context):
         self.context = context
     def getSearchableText(self):
-        sourcetext = texttoindex = self.context.title + " " + self.context.description
+        sourcetext = texttoindex = (self.context.title or "") + " " + (self.context.description or "")
         for word in sourcetext.split():        
             for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
                 texttoindex += subword + " "

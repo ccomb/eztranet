@@ -20,3 +20,5 @@ zope.testing
 zope.app.testing
 zope.securitypolicy
 zope.contentprovider
+zope.app.file
+zope.app.container

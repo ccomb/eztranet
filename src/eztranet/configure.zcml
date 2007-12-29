@@ -5,7 +5,6 @@
   <include package="zope.security" file="meta.zcml" />
   <include package="zope.securitypolicy" file="meta.zcml" />
   <include package="zope.app.zcmlfiles" file="meta.zcml" />
-
   <include package="zope.publisher" />
   <include package="zope.traversing" />
   <include package="zope.traversing.browser" />
@@ -25,13 +24,17 @@
   <include package="zope.app.catalog" />
   <include package="zope.securitypolicy" />
   <include package="zope.contentprovider" />
+  <include package="zope.app.container" />
+  <include package="zope.app.file" />
 
   <!-- Add your own component registrations here -->
 <include file="permissions.zcml" />
 
 <class class=".eztranet.EztranetSite">
-  <require permission="zope.View"          interface=".interfaces.IEztranetSite" />
-  <require permission="zope.ManageContent" set_schema=".interfaces.IEztranetSite" />
+  <require permission="zope.View"
+           interface=".interfaces.IEztranetSite" />
+  <require permission="zope.ManageContent"
+           set_schema=".interfaces.IEztranetSite" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </class>
 
@@ -47,10 +50,9 @@
 <subscriber handler=".eztranet.EztranetInitialSetup" />
 
 
-<browser:addMenuItem
-    title="Eztranet Site"
-    class=".eztranet.EztranetSite"
-    permission="zope.ManageContent"
+<browser:addMenuItem title="Eztranet Site"
+                     class=".eztranet.EztranetSite"
+                     permission="zope.ManageContent"
 />
 
 </configure>

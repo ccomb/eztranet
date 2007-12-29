@@ -1,7 +1,7 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
 
 <zope:class class=".project.Project">
-  <implements interface="eztranet.comment.IAttributeAnnotableComments" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
 </zope:class>
 
 <!-- comment management -->
