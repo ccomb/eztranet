@@ -3,12 +3,14 @@
            i18n_domain="eztranet">
 
   <include package="zope.security" file="meta.zcml" />
-  <include package="zope.securitypolicy" file="meta.zcml" />
+  <include package="zope.app.securitypolicy" file="meta.zcml" />
+  <include package="zope.app.security" file="meta.zcml" />
   <include package="zope.app.zcmlfiles" file="meta.zcml" />
   <include package="zope.publisher" />
   <include package="zope.traversing" />
   <include package="zope.traversing.browser" />
   <include package="zope.app.zcmlfiles" />
+  <include package="zope.app.security" />
 
   <!-- The following packages aren't needed from the beginning, but
        end up being used in most applications -->
@@ -22,7 +24,7 @@
   <include package="zope.app.intid" />
   <include package="zope.app.keyreference" />
   <include package="zope.app.catalog" />
-  <include package="zope.securitypolicy" />
+  <include package="zope.app.securitypolicy" />
   <include package="zope.contentprovider" />
   <include package="zope.app.container" />
   <include package="zope.app.file" />
@@ -32,7 +34,7 @@
 <include file="permissions.zcml" />
 
 <class class=".eztranet.EztranetSite">
-  <require permission="zope.View"
+  <require permission="eztranet.view"
            interface=".interfaces.IEztranetSite" />
   <require permission="zope.ManageContent"
            set_schema=".interfaces.IEztranetSite" />
@@ -47,13 +49,13 @@
 <include package=".project" />
 <include package=".comment" />
 
+
 <subscriber handler=".eztranet.newEztranetSiteAdded" />
 <subscriber handler=".eztranet.EztranetInitialSetup" />
 
 
 <browser:addMenuItem title="Eztranet Site"
                      class=".eztranet.EztranetSite"
-                     permission="zope.ManageContent"
-/>
+                     permission="zope.ManageContent" />
 
 </configure>

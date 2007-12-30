@@ -3,18 +3,4 @@
 
 <browser:defaultSkin name="EztranetSkin" />
 
-<!-- comments -->
-<zope:class class="eztranet.comment.comments.CommentsForAnnotatableComments">
-    <require permission="eztranet.project.ViewProject"
-             interface="eztranet.comment.IReadComments" />
-    <require permission="eztranet.project.ViewProject"
-             interface="eztranet.comment.IAddComments" />
-    <require permission="eztranet.Manage"
-             interface="eztranet.comment.IEditComments" />    
-    <require permission="eztranet.Manage"
-             interface="eztranet.comment.IDeleteComments" />
-    <require permission="zope.ManageContent"
-             set_schema="eztranet.comment.IComment" />
-</zope:class>
-
 </configure>

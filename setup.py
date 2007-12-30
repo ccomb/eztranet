@@ -46,11 +46,13 @@ setup(name='eztranet',
                         # tests only
                         'zope.testing',
                         'zope.app.testing',
+                        'zope.app.securitypolicy',
                         'zope.securitypolicy',
                         'zope.contentprovider',
                         'zope.app.file',
                         'zope.app.container',
-                        'zope.dublincore'
+                        'zope.dublincore',
+                        'zope.app.security'
                         ],
       entry_points = """
       [console_scripts]

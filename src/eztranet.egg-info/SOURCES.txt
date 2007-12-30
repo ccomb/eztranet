@@ -29,7 +29,6 @@ src/eztranet/comment/DEPENDENCIES.cfg
 src/eztranet/comment/README.txt
 src/eztranet/comment/SETUP.cfg
 src/eztranet/comment/__init__.py
-src/eztranet/comment/comment-configure.zcml
 src/eztranet/comment/comments.py
 src/eztranet/comment/configure.zcml
 src/eztranet/comment/interfaces.py
@@ -47,7 +46,6 @@ src/eztranet/download/configure.zcml
 src/eztranet/download/interfaces.py
 src/eztranet/project/__init__.py
 src/eztranet/project/browser.py
-src/eztranet/project/configure-comments.zcml
 src/eztranet/project/configure.zcml
 src/eztranet/project/flashpreview.py
 src/eztranet/project/flowplayer.swf

@@ -2,7 +2,7 @@
 from zope.app.securitypolicy.browser.granting import Granting
 from zope.component import getUtility, getAllUtilitiesRegisteredFor
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.app.securitypolicy.interfaces import IRole, IPrincipalRoleManager
+from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
@@ -23,7 +23,7 @@ class ProjectGranting(Granting):
         if rolemanager.getSetting(role, user).getName()=="Allow":
             return "1"
     def status(self):
-        u"This method is called a the beginning of the template. So do the job and return the status"
+        u"This method is called at the beginning of the template. So do the job and return the status"
         if 'GRANT_SUBMIT' in self.request.form:
             rolemanager = IPrincipalRoleManager(self.context)
             for role in self.get_eztranet_roles():

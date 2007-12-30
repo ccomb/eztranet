@@ -3,41 +3,37 @@
 
 <!-- comment -->
 <class class=".comments.Comment">
-  <factory id="comment.interfaces.IComment" />
-  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-  <require permission="zope.Public"
-           interface=".IComment" />
-  <require permission="zope.ManageContent"
-           set_schema=".IComment" />
+    <factory id="comment.interfaces.IComment" />
+    <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+    <require permission="eztranet.comment.view"
+             interface=".IComment" />
+    <require permission="eztranet.comment.edit"
+             set_schema=".IComment" />
 </class>
 
 <!-- comments -->
 <class class=".comments.CommentsForAnnotatableComments">
-  <factory id="comment.interfaces.IComments" />
-  <require permission="zope.Public"
-           interface=".IReadComments" />
-  <require permission="zope.View"
-           interface=".IAddComments" />
-  <require permission="zope.View"
-           interface=".IEditComments" />    
-  <require permission="zope.View"
-           interface=".IDeleteComments" />
-  <require permission="zope.ManageContent"
-           set_schema=".IComment" />
-</class>
+    <require permission="eztranet.comment.view"
+             interface=".interfaces.IReadComments" />
 
-<class class="zope.app.file.File">
-  <implements  interface="eztranet.comment.IAttributeAnnotatableComments" />
-</class>
- <class class="zope.app.folder.Folder">
-  <implements 
-      interface="eztranet.comment.IAttributeAnnotatableComments" />
+    <require permission="eztranet.comment.add"
+             interface=".interfaces.IAddComments" />
+
+    <require permission="eztranet.comment.edit"
+             interface=".interfaces.IEditComments" />    
+
+    <require permission="eztranet.comment.delete"
+             interface=".interfaces.IDeleteComments" />
+
+    <require permission="eztranet.comment.edit"
+             set_schema=".interfaces.IComment" />
 </class>
 
 <adapter provides=".IComments"
          factory=".comments.CommentsForAnnotatableComments"
          for="zope.annotation.interfaces.IAnnotatable"
-         trusted="True" />
-  <include package=".browser" />
+         trusted="yes" />
+
+<include package=".browser" />
  
 </configure>

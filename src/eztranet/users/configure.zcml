@@ -3,13 +3,13 @@
 <zope:adapter factory="zope.app.security.LogoutSupported" />
 
 <zope:class class=".users.EztranetUser">
-  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUser" />
-  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUser" />
+  <require permission="eztranet.manage"   interface=".interfaces.IEztranetUser" />
+  <require permission="eztranet.manage"   set_schema=".interfaces.IEztranetUser" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <zope:class class=".users.EztranetUsersContainer">
-  <require permission="eztranet.Manage"   interface=".interfaces.IEztranetUsersContainer" />
-  <require permission="eztranet.Manage"   set_schema=".interfaces.IEztranetUsersContainer" />
+  <require permission="eztranet.manage"   interface=".interfaces.IEztranetUsersContainer" />
+  <require permission="eztranet.manage"   set_schema=".interfaces.IEztranetUsersContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </zope:class>
 <zope:subscriber handler=".users.EztranetUserAdded" />
@@ -17,31 +17,31 @@
 
 <browser:containerViews
        for=".interfaces.IEztranetUsersContainer"
-       add="eztranet.Manage" />
+       add="eztranet.manage" />
 <browser:page
     name="contents.html"
     class=".browser.EztranetUsers"
     for=".interfaces.IEztranetUsersContainer"
     template="userscontainer.pt"
-    permission="eztranet.Manage" />
+    permission="eztranet.manage" />
 
 <zope:utility
     component=".users.EztranetUsersContainer"
     name="EztranetUsers"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     provides="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 <browser:page
     name="permissions.html"
     class=".browser.ProjectGranting"
     for="eztranet.project.interfaces.IProject"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     template="granting.pt"
     menu="eztranet_actions" title="Permissions" />
 <browser:page
     name="eztranet.User"
     class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"
-    permission="eztranet.Manage" />
+    permission="eztranet.manage" />
 <browser:menuItem
     menu="eztranet_addings"
     title="Nouvel Utilisateur"
@@ -63,30 +63,30 @@
 <zope:utility
     component=".users.EztranetUsersContainer"
     name="EztranetUsers"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     provides="zope.app.authentication.interfaces.IAuthenticatorPlugin" />
 <zope:utility
     component=".users.EztranetUserFactory"
     name="eztranet.EztranetUser"
-    permission="eztranet.Manage" />
+    permission="eztranet.manage" />
 
 <!-- juste pour la ZMI -->
 <browser:addMenuItem
     title="Eztranet User"
     factory="eztranet.EztranetUser"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     view="eztranet.User" />
 <browser:page
     name="index.html"
     class=".browser.EztranetUserView"
     for=".interfaces.IEztranetUser"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     menu="zmi_views" title="view user" />
 <browser:page
     name="edit_user.html"
     class=".browser.EztranetUserEdit"
     for=".interfaces.IEztranetUser"
-    permission="eztranet.Manage"
+    permission="eztranet.manage"
     menu="zmi_views" title="edit user" />
 
 </configure>

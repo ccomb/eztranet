@@ -1,12 +1,16 @@
 <a name="comment" tal:attributes="name string:comment${view/info/key}"></a>
 <span class="entry-timestamp" style="float:left;" tal:content="view/info/key">
     1. 
-</span><span>. par &nbsp;</span><span tal:content="view/info/who">
+</span>
+<span>. par &nbsp;</span>
+<span tal:content="view/info/who">
     Author 
-</span><span>&nbsp;&nbsp;le</span>
+</span>
+<span>&nbsp;&nbsp;le</span>
 <span tal:content="view/info/when">
         12:45 
-</span> <tal:block condition="view/removable">&nbsp;&nbsp;(<a href="#" tal:attributes="href string: ${request/URL}?del=${view/info/key}">supprimer</a>)</tal:block>
+</span>
+<tal:block condition="view/removable">&nbsp;&nbsp;(<a href="#" tal:attributes="href string: ${request/URL}?del=${view/info/key}">supprimer</a>)</tal:block>
 <div class="comment" tal:content="structure view/info/text">
     Content 
 </div>

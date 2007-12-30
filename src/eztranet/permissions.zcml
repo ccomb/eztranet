@@ -1,85 +1,141 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser"
-           xmlns:meta="http://namespaces.zope.org/meta">
+<configure xmlns="http://namespaces.zope.org/zope">
 
-<zope:permission id="eztranet.View"
-                 title="Eztranet Member" />
-<zope:permission id="eztranet.Manage"
-                 title="Eztranet Administrateur" />
-<zope:permission id="eztranet.project.ViewProject"
-                 title="View project" />
-<zope:permission id="eztranet.project.EditProject"
-                 title="Edit project" />
-<zope:permission id="eztranet.thumbnail.view"
-                 title="View Thumbnail" />
-<zope:permission id="eztranet.thumbnail.write"
-                 title="Write Thumbnail" />
+<!-- FIXME: todo : split all these into their own module -->
 
-<zope:role id="eztranet.Administrator"
-           title="Eztranet Administrator" />
-<zope:role id="eztranet.Member"
-           title="Eztranet Member" />
-<zope:role id="eztranet.project.Manager"
-           title="modifier" />
-<zope:role id="eztranet.project.Member"
-           title="voir" />
+<!-- PERMISSIONS -->
+<permission id="eztranet.view"
+            title="View the eztranet" />
+                 
+<permission id="eztranet.manage"
+            title="Manage the eztranet" />
+                 
+<permission id="eztranet.project.view"
+            title="View the project" />
+                 
+<permission id="eztranet.project.edit"
+            title="Edit the project" />
+                 
+<permission id="eztranet.thumbnail.view"
+            title="View thumbnails" />
+                 
+<permission id="eztranet.thumbnail.write"
+            title="Write thumbnails" />
+
+<permission id="eztranet.comment.view"
+            title="View comments" />
+
+<permission id="eztranet.comment.edit"
+            title="Edit comments" />
+
+<permission id="eztranet.comment.add"
+            title="Add comments" />
+
+<permission id="eztranet.comment.delete"
+            title="Delete comments" />
+
+<!-- ROLES -->
+<role id="eztranet.Administrator"
+      title="Eztranet Administrator" />
+           
+<role id="eztranet.Member"
+      title="Eztranet Member" />
+           
+<role id="eztranet.project.Manager"
+      title="modifier" />
+           
+<role id="eztranet.project.Member"
+      title="voir" />
 
 <!-- EZTRANET ADMIN -->
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.View" />
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.Manage" />
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.project.EditProject" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.View" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.Public" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.ManageContent" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.ManageServices" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.ManageSite" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.Security" />
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.Administrator"
-            permission="eztranet.thumbnail.write" />
-<zope:grant role="eztranet.Administrator"
-            permission="zope.app.dublincore.view" />
+<!-- zope related -->
+<grant role="eztranet.Administrator"
+       permission="zope.ManageContent" />
+            
+<grant role="eztranet.Administrator"
+       permission="zope.ManageServices" />
+            
+<grant role="eztranet.Administrator"
+       permission="zope.ManageSite" />
+            
+<grant role="eztranet.Administrator"
+       permission="zope.Security" />
+
+<grant role="eztranet.Administrator"
+       permission="zope.app.dublincore.change" />
+<!-- eztranet related -->            
+<grant role="eztranet.Administrator"
+       permission="eztranet.manage" />
+            
+<grant role="eztranet.Administrator"
+       permission="eztranet.project.view" />
+            
+<grant role="eztranet.Administrator"
+       permission="eztranet.project.edit" />
+            
+<grant role="eztranet.Administrator"
+       permission="eztranet.comment.edit" />
+
+<grant role="eztranet.Administrator"
+       permission="eztranet.comment.delete" />
+
+<grant role="eztranet.Administrator"
+       permission="eztranet.comment.view" />
+
+<grant role="eztranet.Administrator"
+       permission="eztranet.comment.add" />
+
+<grant role="eztranet.Administrator"
+       permission="eztranet.thumbnail.view" />
+            
+<grant role="eztranet.Administrator"
+       permission="eztranet.thumbnail.write" />
 
 
-<!-- EZTRANET MEMBER -->
-<zope:grant role="eztranet.Member"
-            permission="eztranet.View" />
-<zope:grant role="eztranet.Member"
-            permission="zope.app.dublincore.view" />
 
-<!-- PROJECT MANAGER -->
-<zope:grant role="eztranet.project.Manager"
-            permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.project.Manager"
-            permission="eztranet.project.EditProject" />
-<zope:grant role="eztranet.project.Manager"
-            permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.project.Manager"
-            permission="eztranet.thumbnail.write" />
-<zope:grant role="eztranet.project.Manager"
-            permission="zope.app.dublincore.view" />
 
-<!-- PROJECT MEMBER -->
-<zope:grant role="eztranet.project.Member"
-            permission="eztranet.project.ViewProject" />
-<zope:grant role="eztranet.project.Member"
-            permission="eztranet.thumbnail.view" />
-<zope:grant role="eztranet.project.Member"
-            permission="eztranet.thumbnail.write" />
-<zope:grant role="eztranet.project.Member"
-            permission="zope.app.dublincore.view" />
+
+<!-- EZTRANET MEMBER (can login in the eztranet) -->
+<grant role="eztranet.Member"
+       permission="zope.View" />
+
+<grant role="eztranet.Member"
+       permission="eztranet.view" />
+
+<grant role="eztranet.Member"
+       permission="zope.app.dublincore.view" />
+
+<grant role="eztranet.project.Manager"
+       permission="eztranet.thumbnail.view" />
+            
+<grant role="eztranet.project.Manager"
+       permission="eztranet.thumbnail.write" />
+            
+
+<!-- PROJECT MEMBER (can read a project)-->
+<grant role="eztranet.project.Member"
+       permission="eztranet.project.view" />
+            
+<grant role="eztranet.project.Member"
+       permission="eztranet.thumbnail.view" />
+            
+<grant role="eztranet.project.Member"
+       permission="eztranet.thumbnail.write" />
+
+<grant role="eztranet.project.Member"
+       permission="eztranet.comment.view" />
+
+<grant role="eztranet.project.Member"
+       permission="eztranet.comment.add" />
+
+<!-- PROJECT MANAGER (can write a project) -->
+<grant role="eztranet.project.Manager"
+       permission="eztranet.project.view" />
+            
+<grant role="eztranet.project.Manager"
+       permission="eztranet.project.edit" />
+            
+<grant role="eztranet.Member"
+       permission="zope.app.dublincore.change" />
 
 
 </configure>

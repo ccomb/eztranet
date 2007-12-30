@@ -9,7 +9,7 @@
       for="eztranet.comment.IAttributeAnnotatableComments"
       class=".comment.ListComments"
       template="./templates/comments.pt"
-      permission="zope.View"
+      permission="eztranet.comment.view"
       title="Comments"
       menu="zmi_views" />
            
@@ -18,6 +18,6 @@
       for="eztranet.comment.IAttributeAnnotatableComments"
       class=".comment.AddComment"
       attribute="addComment"
-      permission="zope.View" />
+      permission="eztranet.comment.add" />
       
 </configure>

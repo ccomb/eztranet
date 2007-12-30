@@ -20,7 +20,7 @@ from zope.contenttype import guess_content_type
 
 from interfaces import *
 from project import Project, ProjectImage, ProjectVideo
-
+        
 class CustomTextWidget(TextAreaWidget):
     width=40
     height=5
