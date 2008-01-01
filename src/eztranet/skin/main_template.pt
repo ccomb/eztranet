@@ -24,7 +24,6 @@
 <!-- navigation tree -->
 <metal:tree use-macro="context/@@standard_macros/navigation_tree_box" />
 
-
 <div id="main">
 
 <!-- Logo -->
@@ -32,44 +31,61 @@
 
 <!-- Main menu -->
 <ul id="main_menu">
-<li tal:repeat="item provider:eztranet.main_menu">
-    <a href="#" tal:attributes="href item/url" tal:content="item/name">action1</a>
-</li>
-<li tal:condition="nothing"><a href="#">action2</a></li>
+    <li tal:repeat="item provider:eztranet.main_menu">
+        <a href="#"
+           tal:attributes="href item/url"
+           tal:content="item/name">
+          action1
+        </a>
+    </li>
+    <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
 
 <div id="login_logout">
-<span tal:condition="python:request.principal.id!='zope.anybody'" tal:content="request/principal/id"></span><br/>
-<tal:block replace="structure context/@@login_logout" />
+    <span tal:condition="python:request.principal.id!='zope.anybody'"
+          tal:content="request/principal/id">
+        user
+    </span>
+    <br/>
+    <tal:block replace="structure context/@@login_logout" />
 </div>
 
 <!-- breadcrumb -->
 <div id="breadcrumb">
-<tal:block condition="python: 'main_page' not in dir(view)" repeat="breadcrumb context/@@absolute_url/breadcrumbs">
-    <a tal:attributes="href string:${breadcrumb/url}/view.html" tal:content="breadcrumb/name" tal:condition="repeat/breadcrumb/index">item</a>
+<tal:block condition="python: 'main_page' not in dir(view)"
+           repeat="breadcrumb context/@@absolute_url/breadcrumbs">
+    <a tal:attributes="href string:${breadcrumb/url}/view.html"
+       tal:content="breadcrumb/name"
+       tal:condition="repeat/breadcrumb/index">
+     item
+    </a>
     <tal:block condition="python: repeat['breadcrumb'].index() and not repeat['breadcrumb'].end()" content="string: → "/>
 </tal:block>
 </div>
 
-
-
 <!-- Action menu -->
 <ul id="eztranet_actions">
-<li tal:repeat="item context/@@view_get_menu/eztranet_actions">
-    <a href="#" tal:attributes="href item/action; class item/selected" tal:content="item/title">action1</a>
-</li>
-<li tal:condition="nothing"><a href="#">action2</a></li>
+    <li tal:repeat="item context/@@view_get_menu/eztranet_actions">
+        <a href="#"
+           tal:attributes="href item/action; class item/selected"
+           tal:content="item/title">
+         action1
+        </a>
+    </li>
+    <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
 
 <!-- Adding menu -->
 <ul id="eztranet_addings">
-<li tal:repeat="item context/@@view_get_menu/eztranet_addings">
-    <a href="#" tal:attributes="href item/action" tal:content="item/title">action1</a>
-</li>
-<li tal:condition="nothing"><a href="#">action2</a></li>
+    <li tal:repeat="item context/@@view_get_menu/eztranet_addings">
+        <a href="#"
+           tal:attributes="href item/action"
+           tal:content="item/title">
+          action1
+        </a>
+    </li>
+    <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
-
-
 
 <div metal:define-slot="body">
 Here, the page content
