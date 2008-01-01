@@ -13,14 +13,20 @@
 
 <div style="margin-top: 5%">
 
-<div style="width: 100%; text-align: right"><a href="http://gorfou.fr" style="color: yellow; font-weight: bold">(Retour vers Gorfou)</a><br/>
-Pour installer cette application dans votre entreprise ou la faire adapter,<br/>contactez Christophe Combelles au 06 08 955 845
+<div style="width: 100%; text-align: right">
+<a href="http://gorfou.fr" style="color: yellow; font-weight: bold">
+    (Retour vers Gorfou)
+</a><br/>
+Pour installer cette application dans votre entreprise ou la faire adapter,<br/>
+contactez Christophe Combelles au 06 08 955 845
 </div>
 
 <h2>Un extranet pour votre production vidéo / photo</h2>
-<p>Eztranet est un petit <b>extranet</b> fabriqué pour les besoins spécifiques des sociétés de <b>production vidéo</b>.
+<p>Eztranet est un petit <b>extranet</b> fabriqué pour les besoins spécifiques
+des sociétés de <b>production vidéo</b>.
 Il permet de publier des images et des vidéos de manière ultra-simplifiée, 
-afin de recueillir les commentaires des clients avant finalisation du projet. Aucune formation n'est nécessaire pour l'utiliser.</p>
+afin de recueillir les commentaires des clients avant finalisation du projet.
+Aucune formation n'est nécessaire pour l'utiliser.</p>
 
 <h3>Fonctionnalités :</h3>
 <ul>
@@ -34,20 +40,34 @@ afin de recueillir les commentaires des clients avant finalisation du projet. Au
 </ul>
 <h2>Démo :</h2>
 <p>
-Vous y êtes ! Il vous suffit de cliquer sur « <a href="@@login.html">Connexion</a> » ou « <a href="projects" style="color: yellow"><u>Projets</u></a> » avec le user/pass : <b>admin/eztranet</b>.
-Vous êtes alors administrateur et vous pouvez créer des comptes limités et les restreindre à un projet particulier en cliquant sur « Permissions » dans le projet en question. 
-Si le mot de passe a été changé et que vous n'arrivez plus à vous connecter, contactez : ccomb à gorfou.fr<br/>
+Vous y êtes ! Il vous suffit de cliquer sur 
+« <a href="@@login.html">Connexion</a> » ou 
+« <a href="projects" style="color: yellow"><u>Projets</u></a> » 
+avec le user/pass : <b>admin/eztranet</b>.
+Vous êtes alors administrateur et vous pouvez créer de nouveaux comptes et les
+ restreindre à un projet particulier en cliquant sur « Permissions » dans le 
+ projet en question. 
+Si le mot de passe a été changé et que vous n'arrivez plus à vous connecter, 
+contactez : ccomb à gorfou.fr<br/>
 
 </p>
 <h3>Licence, technologie :</h3>
 <p>
-Eztranet est un <b>logiciel libre</b> distribué sous licence GPL v2. Il est possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer complètement son graphisme, à un coût accessible à une TPE, grâce à sa conception sous forme de composants.<br/>
-Il est écrit en langage Python et fonctionne sur le serveur d'application Zope 3 avec sa base de données objets (conçu sur zope 3.3.1).
+Eztranet est un <b>logiciel libre</b> distribué sous licence GPL v2. Il est 
+possible sur demande de l'étendre avec de nouvelles fonctions, de le modifier 
+pour l'adapter exactement à un <b>besoin spécifique</b> ou de changer 
+complètement son graphisme, à un coût accessible à une TPE, grâce à sa 
+conception sous forme de composants.<br/>
+Il est écrit en langage Python et fonctionne sur le serveur d'application 
+Zope 3 avec sa base de données objets.
 </p>
 <h3>Code source</h3>
 <p>
 <b><a href="http://gorfou.fr/eztranet/">http://gorfou.fr/eztranet/</a></b><br/>
-Le packaging est encore basique, l'application sera « eggifiée » à terme. Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses dépendances pour le transcodage), puis ajouter un objet EztranetSite depuis la ZMI (via ++skin++Rotterdam).
+Le packaging est encore basique, l'application sera « eggifiée » à terme. 
+Pour que ça fonctionne il faut installer python-imaging et ffmpeg (et ses
+ dépendances pour le transcodage), puis ajouter un objet EztranetSite depuis 
+ la ZMI (via ++skin++Rotterdam).
 </p>
 </div>
 
