@@ -62,15 +62,14 @@
 
 <grant role="eztranet.Administrator"
        permission="zope.app.dublincore.change" />
+
+<grant role="eztranet.Administrator"
+       permission="zope.View" />
+
+
 <!-- eztranet related -->            
 <grant role="eztranet.Administrator"
        permission="eztranet.manage" />
-            
-<grant role="eztranet.Administrator"
-       permission="eztranet.project.view" />
-            
-<grant role="eztranet.Administrator"
-       permission="eztranet.project.edit" />
             
 <grant role="eztranet.Administrator"
        permission="eztranet.comment.edit" />
@@ -90,9 +89,12 @@
 <grant role="eztranet.Administrator"
        permission="eztranet.thumbnail.write" />
 
-
-
-
+<grant role="eztranet.Administrator"
+       permission="eztranet.project.view" />
+            
+<grant role="eztranet.Administrator"
+       permission="eztranet.project.edit" />
+            
 
 <!-- EZTRANET MEMBER (can login in the eztranet) -->
 <grant role="eztranet.Member"
@@ -104,10 +106,10 @@
 <grant role="eztranet.Member"
        permission="zope.app.dublincore.view" />
 
-<grant role="eztranet.project.Manager"
+<grant role="eztranet.Member"
        permission="eztranet.thumbnail.view" />
             
-<grant role="eztranet.project.Manager"
+<grant role="eztranet.Member"
        permission="eztranet.thumbnail.write" />
             
 
@@ -115,12 +117,6 @@
 <grant role="eztranet.project.Member"
        permission="eztranet.project.view" />
             
-<grant role="eztranet.project.Member"
-       permission="eztranet.thumbnail.view" />
-            
-<grant role="eztranet.project.Member"
-       permission="eztranet.thumbnail.write" />
-
 <grant role="eztranet.project.Member"
        permission="eztranet.comment.view" />
 
@@ -134,7 +130,7 @@
 <grant role="eztranet.project.Manager"
        permission="eztranet.project.edit" />
             
-<grant role="eztranet.Member"
+<grant role="eztranet.project.Manager"
        permission="zope.app.dublincore.change" />
 
 

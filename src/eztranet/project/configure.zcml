@@ -28,14 +28,18 @@
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
 </zope:class>
 
+<zope:class class=".project.ProjectItem">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.download.interfaces.IDownloadable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+</zope:class>
+
 <zope:class class=".project.ProjectImage">
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectImage" />
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectImage" />
-  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-  <implements interface="eztranet.download.interfaces.IDownloadable" />
-  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
 </zope:class>
 
 <zope:class class=".project.ProjectVideo">
@@ -43,11 +47,8 @@
            interface=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectVideo" />
-    <require permission="eztranet.project.edit"
-             set_attributes="flash_video_tempfile flash_video" />
-  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-  <implements interface="eztranet.download.interfaces.IDownloadable" />
-  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <require permission="eztranet.project.edit"
+           set_attributes="flash_video_tempfile flash_video" />
 </zope:class>
 
 <zope:adapter factory=".project.SearchableTextOfProject" />
@@ -185,7 +186,8 @@
 </browser:menuItems>
 
 <browser:menuItems menu="zmi_views"
-                   for="eztranet.project.interfaces.IProjectItem">
+                   for="eztranet.project.interfaces.IProjectItem"
+                   permission="eztranet.project.edit">
     <menuItem title="edit"
               action="edit.html" />
 </browser:menuItems>
@@ -219,10 +221,12 @@
 <browser:menuItem title="Commenter"
                   action="@@comments.html"
                   for=".interfaces.IProject"
-                  menu="eztranet_actions" />
+                  menu="eztranet_actions"
+                  permission="eztranet.comment.view" />
 <browser:menuItem title="Commenter"
                   action="@@comments.html"
                   for=".interfaces.IProjectItem"
-                  menu="eztranet_actions" />
+                  menu="eztranet_actions"
+                  permission="eztranet.comment.view" />
 
 </configure>

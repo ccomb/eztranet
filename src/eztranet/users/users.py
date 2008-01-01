@@ -77,6 +77,8 @@ def initial_setup(site):
     # create an admin user to be able to log in
     admin = EztranetUser('eztranet', 'eztranet', 'eztranet initial administrator', passwordManagerName='MD5')
     # grant him the admin role
+    print site
+    print site.__name__
     srm = IPrincipalRoleManager(site)
     srm.assignRoleToPrincipal("eztranet.Administrator", admin.login)
     srm.assignRoleToPrincipal("eztranet.Member", admin.login)

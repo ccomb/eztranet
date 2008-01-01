@@ -7,7 +7,8 @@ from zope.app.component.hooks import getSite
 from zope.component import adapts, queryUtility
 from zope.security.checker import canAccess
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
-
+from zope.publisher.browser import BrowserPage
+from zope.app.pagetemplate import ViewPageTemplateFile
 from interfaces import *
 
 class PageTitleContentProvider(object):
@@ -68,3 +69,8 @@ class EztranetMainMenu(object):
             self.menuitems.append({'name': u"Utilisateurs", 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
     def render(self):
         return self.menuitems
+
+class RootFolderView(BrowserPage):
+    __call__ = ViewPageTemplateFile('rootfolder.pt')
+    def eztranet_sites(self):
+        return list(self.context.keys())

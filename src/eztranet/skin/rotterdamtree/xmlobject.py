@@ -13,11 +13,12 @@
 ##############################################################################
 """Support classes for XML-based tree
 
-$Id: xmlobject.py 67630 2006-04-27 00:54:03Z jim $
+$Id: xmlobject.py 74020 2007-04-05 12:54:45Z dobe $
 """
 from rfc822 import formatdate, time
 from xml.sax.saxutils import quoteattr
 
+from zope.component import getMultiAdapter, queryMultiAdapter
 from zope.interface import Interface
 from zope.proxy import sameProxiedObjects
 from zope.security.interfaces import Unauthorized, Forbidden
@@ -25,9 +26,8 @@ from zope.i18n import translate
 from zope.traversing.api import getParents, getParent, traverse
 from zope.publisher.browser import BrowserView
 
-from zope.app import zapi
 from zope.app.container.interfaces import IReadContainer
-from zope.app.i18n import ZopeMessageFactory as _
+from zope.app.rotterdam.i18n import ZopeMessageFactory as _
 
 titleTemplate = _('Contains $${num} item(s)')
 loadingMsg = _('Loading...')
@@ -81,7 +81,7 @@ class ReadContainerXmlObjectView(BrowserView):
 
     def getIconUrl(self, item):
         result = ''
-        icon = zapi.queryMultiAdapter((item, self.request), name='zmi_icon')
+        icon = queryMultiAdapter((item, self.request), name='zmi_icon')
         if icon:
             result = icon.url()
         return result
@@ -104,6 +104,10 @@ class ReadContainerXmlObjectView(BrowserView):
         # include the site manager
         #keys.append(u'++etc++site')
 
+        # dont get children if we get more than 1000 objects
+        if len(keys)>=1000:
+            keys = [u'++etc++site']
+
         for name in keys:
 
             # Only include items we can traverse to
@@ -111,15 +115,16 @@ class ReadContainerXmlObjectView(BrowserView):
             if item is None:
                 continue
 
-            iconUrl = self.getIconUrl(item)
+            #iconUrl = self.getIconUrl(item)
             item_len = self.getLengthOf(item)
-            title = name
-            if hasattr(container[name], 'title'):
-                title = container[name].title
             if item_len >= 0:
-                result.append(xmlEscape(u'<collection name=%s length=%s icon_url="" title=%s />', name, item_len, title))
+                result.append(xmlEscape(
+                    u'<collection name=%s length=%s icon_url=""/>',
+                    name, item_len))
             else:
-                result.append(xmlEscape(u'<item name=%s icon_url="" title=%s />', name, title))
+                result.append(xmlEscape(
+                    u'<item name=%s icon_url=""/>',
+                    name))
 
         return u' '.join(result)
 
@@ -141,12 +146,12 @@ class ReadContainerXmlObjectView(BrowserView):
         their respective siblings.
 
         """
-        result = ''
+        result = 'selected'
         oldItem = self.context
 
         vh = self.request.getVirtualHostRoot()
         if vh:
-            vhrootView = zapi.getMultiAdapter(
+            vhrootView = getMultiAdapter(
                     (vh, self.request), name='absolute_url')
             baseURL = vhrootView() + '/'
             try:
@@ -170,6 +175,8 @@ class ReadContainerXmlObjectView(BrowserView):
             subItems = []
             if IReadContainer.providedBy(item):
                 keys = list(item.keys())
+                if len(keys) >= 1000:
+                    keys = []
             else:
                 keys = []
 
@@ -177,35 +184,32 @@ class ReadContainerXmlObjectView(BrowserView):
             #keys.append(u'++etc++site')
 
             for name in keys:
-                title = name
-                if hasattr(item[name], 'title'):
-                    title = item[name].title
                 # Only include items we can traverse to
                 subItem = traverse(item, name, None)
-                iconUrl = self.getIconUrl(subItem)
+                #iconUrl = self.getIconUrl(subItem)
                 subitem_len = self.getLengthOf(subItem)
                 if subitem_len >= 0:
                     # the test below seems to be broken
                     # with the ++etc++site case
                     if subItem == oldItem:
                         subItems.append(xmlEscapeWithCData(
-                            u'<collection title=%s name=%s length=%s '
+                            u'<collection name=%s length=%s '
                             u'icon_url="">%s</collection>', 
-                            title, name, subitem_len, result))
+                            name, subitem_len, result))
                     else:
                         subItems.append(xmlEscape(
-                            u'<collection title=%s name=%s length=%s '
+                            u'<collection name=%s length=%s '
                             u'icon_url=""/>',
-                            title, name, subitem_len))
+                            name, subitem_len))
                 else:
                     subItems.append(xmlEscape(
-                        u'<item title=%s name=%s icon_url="" />', title, name))
+                        u'<item name=%s icon_url="" />', name))
 
             result = u' '.join(subItems)
             oldItem = item
 
         # do not forget root folder
-        iconUrl = self.getIconUrl(oldItem)
+        #iconUrl = self.getIconUrl(oldItem)
         result = xmlEscapeWithCData(
                   u'<collection name=%s baseURL=%s length=%s '
                   u'icon_url="" isroot="">%s</collection>',
@@ -231,7 +235,7 @@ class XmlObjectView(BrowserView):
         parent = getParent(self.context)
         while parent is not None:
                 if IReadContainer.providedBy(parent):
-                    view = zapi.queryMultiAdapter(
+                    view = queryMultiAdapter(
                         (parent, self.request), name='singleBranchTree.xml')
                     return view()
                 else:

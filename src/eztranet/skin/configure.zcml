@@ -36,6 +36,12 @@
     <page name="view.html" template="home.pt" />
 </browser:pages>
     
+<browser:view name="index.html"
+              for="zope.app.folder.interfaces.IRootFolder"
+              class=".browser.RootFolderView"
+              permission="zope.Public"
+              layer=".interfaces.IEztranetSkin" />
+
 <!-- Ici on définit un menu.
 Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu

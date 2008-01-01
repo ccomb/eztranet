@@ -3,8 +3,8 @@
            i18n_domain="eztranet">
 
   <include package="zope.security" file="meta.zcml" />
-  <include package="zope.app.securitypolicy" file="meta.zcml" />
   <include package="zope.app.security" file="meta.zcml" />
+  <include package="zope.app.securitypolicy" file="meta.zcml" />
   <include package="zope.app.zcmlfiles" file="meta.zcml" />
   <include package="zope.publisher" />
   <include package="zope.traversing" />
@@ -28,13 +28,14 @@
   <include package="zope.contentprovider" />
   <include package="zope.app.container" />
   <include package="zope.app.file" />
+  <include package="zope.app.folder" />
   <include package="zope.dublincore" />
 
   <!-- Add your own component registrations here -->
 <include file="permissions.zcml" />
 
 <class class=".eztranet.EztranetSite">
-  <require permission="eztranet.view"
+  <require permission="zope.View"
            interface=".interfaces.IEztranetSite" />
   <require permission="zope.ManageContent"
            set_schema=".interfaces.IEztranetSite" />

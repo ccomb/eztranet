@@ -38,6 +38,13 @@
     template="granting.pt"
     menu="eztranet_actions" title="Permissions" />
 <browser:page
+    name="permissions.html"
+    class=".browser.ProjectGranting"
+    for="eztranet.project.interfaces.IProjectItem"
+    permission="eztranet.manage"
+    template="granting.pt"
+    menu="eztranet_actions" title="Permissions" />
+<browser:page
     name="eztranet.User"
     class=".browser.EztranetUserAdd"
     for="zope.app.container.interfaces.IAdding"

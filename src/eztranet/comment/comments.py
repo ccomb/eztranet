@@ -34,7 +34,7 @@ from eztranet.comment import IComment
 from eztranet.comment import IComments
 from eztranet.comment import ICommentSequence
 
-commentsKey = 'comment.comments'
+commentsKey = 'eztranet.comment'
 
 class CommentSequence(Sequence) :
     """Special modification description that distinguishes between
@@ -125,6 +125,7 @@ class Comments(Location, Persistent):
     def addComment(self, data, contentType='text/plain'):
         """See comment.IAddComments"""
         comment = Comment(data, contentType)
+        comment.__parent__ = self
         key = self._nextKey
         # add dc modification data
         notify(ObjectCreatedEvent(comment))
@@ -180,6 +181,8 @@ class CommentsForAnnotatableComments(Location):
     def _assert_comments(self):
         if self._get_comments() is None:
             self.__dict__['_annotations'][commentsKey] = Comments()
+            # setting the location parent is necessary for permission checking
+            self.__dict__['_annotations'][commentsKey].__parent__ = self.context
 
     # public methods
     def __getitem__(self, key):
