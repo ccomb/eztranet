@@ -65,6 +65,7 @@ src/eztranet/skin/home.pt
 src/eztranet/skin/interfaces.py
 src/eztranet/skin/main.css
 src/eztranet/skin/main_template.pt
+src/eztranet/skin/rootfolder.pt
 src/eztranet/skin/standardmacros.py
 src/eztranet/skin/images/fond.png
 src/eztranet/skin/images/fondmain.png
