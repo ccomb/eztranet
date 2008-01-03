@@ -75,7 +75,7 @@ def initial_setup(site):
     #activate the wanted credential plugins
     pau.credentialsPlugins = ( "No Challenge if Authenticated", "Session Credentials" )
     # create an admin user to be able to log in
-    admin = EztranetUser('eztranet', 'eztranet', 'eztranet initial administrator', passwordManagerName='MD5')
+    admin = EztranetUser('admin', 'eztranet', 'eztranet initial administrator', passwordManagerName='MD5')
     # grant him the admin role
     print site
     print site.__name__

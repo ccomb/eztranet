@@ -31,7 +31,7 @@ class ProjectAdd(AddForm):
     """
     form_fields=Fields(IProject).omit('__name__', '__parent__')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"New project"
+    label=u"Ajout d'un projet"
     def create(self, data):
         self.project=Project()
         applyChanges(self.project, self.form_fields, data)
@@ -39,7 +39,7 @@ class ProjectAdd(AddForm):
         return self.project
 
 class ProjectEdit(EditForm):
-    label="Edit project details"
+    label="Modification du projete"
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -74,7 +74,7 @@ def project_sorting(p1, p2):
 
 class ProjectView(Contents):
     u"la vue qui permet d'afficher un project"
-    label="View of an Project"
+    label=u"Vue d'un projet"
     __call__=ViewPageTemplateFile("project.pt")
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -115,7 +115,7 @@ class ProjectImageAdd(AddForm):
     """
     form_fields=Fields(IProjectImage).omit('__name__', 'title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"nouvelle image"
+    label=u"Ajout d'une image"
     extra_script = u"""
     document.open()
     document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
@@ -195,7 +195,7 @@ class ProjectItemView(BrowserPage):
 
 class ProjectImageView(ProjectItemView):
     u"la vue qui permet d'afficher une image"
-    label="Image"
+    label=u"Image"
     __call__=ViewPageTemplateFile("image.pt")
 
     def wantedWidth(self):
@@ -209,7 +209,7 @@ class ProjectImageView(ProjectItemView):
 
 class ProjectVideoView(FileView):
     u"la vue qui permet d'afficher une video"
-    label="Vidéo"
+    label=u"Vidéo"
     __call__=ViewPageTemplateFile("video.pt")
 
     def __init__(self, context, request):
