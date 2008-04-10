@@ -1,37 +1,11 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-<!-- FIXME: todo : split all these into their own module -->
-
 <!-- PERMISSIONS -->
 <permission id="eztranet.view"
             title="View the eztranet" />
-                 
+             
 <permission id="eztranet.manage"
             title="Manage the eztranet" />
-                 
-<permission id="eztranet.project.view"
-            title="View the project" />
-                 
-<permission id="eztranet.project.edit"
-            title="Edit the project" />
-                 
-<permission id="eztranet.thumbnail.view"
-            title="View thumbnails" />
-                 
-<permission id="eztranet.thumbnail.write"
-            title="Write thumbnails" />
-
-<permission id="eztranet.comment.view"
-            title="View comments" />
-
-<permission id="eztranet.comment.edit"
-            title="Edit comments" />
-
-<permission id="eztranet.comment.add"
-            title="Add comments" />
-
-<permission id="eztranet.comment.delete"
-            title="Delete comments" />
 
 <!-- ROLES -->
 <role id="eztranet.Administrator"
@@ -39,12 +13,6 @@
            
 <role id="eztranet.Member"
       title="Eztranet Member" />
-           
-<role id="eztranet.project.Manager"
-      title="modifier" />
-           
-<role id="eztranet.project.Member"
-      title="voir" />
 
 <!-- EZTRANET ADMIN -->
 <!-- zope related -->

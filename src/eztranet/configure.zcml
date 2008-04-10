@@ -32,16 +32,14 @@
   <include package="zope.dublincore" />
 
   <!-- Add your own component registrations here -->
-<include file="permissions.zcml" />
 
 <class class=".eztranet.EztranetSite">
-  <require permission="zope.View"
-           interface=".interfaces.IEztranetSite" />
-  <require permission="zope.ManageContent"
-           set_schema=".interfaces.IEztranetSite" />
+  <require permission="zope.View"          interface="zope.app.component.interfaces.IPossibleSite" />
+  <require permission="zope.ManageContent" set_schema="zope.app.component.interfaces.IPossibleSite" />
+  <require permission="zope.View"          interface="zope.app.container.interfaces.IReadContainer" />
+  <require permission="zope.ManageContent" interface="zope.app.container.interfaces.IWriteContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </class>
-
 
 <include package=".skin" />
 <include package=".users" />
@@ -49,6 +47,8 @@
 <include package=".thumbnail" />
 <include package=".project" />
 <include package=".comment" />
+
+<include file="permissions.zcml" />
 
 
 <subscriber handler=".eztranet.newEztranetSiteAdded" />

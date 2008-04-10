@@ -18,8 +18,8 @@ from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
 from zope.contenttype import guess_content_type
 
-from interfaces import *
-from project import Project, ProjectImage, ProjectVideo
+from eztranet.project.interfaces import IProject, IProjectItem, IProjectImage, IProjectVideo
+from eztranet.project.project import Project, ProjectImage, ProjectVideo
         
 class CustomTextWidget(TextAreaWidget):
     width=40

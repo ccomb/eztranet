@@ -25,3 +25,4 @@ zope.app.file
 zope.app.container
 zope.dublincore
 zope.app.security
+zope.file

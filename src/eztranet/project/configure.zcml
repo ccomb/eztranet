@@ -1,7 +1,19 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns="http://namespaces.zope.org/zope">
 
-<zope:class class=".project.ProjectContainer">
+<permission id="eztranet.project.view"
+            title="View the project" />
+                 
+<permission id="eztranet.project.edit"
+            title="Edit the project" />
+
+<role id="eztranet.project.Manager"
+      title="modifier" />
+           
+<role id="eztranet.project.Member"
+      title="voir" />
+
+
+<class class=".project.ProjectContainer">
   <require permission="eztranet.view"
            interface=" zope.app.container.interfaces.IReadContainer" />
   <require permission="eztranet.manage"
@@ -11,10 +23,10 @@
   <require permission="eztranet.manage"
            set_schema=".interfaces.IProjectContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-</zope:class>
+</class>
 
 
-<zope:class class=".project.Project">
+<class class=".project.Project">
   <require permission="eztranet.project.view"
            attributes="title description" />
   <require permission="eztranet.project.edit"
@@ -26,207 +38,61 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
-</zope:class>
+</class>
 
-<zope:class class=".project.ProjectItem">
+<class class=".project.ProjectItem">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.download.interfaces.IDownloadable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
-</zope:class>
+</class>
 
-<zope:class class=".project.ProjectImage">
+<class class=".project.ProjectImage">
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectImage" />
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectImage" />
-</zope:class>
+</class>
 
-<zope:class class=".project.ProjectVideo">
+<class class=".project.ProjectVideo">
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.edit"
            set_attributes="flash_video_tempfile flash_video" />
-</zope:class>
+</class>
 
-<zope:adapter factory=".project.SearchableTextOfProject" />
-<zope:adapter factory=".project.SearchableTextOfProjectItem" />
-<zope:adapter factory=".project.ProjectNameChooser" />
-<zope:adapter factory=".project.ProjectItemNameChooser" />
-<zope:adapter factory=".project.ProjectImageThumbnailer"
+<adapter factory=".project.SearchableTextOfProject" />
+<adapter factory=".project.SearchableTextOfProjectItem" />
+<adapter factory=".project.ProjectNameChooser" />
+<adapter factory=".project.ProjectItemNameChooser" />
+<adapter factory=".project.ProjectImageThumbnailer"
               provides="eztranet.thumbnail.interfaces.IThumbnailer" />
-<zope:adapter factory=".project.ProjectVideoThumbnailer"
+<adapter factory=".project.ProjectVideoThumbnailer"
               provides="eztranet.thumbnail.interfaces.IThumbnailer" />
-<zope:adapter factory=".project.ProjectThumbnail" />
+<adapter factory=".project.ProjectThumbnail" />
 
-<zope:subscriber handler=".project.ProjectVideoAdded" />
-<zope:subscriber handler=".project.ProjectVideoModified" />
-<zope:subscriber handler=".project.ProjectVideoRemoved" />
+<subscriber handler=".project.ProjectVideoAdded" />
+<subscriber handler=".project.ProjectVideoModified" />
+<subscriber handler=".project.ProjectVideoRemoved" />
 
-<!-- Project views -->
-<browser:containerViews for=".interfaces.IProject"
-                        add="eztranet.project.edit" />
-<browser:containerViews for=".interfaces.IProjectContainer"
-                        add="eztranet.manage" />
-<!-- ADD -->
-<browser:page name="eztranet.add.Project"
-              for="zope.app.container.interfaces.IAdding"
-              class=".browser.ProjectAdd"
-              permission="eztranet.manage" />
-<!-- VIEW -->
-<browser:pages for=".interfaces.IProject"
-               class=".browser.ProjectView"
-               permission="eztranet.project.view">
-    <page name="view.html"
-          menu="eztranet_actions"
-          title="Voir" />
-    <page name="index.html" />
-    <page name="contents.html" />
-</browser:pages>
-<!-- EDIT -->
-<browser:page name="edit.html"
-              for=".interfaces.IProject"
-              class=".browser.ProjectEdit"
-              permission="eztranet.project.edit"
-              menu="eztranet_actions"
-              title="Modifier" />
-<!-- ProjectItem views -->
-<!-- ADD -->
-<browser:page name="eztranet.add.ProjectImage"
-              for="zope.app.container.interfaces.IAdding"
-              class=".browser.ProjectImageAdd"
-              permission="eztranet.project.edit" />
-<!-- ADD -->
-<browser:page name="eztranet.add.ProjectVideo"
-              for="zope.app.container.interfaces.IAdding"
-              class=".browser.ProjectVideoAdd"
-              permission="eztranet.project.edit" />
-<!-- EDIT -->
-<browser:page name="edit.html"
-              for=".interfaces.IProjectItem"
-              class=".browser.ProjectItemEdit"
-              permission="eztranet.project.edit"
-              menu="eztranet_actions"
-              title="Modifier" />
 
-<!-- VIEW -->
-<browser:page name="view.html"
-              for=".interfaces.IProjectImage"
-              class=".browser.ProjectImageView"
-              permission="eztranet.project.view"
-              menu="eztranet_actions"
-              title="Voir" />
-<browser:page name="view.html"
-              for=".interfaces.IProjectVideo"
-              class=".browser.ProjectVideoView"
-              permission="eztranet.project.view"
-              menu="eztranet_actions"
-              title="Voir" />
-<browser:page name="flv"
-              for=".interfaces.IProjectVideo"
-              class=".browser.ProjectVideoView"
-              attribute="callFlashView"
-              permission="eztranet.project.view" />
-
-<browser:menuItem title="nouvelle vidéo"
-              action="+/eztranet.add.ProjectVideo"
-              for=".interfaces.IProject"
-              menu="eztranet_addings" />
-<browser:menuItem title="nouvelle image"
-              action="+/eztranet.add.ProjectImage"
-              for=".interfaces.IProject"
-              menu="eztranet_addings" />
-<browser:menuItem title="nouveau projet"
-              action="+/eztranet.add.Project"
-              for=".interfaces.IProjectContainer"
-              menu="eztranet_addings" />
-<browser:menuItem title="nouveau sous-projet"
-              action="+/eztranet.add.Project"
-              for=".interfaces.IProject"
-              menu="eztranet_addings" />
-
-<zope:adapter name="eztranet.project.flashvideo"
+<adapter name="eztranet.project.flashvideo"
               factory=".flashpreview.FlashContentProvider"
               permission="eztranet.project.view" />
 
-<!-- Project Container view -->
-<browser:pages for=".interfaces.IProjectContainer"
-               class=".browser.ProjectContainerView"
-               permission="eztranet.view" >
-    <page name="view.html" />
-    <page name="index.html" />
-    <page name="contents.html" />
-</browser:pages>
-<!-- juste pour la ZMI -->
-<browser:addMenuItem title="Eztranet Project"
-                     class=".project.Project"
-                     permission="eztranet.manage"
-                     view="eztranet.add.Project" />
-<!-- juste pour la ZMI -->
-<browser:addMenuItem title="Eztranet Image"
-                     class=".project.ProjectImage"
-                     permission="eztranet.project.edit"
-                     view="eztranet.add.ProjectImage" />
-<!-- juste pour la ZMI -->
-<browser:addMenuItem title="Eztranet Video"
-                     class=".project.ProjectVideo"
-                     permission="eztranet.project.edit"
-                     view="eztranet.add.ProjectVideo" />
-<browser:menuItems menu="zmi_views"
-                   for="eztranet.project.interfaces.IProject"
-                   permission="eztranet.project.view">
-    <menuItem title="edit"
-              action="edit.html" />
-    <menuItem title="Permissions"
-              action="permissions.html" />
-    <menuItem title="Contents"
-              action="contents.html" />
-</browser:menuItems>
-
-<browser:menuItems menu="zmi_views"
-                   for="eztranet.project.interfaces.IProjectItem"
-                   permission="eztranet.project.edit">
-    <menuItem title="edit"
-              action="edit.html" />
-</browser:menuItems>
 
 
-<zope:utility component=".project.ProjectFactory"
+<utility component=".project.ProjectFactory"
               name="eztranet.Project" />
-<zope:utility component=".project.ProjectItemFactory"
+<utility component=".project.ProjectItemFactory"
               name="eztranet.ProjectItem" />
-<zope:utility component=".project.ProjectContainerFactory"
+<utility component=".project.ProjectContainerFactory"
               name="eztranet.ProjectContainer" />
 
-<browser:resource name="flowplayer.swf"
-                  file="flowplayer.swf"
-                  permission="zope.Public"
-                  layer="..skin.interfaces.IEztranetSkin" />
-<browser:resource name="folder.png"
-                  file="folder.png"
-                  permission="zope.Public"
-                  layer="..skin.interfaces.IEztranetSkin" />
-<browser:resource name="up.png"
-                  file="up.png"
-                  permission="zope.Public"
-                  layer="..skin.interfaces.IEztranetSkin" />
-<browser:resource name="loading.gif"
-                  file="loading.gif"
-                  permission="zope.Public"
-                  layer="..skin.interfaces.IEztranetSkin" />
 
-<!-- comment management -->
-<browser:menuItem title="Commenter"
-                  action="@@comments.html"
-                  for=".interfaces.IProject"
-                  menu="eztranet_actions"
-                  permission="eztranet.comment.view" />
-<browser:menuItem title="Commenter"
-                  action="@@comments.html"
-                  for=".interfaces.IProjectItem"
-                  menu="eztranet_actions"
-                  permission="eztranet.comment.view" />
+<include package=".browser" />
+
 
 </configure>

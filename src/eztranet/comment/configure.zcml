@@ -1,6 +1,18 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            i18n_domain="eztranet">
 
+<permission id="eztranet.comment.view"
+            title="View comments" />
+
+<permission id="eztranet.comment.edit"
+            title="Edit comments" />
+
+<permission id="eztranet.comment.add"
+            title="Add comments" />
+
+<permission id="eztranet.comment.delete"
+            title="Delete comments" />
+
 <!-- comment -->
 <class class=".comments.Comment">
     <factory id="comment.interfaces.IComment" />

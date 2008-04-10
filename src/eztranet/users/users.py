@@ -23,20 +23,19 @@ class EztranetUser(InternalPrincipal):
     """
     implements(IEztranetUser)
     passwordManagerName = 'MD5'
-    def __getattr__(self, name):
-        if name == 'IsAdmin':
-            srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
-            return srm.getSetting("eztranet.Administrator", self.login).getName()=="Allow"
-        return super(EztranetUser, self).__getattr__(name)
-    def __setattr__(self, name, value):
-        if name == 'IsAdmin':
-            srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
-            if value:
-                srm.assignRoleToPrincipal("eztranet.Administrator", self.login)
-            else :
-                srm.unsetRoleForPrincipal("eztranet.Administrator", self.login)
-        else:
-            super(EztranetUser, self).__setattr__(name, value)
+
+    def _getAdminStatus(self):
+        srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
+        return srm.getSetting("eztranet.Administrator", self.login).getName()=="Allow"
+
+    def _setAdminStatus(self, value):
+        srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
+        if value:
+            srm.assignRoleToPrincipal("eztranet.Administrator", self.login)
+        else :
+            srm.unsetRoleForPrincipal("eztranet.Administrator", self.login)
+
+    isAdmin = property(_getAdminStatus, _setAdminStatus)
 
 EztranetUserFactory=Factory(EztranetUser)
 
@@ -45,6 +44,15 @@ def EztranetUserAdded(user, event):
     u"a subscriber that do the necessary after a user has been added"
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
     srm.assignRoleToPrincipal("eztranet.Member", user.login)
+
+def recursively_unsetrole(obj, userlogin):
+    """function used to recurse the role removal on all objects"""
+    rolemanager = IPrincipalRoleManager(obj)
+    roles = rolemanager.getRolesForPrincipal(userlogin)
+    for role in roles:
+        rolemanager.unsetRoleForPrincipal(role[0], userlogin)
+    for subobj in obj.values():
+        recursively_unsetrole(subobj, userlogin)
 
 @adapter(IEztranetUser, IObjectRemovedEvent)
 def EztranetUserRemoved(user, event):
@@ -55,10 +63,7 @@ def EztranetUserRemoved(user, event):
     site = getSite()
     if 'projects' in site:
         for project in getSite()['projects'].values():
-            rolemanager = IPrincipalRoleManager(project)
-            roles = rolemanager.getRolesForPrincipal(user.login)
-            for role in roles:
-                rolemanager.unsetRoleForPrincipal(role[0], user.login)
+            recursively_unsetrole(project, user.login)
 
 def initial_setup(site):
     sm = site.getSiteManager()
@@ -77,8 +82,6 @@ def initial_setup(site):
     # create an admin user to be able to log in
     admin = EztranetUser('admin', 'eztranet', 'eztranet initial administrator', passwordManagerName='MD5')
     # grant him the admin role
-    print site
-    print site.__name__
     srm = IPrincipalRoleManager(site)
     srm.assignRoleToPrincipal("eztranet.Administrator", admin.login)
     srm.assignRoleToPrincipal("eztranet.Member", admin.login)

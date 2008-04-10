@@ -1,6 +1,13 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser">
 
+<zope:permission id="eztranet.thumbnail.view"
+            title="View thumbnails" />
+                 
+<zope:permission id="eztranet.thumbnail.write"
+            title="Write thumbnails" />
+
+
 <zope:class class=".thumbnail.Thumbnail">
     <require permission="eztranet.thumbnail.view"
              interface=".interfaces.IThumbnail" />
