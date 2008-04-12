@@ -6,6 +6,7 @@
   <include package="zope.app.security" file="meta.zcml" />
   <include package="zope.app.securitypolicy" file="meta.zcml" />
   <include package="zope.app.zcmlfiles" file="meta.zcml" />
+  <include package="zope.mimetype" file="meta.zcml" />
   <include package="zope.publisher" />
   <include package="zope.traversing" />
   <include package="zope.traversing.browser" />
@@ -30,6 +31,8 @@
   <include package="zope.app.file" />
   <include package="zope.app.folder" />
   <include package="zope.dublincore" />
+  <include package="zope.mimetype" />
+  <include package="zope.file" />
 
   <!-- Add your own component registrations here -->
 
@@ -43,7 +46,6 @@
 
 <include package=".skin" />
 <include package=".users" />
-<include package=".download" />
 <include package=".thumbnail" />
 <include package=".project" />
 <include package=".comment" />

@@ -17,6 +17,8 @@ from zope.app.file.browser.file import FileView
 from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
 from zope.contenttype import guess_content_type
+from zope.security.proxy import removeSecurityProxy
+import zope.file
 
 from eztranet.project.interfaces import IProject, IProjectItem, IProjectImage, IProjectVideo
 from eztranet.project.project import Project, ProjectImage, ProjectVideo
@@ -135,13 +137,13 @@ class ProjectImageAdd(AddForm):
         self.image.contentType = guess_content_type(self.image.title, self.image.data)[0]
         return self.image
 
+import zope.app.file
 
-
-class ProjectVideoAdd(AddForm):
+class ProjectVideoAdd(zope.file.upload.Upload):
     u"""
     The view class for adding a ProjectVideo
     """
-    form_fields=Fields(IProjectVideo).omit('__name__','title', '__parent__', 'contentType')
+    form_fields=Fields(zope.app.file.interfaces.IFile, IProjectVideo).select('data', 'description')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"Ajout d'une vidéo"
     extra_script = u"""
@@ -151,18 +153,8 @@ class ProjectVideoAdd(AddForm):
     document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
 
-    def create(self, data):
-        self.video=ProjectVideo()
-        applyChanges(self.video, self.form_fields, data)
-        if not self.video.title:
-            self.video.title = self.request.form['form.data'].filename
-        self.video.__parent__ = self.context.context
-        self.context.contentName=INameChooser(self.context.context).chooseName(None, self.video)
-        while self.context.contentName in self.context.__parent__:
-            self.context.contentName = "new-" + self.context.contentName
-            self.video.title = "new-" + self.video.title
-        self.video.contentType = guess_content_type(self.video.title, self.video.data)[0]
-        return self.video
+    def _create_instance(self, data):
+        return ProjectVideo()
 
 class ProjectItemEdit(EditForm):
     label="Modification"
@@ -207,7 +199,7 @@ class ProjectImageView(ProjectItemView):
     def originalWidth(self):
         return self.context.getImageSize()[0]
 
-class ProjectVideoView(FileView):
+class ProjectVideoView(zope.file.download.Download):
     u"la vue qui permet d'afficher une video"
     label=u"Vidéo"
     __call__=ViewPageTemplateFile("video.pt")
@@ -224,6 +216,6 @@ class ProjectVideoView(FileView):
         return getPath(self.context)
 
     def callFlashView(self):
-        self.context = File(self.context.flash_video)
-        return self.show()
+        self.context = self.context.flash_video
+        return removeSecurityProxy(self.context).openDetached().read()
 

@@ -4,7 +4,8 @@ from zope.app.container.constraints import contains, containers
 from zope.schema import TextLine, Text
 from zope.index.text.interfaces import ISearchableText
 from zope.interface import Attribute
-from zope.app.file.interfaces import IFile, IImage
+from zope.file.interfaces import IFile
+from zope.app.file.interfaces import IImage
 
 class IProject(IContainer, IContained):
     u"""

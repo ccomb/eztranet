@@ -8,33 +8,8 @@ from zope.component import adapts
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.security.proxy import removeSecurityProxy
 from zope.traversing.browser.absoluteurl import AbsoluteURL
+from zope.file.file import File
 import urllib
-
-class FlashConverterThread(Thread):
-    u"""
-    The thread that runs ffmpeg and write the result video file
-    The name of the file gives the status of the compression
-    """
-    def __init__(self, origname, targetname):
-        self.origname, self.targetname = origname, targetname
-        super(FlashConverterThread, self).__init__()
-    def run(self):
-        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', self.origname, '-ar', '22050', '-b', '1600', self.targetname):
-            os.remove(self.origname)
-            open(self.targetname+".FAILED", 'a').close() #touch
-            return
-        os.remove(self.origname)
-        os.rename(self.targetname, self.targetname+".OK")
-
-
-def compute_flashvideo(video):
-    tmpfile, tmpname = mkstemp()
-    os.write(tmpfile, video.data)
-    os.close(tmpfile)
-    t = FlashConverterThread(tmpname, tmpname + ".flv")
-    t.start()
-    return tmpname + ".flv"
-    
 
 class FlashContentProvider(object):
     implements(IContentProvider)
@@ -48,7 +23,10 @@ class FlashContentProvider(object):
             if os.path.exists(context.flash_video_tempfile+".OK"):
                 flvname = context.flash_video_tempfile+".OK"
                 flvfile = open(flvname)
-                context.flash_video = flvfile.read()
+                context.flash_video = File()
+                openfile = context.flash_video.open('w')
+                openfile.write(flvfile.read())
+                openfile.close()
                 flvfile.close()
                 os.remove(flvname)
                 context.flash_video_tempfile = 'OK'

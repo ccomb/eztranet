@@ -46,6 +46,7 @@ src/eztranet/download/configure.zcml
 src/eztranet/download/interfaces.py
 src/eztranet/project/__init__.py
 src/eztranet/project/configure.zcml
+src/eztranet/project/flashpreview.py
 src/eztranet/project/interfaces.py
 src/eztranet/project/project.py
 src/eztranet/project/browser/__init__.py

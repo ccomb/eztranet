@@ -156,8 +156,11 @@ div.nb_comments, div a.nb_comments {
     font-size: 90%;
 }
 input, textarea {
-    border: none;
+    border: inset 1px;
     color: #4D4D4D;
-    background: white;
+    background: #D2D6E7;
     margin-bottom: 5px;
+}
+input[type=submit] {
+    border: outset 1px;
 }

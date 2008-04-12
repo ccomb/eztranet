@@ -6,7 +6,7 @@ from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
-from zope.app.file.file import File
+from zope.file.file import File
 from zope.app.file.image import Image
 from persistent import Persistent
 import os
@@ -145,7 +145,7 @@ def ProjectVideoThumbnailer(video):
     u"thumbnail creator for ProjectVideo"
     u"convert the video to png, without audio, with only 1 frame, with a delay of 3 seconds"
     tmpfile = NamedTemporaryFile()
-    tmpfile.write(video.data)
+    tmpfile.write(video.open().read())
     tmpfile.flush()
     thumbnail = os.popen("ffmpeg -i %s -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % tmpfile.name).read()
     tmpfile.close()

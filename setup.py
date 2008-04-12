@@ -52,7 +52,9 @@ setup(name='eztranet',
                         'zope.app.file',
                         'zope.app.container',
                         'zope.dublincore',
-                        'zope.app.security'
+                        'zope.app.security',
+                        'zope.mimetype',
+                        'zope.file',
                         ],
       entry_points = """
       [console_scripts]

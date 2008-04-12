@@ -79,7 +79,7 @@
 
 
 <adapter name="eztranet.project.flashvideo"
-              factory=".flashpreview.FlashContentProvider"
+              factory=".browser.flashpreview.FlashContentProvider"
               permission="eztranet.project.view" />
 
 
