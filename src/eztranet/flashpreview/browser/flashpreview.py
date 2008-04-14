@@ -49,3 +49,20 @@ class FlashContentProvider(object):
 """ % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
         else:        
             return "<br/><br/>En cours de compression..."
+
+
+class FlashPreviewView(zope.file.download.Download, ProjectItemView):
+    u"la vue qui permet d'afficher une video"
+    label=u"Vidéo"
+    __call__=ViewPageTemplateFile("flashpreview.pt")
+
+    def __init__(self, context, request):
+        self.context, self.request = context, request
+
+
+    def getPath(self):
+        return getPath(self.context)
+
+    def callFlashView(self):
+        self.context = self.context.flash_video
+        return removeSecurityProxy(self.context).openDetached().read()

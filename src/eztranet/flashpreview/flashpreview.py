@@ -1,0 +1,66 @@
+# -*- coding: utf-8 -*-
+import os
+from os.path import join, dirname
+import eztranet
+from threading import Thread
+from tempfile import mkstemp
+from zope.contentprovider.interfaces import IContentProvider
+from zope.interface import Interface, implements
+from zope.component import adapts
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from zope.security.proxy import removeSecurityProxy
+from zope.traversing.browser.absoluteurl import AbsoluteURL
+from zope.file.interfaces import IFile
+import urllib
+from interfaces import IFlashPreview
+from zope.annotation.interfaces import IAnnotations
+import transaction
+from persistent.dict import PersistentDict
+
+
+
+class FlashPreview(object):
+    implements(IFlashPreview)
+    adapts(IFile)
+
+    def __init__(self, file):
+        self.context = file
+        annotations = IAnnotations(self.context)
+        if 'eztranet.flashpreview' not in annotations:
+            annotations['eztranet.flashpreview'] = PersistentDict()
+        if 'preview' not in annotations['eztranet.flashpreview']:
+            annotations['eztranet.flashpreview']['preview'] = None
+
+    def encode(self):
+        """
+        start encoding and return the thread
+        """
+        tmpfile, tmpname = mkstemp()
+        os.write(tmpfile, self.context.open().read())
+        os.close(tmpfile)
+        thread = FlashConverterThread(tmpname, tmpname + ".flv")
+        thread.start()
+        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = tmpname + ".flv"
+        return thread
+
+    @property
+    def flash_movie(self):
+        return IAnnotations(self.context)['eztranet.flashpreview']['preview']
+
+
+class FlashConverterThread(Thread):
+    u"""
+    The thread that runs ffmpeg and write the resulting video file
+    The name of the file gives the status of the compression
+    """
+    def __init__(self, origname, targetname):
+        self.origname, self.targetname = origname, targetname
+        super(FlashConverterThread, self).__init__()
+    def run(self):
+        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', self.origname, '-ar', '22050', '-b', '512k', '-g', '240', self.targetname):
+            os.remove(self.origname)
+            open(self.targetname+".FAILED", 'a').close() #touch
+            return
+        os.remove(self.origname)
+        os.rename(self.targetname, self.targetname+".OK")
+        

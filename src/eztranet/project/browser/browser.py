@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+from zope.interface import alsoProvides
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
 from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
@@ -21,7 +21,7 @@ from zope.security.proxy import removeSecurityProxy
 import zope.file
 
 from eztranet.project.interfaces import IProject, IProjectItem, IProjectImage, IProjectVideo
-from eztranet.project.project import Project, ProjectImage, ProjectVideo
+from eztranet.project.project import Project, ProjectItem
         
 class CustomTextWidget(TextAreaWidget):
     width=40
@@ -111,50 +111,30 @@ class ProjectContainerView(Contents):
             pass
         return ret
 
-class ProjectImageAdd(AddForm):
+class ProjectItemAdd(zope.file.upload.Upload):
     u"""
-    The view class for adding a ProjectImage
+    The view class for adding a ProjectItem
     """
-    form_fields=Fields(IProjectImage).omit('__name__', 'title', '__parent__', 'contentType')
+    form_fields=Fields(IProjectItem).omit('__name__', 'title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Ajout d'une image"
+    label=u"Ajout d'un fichier"
     extra_script = u"""
     document.open()
     document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
     document.close()
     document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
-    def create(self, data):
-        self.image=ProjectImage()
-        applyChanges(self.image, self.form_fields, data)
-        if not self.image.title:
-            self.image.title = self.request.form['form.data'].filename
-        self.image.__parent__ = self.context.context
-        self.context.contentName=INameChooser(self.context.context).chooseName(None, self.image)
-        while self.context.contentName in self.context.__parent__:
-            self.context.contentName = "new-" + self.context.contentName
-            self.image.title = "new-" + self.image.title
-        self.image.contentType = guess_content_type(self.image.title, self.image.data)[0]
-        return self.image
-
-import zope.app.file
-
-class ProjectVideoAdd(zope.file.upload.Upload):
-    u"""
-    The view class for adding a ProjectVideo
-    """
-    form_fields=Fields(zope.app.file.interfaces.IFile, IProjectVideo).select('data', 'description')
-    form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Ajout d'une vidéo"
-    extra_script = u"""
-    document.open()
-    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
-    document.close()
-    document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
-    """
+    def add(self, obj):
+        majormimetype = obj.mimeType.split('/')[0]
+        if majormimetype == 'video':
+            alsoProvides(obj, IProjectVideo)
+        elif majormimetype == 'image':
+            alsoProvides(obj, IProjectImage)
+        super(ProjectItemAdd, self).add(obj)
 
     def _create_instance(self, data):
-        return ProjectVideo()
+        return ProjectItem()
+
 
 class ProjectItemEdit(EditForm):
     label="Modification"
@@ -198,24 +178,4 @@ class ProjectImageView(ProjectItemView):
 
     def originalWidth(self):
         return self.context.getImageSize()[0]
-
-class ProjectVideoView(zope.file.download.Download):
-    u"la vue qui permet d'afficher une video"
-    label=u"Vidéo"
-    __call__=ViewPageTemplateFile("video.pt")
-
-    def __init__(self, context, request):
-        self.context, self.request = context, request
-
-    def description(self):
-        if not self.context.description:
-            return None
-        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
-
-    def getPath(self):
-        return getPath(self.context)
-
-    def callFlashView(self):
-        self.context = self.context.flash_video
-        return removeSecurityProxy(self.context).openDetached().read()
 

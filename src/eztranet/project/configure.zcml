@@ -2,7 +2,6 @@
 
 <permission id="eztranet.project.view"
             title="View the project" />
-                 
 <permission id="eztranet.project.edit"
             title="Edit the project" />
 
@@ -42,35 +41,26 @@
 
 <class class=".project.ProjectItem">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-  <implements interface="eztranet.download.interfaces.IDownloadable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectItem
+                      zope.file.interfaces.IFile" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectItem
+                       zope.file.interfaces.IFile" />
+
 </class>
 
-<class class=".project.ProjectImage">
-  <require permission="eztranet.project.view"
-           interface=".interfaces.IProjectImage" />
-  <require permission="eztranet.project.edit"
-           set_schema=".interfaces.IProjectImage" />
-</class>
-
-<class class=".project.ProjectVideo">
-  <require permission="eztranet.project.view"
-           interface=".interfaces.IProjectVideo" />
-  <require permission="eztranet.project.edit"
-           set_schema=".interfaces.IProjectVideo" />
-  <require permission="eztranet.project.edit"
-           set_attributes="flash_video_tempfile flash_video" />
-</class>
 
 <adapter factory=".project.SearchableTextOfProject" />
 <adapter factory=".project.SearchableTextOfProjectItem" />
 <adapter factory=".project.ProjectNameChooser" />
 <adapter factory=".project.ProjectItemNameChooser" />
 <adapter factory=".project.ProjectImageThumbnailer"
-              provides="eztranet.thumbnail.interfaces.IThumbnailer" />
+         provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 <adapter factory=".project.ProjectVideoThumbnailer"
-              provides="eztranet.thumbnail.interfaces.IThumbnailer" />
+         provides="eztranet.thumbnail.interfaces.IThumbnailer" />
 <adapter factory=".project.ProjectThumbnail" />
 
 <subscriber handler=".project.ProjectVideoAdded" />
@@ -78,18 +68,13 @@
 <subscriber handler=".project.ProjectVideoRemoved" />
 
 
-<adapter name="eztranet.project.flashvideo"
-              factory=".browser.flashpreview.FlashContentProvider"
-              permission="eztranet.project.view" />
-
-
 
 <utility component=".project.ProjectFactory"
-              name="eztranet.Project" />
+         name="eztranet.Project" />
 <utility component=".project.ProjectItemFactory"
-              name="eztranet.ProjectItem" />
+         name="eztranet.ProjectItem" />
 <utility component=".project.ProjectContainerFactory"
-              name="eztranet.ProjectContainer" />
+         name="eztranet.ProjectContainer" />
 
 
 <include package=".browser" />

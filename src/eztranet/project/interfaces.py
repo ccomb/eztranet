@@ -1,65 +1,70 @@
-# -*- coding: utf-8 -*-
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
-from zope.schema import TextLine, Text
+from zope.schema import TextLine, Text, Bytes
 from zope.index.text.interfaces import ISearchableText
-from zope.interface import Attribute
+from zope.interface import Interface, Attribute
 from zope.file.interfaces import IFile
 from zope.app.file.interfaces import IImage
 
 class IProject(IContainer, IContained):
-    u"""
+    """
     a project that will contain items or subprojects.
+    This interface is added on regular zope folders.
     """
     containers("eztranet.project.interfaces.IProjectContainer",
                "eztranet.project.interfaces.IProject")
     contains("eztranet.project.interfaces.IProject",
              "eztranet.project.interfaces.IProjectItem")
     title = TextLine(title=u'titre',
-                     description=u'Titre du projet')
-    description = Text(title=u"description",
-                       description=u"Description du projet",
+                     description=u'Project title')
+    description = Text(title=u"Description",
+                       description=u'Project description',
                        required=False,
                        max_length=1000)
 
-class IProjectItem(IContained):
-    u"""
+class IProjectItem(Interface):
+    """
     a project item (image or video)
+    This interface is only used to describe data of interest
+    in an uploaded file, and to generate the adding and edit forms.
     """
     containers("eztranet.project.interfaces.IProject")
-    title = TextLine(title=u'nom de fichier',
-                     description=u'Nom du fichier',
+    data = Bytes(title = u'File',
+                 description = u'File you want to upload')
+    title = TextLine(title=u'File name',
+                     description=u'Name of the uploaded file',
                      required=False)
-    description = Text(title=u"description",
-                       description=u"Description du fichier",
+    description = Text(title=u'Description',
+                       description=u'File description',
                        required=False,
                        max_length=1000)
 
-class IProjectImage(IProjectItem, IImage):
-    u"marker interface to tell this is a project image"
+class IProjectVideo(IProjectItem):
+    """
+    a marker interface to distinguish a video
+    """
 
-class IProjectVideo(IProjectItem, IFile):
-    u"marker interface for project video"
-    flash_video = Attribute("The video converted to flash")
-    flash_video_tempfile = Attribute("Path of the target compressed file, "
-                                     "or status of the compression")
+class IProjectImage(IProjectItem):
+    """
+    a marker interface to distinguish an image
+    """
 
 class IProjectContainer(IContainer, IContained):
-    u"""
+    """
     a toplevel container for the projects should only contain projects or items
     """
     contains(IProject)
-    title=TextLine(title=u'titre',
-                   description=u'Titre du conteneur de projets')
+    title=TextLine(title=u'Title',
+                   description=u'Title of the project container')
 
 class ISearchableTextOfProject(ISearchableText):
-    u"""
-    on déclare un index juste pour cette interface
-    de façon à indexer juste les projets
+    """
+    We declare an index just for this interface, so that
+    only project are indexed
     """
     
 class ISearchableTextOfProjectItem(ISearchableText):
-    u"""
-    on déclare un index juste pour cette interface
-    de façon à indexer juste les articles
+    """
+    We declare an index just for this interface, so that
+    only projectitems are indexed
     """

@@ -1,0 +1,19 @@
+<configure xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns="http://namespaces.zope.org/zope">
+
+<permission id="eztranet.flashpreview.view"
+            title="View the flash preview" />
+<permission id="eztranet.flashpreview.edit"
+            title="Edit the flash preview" />
+
+<class class=".flashpreview.FlashPreview">
+  <require permission="eztranet.flashpreview.view"
+           interface=".interfaces.IFlashPreview" />
+  <require permission="eztranet.flashpreview.edit"
+           set_schema=".interfaces.IFlashPreview" />
+</class>
+
+<adapter factory=".flashpreview.FlashPreview"
+         trusted="yes" />
+
+</configure>

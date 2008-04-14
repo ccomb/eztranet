@@ -1,0 +1,20 @@
+<configure xmlns="http://namespaces.zope.org/browser"
+           xmlns:zope="http://namespaces.zope.org/zope">
+
+<zope:adapter name="eztranet.project.flashvideo"
+              factory=".flashpreview.FlashContentProvider"
+              permission="eztranet.project.view" />
+
+<page name="flv"
+      for="..interfaces.IFlashPreviewable"
+      class=".flashpreview.FlvView"
+      attribute="callFlashView"
+      permission="eztranet.flashpreview.view" />
+
+<resource name="flowplayer.swf"
+          file="flowplayer.swf"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+</configure>
+

@@ -49,6 +49,7 @@
 <include package=".thumbnail" />
 <include package=".project" />
 <include package=".comment" />
+<include package=".flashpreview" />
 
 <include file="permissions.zcml" />
 

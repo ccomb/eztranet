@@ -90,6 +90,10 @@
 
 <grant role="eztranet.project.Member"
        permission="eztranet.comment.add" />
+       
+<grant role="eztranet.project.Member"
+       permission="eztranet.flashpreview.view" />
+       
 
 <!-- PROJECT MANAGER (can write a project) -->
 <grant role="eztranet.project.Manager"
@@ -100,6 +104,9 @@
             
 <grant role="eztranet.project.Manager"
        permission="zope.app.dublincore.change" />
+
+<grant role="eztranet.project.Manager"
+       permission="eztranet.flashpreview.edit" />
 
 
 </configure>

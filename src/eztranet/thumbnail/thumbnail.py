@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
-from zope.component import adapts, getAdapter, adapter
+from zope.component import adapts, queryAdapter, adapter
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.app.file.image import Image
@@ -22,15 +22,14 @@ class Thumbnail(object):
         self.image = IAnnotations(context)['eztranet.thumbnail']
 
     def compute_thumbnail(self):
-        try:
-            thumbnail = getAdapter(removeSecurityProxy(self.context), IThumbnailer)
-        except:
-            thumbnail = None
+        thumbnail = queryAdapter(removeSecurityProxy(self.context), IThumbnailer)
         if thumbnail is not None:
             self.image = IAnnotations(self.context)['eztranet.thumbnail'] = Image(thumbnail)
 
 
 @adapter(IThumbnailed, IObjectModifiedEvent)
 def ThumbnailedModified(object, event):
-    if event.descriptions and hasattr(event.descriptions[0],'attributes') and 'data' in event.descriptions[0].attributes:
+    if event.descriptions \
+    and hasattr(event.descriptions[0],'attributes') \
+    and 'data' in event.descriptions[0].attributes:
         IThumbnail(object).compute_thumbnail()
