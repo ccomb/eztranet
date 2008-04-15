@@ -16,4 +16,4 @@
 $Id: __init__.py 39651 2005-10-26 18:36:17Z oestermeier $
 """
 
-from eztranet.comment.interfaces import *
+from interfaces import *

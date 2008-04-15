@@ -9,7 +9,6 @@ from zope.security.checker import canAccess
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
-from interfaces import *
 
 class PageTitleContentProvider(object):
     u"""

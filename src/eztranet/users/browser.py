@@ -8,7 +8,7 @@ from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
 
 from users import EztranetUser
-from interfaces import *
+from interfaces import IEztranetUser
 
 
 class ProjectGranting(Granting):

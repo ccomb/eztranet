@@ -4,65 +4,51 @@
       xmlns:metal="http://xml.zope.org/namespaces/metal" 
       xml:lang="en" lang="en"
       metal:use-macro="context/@@standard_macros/page">
-
 <body>
-
 <div id="body"
      metal:fill-slot="body">
 
 <tal:block tal:define="IComments nocall:modules/eztranet.comment.interfaces/IComments;
                        IAttributeAnnotatableComments nocall:modules/eztranet.comment.interfaces/IAttributeAnnotatableComments"
            tal:condition="python: IAttributeAnnotatableComments.providedBy(context)">
-
     <div class="nb_comments"
-         tal:define="nb python: len(IComments(context));
-                     s python: 2%(nb+1)/2 * 's'"
+         tal:define="nb python:len(IComments(context));
+                     s python:2%(nb+1)/2 * 's'"
          tal:condition="nb">
        <a class="nb_comments"
           href="@@comments.html"
-          tal:content="string: ${nb} commentaire${s}">
-        X commentaires
+          tal:content="string: ${nb} comment${s}">
+        N comments
        </a>
-</div>
+    </div>
 </tal:block>
 
 <h1>
     <a href="#"
        tal:attributes="href context/__parent__/@@absolute_url"
        tal:content="context/__parent__/title">
-     Project
-    </a> :
-        <span tal:content="context/title">
-        Image
-        </span>
+        Project
+    </a> : 
+    <span tal:content="context/title">
+        Video
+    </span>
 </h1>
 
 <p tal:content="structure view/description">
-    brief description of the image
+    brief description of the video
 </p>
 
 <div id="item_toolbar">
     <a href="#"
-       tal:condition="python: view.originalWidth() > view.wantedWidth()"
-       onclick="toggle_image_size(800,1000)"
-       tal:attributes="onclick string:toggle_image_size(${view/wantedWidth}, ${view/originalWidth})">
-       zoom +/-
-    </a>
-    <a href="#"
        tal:attributes="href string:${context/@@absolute_url}/@@download">
-       télécharger
+     download
     </a>
 </div>
 
-<img id="main_image"
-     width="800"
-     src="#"
-     alt="image"
-     tal:attributes="src context/@@absolute_url; 
-                     alt context/title;
-                     width view/wantedWidth" />
-
+<div tal:content="structure provider:eztranet.flashpreview.flashvideo">
+    flash preview
 </div>
 
+</div>
 </body>
 </html>

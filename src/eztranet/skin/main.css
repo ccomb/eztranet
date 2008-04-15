@@ -94,21 +94,18 @@ div#body {
 #navtreecontents icon { background-repeat: no-repeat; padding-left: 10px; display: inline;  cursor: auto; }
 #navtreecontents collection { display: block; margin-left: 8px; height: auto; }
 
-div#video_toolbar {
+div#item_toolbar {
     background: #6C77AE;
     width: 100%;
 }
-div#video_toolbar a {
+div#item_toolbar a {
     margin-right: 10px;
     color: #c6cce7;
     text-decoration: none;
 }
-div#image_toolbar a {
-    margin-right: 10px;
-    color: #c6cce7;
-    text-decoration: none;
+div#item_toolbar a:hover {
+    color: #F9F9FC;
 }
-div#image_toolbar a:hover,  div#video_toolbar a:hover { color: #F9F9FC; }
 div.item {
     float: left;
     height: 15em;

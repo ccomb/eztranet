@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from interfaces import *
+from interfaces import IEztranetSiteManagerSetEvent, IEztranetSite
 from zope.app.folder.folder import Folder
 from zope.interface import implements, Interface
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer

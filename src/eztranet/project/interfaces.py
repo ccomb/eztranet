@@ -2,9 +2,7 @@ from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
 from zope.schema import TextLine, Text, Bytes
 from zope.index.text.interfaces import ISearchableText
-from zope.interface import Interface, Attribute
-from zope.file.interfaces import IFile
-from zope.app.file.interfaces import IImage
+from zope.interface import Interface
 
 class IProject(IContainer, IContained):
     """

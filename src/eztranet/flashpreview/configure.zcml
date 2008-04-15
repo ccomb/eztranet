@@ -16,4 +16,6 @@
 <adapter factory=".flashpreview.FlashPreview"
          trusted="yes" />
 
+<include package=".browser" />
+
 </configure>

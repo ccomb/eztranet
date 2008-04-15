@@ -49,7 +49,31 @@
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectItem
                        zope.file.interfaces.IFile" />
+</class>
 
+<class class=".project.ProjectImage">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectImage
+                      zope.file.interfaces.IFile" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectImage
+                       zope.file.interfaces.IFile" />
+</class>
+
+<class class=".project.ProjectVideo">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectVideo
+                      zope.file.interfaces.IFile" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectVideo
+                       zope.file.interfaces.IFile" />
 </class>
 
 

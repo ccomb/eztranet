@@ -46,8 +46,14 @@
 
 <!-- VIEW -->
 <page name="view.html"
-      for="..interfaces.IProjectItem"
-      class=".browser.ProjectItemView"
+      for="..interfaces.IProjectImage"
+      class=".browser.ProjectImageView"
+      permission="eztranet.project.view"
+      menu="eztranet_actions"
+      title="View" />
+<page name="view.html"
+      for="..interfaces.IProjectVideo"
+      class=".browser.ProjectVideoView"
       permission="eztranet.project.view"
       menu="eztranet_actions"
       title="View" />

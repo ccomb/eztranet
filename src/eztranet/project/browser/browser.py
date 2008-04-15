@@ -1,47 +1,44 @@
-from zope.interface import alsoProvides
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges
-from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.traversing.api import getPath
 from zope.app.form.browser import TextAreaWidget
 from zope.app.container.browser.contents import Contents
 from zope.app.container.interfaces import INameChooser
-from zope.formlib.form import Actions, Action, getWidgetsData
+from zope.formlib.form import Actions, Action
 from zope.copypastemove import ContainerItemRenamer
 from zope.security.checker import canAccess
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 from zope.app.form.browser.textwidgets import escape
-from zope.app.file.browser.image import ImageData
-from zope.app.file.browser.file import FileView
-from zope.app.file import File
 from zope.dublincore.interfaces import IDCTimes
-from zope.contenttype import guess_content_type
 from zope.security.proxy import removeSecurityProxy
 import zope.file
 
-from eztranet.project.interfaces import IProject, IProjectItem, IProjectImage, IProjectVideo
-from eztranet.project.project import Project, ProjectItem
+from eztranet.project.interfaces import IProject, IProjectItem
+from eztranet.project.project import Project, ProjectItem, \
+                                     ProjectImage, ProjectVideo
         
 class CustomTextWidget(TextAreaWidget):
     width=40
     height=5
 
 class ProjectAdd(AddForm):
-    u"""
+    """
     The view class for adding an project
     """
     form_fields=Fields(IProject).omit('__name__', '__parent__')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Ajout d'un projet"
+    label = u"Adding a project"
     def create(self, data):
         self.project=Project()
         applyChanges(self.project, self.form_fields, data)
-        self.context.contentName=INameChooser(self.context.context).chooseName(self.project.title, self.project)
+        self.context.contentName = \
+            INameChooser(self.context.context).chooseName(self.project.title,
+                                                          self.project)
         return self.project
 
 class ProjectEdit(EditForm):
-    label="Modification du projete"
+    label = u'Modification of the project'
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -62,7 +59,9 @@ class ProjectEdit(EditForm):
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
 def project_sorting(p1, p2):
-    u"We put projects in the beginning, and order by date, most recent first"
+    """
+    We put projects in the beginning, and order by date, most recent first
+    """
     if IProject.providedBy(p1['object']) and IProjectItem.providedBy(p2['object']):
         return -1
     if IProject.providedBy(p2['object']) and IProjectItem.providedBy(p1['object']):
@@ -75,7 +74,9 @@ def project_sorting(p1, p2):
 
 
 class ProjectView(Contents):
-    u"la vue qui permet d'afficher un project"
+    """
+    The view used to display a project
+    """
     label=u"Vue d'un projet"
     __call__=ViewPageTemplateFile("project.pt")
     def __init__(self, context, request):
@@ -93,12 +94,12 @@ class ProjectView(Contents):
         return contentinfo
 
 class ProjectContainerView(Contents):
-    u"""
-    la vue du container de projects.
+    """
+    The view for project containers
     """
     label = u"Projets"
     __call__ = ViewPageTemplateFile('project.pt')
-    description = u"Voici la liste de vos différents projets"
+    description = u"Here is the list of your projects"
     def listContentInfo(self):
         u"""
         reuse the original, but remove those not permitted
@@ -112,7 +113,7 @@ class ProjectContainerView(Contents):
         return ret
 
 class ProjectItemAdd(zope.file.upload.Upload):
-    u"""
+    """
     The view class for adding a ProjectItem
     """
     form_fields=Fields(IProjectItem).omit('__name__', 'title', '__parent__', 'contentType')
@@ -124,20 +125,18 @@ class ProjectItemAdd(zope.file.upload.Upload):
     document.close()
     document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
-    def add(self, obj):
-        majormimetype = obj.mimeType.split('/')[0]
-        if majormimetype == 'video':
-            alsoProvides(obj, IProjectVideo)
-        elif majormimetype == 'image':
-            alsoProvides(obj, IProjectImage)
-        super(ProjectItemAdd, self).add(obj)
 
     def _create_instance(self, data):
-        return ProjectItem()
-
+        majormimetype = self.request.form['form.data'].headers['Content-Type'].split('/')[0]
+        if majormimetype == 'video':
+            return ProjectVideo()
+        elif majormimetype == 'image':
+            return ProjectImage()
+        else :
+            return ProjectItem()
 
 class ProjectItemEdit(EditForm):
-    label="Modification"
+    label = u'Modification'
     actions = Actions(Action('Apply', success='handle_edit_action'), )
 
     def __init__(self, context, request):
@@ -159,15 +158,23 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
-class ProjectItemView(BrowserPage):
+class ProjectItemView(zope.file.download.Download):
+    """
+    The base view for project items
+    """
+    label = u'File'
+    __call__ = ViewPageTemplateFile("file.pt")
+
     def description(self):
         if not self.context.description:
             return None
         return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
 class ProjectImageView(ProjectItemView):
-    u"la vue qui permet d'afficher une image"
-    label=u"Image"
+    """
+    The view that allows to display an image
+    """
+    label = u'Image'
     __call__=ViewPageTemplateFile("image.pt")
 
     def wantedWidth(self):
@@ -179,3 +186,19 @@ class ProjectImageView(ProjectItemView):
     def originalWidth(self):
         return self.context.getImageSize()[0]
 
+class ProjectVideoView(ProjectItemView):
+    """
+    The view that allows to display a video
+    """
+    label = u'Video'
+    __call__=ViewPageTemplateFile("video.pt")
+
+    def __init__(self, context, request):
+        self.context, self.request = context, request
+
+    def getPath(self):
+        return getPath(self.context)
+
+    def callFlashView(self):
+        self.context = self.context.flash_video
+        return removeSecurityProxy(self.context).openDetached().read()

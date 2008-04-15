@@ -1,23 +1,12 @@
-# -*- coding: utf-8 -*-
 import os
-from os.path import join, dirname
-import eztranet
 from threading import Thread
 from tempfile import mkstemp
-from zope.contentprovider.interfaces import IContentProvider
-from zope.interface import Interface, implements
+from zope.interface import implements
 from zope.component import adapts
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.security.proxy import removeSecurityProxy
-from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.file.interfaces import IFile
-import urllib
 from interfaces import IFlashPreview
 from zope.annotation.interfaces import IAnnotations
-import transaction
 from persistent.dict import PersistentDict
-
-
 
 class FlashPreview(object):
     implements(IFlashPreview)
@@ -43,13 +32,16 @@ class FlashPreview(object):
         IAnnotations(self.context)['eztranet.flashpreview']['preview'] = tmpname + ".flv"
         return thread
 
-    @property
-    def flash_movie(self):
+    def get_flash_movie(self):
         return IAnnotations(self.context)['eztranet.flashpreview']['preview']
 
+    def set_flash_movie(self, file):
+        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = file
+
+    flash_movie = property(get_flash_movie, set_flash_movie)
 
 class FlashConverterThread(Thread):
-    u"""
+    """
     The thread that runs ffmpeg and write the resulting video file
     The name of the file gives the status of the compression
     """

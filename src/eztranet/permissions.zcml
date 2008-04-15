@@ -34,7 +34,6 @@
 <grant role="eztranet.Administrator"
        permission="zope.View" />
 
-
 <!-- eztranet related -->            
 <grant role="eztranet.Administrator"
        permission="eztranet.manage" />
@@ -62,7 +61,12 @@
             
 <grant role="eztranet.Administrator"
        permission="eztranet.project.edit" />
-            
+  
+<grant role="eztranet.Administrator"
+       permission="eztranet.flashpreview.view" />
+
+<grant role="eztranet.Administrator"
+       permission="eztranet.flashpreview.edit" />
 
 <!-- EZTRANET MEMBER (can login in the eztranet) -->
 <grant role="eztranet.Member"

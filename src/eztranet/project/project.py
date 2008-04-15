@@ -1,17 +1,20 @@
 from zope.interface import implements, implementsOnly
 from zope.component import adapts, adapter
-from zope.app.container.interfaces import INameChooser, IObjectRemovedEvent, IObjectAddedEvent, IObjectRemovedEvent
+from zope.app.container.interfaces import INameChooser, \
+                                          IObjectRemovedEvent, \
+                                          IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
 from zope.file.file import File
-from persistent import Persistent
 import os
 import PIL.Image
 from StringIO import StringIO
 from tempfile import NamedTemporaryFile
-from interfaces import *
+from interfaces import IProjectContainer, IProjectItem, IProject, \
+                                          IProjectImage, IProjectVideo, \
+                        ISearchableTextOfProject, ISearchableTextOfProjectItem
 from eztranet.thumbnail.interfaces import IThumbnail
 from eztranet.flashpreview.interfaces import IFlashPreview
 
@@ -49,6 +52,22 @@ class ProjectItem(File):
 
 ProjectItemFactory = Factory(ProjectItem)
 
+class ProjectImage(ProjectItem):
+    """
+    a project image
+    """
+    implements(IProjectImage)
+
+ProjectImageFactory = Factory(ProjectImage)
+
+class ProjectVideo(ProjectItem):
+    """
+    a project video
+    """
+    implements(IProjectVideo)
+
+ProjectVideoFactory = Factory(ProjectVideo)
+
 class ProjectItemNameChooser(NameChooser):
     """
     adapter that allows to choose the __name__ of a projectitem
@@ -71,12 +90,6 @@ class ProjectNameChooser(ProjectItemNameChooser):
     """
     adapts(IProject)
     implements(INameChooser)
-
-class ProjectVideo(ProjectItem):
-    implements(IProjectVideo)
-
-class ProjectImage(ProjectItem):
-    implements(IProjectImage)
 
 class SearchableTextOfProject(object):
     """

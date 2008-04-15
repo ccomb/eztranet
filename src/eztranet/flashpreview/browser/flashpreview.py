@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
 import os
-from threading import Thread
-from tempfile import mkstemp
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import Interface, implements
 from zope.component import adapts
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.security.proxy import removeSecurityProxy
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.file.file import File
+from eztranet.flashpreview.interfaces import IFlashPreview
+from zope.security.proxy import removeSecurityProxy
 import urllib
+import zope.file
+import transaction
 
 class FlashContentProvider(object):
     implements(IContentProvider)
@@ -17,28 +17,33 @@ class FlashContentProvider(object):
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
     def update(self):
-        context = removeSecurityProxy(self.context)
-        status_or_file = context.flash_video_tempfile
-        if status_or_file != None and status_or_file != 'OK' and status_or_file != 'FAILED':
-            if os.path.exists(context.flash_video_tempfile+".OK"):
-                flvname = context.flash_video_tempfile+".OK"
+        self.flashpreview = removeSecurityProxy(IFlashPreview(self.context))
+        if type(self.flashpreview.flash_movie) is str \
+        and self.flashpreview.flash_movie != 'OK' \
+        and self.flashpreview.flash_movie != 'FAILED':
+            if os.path.exists(self.flashpreview.flash_movie + '.OK'):
+                flvname = self.flashpreview.flash_movie + '.OK'
                 flvfile = open(flvname)
-                context.flash_video = File()
-                openfile = context.flash_video.open('w')
+                self.flashpreview.flash_movie = File()
+                openfile = self.flashpreview.flash_movie.open('w')
                 openfile.write(flvfile.read())
                 openfile.close()
                 flvfile.close()
+                transaction.savepoint() # be sure to save before removing the file
                 os.remove(flvname)
-                context.flash_video_tempfile = 'OK'
-            if os.path.exists(context.flash_video_tempfile+".FAILED"):
-                os.remove(context.flash_video_tempfile+".FAILED")
-                context.flash_video_tempfile = 'FAILED'
+            elif os.path.exists(self.flashpreview.flash_movie + '.FAILED'):
+                os.remove(self.flashpreview.flash_movie + '.FAILED')
+                self.flashpreview.flash_movie = 'FAILED'
+ 
     def render(self):
-        if self.context.flash_video_tempfile == 'FAILED':
-            return u"La compression flash a échoué.<br/>Vous pouvez néanmoins télécharger la vidéo d'origine."
-        if self.context.flash_video_tempfile == 'OK':
+        if type(self.flashpreview.flash_movie) is str:
+            if self.flashpreview.flash_movie == 'FAILED':
+                return u"Flash compression failed.<br/>However you can still download the original movie."
+            elif self.flashpreview.flash_movie[0:4] == '/tmp':
+                return "<br/><br/>Currently compressing..."
+        else:
             return u"""
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="720" height="540">
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="360" height="288">
 	<param name="allowScriptAccess" value="sameDomain" />
 	<param name="movie" value="/@@/flowplayer.swf" />
 	<param name="quality" value="high" />
@@ -47,22 +52,17 @@ class FlashContentProvider(object):
     <param name="flashvars" value="config={ initialScale:'orig', baseURL: '%s/', videoFile: '@@flv', loop: false }" />
 </object>
 """ % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
-        else:        
-            return "<br/><br/>En cours de compression..."
 
 
-class FlashPreviewView(zope.file.download.Download, ProjectItemView):
-    u"la vue qui permet d'afficher une video"
-    label=u"Vidéo"
-    __call__=ViewPageTemplateFile("flashpreview.pt")
-
+class FlvView(zope.file.download.Download):
+    """
+    view to get the flv file stored in the annotations
+    """
     def __init__(self, context, request):
-        self.context, self.request = context, request
+        super(FlvView, self).__init__(context, request)
+        self.flashpreview = removeSecurityProxy(IFlashPreview(context))
+
+    def __call__(self):
+        return zope.file.download.Download(self.flashpreview.flash_movie, self.request).__call__()
 
 
-    def getPath(self):
-        return getPath(self.context)
-
-    def callFlashView(self):
-        self.context = self.context.flash_video
-        return removeSecurityProxy(self.context).openDetached().read()

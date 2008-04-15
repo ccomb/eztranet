@@ -3,7 +3,7 @@ from zope.publisher.browser import BrowserView
 from zope.app.file.browser.image import ImageData
 from zope.traversing.browser.absoluteurl import absoluteURL
 from zope.security.proxy import removeSecurityProxy
-from interfaces import *
+from interfaces import IThumbnail
 
 class ThumbnailImageView(ImageData, BrowserView):
     u"""

@@ -5,7 +5,7 @@ from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.app.file.image import Image
 from zope.security.proxy import removeSecurityProxy
-from interfaces import *
+from interfaces import IThumbnail, IThumbnailed, IThumbnailer
 
 class Thumbnail(object):
     u"""

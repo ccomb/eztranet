@@ -11,7 +11,7 @@ from zope.app.security.interfaces import IAuthentication
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.app.component.hooks import getSite
 
-from interfaces import *
+from interfaces import IEztranetUsersContainer, IEztranetUser
 
 class EztranetUsersContainer(PrincipalFolder):
     implements(IEztranetUsersContainer)
