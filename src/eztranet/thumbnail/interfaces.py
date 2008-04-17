@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from zope.interface import Interface, Attribute
+from zope.annotation.interfaces import IAttributeAnnotatable
 
-class IThumbnailed(Interface):
+class IThumbnailed(IAttributeAnnotatable):
     u"""
     The marker interface to put on an object that must have a thumbnail
     """

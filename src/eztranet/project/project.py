@@ -9,13 +9,10 @@ from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
 from zope.file.file import File
 import os
-import PIL.Image
-from StringIO import StringIO
-from tempfile import NamedTemporaryFile
 from interfaces import IProjectContainer, IProjectItem, IProject, \
                                           IProjectImage, IProjectVideo, \
                         ISearchableTextOfProject, ISearchableTextOfProjectItem
-from eztranet.thumbnail.interfaces import IThumbnail
+from eztranet.thumbnail.interfaces import IThumbnail, IThumbnailer
 from eztranet.flashpreview.interfaces import IFlashPreview
 
 class ProjectContainer(BTreeContainer):
@@ -129,34 +126,12 @@ class ProjectThumbnail(object):
     def compute_thumbnail(self):
         pass
 
-@adapter(IProjectImage)
-def ProjectImageThumbnailer(imagefile):
-    "thumbnail creator for ProjectImage"
-    tmp=StringIO()
-    i = PIL.Image.open(imagefile.open())
-    i.thumbnail((120,120), PIL.Image.ANTIALIAS)
-    i.save(tmp, "png")
-    return tmp.getvalue()
-
-@adapter(IProjectVideo)
-def ProjectVideoThumbnailer(videofile):
-    "thumbnail creator for ProjectVideo"
-    "convert the video to png, without audio, with only 1 frame, with a delay of 3 seconds"
-    tmpfile = NamedTemporaryFile()
-    tmpfile.write(videofile.open().read())
-    tmpfile.flush()
-    thumbnail = os.popen("ffmpeg -i %s -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % tmpfile.name).read()
-    tmpfile.close()
-    blobfile = File()
-    fd = blobfile.open('w')
-    fd.write(thumbnail)
-    fd.close()
-    return ProjectImageThumbnailer(blobfile)
 
 @adapter(IProjectVideo, IObjectAddedEvent)
 def ProjectVideoAdded(video, event):
-    "warning, here the object is NOT security proxied"
-    #IThumbnail(video).compute_thumbnail()
+    """
+    warning, here the object is NOT security proxied
+    """
     IFlashPreview(video).encode()
 
 @adapter(IProjectVideo, IObjectModifiedEvent)

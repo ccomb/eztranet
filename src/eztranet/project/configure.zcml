@@ -81,10 +81,8 @@
 <adapter factory=".project.SearchableTextOfProjectItem" />
 <adapter factory=".project.ProjectNameChooser" />
 <adapter factory=".project.ProjectItemNameChooser" />
-<adapter factory=".project.ProjectImageThumbnailer"
-         provides="eztranet.thumbnail.interfaces.IThumbnailer" />
-<adapter factory=".project.ProjectVideoThumbnailer"
-         provides="eztranet.thumbnail.interfaces.IThumbnailer" />
+<adapter factory=".project.ProjectImageThumbnailer" />
+<adapter factory=".project.ProjectVideoThumbnailer" />
 <adapter factory=".project.ProjectThumbnail" />
 
 <subscriber handler=".project.ProjectVideoAdded" />

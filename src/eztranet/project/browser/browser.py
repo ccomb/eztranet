@@ -12,8 +12,8 @@ from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 from zope.app.form.browser.textwidgets import escape
 from zope.dublincore.interfaces import IDCTimes
 from zope.security.proxy import removeSecurityProxy
-import zope.file
-
+from zope.file.upload import Upload
+from zope.file.download import Download
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project, ProjectItem, \
                                      ProjectImage, ProjectVideo
@@ -112,7 +112,7 @@ class ProjectContainerView(Contents):
             pass
         return ret
 
-class ProjectItemAdd(zope.file.upload.Upload):
+class ProjectItemAdd(Upload):
     """
     The view class for adding a ProjectItem
     """
@@ -158,7 +158,7 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
 
-class ProjectItemView(zope.file.download.Download):
+class ProjectItemView(Download):
     """
     The base view for project items
     """

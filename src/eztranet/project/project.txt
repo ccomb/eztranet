@@ -112,11 +112,16 @@ The project and projectcontainer have a name chooser::
     >>> namechooser.chooseName(u'', item)
     'ProjectItem'
 
-We try a weird name::
+We try a unicode and a weird name::
 
+    >>> item.title = u'Şakir'
+    >>> namechooser.chooseName(u'', item)
+    '\xc3\xa5\xc2\x9eakir'
+   
     >>> item.title = u'  @+@ My project/ /O   '
     >>> namechooser.chooseName(u'', item)
     'my-project---o'
+
 
 We put the item in the project, and try to add a second item
 with the same computed name
@@ -125,4 +130,21 @@ with the same computed name
     >>> item2 = ProjectItem(title=u'  @+@ My project///O ')
     >>> namechooser.chooseName(u'', item2)
     'my-project---o-2'
+
+=======================
+ProjectImageThumbnailer
+=======================
+
+
+
+========
+AddForms
+========
+
+    >>> from zope.publisher.browser import TestRequest
+    >>> from eztranet.project.browser.browser import ProjectAdd
+    >>> projects = ProjectContainer()
+
+
+
 

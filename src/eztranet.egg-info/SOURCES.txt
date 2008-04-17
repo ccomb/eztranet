@@ -62,6 +62,7 @@ src/eztranet/project/project.txt
 src/eztranet/project/browser/__init__.py
 src/eztranet/project/browser/browser.py
 src/eztranet/project/browser/configure.zcml
+src/eztranet/project/browser/file.pt
 src/eztranet/project/browser/folder.png
 src/eztranet/project/browser/image.pt
 src/eztranet/project/browser/loading.gif

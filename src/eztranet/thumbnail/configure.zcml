@@ -18,6 +18,14 @@
 <zope:adapter factory=".thumbnail.Thumbnail"
               trusted="yes" />
 
+<zope:adapter factory=".thumbnail.ImageThumbnailer"
+              name="image" />
+
+<zope:adapter factory=".thumbnail.VideoThumbnailer"
+              name="video" />
+
+<zope:adapter factory=".thumbnail.GenericThumbnailer" />
+
 <browser:view name="thumbnail_image"
               for=".interfaces.IThumbnailed"
               class=".browser.ThumbnailImageView"
