@@ -79,7 +79,7 @@ class ProjectItemNameChooser(NameChooser):
             newname = name
         if item is not None and len(rawname)>0:
             newname = unicode.lower(rawname).strip(' @+').replace(' ','-').replace('/','-')
-        return super(ProjectItemNameChooser, self).chooseName(newname, item).encode('utf-8')
+        return super(ProjectItemNameChooser, self).chooseName(newname, item)
 
 class ProjectNameChooser(ProjectItemNameChooser):
     """

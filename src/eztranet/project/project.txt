@@ -115,11 +115,11 @@ We try a unicode and a weird name::
 
     >>> item.title = u'Şakir'
     >>> namechooser.chooseName(u'', item)
-    '\xc3\xa5\xc2\x9eakir'
+    u'\xe5\x9eakir'
    
     >>> item.title = u'  @+@ My project/ /O   '
     >>> namechooser.chooseName(u'', item)
-    'my-project---o'
+    u'my-project---o'
 
 
 We put the item in the project, and try to add a second item
@@ -129,7 +129,7 @@ A number is automatically appended::
     >>> project['my-project---o'] = item
     >>> item2 = ProjectItem(title=u'  @+@ My project///O ')
     >>> namechooser.chooseName(u'', item2)
-    'my-project---o-2'
+    u'my-project---o-2'
     >>> del item, item2, project['my-project---o']
 
 
