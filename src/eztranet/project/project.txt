@@ -107,7 +107,6 @@ The project and projectcontainer have a name chooser::
 
     >>> from eztranet.project.project import ProjectItemNameChooser
     >>> project = Project(title=u'my project')
-    >>> item = ProjectItem()
     >>> namechooser = ProjectItemNameChooser(project)
     >>> namechooser.chooseName(u'', item)
     'ProjectItem'
@@ -124,17 +123,14 @@ We try a unicode and a weird name::
 
 
 We put the item in the project, and try to add a second item
-with the same computed name
+with the same computed name.
+A number is automatically appended::
 
-    >>> project[namechooser.chooseName(u'', item)] = item
+    >>> project['my-project---o'] = item
     >>> item2 = ProjectItem(title=u'  @+@ My project///O ')
     >>> namechooser.chooseName(u'', item2)
     'my-project---o-2'
-
-=======================
-ProjectImageThumbnailer
-=======================
-
+    >>> del item, item2, project['my-project---o']
 
 
 ========

@@ -40,7 +40,7 @@ class ProjectItem(File):
     A project item is just a blob file
     """
     implements(IProjectItem)
-    __name__=__parent__=None
+    __name__ = __parent__ = None
 
     def __init__(self, title=u'', description=u''):
         super(ProjectItem, self).__init__()
@@ -112,42 +112,3 @@ class SearchableTextOfProjectItem(SearchableTextOfProject):
     adapts(IProjectItem)
     implementsOnly(ISearchableTextOfProjectItem)
 
-
-class ProjectThumbnail(object):
-    "adapter from a project to a thumbnail"
-    adapts(IProject)
-    implements(IThumbnail)
-    image = None
-    url = '/@@/folder.png'
-
-    def __init__(self, context):
-        self.context = context
-
-    def compute_thumbnail(self):
-        pass
-
-
-@adapter(IProjectVideo, IObjectAddedEvent)
-def ProjectVideoAdded(video, event):
-    """
-    warning, here the object is NOT security proxied
-    """
-    IFlashPreview(video).encode()
-
-@adapter(IProjectVideo, IObjectModifiedEvent)
-def ProjectVideoModified(video, event):
-    "warning, here the object IS security proxied"
-    try:
-        if 'data' in event.descriptions[0].attributes:
-            # we compute the flash video only if we uploaded something
-            IFlashPreview(video).encode()
-    except:
-        return
-
-@adapter(IProjectVideo, IObjectRemovedEvent)
-def ProjectVideoRemoved(video, event):
-    tmpfile = IFlashPreview(video).flash_movie
-    if type(tmpfile) is str and tmpfile[0:4] == '/tmp':
-        for file in tmpfile, tmpfile+".OK", tmpfile+'.FAILED': 
-            if os.path.exists(file):
-                os.remove(file)

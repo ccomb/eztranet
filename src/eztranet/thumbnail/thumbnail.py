@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
-from zope.component import adapts, queryAdapter, adapter
+from zope.component import adapts, adapter, queryAdapter, adapter
+from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.file.interfaces import IFile
@@ -40,6 +41,7 @@ class Thumbnail(object):
                 file = self.image.open('w')
                 file.write(thumbnail_content)
                 file.close()
+                self.url = None
             else:
                 self.image = IAnnotations(self.context)['eztranet.thumbnail'] = None
                 self.url = '/@@/default_thumbnail.png'
@@ -47,13 +49,6 @@ class Thumbnail(object):
             self.image = IAnnotations(self.context)['eztranet.thumbnail'] = None
             self.url = '/@@/default_thumbnail.png'
 
-
-@adapter(IThumbnailed, IObjectModifiedEvent)
-def ThumbnailedModified(object, event):
-    if event.descriptions \
-    and hasattr(event.descriptions[0],'attributes') \
-    and 'data' in event.descriptions[0].attributes:
-        IThumbnail(object).compute_thumbnail()
 
 class BaseThumbnailer(object):
     """
@@ -93,11 +88,25 @@ class VideoThumbnailer(BaseThumbnailer):
     """
     def __call__(self):
         blobpath = self.context._data._current_filename()
-        thumbnail_content = os.popen("ffmpeg -i %s -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath).read()
+        thumbnail_content = os.popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath).read()
         if len(thumbnail_content) == 0: # maybe there is less than 3 seconds?
-            thumbnail_content = os.popen("ffmpeg -i %s -vcodec png -vframes 1 -an -f rawvideo -" % blobpath).read()
+            thumbnail_content = os.popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobpath).read()
         thumbfile = File()
         fd = thumbfile.open('w')
         fd.write(thumbnail_content)
         fd.close()
         return ImageThumbnailer(thumbfile)()
+
+@adapter(IThumbnailed, IObjectModifiedEvent)
+def ThumbnailedModified(obj, event):
+    if event.descriptions \
+    and hasattr(event.descriptions[0],'attributes') \
+    and 'data' in event.descriptions[0].attributes:
+        IThumbnail(obj).compute_thumbnail()
+
+@adapter(IThumbnailed, IObjectAddedEvent)
+def ThumbnailedAdded(video, event):
+    """
+    warning, here the object is NOT security proxied
+    """
+    IThumbnail(video).compute_thumbnail()

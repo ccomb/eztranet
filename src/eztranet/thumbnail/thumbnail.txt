@@ -14,6 +14,7 @@ First some imports::
     >>> from os.path import dirname, join
     >>> from zope.file.interfaces import IFile
     >>> from zope.file.file import File
+    >>> import os
 
 
 Any object can store a thumbnail in its annotations.
@@ -94,17 +95,17 @@ First we create a source blob-based image file,
 and we tell it can hold a thumbnail ::
 
     >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
-    >>> file = File()
-    >>> fd = file.open('w')
+    >>> blobfile = File()
+    >>> fd = blobfile.open('w')
     >>> fd.write(open(samplepath).read())
     >>> fd.close()
-    >>> file.size
+    >>> blobfile.size
     3172
-    >>> alsoProvides(file, IThumbnailed)
+    >>> alsoProvides(blobfile, IThumbnailed)
 
 We initialize the content type, but this should be done during upload::
 
-    >>> file.mimeType = 'image/png'
+    >>> blobfile.mimeType = 'image/png'
 
 Then we register the image thumbnailer (done via zcml)::
 
@@ -112,7 +113,7 @@ Then we register the image thumbnailer (done via zcml)::
 
 Now we can directly call the thumbnail adapter and compute the thumbnail::
 
-    >>> thumb = IThumbnail(file)
+    >>> thumb = IThumbnail(blobfile)
     >>> thumb.image is None
     True
     >>> thumb.compute_thumbnail()
@@ -123,12 +124,19 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.url is None
     True
 
+Try to compute again the thumbnail::
+
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    1443
+   
+
 If the thumbnail can not be computed, we get a default url::
 
-    >>> fd = file.open('w')
+    >>> fd = blobfile.open('w')
     >>> fd.write('bad content')
     >>> fd.close()
-    >>> file.size
+    >>> blobfile.size
     11
     >>> thumb.compute_thumbnail()
     >>> thumb.image is None
@@ -146,15 +154,15 @@ And the name is the major contentType 'video'.
 We keep the same file as before but we fill it with a ogg video::
 
     >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
-    >>> fd = file.open('w')
+    >>> fd = blobfile.open('w')
     >>> fd.write(open(samplepath).read())
     >>> fd.close()
-    >>> file.size
+    >>> blobfile.size
     180511
 
 We initialize the content type, but this should be done during upload::
 
-    >>> file.mimeType = 'video/ogg'
+    >>> blobfile.mimeType = 'video/ogg'
 
 Then we register the video thumbnailer (done via zcml)::
 
@@ -162,7 +170,7 @@ Then we register the video thumbnailer (done via zcml)::
 
 Now we can directly call the thumbnail adapter and compute the thumbnail::
 
-    >>> thumb = IThumbnail(file)
+    >>> thumb = IThumbnail(blobfile)
     >>> thumb.image is None
     True
     >>> thumb.compute_thumbnail()
@@ -173,12 +181,13 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.url is None
     True
 
+
 If the thumbnail can not be computed, we get a default url::
 
-    >>> fd = file.open('w')
+    >>> fd = blobfile.open('w')
     >>> fd.write('bad content')
     >>> fd.close()
-    >>> file.size
+    >>> blobfile.size
     11
     >>> thumb.compute_thumbnail()
     >>> thumb.image is None
@@ -186,15 +195,14 @@ If the thumbnail can not be computed, we get a default url::
     >>> thumb.url
     '/@@/default_thumbnail.png'
 
-
 =================
 Default thumbnail
 =================
 
 If we don't have a correct mimeType, we get a generic thumbnail::
 
-    >>> file.mimeType = 'unknown type'
-    >>> thumb = IThumbnail(file)
+    >>> blobfile.mimeType = 'unknown type'
+    >>> thumb = IThumbnail(blobfile)
     >>> thumb.image is None
     True
     >>> thumb.compute_thumbnail()
@@ -202,5 +210,60 @@ If we don't have a correct mimeType, we get a generic thumbnail::
     True
     >>> thumb.url
     '/@@/default_thumbnail.png'
+
+==============
+thumbnail view
+==============
+
+We recreate the blobfile and its thumbnail::
+
+    >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> fd = blobfile.open('w')
+    >>> fd.write(open(samplepath).read())
+    >>> fd.close()
+    >>> blobfile.mimeType = 'image/png'
+    >>> blobfile.size
+    3172
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    1443
+    >>> thumb.url is None
+    True
+
+We put the blob in the database
+
+    >>> from ZODB.MappingStorage import MappingStorage
+    >>> from ZODB.blob import BlobStorage
+    >>> from ZODB.DB import DB
+    >>> import transaction
+    >>> import tempfile
+    >>> from tempfile import mkdtemp
+    >>> base_storage = MappingStorage("test")
+    >>> blob_dir = mkdtemp()
+    >>> blob_storage = BlobStorage(blob_dir, base_storage)
+    >>> database = DB(blob_storage)
+    >>> connection = database.open()
+    >>> root = connection.root()
+    >>> root['blobfile'] = blobfile
+    >>> transaction.commit()
+    
+Then we call the thumbnail view, that returns a DownloadResult
+with the content of the thumbnail::
+
+    >>> from zope.publisher.browser import TestRequest
+    >>> from eztranet.thumbnail.browser import ThumbnailImageView
+    >>> d = ThumbnailImageView(blobfile, TestRequest())()
+    >>> len(iter(d).next())
+    1443
+
+
+We clean the temporary database::
+
+    >>> import shutil
+    >>> shutil.rmtree(blob_dir)
+    >>> database.close()
+
+
+
 
 

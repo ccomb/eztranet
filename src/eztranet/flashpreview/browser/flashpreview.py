@@ -34,7 +34,7 @@ class FlashContentProvider(object):
             elif os.path.exists(self.flashpreview.flash_movie + '.FAILED'):
                 os.remove(self.flashpreview.flash_movie + '.FAILED')
                 self.flashpreview.flash_movie = 'FAILED'
- 
+
     def render(self):
         if type(self.flashpreview.flash_movie) is str:
             if self.flashpreview.flash_movie == 'FAILED':
@@ -63,6 +63,6 @@ class FlvView(zope.file.download.Download):
         self.flashpreview = removeSecurityProxy(IFlashPreview(context))
 
     def __call__(self):
-        return zope.file.download.Download(self.flashpreview.flash_movie, self.request).__call__()
+        return zope.file.download.Download(self.flashpreview.flash_movie, self.request)()
 
 

@@ -13,7 +13,7 @@ def tearDown(test):
 
 def test_suite( ):
     return unittest.TestSuite((
-        doctest.DocFileSuite('project/project.txt', 
+        doctest.DocFileSuite('project.txt', 
                              setUp=setUp, 
                              tearDown=tearDown,
                              globs={'zapi': zapi,

@@ -16,6 +16,10 @@
 <adapter factory=".flashpreview.FlashPreview"
          trusted="yes" />
 
+<subscriber handler=".flashpreview.FlashPreviewableAdded" />
+<subscriber handler=".flashpreview.FlashPreviewableModified" />
+<subscriber handler=".flashpreview.FlashPreviewableRemoved" />
+
 <include package=".browser" />
 
 </configure>

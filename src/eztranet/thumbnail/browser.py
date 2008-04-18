@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 from zope.publisher.browser import BrowserView
-from zope.app.file.browser.image import ImageData
+from zope.file.download import Download
 from zope.traversing.browser.absoluteurl import absoluteURL
 from zope.security.proxy import removeSecurityProxy
 from interfaces import IThumbnail
 
-class ThumbnailImageView(ImageData, BrowserView):
+class ThumbnailImageView(Download):
     u"""
     The thumbnail view of an object
     """
     def __call__(self):
         thumbnail = IThumbnail(self.context)
         if thumbnail.image is not None:
-            self.context = removeSecurityProxy(thumbnail.image)
-            return self.show()
+            return Download(removeSecurityProxy(thumbnail.image), self.request)()
         return None
 
 class ThumbnailUrlView(BrowserView):

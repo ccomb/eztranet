@@ -24,8 +24,6 @@
 <zope:adapter factory=".thumbnail.VideoThumbnailer"
               name="video" />
 
-<zope:adapter factory=".thumbnail.GenericThumbnailer" />
-
 <browser:view name="thumbnail_image"
               for=".interfaces.IThumbnailed"
               class=".browser.ThumbnailImageView"
@@ -37,6 +35,7 @@
               permission="eztranet.thumbnail.view" />
 
 <zope:subscriber handler=".thumbnail.ThumbnailedModified" />
+<zope:subscriber handler=".thumbnail.ThumbnailedAdded" />
 
 <browser:resource name="default_thumbnail.png"
                   file="default_thumbnail.png"

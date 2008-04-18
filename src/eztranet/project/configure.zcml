@@ -54,6 +54,7 @@
 <class class=".project.ProjectImage">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectImage
@@ -66,6 +67,7 @@
 <class class=".project.ProjectVideo">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <require permission="eztranet.project.view"
@@ -81,13 +83,7 @@
 <adapter factory=".project.SearchableTextOfProjectItem" />
 <adapter factory=".project.ProjectNameChooser" />
 <adapter factory=".project.ProjectItemNameChooser" />
-<adapter factory=".project.ProjectImageThumbnailer" />
-<adapter factory=".project.ProjectVideoThumbnailer" />
-<adapter factory=".project.ProjectThumbnail" />
 
-<subscriber handler=".project.ProjectVideoAdded" />
-<subscriber handler=".project.ProjectVideoModified" />
-<subscriber handler=".project.ProjectVideoRemoved" />
 
 
 
