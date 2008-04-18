@@ -17,6 +17,9 @@ from zope.file.download import Download
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project, ProjectItem, \
                                      ProjectImage, ProjectVideo
+from eztranet.thumbnail.interfaces import IThumbnail
+from zope.component import adapts
+from zope.interface import implements
         
 class CustomTextWidget(TextAreaWidget):
     width=40
@@ -202,3 +205,18 @@ class ProjectVideoView(ProjectItemView):
     def callFlashView(self):
         self.context = self.context.flash_video
         return removeSecurityProxy(self.context).openDetached().read()
+
+class ProjectThumbnail(object):
+    """
+    adapter from a project to a thumbnail
+    """
+    adapts(IProject)
+    implements(IThumbnail)
+    image = None
+    url = '/@@/folder.png'
+
+    def __init__(self, context):
+        self.context = context
+
+    def compute_thumbnail(self):
+        pass

@@ -15,5 +15,15 @@
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 
+<resource name="fullscreen.html"
+          file="fullscreen.html"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<resource name="fullscreen.js"
+          file="fullscreen.js"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
 </configure>
 

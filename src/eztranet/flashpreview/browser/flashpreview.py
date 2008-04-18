@@ -43,13 +43,21 @@ class FlashContentProvider(object):
                 return "<br/><br/>Currently compressing..."
         else:
             return u"""
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="360" height="288">
+<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="720" height="576">
 	<param name="allowScriptAccess" value="sameDomain" />
 	<param name="movie" value="/@@/flowplayer.swf" />
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
-    <param name="flashvars" value="config={ initialScale:'orig', baseURL: '%s/', videoFile: '@@flv', loop: false }" />
+    <param name="flashvars" value="config={ initialScale:'fit',
+                                            baseURL: '%s/',
+                                            videoFile: '@@flv',
+                                            loop: false,
+                                            controlBarBackgroundColor: 0x6C77AE,
+                                            useNativeFullScreen: false,
+                                            autoRewind: true,
+                                            controlBarGloss: 'high',
+                                            menuItems: [ true, true, true, true, true, false, false ] }" />
 </object>
 """ % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
 
