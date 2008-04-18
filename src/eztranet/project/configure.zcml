@@ -78,14 +78,10 @@
                        zope.file.interfaces.IFile" />
 </class>
 
-
 <adapter factory=".project.SearchableTextOfProject" />
 <adapter factory=".project.SearchableTextOfProjectItem" />
 <adapter factory=".project.ProjectNameChooser" />
 <adapter factory=".project.ProjectItemNameChooser" />
-
-
-
 
 <utility component=".project.ProjectFactory"
          name="eztranet.Project" />

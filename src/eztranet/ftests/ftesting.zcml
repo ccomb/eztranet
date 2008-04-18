@@ -5,6 +5,7 @@
   <!-- Turn on the devmode -->
   <meta:provides feature="devmode" />
   <include package="eztranet" />
+  <includeOverrides package="eztranet" file="overrides.zcml" />
 
   <include package="zope.app.securitypolicy" file="meta.zcml" />
   <include package="zope.app.securitypolicy" />

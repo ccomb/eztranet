@@ -37,12 +37,26 @@
   <!-- Add your own component registrations here -->
 
 <class class=".eztranet.EztranetSite">
-  <require permission="zope.View"          interface="zope.app.component.interfaces.IPossibleSite" />
-  <require permission="zope.ManageContent" set_schema="zope.app.component.interfaces.IPossibleSite" />
-  <require permission="zope.View"          interface="zope.app.container.interfaces.IReadContainer" />
-  <require permission="zope.ManageContent" interface="zope.app.container.interfaces.IWriteContainer" />
+  <factory id="eztranet.eztranet.EztranetSite"
+           title="Eztranet site"
+           description="An Eztranet application" />
+  <require permission="zope.View"
+           interface="zope.app.component.interfaces.IPossibleSite" />
+  <require permission="zope.ManageContent"
+           set_schema="zope.app.component.interfaces.IPossibleSite" />
+  <require permission="zope.View"
+           interface="zope.app.container.interfaces.IReadContainer" />
+  <require permission="zope.ManageContent"
+           interface="zope.app.container.interfaces.IWriteContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </class>
+
+<browser:addform name="eztranet.eztranet.EztranetSite"
+                 schema="eztranet.interfaces.IEztranetSite"
+                 permission="zope.ManageContent"
+                 class=".eztranet.EztranetSiteAdd"
+                 label="Add an Eztranet Site"
+                 content_factory="eztranet.eztranet.EztranetSite" />
 
 <include package=".skin" />
 <include package=".users" />

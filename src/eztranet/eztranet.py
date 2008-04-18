@@ -4,7 +4,7 @@ from zope.app.folder.folder import Folder
 from zope.interface import implements, Interface
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
 from zope.component import adapter
-from zope.app.container.interfaces import IObjectAddedEvent
+from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
 from zope.event import notify
 from zope.app.intid.interfaces import IIntIds
 from zope.app.intid import IntIds
@@ -15,6 +15,7 @@ from zope.app.generations.utility import findObjectsProviding
 from project.interfaces import ISearchableTextOfProject
 from project.interfaces import ISearchableTextOfProjectItem
 from users import users
+from zope.formlib.form import AddForm, Fields, applyChanges
 
 class EztranetSiteManagerSetEvent(object):
     implements(IEztranetSiteManagerSetEvent)
@@ -29,6 +30,8 @@ class EztranetSite(Folder, SiteManagerContainer):
     créer le nécessaire pour faire fonctionner le site
     """
     implements(IEztranetSite)
+    title = u''
+
     def setSiteManager(self, sm):
         u"on surcharge cette méthode pour pouvoir lancer l'evenement"
         super(EztranetSite, self).setSiteManager(sm)
@@ -76,4 +79,20 @@ def EztranetInitialSetup(event):
         intid.register(object)
     # reindex eveything
     catalog.updateIndexes()
+
+class EztranetSiteAdd(AddForm):
+    form_fields = Fields(IEztranetSite)
+    form_fields['__name__'].field.title = u'Name (used in the URL)'
+    form_fields['__name__'].field.description = u'Name used in the URL'
+    label = u"Adding an Eztranet Site"
+
+    def create(self, data):
+        eztranet_site = EztranetSite()
+        applyChanges(eztranet_site, self.form_fields, data)
+        self.context.contentName = INameChooser(self.context.context).\
+                                    chooseName(eztranet_site.__name__,
+                                               eztranet_site)
+        return eztranet_site
+
+
 

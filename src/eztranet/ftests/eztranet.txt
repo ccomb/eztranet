@@ -2,8 +2,12 @@
 Functional tests
 ================
 
+We create the test browser
+
     >>> from zope.testbrowser.testing import Browser
     >>> browser = Browser()
-    >>> browser.addHeader('Authorization', 'Basic mgr:mgrpw')
-    >>> browser.open('http://localhost/')
 
+We need to add an Eztranet Site as a global manager
+    >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
+    >>> browser.open('http://localhost/++skin++Rotterdam/+/eztranet.eztranet.EztranetSite')
+    >>> print browser.contents
