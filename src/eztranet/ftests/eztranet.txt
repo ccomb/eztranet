@@ -7,7 +7,73 @@ We create the test browser
     >>> from zope.testbrowser.testing import Browser
     >>> browser = Browser()
 
-We need to add an Eztranet Site as a global manager
+We need to add an Eztranet Site as a global manager.
+So we load the adding page::
+
     >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
+    >>> browser.addHeader('Accept-Language', 'en-US')
     >>> browser.open('http://localhost/++skin++Rotterdam/+/eztranet.eztranet.EztranetSite')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+
+We fill in the form::
+
+    >>> browser.getControl(name='form.__name__').value = 'eztranet'
+    >>> browser.getControl(name='form.title').value = 'My Eztranet Site'
+    >>> browser.getControl(name='form.actions.add').click()
+
+We should have both an EztranetSite object and a 'projects' subfolder::
+
+    >>> root = getRootFolder()
+    >>> 'projects' in root['eztranet']
+    True
+
+We also have a new 'admin' user in an auth folder::
+
+    >>> from zope.app.component.hooks import getSiteManager
+    >>> sm = getSiteManager(root['eztranet'])
+    >>> 'admin' in sm['authentication']['EztranetUsers']
+    True
+
+We can now visit the eztranet site::
+
+    >>> del browser
+    >>> browser = Browser()
+    >>> browser.open('http://localhost/eztranet')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> 'Eztranet demo' in browser.contents
+    True
+
+We cannot yet visit the projects, and we are redirected
+to a login page::
+
+    >>> browser.open('http://localhost/eztranet/projects/')
     >>> print browser.contents
+    <html ...
+    <input type="text" name="login" id="login" />
+    ...
+
+We fill in the user and password::
+
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
+
+Now we are in the projects page::
+
+    >>> browser.url
+    'http://localhost/eztranet/projects/@@index.html'
+
+We can add a project::
+
+    >>> browser.getLink(url='+/eztranet.add.Project').click()
+    >>> browser.getControl(name='form.title').value = u' project name  '
+    >>> browser.getControl(name='form.description').value = u'project description'
+    >>> browser.getControl(name='form.actions.add').click()
+
+
+
+

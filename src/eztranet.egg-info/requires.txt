@@ -27,3 +27,4 @@ zope.dublincore
 zope.app.security
 zope.mimetype
 zope.file
+zope.testbrowser
