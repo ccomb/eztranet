@@ -54,7 +54,7 @@
 <div id="breadcrumb">
 <tal:block condition="python: 'main_page' not in dir(view)"
            repeat="breadcrumb context/@@absolute_url/breadcrumbs">
-    <a tal:attributes="href string:${breadcrumb/url}/view.html"
+    <a tal:attributes="href string:${breadcrumb/url}/"
        tal:content="breadcrumb/name"
        tal:condition="repeat/breadcrumb/index">
      item

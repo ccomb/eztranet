@@ -10,13 +10,10 @@ log/README.txt
 src/eztranet/__init__.py
 src/eztranet/configure.zcml
 src/eztranet/eztranet.py
-src/eztranet/ftesting.zcml
-src/eztranet/ftests.py
 src/eztranet/interfaces.py
 src/eztranet/overrides.zcml
 src/eztranet/permissions.zcml
 src/eztranet/startup.py
-src/eztranet/testing.py
 src/eztranet.egg-info/PKG-INFO
 src/eztranet.egg-info/SOURCES.txt
 src/eztranet.egg-info/dependency_links.txt
@@ -56,6 +53,10 @@ src/eztranet/flashpreview/browser/flashpreview.py
 src/eztranet/flashpreview/browser/flowplayer.swf
 src/eztranet/flashpreview/browser/fullscreen.html
 src/eztranet/flashpreview/browser/fullscreen.js
+src/eztranet/ftests/__init__.py
+src/eztranet/ftests/eztranet.txt
+src/eztranet/ftests/ftesting.zcml
+src/eztranet/ftests/ftests.py
 src/eztranet/project/__init__.py
 src/eztranet/project/configure.zcml
 src/eztranet/project/interfaces.py

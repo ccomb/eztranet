@@ -61,11 +61,11 @@
          
         <metal:block tal:define="supportsRename view/supportsRename" tal:repeat="item container_contents">
          <div class="item" tal:define="url item/url; id_quoted item/id/url:quote">
-            <a href="#" tal:attributes="href string:${url}/view.html"><img src="#" tal:attributes="src item/object/@@thumbnail_url" /></a>
+            <a href="#" tal:attributes="href string:${url}"><img src="#" tal:attributes="src item/object/@@thumbnail_url" /></a>
             <input type="checkbox" class="noborder" name="ids:list" id="#" value="#" tal:attributes="value item/id; id item/cb_id; checked request/ids_checked|nothing;"/>
 
 
-                  <a href="#" tal:attributes="href string:${url}/view.html" tal:content="item/id">foo</a>
+                  <a href="#" tal:attributes="href string:${url}" tal:content="item/id">foo</a>
 
               <span class="itemsize" tal:content="item/size/sizeForDisplay|nothing" i18n:translate="">&nbsp;</span>
             <div class="itemcreated" tal:define="created item/created|default" tal:content="string: Créé : ${created}" i18n:translate="">&nbsp;</div>

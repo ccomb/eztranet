@@ -2,7 +2,7 @@
 
 <include package=".rotterdamtree" />
 
-<!-- on register l'interface IEztranetSkin avec un nom et un type -->
+<!-- on inscrit l'interface IEztranetSkin avec un nom et un type -->
 <zope:interface
     name="EztranetSkin"
     interface=".interfaces.IEztranetSkin"
@@ -33,7 +33,6 @@
     layer=".interfaces.IEztranetSkin"
     permission="zope.Public" >
     <page name="index.html" template="home.pt" />
-    <page name="view.html" template="home.pt" />
 </browser:pages>
     
 <browser:view name="index.html"

@@ -67,12 +67,32 @@ Now we are in the projects page::
     >>> browser.url
     'http://localhost/eztranet/projects/@@index.html'
 
-We can add a project::
+We add two projects::
 
     >>> browser.getLink(url='+/eztranet.add.Project').click()
-    >>> browser.getControl(name='form.title').value = u' project name  '
-    >>> browser.getControl(name='form.description').value = u'project description'
+    >>> browser.getControl(name='form.title').value = u'   @@@ ++++  '
+    >>> browser.getControl(name='form.description').value = u'project1 description'
     >>> browser.getControl(name='form.actions.add').click()
+    >>> 'Project' in root['eztranet']['projects']
+    True
+    >>> browser.getLink(url='+/eztranet.add.Project').click()
+    >>> browser.getControl(name='form.title').value = u'project 2'
+    >>> browser.getControl(name='form.description').value = u'project2 description'
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> [p in root['eztranet']['projects'] for p in ('Project','project-2')]
+    [True, True]
+
+In each project we add a subproject. We don't try to upload an image or a video
+because zope.app.testing.functional does not support blobstorage yet (#219845)
+
+    >>> browser.getLink('Project').click()
+    >>> browser.getLink(url='+/eztranet.add.Project', index=1).click()
+    >>> browser.getControl(name='form.title').value = u'subproject'
+    >>> browser.getControl(name='form.description').value = u'subproject description'
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> 'subproject' in root['eztranet']['projects']['Project']
+    True
+
 
 
 

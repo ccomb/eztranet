@@ -76,7 +76,6 @@
 <pages for="..interfaces.IProjectContainer"
        class=".browser.ProjectContainerView"
        permission="eztranet.view" >
-    <page name="view.html" />
     <page name="index.html" />
     <page name="contents.html" />
 </pages>
