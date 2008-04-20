@@ -81,17 +81,233 @@ We add two projects::
     >>> browser.getControl(name='form.actions.add').click()
     >>> [p in root['eztranet']['projects'] for p in ('Project','project-2')]
     [True, True]
+    >>> browser.getLink(text='Projects').click()
+    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    True
+    >>> '<a href="Project">   @@@ ++++  </a>' in  browser.contents
+    True
 
 In each project we add a subproject. We don't try to upload an image or a video
 because zope.app.testing.functional does not support blobstorage yet (#219845)
 
-    >>> browser.getLink('Project').click()
-    >>> browser.getLink(url='+/eztranet.add.Project', index=1).click()
+    >>> browser.getLink(text='@@@ ++++').click()
+    >>> browser.getLink(text='new subproject').click()
     >>> browser.getControl(name='form.title').value = u'subproject'
     >>> browser.getControl(name='form.description').value = u'subproject description'
     >>> browser.getControl(name='form.actions.add').click()
+    >>> browser.getLink('subproject', index=1).click()
     >>> 'subproject' in root['eztranet']['projects']['Project']
     True
+
+    >>> browser.getLink(url='..').click()
+    >>> browser.getLink(url='..').click()
+    
+    >>> browser.getLink(url='project-2').click()
+    >>> browser.getLink(text='new subproject').click()
+    >>> browser.getControl(name='form.title').value = u'subproject'
+    >>> browser.getControl(name='form.description').value = u'subproject description'
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> browser.getLink('subproject', index=1).click()
+    >>> 'subproject' in root['eztranet']['projects']['Project']
+    True
+
+We create a new user 'testuser'::
+
+    >>> browser.getLink(text='Users').click()
+    >>> browser.getLink(text='New user').click()
+    >>> browser.getControl(name='form.login').value = u'testuser'
+    >>> browser.getControl(name='form.password').value = u'testpass'
+    >>> browser.getControl(name='form.actions.add').click()
+
+We set the read permissions on project-2 to the user
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getLink(text='project 2').click()
+    >>> browser.getLink(text='Permissions').click()
+    >>> browser.getControl(name='eztranet.project.Member').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+We logout, revisit the projects and login as the new user::
+
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+
+We only see the authorized project::
+
+    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    True
+    >>> '<a href="Project">   @@@ ++++  </a>' in  browser.contents
+    False
+
+Trying to see the unauthorized pages leads to an error::
+
+    >>> browser.open('http://localhost/eztranet/projects/Project')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/Project/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/Project/@@edit.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/Project/@@comments.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@edit.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
+We cannot delete the project:
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getControl(name='ids:list').options
+    ['project-2']
+    >>> browser.getControl(name='ids:list').value = ['project-2']
+    >>> browser.getControl(name="container_delete_button").click()
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
+We can add a comment to the project::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html')
+    >>> browser.getControl(name='text').value = 'this is a comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a comment' in browser.contents
+    True
+    >>> browser.getControl(name='text').value = 'this is a second comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a second comment' in browser.contents
+    True
+    >>> 'this is a comment' in browser.contents
+    True
+
+We cannot delete a comment::
+
+    >>> 'delete' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html?del=1')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
+However we can login as admin and delete the first comment::
+
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.getLink(text='project 2').click()
+    >>> browser.getLink(text='Comment').click()
+    >>> 'this is a comment' in browser.contents
+    True
+    >>> 'this is a second comment' in browser.contents
+    True
+    >>> browser.getLink(text='delete', index=0).click()
+    >>> 'this is a comment' in browser.contents
+    False
+    >>> 'this is a second comment' in browser.contents
+    True
+
+Trying to delete a non existent comment does nothing::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html?del=0')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html?del=-1')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html?del=invalid')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> 'this is a second comment' in browser.contents
+    True
+
+We delete the second project and add it again
+to check that testuser cannot access it after recreation::
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getControl(name='ids:list').options
+    ['project-2', 'Project']
+    >>> browser.getControl(name='ids:list').value = ['project-2']
+    >>> browser.getControl(name="container_delete_button").click()
+
+    >>> browser.getLink(text='new project').click()
+    >>> browser.getControl(name='form.title').value = u'project 2'
+    >>> browser.getControl(name='form.description').value = u'project 2 description'
+    >>> browser.getControl(name='form.actions.add').click()
+
+We should not be able to view it as testuser::
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
+We give access to project-2 to testuser again,
+then we delete and add again testuser
+to check that the new testuser cannot access the project-2::
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.getLink(text='project 2').click()
+    >>> browser.getLink(text='Permissions').click()
+    >>> browser.getControl(name='eztranet.project.Member').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+    >>> browser.getLink(text='Users').click()
+    >>> browser.getControl(name='ids:list').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='ids:list').value = ['testuser']
+    >>> browser.getControl(name="container_delete_button").click()
+
+    >>> browser.getLink(text='New user').click()
+    >>> browser.getControl(name='form.login').value = u'testuser'
+    >>> browser.getControl(name='form.password').value = u'testpass'
+    >>> browser.getControl(name='form.actions.add').click()
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+    
+    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    Traceback (most recent call last):
+    ...
+    HTTPError: HTTP Error 403: Forbidden
+
 
 
 

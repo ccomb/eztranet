@@ -51,7 +51,7 @@
     permission="eztranet.manage" />
 <browser:menuItem
     menu="eztranet_addings"
-    title="Nouvel Utilisateur"
+    title="New user"
     action="+/eztranet.User"
     for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 <browser:menuItem

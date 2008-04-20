@@ -56,7 +56,7 @@ def EztranetInitialSetup(event):
     
     # then create the project folder
     event.object['projects'] = createObject(u"eztranet.ProjectContainer")
-    event.object['projects'].title = u"Projets"
+    event.object['projects'].title = u"Projects"
      
     # then create and register the catalog
     catalog = Catalog()

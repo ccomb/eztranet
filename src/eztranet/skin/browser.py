@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
@@ -11,7 +10,7 @@ from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
 
 class PageTitleContentProvider(object):
-    u"""
+    """
     Un Content Provider qui permet d'afficher le titre de la page (dans le header html)
     """
     implements(IContentProvider)
@@ -31,7 +30,7 @@ class PageTitleContentProvider(object):
         return self._pagetitle
 
 class LogoProvider(object):
-    u"""
+    """
     The view that provides the logo and its html accessories
     """
     implements(IContentProvider)
@@ -42,18 +41,21 @@ class LogoProvider(object):
         try:
             self.logo = getSite()['logo']
         except:
-            self.logo=None
-            self.url="#"
-            self.title="Eztranet"
+            self.logo = None
+            self.url = "#"
+            self.title = "Eztranet"
             return
         self.title = getSite().__name__
         self.url = AbsoluteURL(self.logo, self.request)()
     def render(self):
-        u"Instead of rendering HTML, we return a dict with what we want to be traversed in TALES"
+        """
+        Instead of rendering HTML,
+        we return a dict with what we want to be traversed in TALES
+        """
         return { 'url':self.url, 'title': self.title, 'alt':self.title }
 
 class EztranetMainMenu(object):
-    u"""
+    """
     The content provider that provides the main menu
     """
     implements(IContentProvider)
@@ -65,7 +67,7 @@ class EztranetMainMenu(object):
         self.menuitems = [ { 'name':site[i].title, 'url':AbsoluteURL(site[i], self.request)()} for i in site.keys() if i not in ['logo'] ]
         users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
         if users and canAccess(users, '__name__'):
-            self.menuitems.append({'name': u"Utilisateurs", 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
+            self.menuitems.append({'name': u'Users', 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
     def render(self):
         return self.menuitems
 

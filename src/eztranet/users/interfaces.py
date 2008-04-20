@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
 from zope.schema import Bool
@@ -9,8 +8,8 @@ class IEztranetUsersContainer(IInternalPrincipalContainer, IAuthenticatorPlugin,
     contains("eztranet.users.interfaces.IEztranetUser")
 
 class IEztranetUser(IInternalPrincipal):
-    u"""
+    """
     A user of the eztranet. This is an extended Principal
     """
     containers(IEztranetUsersContainer)
-    IsAdmin = Bool(u"Administrateur")
+    IsAdmin = Bool(u'Administrator')

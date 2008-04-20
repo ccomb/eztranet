@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.app.securitypolicy.browser.granting import Granting
 from zope.component import getUtility, getAllUtilitiesRegisteredFor
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
@@ -23,7 +22,9 @@ class ProjectGranting(Granting):
         if rolemanager.getSetting(role, user).getName()=="Allow":
             return "1"
     def status(self):
-        u"This method is called at the beginning of the template. So do the job and return the status"
+        """
+        This method is called at the beginning of the template. So do the job and return the status
+        """
         if 'GRANT_SUBMIT' in self.request.form:
             rolemanager = IPrincipalRoleManager(self.context)
             for role in self.get_eztranet_roles():
@@ -37,43 +38,40 @@ class ProjectGranting(Granting):
             return False
 
 class EztranetUserAdd(AddForm):
-    u"""
+    """
     The view class for adding a user
     """
-    form_fields=Fields(IEztranetUser).select('login','password','IsAdmin')
-    label=u"Nouvel utilisateur"
+    form_fields = Fields(IEztranetUser).select('login','password','IsAdmin')
+    label = u'New user'
     def create(self, data):
-        u"on crée l'objet (ici avec le constructeur, mais on devrait utiliser une named factory)"
         user=EztranetUser("","","")
-        u"puis on applique les données du formulaire à l'objet (data contient les données du formulaire !)"
         applyChanges(user, self.form_fields, data)
-        u"puis on choisit le nom de l'objet dans le container (le 1er nom dans la liste)"
         self.context.contentName=INameChooser(user).chooseName(user.title, user)
         user.title = user.login
         return user
 
 class EztranetUserView(DisplayForm):
-    u"""
+    """
     The view class for viewing a user
     """
-    form_fields=Fields(IEztranetUser).select('login','IsAdmin')
-    label=u"Utilisateur"
+    form_fields = Fields(IEztranetUser).select('login','IsAdmin')
+    label = u'User'
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login
 
 class EztranetUserEdit(EditForm):
-    u"""
+    """
     The view class for editing a user
     """
     form_fields=Fields(IEztranetUser).select('password','IsAdmin')
-    label=u"Modification utilisateur"
+    label=u"Modifying a user"
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login
 
 class EztranetUsers(Contents):
-    u"""
+    """
     The list of users
     """
     def supportsRename(self):

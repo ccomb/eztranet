@@ -100,7 +100,7 @@ class ProjectContainerView(Contents):
     """
     The view for project containers
     """
-    label = u"Projets"
+    label = u"Projects"
     __call__ = ViewPageTemplateFile('project.pt')
     description = u"Here is the list of your projects"
     def listContentInfo(self):

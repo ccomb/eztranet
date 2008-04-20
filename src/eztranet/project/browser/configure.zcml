@@ -17,10 +17,9 @@
 <pages for="..interfaces.IProject"
        class=".browser.ProjectView"
        permission="eztranet.project.view">
-    <page name="view.html"
+    <page name="index.html"
           menu="eztranet_actions"
           title="View" />
-    <page name="index.html" />
     <page name="contents.html" />
 </pages>
 <!-- EDIT -->
@@ -122,12 +121,12 @@
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <!-- comment management -->
-<menuItem title="Commenter"
+<menuItem title="Comment"
           action="@@comments.html"
           for="..interfaces.IProject"
           menu="eztranet_actions"
           permission="eztranet.comment.view" />
-<menuItem title="Commenter"
+<menuItem title="Comment"
           action="@@comments.html"
           for="..interfaces.IProjectItem"
           menu="eztranet_actions"

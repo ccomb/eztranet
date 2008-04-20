@@ -35,7 +35,7 @@ class EztranetUser(InternalPrincipal):
         else :
             srm.unsetRoleForPrincipal("eztranet.Administrator", self.login)
 
-    isAdmin = property(_getAdminStatus, _setAdminStatus)
+    IsAdmin = property(_getAdminStatus, _setAdminStatus)
 
 EztranetUserFactory=Factory(EztranetUser)
 
