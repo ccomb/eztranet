@@ -11,7 +11,7 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 
 class PageTitleContentProvider(object):
     """
-    Un Content Provider qui permet d'afficher le titre de la page (dans le header html)
+    A Content Provider that allows to display the page titlee (in the html header)
     """
     implements(IContentProvider)
     adapts(Interface, IDefaultBrowserLayer, Interface)
@@ -19,7 +19,7 @@ class PageTitleContentProvider(object):
         self.context, self.request, self.view = context, request, view
         self._sitename = getSite().__name__ or "Zope3"
     def update(self):
-        u"on récupère le nom du contexte s'il en a un"
+        # we retrieve the name of the context if any
         if hasattr(self.context,'__name__') and self.context.__name__ is not None:
             self._pagetitle = self.context.__name__ + " - " + self._sitename
             if self.context.__name__ == 'eztranet':
