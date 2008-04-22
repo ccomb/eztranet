@@ -154,7 +154,7 @@
                   <a href="#"
                      tal:attributes="href string:${url}"
                      tal:content="item/object/title">
-                    foo
+                    ITEM TITLE
                   </a>
 
               <span class="itemsize"

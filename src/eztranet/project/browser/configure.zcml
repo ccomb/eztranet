@@ -45,13 +45,13 @@
       title="Modify" />
 
 <!-- VIEW -->
-<page name="view.html"
+<page name="index.html"
       for="..interfaces.IProjectImage"
       class=".browser.ProjectImageView"
       permission="eztranet.project.view"
       menu="eztranet_actions"
       title="View" />
-<page name="view.html"
+<page name="index.html"
       for="..interfaces.IProjectVideo"
       class=".browser.ProjectVideoView"
       permission="eztranet.project.view"

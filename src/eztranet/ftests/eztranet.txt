@@ -2,6 +2,9 @@
 Functional tests
 ================
 
+Adding an Eztranet site
+-----------------------
+
 We create the test browser
 
     >>> from zope.testbrowser.testing import Browser
@@ -67,6 +70,10 @@ Now we are in the projects page::
     >>> browser.url
     'http://localhost/eztranet/projects/@@index.html'
 
+
+Adding Projects
+---------------
+
 We add two projects::
 
     >>> browser.getLink(url='+/eztranet.add.Project').click()
@@ -87,8 +94,7 @@ We add two projects::
     >>> '<a href="Project">   @@@ ++++  </a>' in  browser.contents
     True
 
-In each project we add a subproject. We don't try to upload an image or a video
-because zope.app.testing.functional does not support blobstorage yet (#219845)
+In each project we add a subproject
 
     >>> browser.getLink(text='@@@ ++++').click()
     >>> browser.getLink(text='new subproject').click()
@@ -107,9 +113,54 @@ because zope.app.testing.functional does not support blobstorage yet (#219845)
     >>> browser.getControl(name='form.title').value = u'subproject'
     >>> browser.getControl(name='form.description').value = u'subproject description'
     >>> browser.getControl(name='form.actions.add').click()
-    >>> browser.getLink('subproject', index=1).click()
     >>> 'subproject' in root['eztranet']['projects']['Project']
     True
+    >>> browser.getLink(url='subproject', index=1).click()
+    >>> 'subproject' in browser.contents
+    True
+    >>> browser.getLink(url='..').click()
+
+
+Adding a Video
+--------------
+
+We add a video from eztranet.thumbnail
+
+    >>> import eztranet.thumbnail
+    >>> from os.path import join, dirname
+    >>> videopath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
+    >>> browser.getLink(text='new file').click()
+    >>> browser.getControl(name='form.data').add_file(open(videopath), 'video/ogg', 'a sample.ogg')
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> '<a href="a%20sample.ogg">' in browser.contents
+    True
+    >>> browser.getLink(url='a%20sample.ogg').click()
+
+CHECK A FEW THINGS
+
+    >>> browser.getLink(url='..').click()
+
+
+Adding an Image
+---------------
+
+We add an image from eztranet.thumbnail
+
+    >>> imagepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> browser.getLink(text='new file').click()
+    >>> browser.getControl(name='form.data').mech_control.add_file(open(imagepath), 'image/png', 'a sample.png')
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> '<a href="a%20sample.png">' in browser.contents
+    True
+    >>> browser.getLink(url='a%20sample.png').click()
+
+CHECK A FEW THINGS
+
+    >>> browser.getLink(url='..').click()
+
+
+Read permissions
+----------------
 
 We create a new user 'testuser'::
 
@@ -188,6 +239,9 @@ We cannot delete the project:
     ...
     HTTPError: HTTP Error 403: Forbidden
 
+Adding a comment
+----------------
+
 We can add a comment to the project::
 
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html')
@@ -239,6 +293,9 @@ Trying to delete a non existent comment does nothing::
     True
     >>> 'this is a second comment' in browser.contents
     True
+
+Resetting permissions
+---------------------
 
 We delete the second project and add it again
 to check that testuser cannot access it after recreation::

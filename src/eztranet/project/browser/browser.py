@@ -59,7 +59,7 @@ class ProjectEdit(EditForm):
         if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 def project_sorting(p1, p2):
     """
@@ -121,10 +121,10 @@ class ProjectItemAdd(Upload):
     """
     form_fields=Fields(IProjectItem).omit('__name__', 'title', '__parent__', 'contentType')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Ajout d'un fichier"
+    label=u"Adding a file"
     extra_script = u"""
     document.open()
-    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />Le fichier est en cours d'envoi, cela peut prendre plusieurs minutes...<br/>Si vous interrompez le chargement de cette page, l'opération sera annulée.</p>")
+    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />The file is being uploaded, this can take several minutes...<br/>If you stop the loading of this page, the transfer will be canceled.</p>")
     document.close()
     document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
     """
@@ -159,7 +159,7 @@ class ProjectItemEdit(EditForm):
             INameChooser(self.context.__parent__).checkName(newname,self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)()+"/view.html")
+        return self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 class ProjectItemView(Download):
     """

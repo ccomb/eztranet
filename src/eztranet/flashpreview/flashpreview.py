@@ -9,6 +9,7 @@ from zope.annotation.interfaces import IAnnotations
 from persistent.dict import PersistentDict
 from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+import transaction
 
 class FlashPreview(object):
     implements(IFlashPreview)
@@ -26,9 +27,9 @@ class FlashPreview(object):
         """
         start encoding and return the thread
         """
-        blobpath = self.context._data._current_filename()
+        transaction.commit() # to be able to open the blob later
         tmpfile, tmpname = mkstemp()
-        thread = FlashConverterThread(blobpath, tmpname)
+        thread = FlashConverterThread(self.context, tmpname)
         thread.start()
         IAnnotations(self.context)['eztranet.flashpreview']['preview'] = tmpname
         return thread
@@ -46,13 +47,16 @@ class FlashConverterThread(Thread):
     The thread that runs ffmpeg and write the resulting video file
     The name of the file gives the status of the compression
     """
-    def __init__(self, blobsourcepath, targetpath):
-        self.blobsourcepath, self.targetpath = blobsourcepath, targetpath
+    def __init__(self, sourcefile, targetpath):
+        self.sourcefile, self.targetpath = sourcefile, targetpath
         super(FlashConverterThread, self).__init__()
     def run(self):
-        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', self.blobsourcepath, '-y', '-ar', '22050', '-b', '512k', '-g', '240', self.targetpath + '.flv'):
+        fd = self.sourcefile.open()
+        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', fd.name, '-y', '-ar', '22050', '-b', '512k', '-g', '240', self.targetpath + '.flv'):
+            fd.close()
             os.rename(self.targetpath, self.targetpath+".FAILED")
             return
+        fd.close()
         os.remove(self.targetpath)
         os.rename(self.targetpath + '.flv', self.targetpath+".OK")
         

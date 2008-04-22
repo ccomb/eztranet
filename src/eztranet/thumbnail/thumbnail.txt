@@ -119,16 +119,16 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
-    >>> thumb.image.size
-    1443
+    >>> 1000 < thumb.image.size < 2000
+    True
     >>> thumb.url is None
     True
 
 Try to compute again the thumbnail::
 
     >>> thumb.compute_thumbnail()
-    >>> thumb.image.size
-    1443
+    >>> 1000 < thumb.image.size < 2000
+    True
    
 
 If the thumbnail can not be computed, we get a default url::
@@ -176,8 +176,8 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
-    >>> thumb.image.size
-    15256
+    >>> 10000 < thumb.image.size < 20000
+    True
     >>> thumb.url is None
     True
 
@@ -225,8 +225,8 @@ We recreate the blobfile and its thumbnail::
     >>> blobfile.size
     3172
     >>> thumb.compute_thumbnail()
-    >>> thumb.image.size
-    1443
+    >>> 1000 < thumb.image.size < 2000
+    True
     >>> thumb.url is None
     True
 
@@ -253,8 +253,8 @@ with the content of the thumbnail::
     >>> from zope.publisher.browser import TestRequest
     >>> from eztranet.thumbnail.browser import ThumbnailImageView
     >>> d = ThumbnailImageView(blobfile, TestRequest())()
-    >>> len(iter(d).next())
-    1443
+    >>> 1000 < len(iter(d).next()) < 2000
+    True
 
 
 We clean the temporary database::
