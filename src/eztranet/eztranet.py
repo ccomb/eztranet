@@ -12,8 +12,6 @@ from zope.app.catalog.catalog import Catalog, ICatalog
 from zope.app.catalog.text import TextIndex
 from zope.component import createObject
 from zope.app.generations.utility import findObjectsProviding
-from project.interfaces import ISearchableTextOfProject
-from project.interfaces import ISearchableTextOfProjectItem
 from users import users
 from zope.formlib.form import AddForm, Fields, applyChanges
 
@@ -57,15 +55,6 @@ def EztranetInitialSetup(event):
     # then create the project folder
     event.object['projects'] = createObject(u"eztranet.ProjectContainer")
     event.object['projects'].title = u"Projects"
-     
-    # then create and register the catalog
-    catalog = Catalog()
-    sm['catalog']=catalog
-    sm.registerUtility(catalog, ICatalog)
-     
-    # then create and register the wanted indices in the catalog
-    catalog['project_text'] = TextIndex(interface=ISearchableTextOfProject, field_name='getSearchableText', field_callable=True)
-    catalog['projectitem_text'] = TextIndex(interface=ISearchableTextOfProjectItem, field_name='getSearchableText', field_callable=True)
     
     # cet setup pourrait être fait dans un event déclenché lors de l'ajout du EztranetSite
     # en disant que l'EztranetSite implémente une interface marqueur du style IHaveUserManagement
@@ -77,8 +66,6 @@ def EztranetInitialSetup(event):
         intid.register(object)
     for object in findObjectsProviding(sm,Interface):
         intid.register(object)
-    # reindex eveything
-    catalog.updateIndexes()
 
 class EztranetSiteAdd(AddForm):
     form_fields = Fields(IEztranetSite)

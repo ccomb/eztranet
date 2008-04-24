@@ -43,14 +43,6 @@ An eztranet project is just a container::
     >>> IContainer.providedBy(p)
     True
 
-A project can be indexed (but this is not yet used)::
-
-    >>> from eztranet.project.interfaces import ISearchableTextOfProject, IProject
-    >>> from eztranet.project.project import SearchableTextOfProject
-    >>> ztapi.provideAdapter(IProject, ISearchableTextOfProject, SearchableTextOfProject)
-    >>> ISearchableTextOfProject(p).getSearchableText()
-    u'projet projet rojet ojet jet et t '
-
 A project has a title and a description, empty by default::
 
     >>> project = Project()
@@ -140,7 +132,5 @@ AddForms
     >>> from zope.publisher.browser import TestRequest
     >>> from eztranet.project.browser.browser import ProjectAdd
     >>> projects = ProjectContainer()
-
-
 
 

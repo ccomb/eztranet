@@ -21,23 +21,13 @@
        <a class="nb_comments"
           href="@@comments.html"
           tal:content="string: ${nb} commentaire${s}">
-        X commentaires
+        X comments
        </a>
 </div>
 </tal:block>
 
-<h1>
-    <a href="#"
-       tal:attributes="href context/__parent__/@@absolute_url"
-       tal:content="context/__parent__/title">
-     Project
-    </a> :
-        <span tal:content="context/title">
-        Image
-        </span>
-</h1>
-
-<p tal:content="structure view/description">
+<p id="description"
+   tal:content="structure view/description">
     brief description of the image
 </p>
 
@@ -50,7 +40,7 @@
     </a>
     <a href="#"
        tal:attributes="href string:${context/@@absolute_url}/@@download">
-       télécharger
+       download
     </a>
 </div>
 
@@ -58,7 +48,7 @@
      width="800"
      src="#"
      alt="image"
-     tal:attributes="src context/@@absolute_url; 
+     tal:attributes="src string:${context/@@absolute_url}/@@display; 
                      alt context/title;
                      width view/wantedWidth" />
 

@@ -1,7 +1,7 @@
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
 from zope.schema import TextLine, Text, Bytes
-from zope.index.text.interfaces import ISearchableText
+from zope.file.interfaces import IFile
 from zope.interface import Interface
 
 class IProject(IContainer, IContained):
@@ -27,8 +27,9 @@ class IProjectItem(Interface):
     in an uploaded file, and to generate the adding and edit forms.
     """
     containers("eztranet.project.interfaces.IProject")
-    data = Bytes(title = u'File',
-                 description = u'The file you want to upload')
+    data = Bytes(title=u'File',
+                 description=u'The file you want to upload',
+                 required=False)
     title = TextLine(title=u'File name',
                      description=u'Name of the uploaded file',
                      required=False)
@@ -37,12 +38,12 @@ class IProjectItem(Interface):
                        required=False,
                        max_length=1000)
 
-class IProjectVideo(IProjectItem):
+class IProjectVideo(IProjectItem, IFile):
     """
     a marker interface to distinguish a video
     """
 
-class IProjectImage(IProjectItem):
+class IProjectImage(IProjectItem, IFile):
     """
     a marker interface to distinguish an image
     """
@@ -54,15 +55,3 @@ class IProjectContainer(IContainer, IContained):
     contains(IProject)
     title=TextLine(title=u'Title',
                    description=u'Title of the project container')
-
-class ISearchableTextOfProject(ISearchableText):
-    """
-    We declare an index just for this interface, so that
-    only project are indexed
-    """
-    
-class ISearchableTextOfProjectItem(ISearchableText):
-    """
-    We declare an index just for this interface, so that
-    only projectitems are indexed
-    """

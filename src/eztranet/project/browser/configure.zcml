@@ -61,15 +61,15 @@
 <menuItem title="new file"
           action="+/eztranet.add.ProjectItem"
           for="..interfaces.IProject"
-          menu="eztranet_addings" />
+          menu="eztranet_actions" />
 <menuItem title="new project"
           action="+/eztranet.add.Project"
           for="..interfaces.IProjectContainer"
-          menu="eztranet_addings" />
+          menu="eztranet_actions" />
 <menuItem title="new subproject"
           action="+/eztranet.add.Project"
           for="..interfaces.IProject"
-          menu="eztranet_addings" />
+          menu="eztranet_actions" />
 
 <!-- Project Container view -->
 <pages for="..interfaces.IProjectContainer"

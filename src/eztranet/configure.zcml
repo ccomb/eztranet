@@ -59,9 +59,9 @@
                  content_factory="eztranet.eztranet.EztranetSite" />
 
 <include package=".skin" />
+<include package=".project" />
 <include package=".users" />
 <include package=".thumbnail" />
-<include package=".project" />
 <include package=".comment" />
 <include package=".flashpreview" />
 

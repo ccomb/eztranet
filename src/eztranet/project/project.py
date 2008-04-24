@@ -8,10 +8,11 @@ from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
 from zope.file.file import File
+from zope.size.interfaces import ISized
+import PIL.Image
 import os
 from interfaces import IProjectContainer, IProjectItem, IProject, \
-                                          IProjectImage, IProjectVideo, \
-                        ISearchableTextOfProject, ISearchableTextOfProjectItem
+                       IProjectImage, IProjectVideo
 from eztranet.thumbnail.interfaces import IThumbnail, IThumbnailer
 from eztranet.flashpreview.interfaces import IFlashPreview
 
@@ -40,7 +41,7 @@ class ProjectItem(File):
     A project item is just a blob file
     """
     implements(IProjectItem)
-    __name__ = __parent__ = None
+    __name__ = __parent__ = data = None
 
     def __init__(self, title=u'', description=u''):
         super(ProjectItem, self).__init__()
@@ -88,27 +89,30 @@ class ProjectNameChooser(ProjectItemNameChooser):
     adapts(IProject)
     implements(INameChooser)
 
-class SearchableTextOfProject(object):
+class ProjectImageSized(object):
     """
-    adapter that allows to index projects
+    adapter to ISized for an image
     """
-    adapts(IProject)
-    implements(ISearchableTextOfProject)
+    adapts(IProjectImage)
+    implements(ISized)
 
     def __init__(self, context):
         self.context = context
+        image = PIL.Image.open(self.context._data._current_filename())
+        self.width = image.size[0]
+        self.height = image.size[1]
+        self.size = self.context.size
 
-    def getSearchableText(self):
-        sourcetext = texttoindex = (self.context.title or "") + " " + (self.context.description or "")
-        for word in sourcetext.split():        
-            for subword in [ word[i:] for i in xrange(len(word)) if len(word)>=1 ]:
-                texttoindex += subword + " "
-        return texttoindex
+    def sizeForDisplay(self):
+        """
+        returns a size of the form '3125KB 640x480'
+        """
+        image = PIL.Image.open(self.context._data._current_filename())
+        return '%sKB %sx%s' % (self.size/1024, self.width, self.height)
 
-class SearchableTextOfProjectItem(SearchableTextOfProject):
-    """
-    adapter that allows to index project items
-    """
-    adapts(IProjectItem)
-    implementsOnly(ISearchableTextOfProjectItem)
+    def sizeForSorting(self):
+        return ('KB', self.size)
+
+
+
 

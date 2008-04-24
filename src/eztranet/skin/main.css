@@ -1,20 +1,20 @@
 body {
     font-family: Sans-serif;
     background: #6C77AE;
-    color: #C6CCE7;
+    color: #B8BEDF;
     font-size: 90%;
     background-image: url(/@@/images/fond.png);
     background-repeat: repeat-x;
 }
 a {
     text-decoration: none;
-    color: #C6CCE7;
+    color: #D6DCF5;
 }
 a:hover {
     color: #F9F9FC;
 }
 h1 {
-    font-size: 200%;
+    font-size: 150%;
     margin: 5px;
     padding-left: 5px;
 }
@@ -34,7 +34,7 @@ div#main {
     border: solid 2px #586498;
 }
 div#breadcrumb {
-    font-size: 80%;
+    font-size: 100%;
     margin-bottom: 10px;
     padding-left: 5px;
 }
@@ -59,33 +59,32 @@ ul#main_menu li {
 ul#main_menu a {
     font-weight: bold;
 }
-
 ul#eztranet_actions {
     width: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    background-color: #8585AD;
+    background-color: #B8BEDF;
+    border-top: solid 2px #B8BEDF;
 }
 ul#eztranet_actions a {
-    color: white;
+    color: #3F486E;
+    margin-left: 5px;
 }
-ul#eztranet_addings {
-    font-size: 80%;
-    text-align: right;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-ul#eztranet_actions li, ul#eztranet_addings li {
+ul#eztranet_actions li {
     display: inline;
+}
+ul#eztranet_actions li a {
     padding-left: 5px;
     padding-right: 5px;
 }
+ul#eztranet_actions li a.selected {
+    color: white;
+    background-color: #6C77AE;
+}
 ul li a.selected { font-weight: bold; }
 div#body {
-    margin-top: 10px;
+    margin-top: 0px;
 }
 /*  Styles for xmltree */
 #navtreecontents a { cursor: pointer; height: 20px; }
@@ -118,8 +117,11 @@ div.item a {
     font-weight: bold;
 }
 div#buttons {
-    position: absolute;
-    bottom: 0;
+    margin-left: 68%;
+    right: 0;
+}
+div.listing {
+    margin-top: 25px;
 }
 a img {
     border: none;
@@ -149,8 +151,8 @@ div.comment {
     margin: 0.7em;
 }
 div.nb_comments, div a.nb_comments {
+    margin: 5px;
     color: yellow;
-    font-size: 90%;
 }
 input, textarea {
     border: inset 1px;
@@ -160,4 +162,8 @@ input, textarea {
 }
 input[type=submit] {
     border: outset 1px;
+}
+th { border: solid 5px #6C77AD; }
+p#description {
+    margin: 5px;
 }

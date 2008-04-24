@@ -2,6 +2,8 @@
 Functional tests
 ================
 
+This file is too big and should be cut into pieces.
+
 Adding an Eztranet site
 -----------------------
 
@@ -132,13 +134,24 @@ We add a video from eztranet.thumbnail
     >>> browser.getLink(text='new file').click()
     >>> browser.getControl(name='form.data').add_file(open(videopath), 'video/ogg', 'a sample.ogg')
     >>> browser.getControl(name='form.actions.add').click()
-    >>> '<a href="a%20sample.ogg">' in browser.contents
+    >>> '<a href="a-sample.ogg">a sample.ogg</a>' in browser.contents
     True
-    >>> browser.getLink(url='a%20sample.ogg').click()
+    >>> browser.getLink(url='a-sample.ogg').click()
+    >>> '<span>a sample.ogg</span>' in browser.contents
+    True
 
-CHECK A FEW THINGS
+We check the different views::
 
-    >>> browser.getLink(url='..').click()
+    >>> browser.getLink('View').click()
+    >>> 'new file' in browser.contents
+    False
+    >>> 'new subproject' in browser.contents
+    False
+    >>> browser.getLink('Modify').click()
+    >>> browser.getLink('Comment').click()
+    >>> browser.getLink('Permissions').click()
+
+    >>> browser.getLink('project-2').click()
 
 
 Adding an Image
@@ -150,13 +163,23 @@ We add an image from eztranet.thumbnail
     >>> browser.getLink(text='new file').click()
     >>> browser.getControl(name='form.data').mech_control.add_file(open(imagepath), 'image/png', 'a sample.png')
     >>> browser.getControl(name='form.actions.add').click()
-    >>> '<a href="a%20sample.png">' in browser.contents
+    >>> '<a href="a-sample.png">a sample.png</a>' in browser.contents
     True
-    >>> browser.getLink(url='a%20sample.png').click()
+    >>> browser.getLink(url='a-sample.png').click()
+    >>> '<span>a sample.png</span>' in browser.contents
+    True
 
-CHECK A FEW THINGS
+We check the different views::
 
-    >>> browser.getLink(url='..').click()
+    >>> browser.getLink('View').click()
+    >>> 'new file' in browser.contents
+    False
+    >>> 'new subproject' in browser.contents
+    False
+    >>> browser.getLink('Modify').click()
+    >>> browser.getLink('Comment').click()
+    >>> browser.getLink('Permissions').click()
+    >>> browser.getLink('Project').click()
 
 
 Read permissions

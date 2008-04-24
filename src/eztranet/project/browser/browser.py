@@ -17,10 +17,15 @@ from zope.file.download import Download
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project, ProjectItem, \
                                      ProjectImage, ProjectVideo
+from zope.schema import Bytes
+from zope.size.interfaces import ISized
 from eztranet.thumbnail.interfaces import IThumbnail
 from zope.component import adapts
 from zope.interface import implements
-        
+from os.path import basename
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
+
 class CustomTextWidget(TextAreaWidget):
     width=40
     height=5
@@ -41,7 +46,7 @@ class ProjectAdd(AddForm):
         return self.project
 
 class ProjectEdit(EditForm):
-    label = u'Modification of the project'
+    label = u'Project details'
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -119,7 +124,7 @@ class ProjectItemAdd(Upload):
     """
     The view class for adding a ProjectItem
     """
-    form_fields=Fields(IProjectItem).omit('__name__', 'title', '__parent__', 'contentType')
+    form_fields=Fields(IProjectItem).omit('__name__', '__parent__', 'title')
     form_fields['description'].custom_widget=CustomTextWidget
     label=u"Adding a file"
     extra_script = u"""
@@ -138,13 +143,18 @@ class ProjectItemAdd(Upload):
         else :
             return ProjectItem()
 
+    def create(self, data):
+        item = super(ProjectItemAdd, self).create(data)
+        item.title = basename(self.request.form['form.data'].filename).split('\\')[-1]
+        return item
+
 class ProjectItemEdit(EditForm):
     label = u'Modification'
     actions = Actions(Action('Apply', success='handle_edit_action'), )
 
     def __init__(self, context, request):
         self.context, self.request = context, request
-        self.form_fields=Fields(IProjectItem).omit('__name__', '__parent__')
+        self.form_fields=Fields(IProjectItem).omit('__name__', '__parent__', 'data')
         self.form_fields['description'].custom_widget=CustomTextWidget
         super(ProjectItemEdit, self).__init__(context, request)
         #template=ViewPageTemplateFile("project_form.pt")
@@ -180,14 +190,22 @@ class ProjectImageView(ProjectItemView):
     label = u'Image'
     __call__=ViewPageTemplateFile("image.pt")
 
+    def __init__(self, context, request):
+        super(ProjectImageView, self).__init__(context, request)
+        self.size = ISized(self.context)
+
     def wantedWidth(self):
-        width = self.context.getImageSize()[0]
-        if width > 720:
-            width=720
+        site_width = 720
+        try:
+            width = self.size.sizeForDisplay().split(' ')[1].split('x')[0]
+        except Exception:
+            width = site_width
+        if width > site_width:
+            width = site_width
         return width
 
     def originalWidth(self):
-        return self.context.getImageSize()[0]
+        return self.size.sizeForDisplay().split(' ')[1].split('x')[0]
 
 class ProjectVideoView(ProjectItemView):
     """

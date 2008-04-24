@@ -6,12 +6,12 @@
             title="Edit the project" />
 
 <role id="eztranet.project.Manager"
-      title="modifier" />
+      title="modify" />
            
 <role id="eztranet.project.Member"
-      title="voir" />
+      title="view" />
 
-
+<!-- Project Container -->
 <class class=".project.ProjectContainer">
   <require permission="eztranet.view"
            interface=" zope.app.container.interfaces.IReadContainer" />
@@ -24,7 +24,10 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </class>
 
+<utility component=".project.ProjectContainerFactory"
+         name="eztranet.ProjectContainer" />
 
+<!-- Project -->
 <class class=".project.Project">
   <require permission="eztranet.project.view"
            attributes="title description" />
@@ -39,31 +42,42 @@
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
 </class>
 
+<utility component=".project.ProjectFactory"
+         name="eztranet.Project" />
+<adapter factory=".project.ProjectNameChooser" />
+
+<!-- ProjectItem -->
 <class class=".project.ProjectItem">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <require permission="eztranet.project.view"
-           interface=".interfaces.IProjectItem
-                      zope.file.interfaces.IFile" />
+           interface=".interfaces.IProjectItem" />
   <require permission="eztranet.project.edit"
-           set_schema=".interfaces.IProjectItem
-                       zope.file.interfaces.IFile" />
+           set_schema=".interfaces.IProjectItem" />
 </class>
 
+<utility component=".project.ProjectItemFactory"
+         name="eztranet.ProjectItem" />
+<adapter factory=".project.ProjectItemNameChooser" />
+
+<!-- ProjectImage -->
 <class class=".project.ProjectImage">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <require permission="eztranet.project.view"
-           interface=".interfaces.IProjectImage
-                      zope.file.interfaces.IFile" />
+           interface=".interfaces.IProjectImage" />
   <require permission="eztranet.project.edit"
-           set_schema=".interfaces.IProjectImage
-                       zope.file.interfaces.IFile" />
+           set_schema=".interfaces.IProjectImage" />
 </class>
 
+<adapter factory=".project.ProjectImageSized"
+         trusted="yes"
+         permission="eztranet.project.view" />
+
+<!-- ProjectVideo -->
 <class class=".project.ProjectVideo">
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
@@ -71,24 +85,12 @@
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <require permission="eztranet.project.view"
-           interface=".interfaces.IProjectVideo
-                      zope.file.interfaces.IFile" />
+           interface=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.edit"
-           set_schema=".interfaces.IProjectVideo
-                       zope.file.interfaces.IFile" />
+           set_schema=".interfaces.IProjectVideo" />
 </class>
 
-<adapter factory=".project.SearchableTextOfProject" />
-<adapter factory=".project.SearchableTextOfProjectItem" />
-<adapter factory=".project.ProjectNameChooser" />
-<adapter factory=".project.ProjectItemNameChooser" />
 
-<utility component=".project.ProjectFactory"
-         name="eztranet.Project" />
-<utility component=".project.ProjectItemFactory"
-         name="eztranet.ProjectItem" />
-<utility component=".project.ProjectContainerFactory"
-         name="eztranet.ProjectContainer" />
 
 
 <include package=".browser" />

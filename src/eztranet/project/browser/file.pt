@@ -23,18 +23,8 @@
     </div>
 </tal:block>
 
-<h1>
-    <a href="#"
-       tal:attributes="href context/__parent__/@@absolute_url"
-       tal:content="context/__parent__/title">
-        Project
-    </a> : 
-    <span tal:content="context/__name__">
-        Image
-    </span>
-</h1>
-
-<p tal:content="structure view/description">
+<p id="description"
+   tal:content="structure view/description">
     brief description of the video
 </p>
 

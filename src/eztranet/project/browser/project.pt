@@ -19,13 +19,11 @@
 </div>
 </tal:block>
 
-<h1 tal:content="context/title | nothing">
-    contexte
-</h1>
-
-<p tal:content="structure view/description">
+<p id="description"
+   tal:content="structure view/description">
     brief description of the project
 </p>
+
 
 <div metal:define-macro="contents">
 <form name="containerContentsForm"
@@ -128,7 +126,7 @@
                 <a href="..">..</a>
             </span>
             <span class="itemsize">
-                remonter d'un niveau
+                go up one level
             </span>
          </div>
          
