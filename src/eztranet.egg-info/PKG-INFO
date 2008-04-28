@@ -2,13 +2,17 @@ Metadata-Version: 1.0
 Name: eztranet
 Version: 1.1dev
 Summary: UNKNOWN
-Home-page: UNKNOWN
-Author: UNKNOWN
-Author-email: UNKNOWN
-License: UNKNOWN
+Home-page: http://gorfou.fr/site/eztranet.html
+Author: Christophe Combelles
+Author-email: ccomb@free.fr
+License: ZPL
 Description: UNKNOWN
+Keywords: eztranet extranet video photo
 Platform: UNKNOWN
 Classifier: Programming Language :: Python
 Classifier: Environment :: Web Environment
 Classifier: Topic :: Internet :: WWW/HTTP :: WSGI :: Application
 Classifier: Framework :: Zope3
+Classifier: Intended Audience :: Information Technology
+Classifier: License :: OSI Approved :: Zope Public License
+Classifier: Topic :: Multimedia :: Video
