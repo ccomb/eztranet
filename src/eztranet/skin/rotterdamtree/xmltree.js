@@ -6,7 +6,7 @@ var ICON = 'ICON';
 var EXPAND = 'EXPAND';
 var XML_CHILDREN_VIEW = '@@children.xml';
 var SINGLE_BRANCH_TREE_VIEW = '@@singleBranchTree.xml';
-var CONTENT_VIEW = '@@SelectedManagementView.html';
+var CONTENT_VIEW = '@@index.html';
 var NUM_TEMPLATE = '$${num}';
 
 
@@ -32,7 +32,7 @@ var loglevel = LG_NOLOG;
 function navigationTreeNode (domNode) {
     this.childNodes = new Array();
     this.isEmpty = 1;
-    this.isCollapsed = 1;
+    this.isCollapsed = 0;
     this.domNode = domNode;
     this.loadingNode = null;
     this.path = '';
