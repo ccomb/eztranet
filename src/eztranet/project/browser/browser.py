@@ -37,13 +37,15 @@ class ProjectAdd(AddForm):
     form_fields=Fields(IProject).omit('__name__', '__parent__')
     form_fields['description'].custom_widget=CustomTextWidget
     label = u"Adding a project"
-    def create(self, data):
-        self.project=Project()
-        applyChanges(self.project, self.form_fields, data)
-        self.context.contentName = \
-            INameChooser(self.context.context).chooseName(self.project.title,
-                                                          self.project)
-        return self.project
+    
+    def createAndAdd(self, data):
+        project=Project()
+        applyChanges(project, self.form_fields, data)
+        contentName = \
+            INameChooser(self.context).chooseName(project.title,
+                                                  project)
+        self.context[contentName] = project
+        self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 class ProjectEdit(EditForm):
     label = u'Project details'
@@ -64,7 +66,7 @@ class ProjectEdit(EditForm):
         if oldname!=newname:
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(AbsoluteURL(self.context, self.request)())
+        self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 def project_sorting(p1, p2):
     """
@@ -143,10 +145,14 @@ class ProjectItemAdd(Upload):
         else :
             return ProjectItem()
 
-    def create(self, data):
+    def createAndAdd(self, data):
         item = super(ProjectItemAdd, self).create(data)
         item.title = basename(self.request.form['form.data'].filename).split('\\')[-1]
-        return item
+        applyChanges(item, self.form_fields, data)
+        contentName = INameChooser(self.context).chooseName(item.title,
+                                                            item)
+        self.context[contentName] = item
+        self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 class ProjectItemEdit(EditForm):
     label = u'Modification'

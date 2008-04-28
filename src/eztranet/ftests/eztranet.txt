@@ -78,13 +78,13 @@ Adding Projects
 
 We add two projects::
 
-    >>> browser.getLink(url='+/eztranet.add.Project').click()
+    >>> browser.getLink(url='add_project.html').click()
     >>> browser.getControl(name='form.title').value = u'   @@@ ++++  '
     >>> browser.getControl(name='form.description').value = u'project1 description'
     >>> browser.getControl(name='form.actions.add').click()
     >>> 'Project' in root['eztranet']['projects']
     True
-    >>> browser.getLink(url='+/eztranet.add.Project').click()
+    >>> browser.getLink(url='add_project.html').click()
     >>> browser.getControl(name='form.title').value = u'project 2'
     >>> browser.getControl(name='form.description').value = u'project2 description'
     >>> browser.getControl(name='form.actions.add').click()
@@ -325,7 +325,7 @@ to check that testuser cannot access it after recreation::
 
     >>> browser.getLink(text='Projects').click()
     >>> browser.getControl(name='ids:list').options
-    ['project-2', 'Project']
+    ['Project', 'project-2']
     >>> browser.getControl(name='ids:list').value = ['project-2']
     >>> browser.getControl(name="container_delete_button").click()
 

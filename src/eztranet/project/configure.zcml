@@ -15,7 +15,7 @@
 <class class=".project.ProjectContainer">
   <require permission="eztranet.view"
            interface=" zope.app.container.interfaces.IReadContainer" />
-  <require permission="eztranet.manage"
+  <require permission="eztranet.project.edit"
            interface=" zope.app.container.interfaces.IWriteContainer" />
   <require permission="eztranet.view"
            attributes="title" />

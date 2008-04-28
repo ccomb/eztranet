@@ -8,33 +8,24 @@
                 add="eztranet.project.edit" />
 <containerViews for="..interfaces.IProjectContainer"
                 add="eztranet.manage" />
-<!-- ADD -->
-<page name="eztranet.add.Project"
-      for="zope.app.container.interfaces.IAdding"
-      class=".browser.ProjectAdd"
-      permission="eztranet.manage" />
+
+
 <!-- VIEW -->
 <pages for="..interfaces.IProject"
        class=".browser.ProjectView"
        permission="eztranet.project.view">
     <page name="index.html"
           menu="eztranet_actions"
-          title="View" />
+          title="List" />
     <page name="contents.html" />
 </pages>
-<!-- EDIT -->
+
 <page name="edit.html"
       for="..interfaces.IProject"
       class=".browser.ProjectEdit"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="Modify" />
-<!-- ProjectItem views -->
-<!-- ADD -->
-<page name="eztranet.add.ProjectItem"
-      for="zope.app.container.interfaces.IAdding"
-      class=".browser.ProjectItemAdd"
-      permission="eztranet.project.edit" />
 
 <!-- EDIT -->
 <page name="edit.html"
@@ -58,37 +49,39 @@
       menu="eztranet_actions"
       title="View" />
 
-<menuItem title="new file"
-          action="+/eztranet.add.ProjectItem"
-          for="..interfaces.IProject"
-          menu="eztranet_actions" />
-<menuItem title="new project"
-          action="+/eztranet.add.Project"
-          for="..interfaces.IProjectContainer"
-          menu="eztranet_actions" />
-<menuItem title="new subproject"
-          action="+/eztranet.add.Project"
-          for="..interfaces.IProject"
-          menu="eztranet_actions" />
-
 <!-- Project Container view -->
 <pages for="..interfaces.IProjectContainer"
        class=".browser.ProjectContainerView"
        permission="eztranet.view" >
-    <page name="index.html" />
-    <page name="contents.html" />
+    <page name="index.html"
+          menu="eztranet_actions"
+          title="List"  />
 </pages>
 
+<!-- ADDING PROJECT-->
+<page name="add_project.html"
+      for="..interfaces.IProject"
+      class=".browser.ProjectAdd"
+      permission="eztranet.project.edit"
+      menu="eztranet_actions"
+      title="new subproject" />
+
+<page name="add_project.html"
+      for="..interfaces.IProjectContainer"
+      class=".browser.ProjectAdd"
+      permission="eztranet.project.edit"
+      menu="eztranet_actions"
+      title="new project" />
+
+<!-- ADDING PROJECTITEM -->
+<page name="add_projectitem.html"
+      for="..interfaces.IProject"
+      class=".browser.ProjectItemAdd"
+      permission="eztranet.project.edit"
+      menu="eztranet_actions"
+      title="new file" />
+
 <!-- juste pour la ZMI -->
-<addMenuItem title="Eztranet Project"
-             class="..project.Project"
-             permission="eztranet.manage"
-             view="eztranet.add.Project" />
-<!-- juste pour la ZMI -->
-<addMenuItem title="Eztranet Item"
-             class="..project.ProjectItem"
-             permission="eztranet.project.edit"
-             view="eztranet.add.ProjectItem" />
 <menuItems menu="zmi_views"
            for="eztranet.project.interfaces.IProject"
            permission="eztranet.project.view">
