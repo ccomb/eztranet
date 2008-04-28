@@ -1,7 +1,6 @@
 import unittest
 import os.path
-from zope.testing import doctest
-from zope.app.testing.functional import FunctionalDocFileSuite, ZCMLLayer
+from zope.app.testing.functional import ZCMLLayer
 from zope.file.testing import FunctionalBlobDocFileSuite
 
 ftesting_zcml = os.path.join(os.path.dirname(__file__), 'ftesting.zcml')

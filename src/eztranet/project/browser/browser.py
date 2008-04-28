@@ -17,7 +17,6 @@ from zope.file.download import Download
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project, ProjectItem, \
                                      ProjectImage, ProjectVideo
-from zope.schema import Bytes
 from zope.size.interfaces import ISized
 from eztranet.thumbnail.interfaces import IThumbnail
 from zope.component import adapts
@@ -36,7 +35,7 @@ class ProjectAdd(AddForm):
     """
     form_fields=Fields(IProject).omit('__name__', '__parent__')
     form_fields['description'].custom_widget=CustomTextWidget
-    label = u"Adding a project"
+    label = _(u'Adding a project')
     
     def createAndAdd(self, data):
         project=Project()
@@ -48,7 +47,7 @@ class ProjectAdd(AddForm):
         self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 class ProjectEdit(EditForm):
-    label = u'Project details'
+    label = _(u'Project details')
     actions = Actions(Action('Apply', success='handle_edit_action'), )
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -87,7 +86,7 @@ class ProjectView(Contents):
     """
     The view used to display a project
     """
-    label=u"Vue d'un projet"
+    label=_(u'View of a project')
     __call__=ViewPageTemplateFile("project.pt")
     def __init__(self, context, request):
         self.context, self.request = context, request
@@ -107,9 +106,9 @@ class ProjectContainerView(Contents):
     """
     The view for project containers
     """
-    label = u"Projects"
+    label = _(u'Projects')
     __call__ = ViewPageTemplateFile('project.pt')
-    description = u"Here is the list of your projects"
+    description = _(u'Here is the list of your projects')
     def listContentInfo(self):
         u"""
         reuse the original, but remove those not permitted
@@ -128,13 +127,20 @@ class ProjectItemAdd(Upload):
     """
     form_fields=Fields(IProjectItem).omit('__name__', '__parent__', 'title')
     form_fields['description'].custom_widget=CustomTextWidget
-    label=u"Adding a file"
+    label = _(u'Adding a file')
     extra_script = u"""
-    document.open()
-    document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' />The file is being uploaded, this can take several minutes...<br/>If you stop the loading of this page, the transfer will be canceled.</p>")
-    document.close()
-    document.getElementById('form.actions.add').onclick= function() { document.getElementById('loading').style.display='block'; }
-    """
+        document.open()
+        document.write("<p id='loading' style='display: none'>
+                        <img src='/@@/loading.gif'
+                             alt='loading'
+                             style='float: left\;
+                                    margin-right: 10px\;' />
+                        %s
+                        </p>")
+        document.close()
+        document.getElementById('form.actions.add').onclick = function() { document.getElementById('loading').style.display='block'; }
+    """ % _(u'The file is being uploaded, this can take several minutes...<br/>\
+              If you stop the loading of this page, the transfer will be canceled.')
 
     def _create_instance(self, data):
         majormimetype = self.request.form['form.data'].headers['Content-Type'].split('/')[0]
@@ -155,7 +161,7 @@ class ProjectItemAdd(Upload):
         self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
 class ProjectItemEdit(EditForm):
-    label = u'Modification'
+    label = _(u'Modification')
     actions = Actions(Action('Apply', success='handle_edit_action'), )
 
     def __init__(self, context, request):
@@ -181,7 +187,7 @@ class ProjectItemView(Download):
     """
     The base view for project items
     """
-    label = u'File'
+    label = _(u'File')
     __call__ = ViewPageTemplateFile("file.pt")
 
     def description(self):
@@ -193,7 +199,7 @@ class ProjectImageView(ProjectItemView):
     """
     The view that allows to display an image
     """
-    label = u'Image'
+    label = _(u'Image')
     __call__=ViewPageTemplateFile("image.pt")
 
     def __init__(self, context, request):
@@ -217,7 +223,7 @@ class ProjectVideoView(ProjectItemView):
     """
     The view that allows to display a video
     """
-    label = u'Video'
+    label = _(u'Video')
     __call__=ViewPageTemplateFile("video.pt")
 
     def __init__(self, context, request):

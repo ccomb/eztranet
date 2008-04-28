@@ -8,6 +8,8 @@ from zope.security.checker import canAccess
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 class PageTitleContentProvider(object):
     """
@@ -23,7 +25,7 @@ class PageTitleContentProvider(object):
         if hasattr(self.context,'__name__') and self.context.__name__ is not None:
             self._pagetitle = self.context.__name__ + " - " + self._sitename
             if self.context.__name__ == 'eztranet':
-                self._pagetitle = 'Eztranet : votre extranet photo video'
+                self._pagetitle = _(u'Eztranet : your photo/video extranet')
         else:
             self._pagetitle = self._sitename
     def render(self):
@@ -43,7 +45,7 @@ class LogoProvider(object):
         except:
             self.logo = None
             self.url = "#"
-            self.title = "Eztranet"
+            self.title = u'Eztranet'
             return
         self.title = getSite().__name__
         self.url = AbsoluteURL(self.logo, self.request)()
@@ -64,10 +66,13 @@ class EztranetMainMenu(object):
         self.context, self.request, self.view = context, request, view
     def update(self):
         site = getSite()
-        self.menuitems = [ { 'name':site[i].title, 'url':AbsoluteURL(site[i], self.request)()} for i in site.keys() if i not in ['logo'] ]
+        self.menuitems = [{'name':site[i].title,
+                           'url':AbsoluteURL(site[i], self.request)()}
+                          for i in site.keys() if i not in ['logo']]
         users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
         if users and canAccess(users, '__name__'):
-            self.menuitems.append({'name': u'Users', 'url': AbsoluteURL(users, self.request)() + "/contents.html"})
+            self.menuitems.append({'name': _(u'Users'),
+                                   'url': AbsoluteURL(users, self.request)() + '/contents.html'})
     def render(self):
         return self.menuitems
 

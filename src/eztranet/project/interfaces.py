@@ -3,6 +3,8 @@ from zope.app.container.constraints import contains, containers
 from zope.schema import TextLine, Text, Bytes
 from zope.file.interfaces import IFile
 from zope.interface import Interface
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 class IProject(IContainer, IContained):
     """
@@ -13,10 +15,10 @@ class IProject(IContainer, IContained):
                "eztranet.project.interfaces.IProject")
     contains("eztranet.project.interfaces.IProject",
              "eztranet.project.interfaces.IProjectItem")
-    title = TextLine(title=u'titre',
-                     description=u'Project title')
-    description = Text(title=u"Description",
-                       description=u'Project description',
+    title = TextLine(title=_(u'titre'),
+                     description=_(u'Project title'))
+    description = Text(title=_(u'Description'),
+                       description=_(u'Project description'),
                        required=False,
                        max_length=1000)
 
@@ -28,13 +30,13 @@ class IProjectItem(Interface):
     """
     containers("eztranet.project.interfaces.IProject")
     data = Bytes(title=u'File',
-                 description=u'The file you want to upload',
+                 description=_(u'The file you want to upload'),
                  required=False)
-    title = TextLine(title=u'File name',
-                     description=u'Name of the uploaded file',
+    title = TextLine(title=_(u'File name'),
+                     description=_(u'Name of the uploaded file'),
                      required=False)
-    description = Text(title=u'Description',
-                       description=u'File description',
+    description = Text(title=_(u'Description'),
+                       description=_(u'File description'),
                        required=False,
                        max_length=1000)
 
@@ -53,5 +55,5 @@ class IProjectContainer(IContainer, IContained):
     a toplevel container for the projects should only contain projects or items
     """
     contains(IProject)
-    title=TextLine(title=u'Title',
-                   description=u'Title of the project container')
+    title=TextLine(title=_(u'Title'),
+                   description=_(u'Title of the project container'))

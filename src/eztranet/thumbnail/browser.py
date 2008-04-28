@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.publisher.browser import BrowserView
 from zope.file.download import Download
 from zope.traversing.browser.absoluteurl import absoluteURL
@@ -6,7 +5,7 @@ from zope.security.proxy import removeSecurityProxy
 from interfaces import IThumbnail
 
 class ThumbnailImageView(Download):
-    u"""
+    """
     The thumbnail view of an object
     """
     def __call__(self):
@@ -16,7 +15,7 @@ class ThumbnailImageView(Download):
         return None
 
 class ThumbnailUrlView(BrowserView):
-    u"""
+    """
     The view that provides an URL for the thumbnail of an object.
     (for static thumbnails, so that they are cached by the browser
     """

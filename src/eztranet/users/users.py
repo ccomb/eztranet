@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from zope.interface import implements
 from zope.component import adapter, adapts
 from zope.app.container.interfaces import IObjectAddedEvent, IObjectRemovedEvent, INameChooser
@@ -10,6 +9,8 @@ from zope.app.authentication.principalfolder import InternalPrincipal, Principal
 from zope.app.security.interfaces import IAuthentication
 from zope.securitypolicy.interfaces import IPrincipalRoleManager
 from zope.app.component.hooks import getSite
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 from interfaces import IEztranetUsersContainer, IEztranetUser
 
@@ -18,7 +19,7 @@ class EztranetUsersContainer(PrincipalFolder):
     __name__=__parent__=None
 
 class EztranetUser(InternalPrincipal):
-    u"""
+    """
     an eztranet user, ie a basic Principal that can be assigned an admin role
     """
     implements(IEztranetUser)
@@ -41,12 +42,16 @@ EztranetUserFactory=Factory(EztranetUser)
 
 @adapter(IEztranetUser, IObjectAddedEvent)
 def EztranetUserAdded(user, event):
-    u"a subscriber that do the necessary after a user has been added"
+    """
+    a subscriber that do the necessary after a user has been added
+    """
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
-    srm.assignRoleToPrincipal("eztranet.Member", user.login)
+    srm.assignRoleToPrincipal('eztranet.Member', user.login)
 
 def recursively_unsetrole(obj, userlogin):
-    """function used to recurse the role removal on all objects"""
+    """
+    function used to recurse the role removal on all objects
+    """
     rolemanager = IPrincipalRoleManager(obj)
     roles = rolemanager.getRolesForPrincipal(userlogin)
     for role in roles:
@@ -56,7 +61,7 @@ def recursively_unsetrole(obj, userlogin):
 
 @adapter(IEztranetUser, IObjectRemovedEvent)
 def EztranetUserRemoved(user, event):
-    u"""
+    """
     A subscriber that do the necessary after a user has been added
     We loop on every project and remove role assignment.
     """
@@ -78,17 +83,23 @@ def initial_setup(site):
     # activate the auth plugins in the pau
     pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
     #activate the wanted credential plugins
-    pau.credentialsPlugins = ( "No Challenge if Authenticated", "Session Credentials" )
+    pau.credentialsPlugins = ('No Challenge if Authenticated',
+                              'Session Credentials' )
     # create an admin user to be able to log in
-    admin = EztranetUser('admin', 'eztranet', 'eztranet initial administrator', passwordManagerName='MD5')
+    admin = EztranetUser('admin',
+                         'eztranet',
+                         _(u'eztranet initial administrator'),
+                         passwordManagerName='MD5')
     # grant him the admin role
     srm = IPrincipalRoleManager(site)
-    srm.assignRoleToPrincipal("eztranet.Administrator", admin.login)
-    srm.assignRoleToPrincipal("eztranet.Member", admin.login)
+    srm.assignRoleToPrincipal("eztranet.Administrator",
+                              admin.login)
+    srm.assignRoleToPrincipal("eztranet.Member",
+                              admin.login)
     users[admin.login] = admin
 
 class UserNameChooser(NameChooser):
-    u"""
+    """
     adapter that allows to choose the __name__ of a user
     """
     implements(INameChooser)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
-from zope.component import adapts, adapter, queryAdapter, adapter
-from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
+from zope.component import adapts, adapter, queryAdapter
+from zope.app.container.interfaces import IObjectAddedEvent
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.file.interfaces import IFile

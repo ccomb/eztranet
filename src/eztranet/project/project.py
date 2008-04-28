@@ -1,20 +1,16 @@
-from zope.interface import implements, implementsOnly
-from zope.component import adapts, adapter
-from zope.app.container.interfaces import INameChooser, \
-                                          IObjectRemovedEvent, \
-                                          IObjectAddedEvent
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.interface import implements
+from zope.component import adapts
+from zope.app.container.interfaces import INameChooser
 from zope.app.container.contained import NameChooser
 from zope.app.container.btree import BTreeContainer
 from zope.component.factory import Factory
 from zope.file.file import File
 from zope.size.interfaces import ISized
 import PIL.Image
-import os
 from interfaces import IProjectContainer, IProjectItem, IProject, \
                        IProjectImage, IProjectVideo
-from eztranet.thumbnail.interfaces import IThumbnail, IThumbnailer
-from eztranet.flashpreview.interfaces import IFlashPreview
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 class ProjectContainer(BTreeContainer):
   """
@@ -108,10 +104,10 @@ class ProjectImageSized(object):
         returns a size of the form '3125KB 640x480'
         """
         image = PIL.Image.open(self.context._data._current_filename())
-        return '%sKB %sx%s' % (self.size/1024, self.width, self.height)
+        return _(u'%sKB %sx%s') % (self.size/1024, self.width, self.height)
 
     def sizeForSorting(self):
-        return ('KB', self.size)
+        return (_(u'KB'), self.size)
 
 
 

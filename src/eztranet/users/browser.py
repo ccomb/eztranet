@@ -5,6 +5,8 @@ from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 from users import EztranetUser
 from interfaces import IEztranetUser
@@ -33,7 +35,7 @@ class ProjectGranting(Granting):
                         rolemanager.assignRoleToPrincipal(role.id, user)
                     else:
                         rolemanager.unsetRoleForPrincipal(role.id, user)
-            return "Permissions modified"
+            return _(u'Permissions modified')
         else:
             return False
 
@@ -42,7 +44,7 @@ class EztranetUserAdd(AddForm):
     The view class for adding a user
     """
     form_fields = Fields(IEztranetUser).select('login','password','IsAdmin')
-    label = u'New user'
+    label = _(u'New user')
     def create(self, data):
         user=EztranetUser("","","")
         applyChanges(user, self.form_fields, data)
@@ -55,7 +57,7 @@ class EztranetUserView(DisplayForm):
     The view class for viewing a user
     """
     form_fields = Fields(IEztranetUser).select('login','IsAdmin')
-    label = u'User'
+    label = _(u'User')
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login
@@ -65,7 +67,7 @@ class EztranetUserEdit(EditForm):
     The view class for editing a user
     """
     form_fields=Fields(IEztranetUser).select('password','IsAdmin')
-    label=u"Modifying a user"
+    label = _(u'Modifying a user')
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.label = self.context.login

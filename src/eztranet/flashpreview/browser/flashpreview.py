@@ -10,6 +10,8 @@ from zope.security.proxy import removeSecurityProxy
 import urllib
 import zope.file
 import transaction
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 class FlashContentProvider(object):
     implements(IContentProvider)
@@ -38,9 +40,11 @@ class FlashContentProvider(object):
     def render(self):
         if type(self.flashpreview.flash_movie) is str:
             if self.flashpreview.flash_movie == 'FAILED':
-                return u"Flash compression failed.<br/>However you can still download the original movie."
+                return _(u'Flash compression failed.<br/>\
+                           However you can still download the original movie.')
             elif self.flashpreview.flash_movie[0:4] == '/tmp':
-                return u'<br/><br/>Currently compressing... (<a href=".">click to reload</a>)'
+                return _(u'<br/><br/>Currently compressing... \
+                          (<a href=".">click to reload</a>)')
         else:
             return u"""
 <object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="720" height="576">

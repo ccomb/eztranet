@@ -9,7 +9,6 @@
 <containerViews for="..interfaces.IProjectContainer"
                 add="eztranet.manage" />
 
-
 <!-- VIEW -->
 <pages for="..interfaces.IProject"
        class=".browser.ProjectView"
