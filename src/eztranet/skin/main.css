@@ -90,9 +90,9 @@ div#body {
 #navtreecontents a { cursor: pointer; height: 20px; }
 #navtreecontents loading { display: block; padding-left: 31px; height: 18px; }
 #navtreecontents expand { background-repeat: no-repeat; padding-left: 10px; display: inline; cursor: pointer; }
-#navtreecontents icon { background-repeat: no-repeat; padding-left: 10px; display: inline;  cursor: auto; }
+#navtreecontents icon { background-repeat: no-repeat; margin-left: 7px; padding-left: 3px; display: inline;  cursor: auto; }
 #navtreecontents collection { display: block; margin-left: 8px; height: auto; }
-
+#navtreecontents icon.selected a { padding-left: 3px; padding-right: 3px; background-color: #6C77AE; color: white; font-weight: bold;  }
 div#item_toolbar {
     background: #6C77AE;
     width: 100%;
@@ -167,3 +167,4 @@ th { border: solid 5px #6C77AD; }
 p#description {
     margin: 5px;
 }
+
