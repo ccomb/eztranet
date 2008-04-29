@@ -1,12 +1,13 @@
 <a name="comment"
-   tal:attributes="name string:comment${view/info/key}">
+   tal:attributes="name string:comment${view/info/key}"
+   i18n:domain="eztranet">
  </a>
 <span class="entry-timestamp"
       style="float:left;"
       tal:content="view/info/key">
     1. 
 </span>
-<span>
+<span i18n:translate="">
     . par &nbsp;
 </span>
 <span tal:content="view/info/who">
@@ -21,7 +22,8 @@
 <tal:block condition="view/removable">
     &nbsp;&nbsp;(
     <a href="#"
-       tal:attributes="href string: ${request/URL}?del=${view/info/key}">
+       tal:attributes="href string: ${request/URL}?del=${view/info/key}"
+       i18n:translate="">
      delete
     </a>
     )

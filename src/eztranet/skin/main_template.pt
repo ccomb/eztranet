@@ -4,6 +4,7 @@
     xmlns:tal="http://xml.zope.org/namespaces/tal" 
     xmlns:metal="http://xml.zope.org/namespaces/metal"
     xml:lang="en" lang="en"
+    i18n:domain="eztranet"
     metal:define-macro="page"
 >
 
@@ -87,7 +88,13 @@ Here, the page content
 </div>
 
 </div><!-- main -->
-<div id="author">v1.1dev&nbsp;&nbsp;&nbsp;<a href="http://gorfou.fr">réalisé par un Gorfou</a></div>
+<div id="author">
+  v1.1dev&nbsp;&nbsp;&nbsp;
+  <a href="http://gorfou.fr"
+     i18n:translate="">
+    réalisé par un Gorfou
+  </a>
+</div>
 
 </body>
 

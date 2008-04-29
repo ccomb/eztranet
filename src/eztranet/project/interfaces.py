@@ -15,7 +15,7 @@ class IProject(IContainer, IContained):
                "eztranet.project.interfaces.IProject")
     contains("eztranet.project.interfaces.IProject",
              "eztranet.project.interfaces.IProjectItem")
-    title = TextLine(title=_(u'titre'),
+    title = TextLine(title=_(u'title'),
                      description=_(u'Project title'))
     description = Text(title=_(u'Description'),
                        description=_(u'Project description'),

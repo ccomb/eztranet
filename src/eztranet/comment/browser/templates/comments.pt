@@ -1,10 +1,11 @@
 <html metal:use-macro="context/@@standard_macros/view"
-    i18n:domain="zope">
+    i18n:domain="eztranet">
 <body>
 <div metal:fill-slot="body">
 
    <p></p>
-   <p tal:condition="not: view/comments">Ajouter le premier commentaire</p>
+   <p tal:condition="not: view/comments"
+      i18n:translate="">Add first comment</p>
    <div class="page_error" tal:condition="view/error | nothing" tal:content="view/error">error</div>
 
    <div id="comments" tal:content="structure view/render">
@@ -17,7 +18,10 @@
 
 
     <div class="row">
-      <div class="label" i18n:translate="">Nouveau commentaire</div>
+      <div class="label"
+           i18n:translate="">
+        New comment
+      </div>
       <div class="field">
         <textarea name="text" rows="5" cols="45"></textarea>
       </div>
@@ -25,8 +29,10 @@
 
     <div class="row">
       <div class="controls">
-        <input type="submit" name="save" value="Ajouter le commentaire"
-            i18n:attributes="value save-comment-button"/>
+        <input type="submit"
+               name="save"
+               value="Add comment"
+               i18n:attributes="value save-comment-button"/>
       </div>
     </div>
 

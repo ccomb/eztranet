@@ -1,0 +1,424 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Tue Apr 29 02:02:07 2008\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: site.zcml:36
+msgid "Site Manager"
+msgstr ""
+
+#: site.zcml:37
+msgid "Site Member"
+msgstr ""
+
+#: src/eztranet/comment/browser/configure.zcml:5
+msgid "Comments"
+msgstr ""
+
+#: src/eztranet/comment/browser/templates/comment.pt:10
+msgid ". par &nbsp;"
+msgstr ""
+
+#: src/eztranet/comment/browser/templates/comment.pt:24
+msgid "delete"
+msgstr ""
+
+#: src/eztranet/comment/browser/templates/comments.pt:21
+msgid "New comment"
+msgstr ""
+
+#: src/eztranet/comment/browser/templates/comments.pt:32
+#. Default: "Add comment"
+msgid "save-comment-button"
+msgstr ""
+
+#: src/eztranet/comment/browser/templates/comments.pt:7
+msgid "Add first comment"
+msgstr ""
+
+#: src/eztranet/comment/configure.zcml:10
+msgid "Add comments"
+msgstr ""
+
+#: src/eztranet/comment/configure.zcml:13
+msgid "Delete comments"
+msgstr ""
+
+#: src/eztranet/comment/configure.zcml:4
+msgid "View comments"
+msgstr ""
+
+#: src/eztranet/comment/configure.zcml:7
+msgid "Edit comments"
+msgstr ""
+
+#: src/eztranet/configure.zcml:41
+msgid "Eztranet site"
+msgstr ""
+
+#: src/eztranet/configure.zcml:41
+msgid "An Eztranet application"
+msgstr ""
+
+#: src/eztranet/configure.zcml:55
+msgid "Add an Eztranet Site"
+msgstr ""
+
+#: src/eztranet/configure.zcml:77
+msgid "Eztranet Site"
+msgstr ""
+
+#: src/eztranet/eztranet.py:55
+#: src/eztranet/project/browser/browser.py:109
+msgid "Projects"
+msgstr ""
+
+#: src/eztranet/eztranet.py:70
+msgid "Name (used in the URL)"
+msgstr ""
+
+#: src/eztranet/eztranet.py:71
+msgid "Name used in the URL"
+msgstr ""
+
+#: src/eztranet/eztranet.py:72
+msgid "Adding an Eztranet Site"
+msgstr ""
+
+#: src/eztranet/flashpreview/browser/flashpreview.py:43
+msgid "Flash compression failed.<br/>                           However you can still download the original movie."
+msgstr ""
+
+#: src/eztranet/flashpreview/browser/flashpreview.py:46
+msgid "<br/><br/>Currently compressing...                           (<a href=\".\">click to reload</a>)"
+msgstr ""
+
+#: src/eztranet/flashpreview/configure.zcml:4
+msgid "View the flash preview"
+msgstr ""
+
+#: src/eztranet/flashpreview/configure.zcml:6
+msgid "Edit the flash preview"
+msgstr ""
+
+#: src/eztranet/flashpreview/interfaces.py:13
+msgid "bitrate (kb/s)"
+msgstr ""
+
+#: src/eztranet/flashpreview/interfaces.py:14
+#: src/eztranet/flashpreview/interfaces.py:16
+#: src/eztranet/flashpreview/interfaces.py:18
+msgid "encoding bitrate of the video"
+msgstr ""
+
+#: src/eztranet/flashpreview/interfaces.py:15
+msgid "width (px)"
+msgstr ""
+
+#: src/eztranet/flashpreview/interfaces.py:17
+msgid "height (px)"
+msgstr ""
+
+#: src/eztranet/flashpreview/interfaces.py:26
+msgid "the flash movie blob, or compressed temporary filename"
+msgstr ""
+
+#: src/eztranet/interfaces.py:13
+msgid "Title (used for display)"
+msgstr ""
+
+#: src/eztranet/interfaces.py:14
+msgid "The name of your Eztranet Site"
+msgstr ""
+
+#: src/eztranet/permissions.zcml:12
+msgid "Eztranet Administrator"
+msgstr ""
+
+#: src/eztranet/permissions.zcml:15
+msgid "Eztranet Member"
+msgstr ""
+
+#: src/eztranet/permissions.zcml:5
+msgid "View the eztranet"
+msgstr ""
+
+#: src/eztranet/permissions.zcml:8
+msgid "Manage the eztranet"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:111
+msgid "Here is the list of your projects"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:130
+msgid "Adding a file"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:142
+msgid "The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:164
+msgid "Modification"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:190
+msgid "File"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:202
+msgid "Image"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:226
+msgid "Video"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:38
+msgid "Adding a project"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:50
+msgid "Project details"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:89
+msgid "View of a project"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:117
+#: src/eztranet/project/browser/configure.zcml:122
+msgid "Comment"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:17
+#: src/eztranet/project/browser/configure.zcml:56
+msgid "List"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:23
+#: src/eztranet/project/browser/configure.zcml:31
+#: src/eztranet/users/configure.zcml:59
+msgid "Modify"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:39
+#: src/eztranet/project/browser/configure.zcml:45
+#: src/eztranet/users/configure.zcml:63
+msgid "View"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:62
+msgid "new subproject"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:69
+msgid "new project"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:77
+msgid "new file"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:88
+#: src/eztranet/project/browser/configure.zcml:99
+msgid "edit"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:90
+#: src/eztranet/users/configure.zcml:37
+#: src/eztranet/users/configure.zcml:44
+msgid "Permissions"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:92
+msgid "Contents"
+msgstr ""
+
+#: src/eztranet/project/browser/image.pt:22
+msgid "${DYNAMIC_CONTENT}"
+msgstr ""
+
+#: src/eztranet/project/browser/image.pt:44
+#: src/eztranet/project/browser/video.pt:33
+#: src/eztranet/project/browser/file.pt:33
+msgid "download"
+msgstr ""
+
+#: src/eztranet/project/configure.zcml:12
+msgid "view"
+msgstr ""
+
+#: src/eztranet/project/configure.zcml:4
+msgid "View the project"
+msgstr ""
+
+#: src/eztranet/project/configure.zcml:6
+msgid "Edit the project"
+msgstr ""
+
+#: src/eztranet/project/configure.zcml:9
+msgid "modify"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:18
+msgid "title"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:19
+msgid "Project title"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:20
+#: src/eztranet/project/interfaces.py:38
+msgid "Description"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:21
+msgid "Project description"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:33
+msgid "The file you want to upload"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:35
+msgid "File name"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:36
+msgid "Name of the uploaded file"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:39
+msgid "File description"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:58
+msgid "Title"
+msgstr ""
+
+#: src/eztranet/project/interfaces.py:59
+msgid "Title of the project container"
+msgstr ""
+
+#: src/eztranet/project/project.py:107
+msgid "%sKB %sx%s"
+msgstr ""
+
+#: src/eztranet/project/project.py:110
+msgid "KB"
+msgstr ""
+
+#: src/eztranet/skin/browser.py:28
+msgid "Eztranet : your photo/video extranet"
+msgstr ""
+
+#: src/eztranet/skin/browser.py:74
+msgid "Users"
+msgstr ""
+
+#: src/eztranet/skin/configure.zcml:38
+msgid "Eztranet actions Menu"
+msgstr ""
+
+#: src/eztranet/skin/home.pt:18
+msgid "(Back to Gorfou)"
+msgstr ""
+
+#: src/eztranet/skin/home.pt:25
+msgid "Eztranet demo"
+msgstr ""
+
+#: src/eztranet/skin/home.pt:29
+msgid "You can try the Eztranet by clicking on \"projects\" (at the top) or on \"connection\" (top-left corner)."
+msgstr ""
+
+#: src/eztranet/skin/main_template.pt:93
+msgid "r\303\251alis\303\251 par un Gorfou"
+msgstr ""
+
+#: src/eztranet/skin/rotterdamtree/xmlobject.py:162
+#: src/eztranet/skin/rotterdamtree/xmlobject.py:165
+msgid "[top]"
+msgstr ""
+
+#: src/eztranet/skin/rotterdamtree/xmlobject.py:32
+msgid "Contains $${num} item(s)"
+msgstr ""
+
+#: src/eztranet/skin/rotterdamtree/xmlobject.py:33
+#: src/eztranet/skin/rotterdamtree/rotterdamtree.pt:32
+msgid "Loading..."
+msgstr ""
+
+#: src/eztranet/thumbnail/configure.zcml:5
+msgid "View thumbnails"
+msgstr ""
+
+#: src/eztranet/thumbnail/configure.zcml:8
+msgid "Write thumbnails"
+msgstr ""
+
+#: src/eztranet/thumbnail/interfaces.py:21
+msgid "The URL of a thumbnail"
+msgstr ""
+
+#: src/eztranet/users/browser.py:38
+msgid "Permissions modified"
+msgstr ""
+
+#: src/eztranet/users/browser.py:47
+#: src/eztranet/users/configure.zcml:55
+msgid "New user"
+msgstr ""
+
+#: src/eztranet/users/browser.py:60
+msgid "User"
+msgstr ""
+
+#: src/eztranet/users/browser.py:70
+msgid "Modifying a user"
+msgstr ""
+
+#: src/eztranet/users/configure.zcml:78
+msgid "Eztranet User"
+msgstr ""
+
+#: src/eztranet/users/configure.zcml:82
+msgid "view user"
+msgstr ""
+
+#: src/eztranet/users/configure.zcml:88
+msgid "edit user"
+msgstr ""
+
+#: src/eztranet/users/interfaces.py:17
+msgid "Administrator"
+msgstr ""
+
+#: src/eztranet/users/users.py:91
+msgid "eztranet initial administrator"
+msgstr ""
+

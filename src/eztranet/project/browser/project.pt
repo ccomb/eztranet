@@ -161,14 +161,16 @@
                   &nbsp;
               </span>
             <div class="itemcreated"
-                 tal:define="created item/created|default"
-                 tal:content="string: Created : ${created}"
+                 tal:define="created item/created|default;
+                             createdstr string:Created"
+                 tal:content="string: ${createdstr} : ${created}"
                  i18n:translate="">
                &nbsp;
             </div>
             <div class="itemmodified"
-                 tal:define="modified item/modified|default"
-                 tal:content="string: Modified : ${modified}"
+                 tal:define="modified item/modified|default;
+                             modifiedstr string:Modified"
+                 tal:content="string: ${modifiedstr} : ${modified}"
                  i18n:translate="">&nbsp;</div>
          </div>
         </metal:block>

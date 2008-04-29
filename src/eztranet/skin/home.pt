@@ -5,6 +5,7 @@
     xmlns:metal="http://xml.zope.org/namespaces/metal" 
     xml:lang="en" lang="en"
     metal:use-macro="context/@@standard_macros/page"
+    i18n:domain="eztranet"
 >
 
 <body>
@@ -14,15 +15,21 @@
 <div style="margin-top: 5%">
 
 <div style="width: 100%; text-align: right">
-<a href="http://gorfou.fr/site/eztranet.html" style="color: yellow; font-weight: bold">
-    (Retour vers Gorfou)
+<a href="http://gorfou.fr/site/eztranet.html"
+   style="color: yellow; font-weight: bold"
+   i18n:translate="">
+    (Back to Gorfou)
 </a>
 </div>
 
-<h2>Eztranet demo</h2>
+<h2 i18n:translate="">
+  Eztranet demo
+</h2>
 
-Vous pouvez essayer l'Eztranet en cliquant sur « projets » (en haut) ou sur « connexion » (en haut à gauche)
-
+<p i18n:translate="">
+You can try the Eztranet by clicking on "projects" (at the top) or on
+"connection" (top-left corner).
+</p>
 </div>
 
 </div>

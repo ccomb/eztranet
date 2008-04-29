@@ -1,5 +1,6 @@
 <configure xmlns:zope="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser">
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="eztranet">
 
 <zope:permission id="eztranet.thumbnail.view"
             title="View thumbnails" />

@@ -1,10 +1,10 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser">
 
 <!-- DOWNLOAD VIEW -->
-<browser:page
-    name="download.html"
-    for=".interfaces.IDownloadable"
-    class=".browser.DownloadView"
-    permission="zope.View" />
+<browser:page name="download.html"
+              for=".interfaces.IDownloadable"
+              class=".browser.DownloadView"
+              permission="zope.View" />
     
 </configure>

@@ -1,5 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="eztranet">
 
   <include package="zope.security" file="meta.zcml" />
@@ -65,6 +66,7 @@
 <include package=".comment" />
 <include package=".flashpreview" />
 
+<i18n:registerTranslations directory="locales" /> 
 <include file="permissions.zcml" />
 
 

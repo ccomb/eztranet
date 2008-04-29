@@ -2,16 +2,11 @@
 
 <include package=".rotterdamtree" />
 
-<!-- on inscrit l'interface IEztranetSkin avec un nom et un type -->
 <zope:interface
     name="EztranetSkin"
     interface=".interfaces.IEztranetSkin"
     type="zope.publisher.interfaces.browser.IBrowserSkinType" />
 
-<!-- a browser view is not intended to be published, while browser pages are. -->
-<!--  IItemMapping is implemented by StandardMacros. With it we provide access to...???? -->
-
-<!-- Ici on décide que la vue "standard_macros" est gérée par la classe MyOwnStandardMacros. -->
 <browser:view
     name="standard_macros"
     for="*"
@@ -20,7 +15,6 @@
     allowed_interface="zope.interface.common.mapping.IItemMapping"
     layer=".interfaces.IEztranetSkin" />
 
-<!-- Ensuite on décide que la macro particulière dont le nom est "mymainmacro" correspond à la vue/macro/template MyMainMacro -->
 <browser:view
     name="mymainmacro"
     for="*"
@@ -41,8 +35,6 @@
               permission="zope.Public"
               layer=".interfaces.IEztranetSkin" />
 
-<!-- Ici on définit un menu.
-Ensuite on peut afficher les browser:page dans ce menu avec la directive menu -->
 <browser:menu
     id="eztranet_actions"
     title="Eztranet actions Menu" />
@@ -73,7 +65,5 @@ Ensuite on peut afficher les browser:page dans ce menu avec la directive menu --
     factory=".browser.PageTitleContentProvider"
     permission="zope.Public"
 />
-
-
 
 </configure>

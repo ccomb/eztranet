@@ -3,6 +3,7 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal" 
       xmlns:metal="http://xml.zope.org/namespaces/metal" 
       xml:lang="en" lang="en"
+      i18n:domain="eztranet"
       metal:use-macro="context/@@standard_macros/page">
 
 <body>
@@ -20,7 +21,9 @@
          tal:condition="nb">
        <a class="nb_comments"
           href="@@comments.html"
-          tal:content="string: ${nb} commentaire${s}">
+          tal:define="comment string:comment"
+          tal:content="string: ${nb} ${comment}${s}"
+          i18n:translate="">
         X comments
        </a>
 </div>
@@ -39,7 +42,8 @@
        zoom +/-
     </a>
     <a href="#"
-       tal:attributes="href string:${context/@@absolute_url}/@@download">
+       tal:attributes="href string:${context/@@absolute_url}/@@download"
+       i18n:translate="">
        download
     </a>
 </div>
