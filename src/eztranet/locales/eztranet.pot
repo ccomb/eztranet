@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Tue Apr 29 02:02:07 2008\n"
+"POT-Creation-Date: Wed Apr 30 19:35:21 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -175,23 +175,23 @@ msgstr ""
 msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:142
+#: src/eztranet/project/browser/browser.py:136
 msgid "The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:164
+#: src/eztranet/project/browser/browser.py:158
 msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:190
+#: src/eztranet/project/browser/browser.py:184
 msgid "File"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:202
+#: src/eztranet/project/browser/browser.py:196
 msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:226
+#: src/eztranet/project/browser/browser.py:220
 msgid "Video"
 msgstr ""
 
@@ -256,13 +256,21 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: src/eztranet/project/browser/image.pt:22
-msgid "${DYNAMIC_CONTENT}"
+#: src/eztranet/project/browser/image.pt:26
+#: src/eztranet/project/browser/video.pt:23
+#: src/eztranet/project/browser/file.pt:23
+msgid "comment"
 msgstr ""
 
-#: src/eztranet/project/browser/image.pt:44
+#: src/eztranet/project/browser/image.pt:36
 #: src/eztranet/project/browser/video.pt:33
 #: src/eztranet/project/browser/file.pt:33
+msgid "comments"
+msgstr ""
+
+#: src/eztranet/project/browser/image.pt:56
+#: src/eztranet/project/browser/video.pt:47
+#: src/eztranet/project/browser/file.pt:47
 msgid "download"
 msgstr ""
 
@@ -331,15 +339,15 @@ msgstr ""
 msgid "KB"
 msgstr ""
 
-#: src/eztranet/skin/browser.py:28
+#: src/eztranet/skin/browser.py:29
 msgid "Eztranet : your photo/video extranet"
 msgstr ""
 
-#: src/eztranet/skin/browser.py:74
+#: src/eztranet/skin/browser.py:77
 msgid "Users"
 msgstr ""
 
-#: src/eztranet/skin/configure.zcml:38
+#: src/eztranet/skin/configure.zcml:39
 msgid "Eztranet actions Menu"
 msgstr ""
 
@@ -355,8 +363,20 @@ msgstr ""
 msgid "You can try the Eztranet by clicking on \"projects\" (at the top) or on \"connection\" (top-left corner)."
 msgstr ""
 
-#: src/eztranet/skin/main_template.pt:93
-msgid "r\303\251alis\303\251 par un Gorfou"
+#: src/eztranet/skin/languagechoice.pt:3
+msgid "Language:"
+msgstr ""
+
+#: src/eztranet/skin/main_template.pt:99
+msgid "Made to measure by Gorfou"
+msgstr ""
+
+#: src/eztranet/skin/rootfolder.pt:15
+msgid "List of your eztranet sites:"
+msgstr ""
+
+#: src/eztranet/skin/rootfolder.pt:9
+msgid "You don't have any eztranet site yet"
 msgstr ""
 
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:162
@@ -402,15 +422,15 @@ msgstr ""
 msgid "Modifying a user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:78
+#: src/eztranet/users/configure.zcml:74
 msgid "Eztranet User"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:82
+#: src/eztranet/users/configure.zcml:78
 msgid "view user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:88
+#: src/eztranet/users/configure.zcml:84
 msgid "edit user"
 msgstr ""
 

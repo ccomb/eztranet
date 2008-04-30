@@ -52,7 +52,11 @@ class FlashConverterThread(Thread):
         super(FlashConverterThread, self).__init__()
     def run(self):
         fd = self.sourcefile.open()
-        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', fd.name, '-y', '-ar', '22050', '-b', '512k', '-g', '240', self.targetpath + '.flv'):
+        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', fd.name, '-y',
+                                                     '-ar', '22050',
+                                                     '-b', '800k',
+                                                     '-g', '240',
+                                                     self.targetpath + '.flv'):
             fd.close()
             os.rename(self.targetpath, self.targetpath+".FAILED")
             return

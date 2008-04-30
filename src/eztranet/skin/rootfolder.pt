@@ -6,8 +6,15 @@
 >
 
 <body>
+<span tal:condition="python: not len(context)"
+      i18n:translate="">
+   You don't have any eztranet site yet
+</span>
 
-<ul>
+<ul tal:condition="python: len(context)">
+<tal:block i18n:translate="">
+  List of your eztranet sites:
+</tal:block>
 <li tal:repeat="site view/eztranet_sites">
     <a href="#"
        tal:attributes="href site" 

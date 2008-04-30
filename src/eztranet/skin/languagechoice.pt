@@ -1,6 +1,8 @@
 <form action=""
       method="POST">
-  Language:
+  <span i18n:translate="">
+    Language:
+  </span>
   <select name="langchoice"
           onchange="this.parentNode.submit()">
     <option value="auto"

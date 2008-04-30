@@ -66,10 +66,6 @@
                   for="eztranet.users.interfaces.IEztranetUser" />
 
 <zope:adapter factory=".users.UserNameChooser" />
-<zope:utility component=".users.EztranetUsersContainer"
-              name="EztranetUsers"
-              permission="eztranet.manage"
-              provides="zope.app.authentication.interfaces.IAuthenticatorPlugin" />
 <zope:utility component=".users.EztranetUserFactory"
               name="eztranet.EztranetUser"
               permission="eztranet.manage" />

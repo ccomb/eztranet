@@ -65,15 +65,17 @@ class EztranetMainMenu(object):
     adapts(Interface, IDefaultBrowserLayer, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
+        self.menuitems = []
     def update(self):
         site = getSite()
-        self.menuitems = [{'name':site[i].title,
-                           'url':AbsoluteURL(site[i], self.request)()}
-                          for i in site.keys() if i not in ['logo']]
-        users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
-        if users and canAccess(users, '__name__'):
-            self.menuitems.append({'name': _(u'Users'),
-                                   'url': AbsoluteURL(users, self.request)() + '/contents.html'})
+        if site is not None:
+            self.menuitems = [{'name':site[i].title,
+                               'url':AbsoluteURL(site[i], self.request)()}
+                               for i in site.keys() if i not in ['logo']]
+            users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
+            if users is not None and canAccess(users, '__name__'):
+                self.menuitems.append({'name': _(u'Users'),
+                                       'url': AbsoluteURL(users, self.request)() + '/contents.html'})
     def render(self):
         return self.menuitems
 
