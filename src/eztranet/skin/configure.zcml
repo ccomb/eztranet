@@ -1,8 +1,9 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser">
 
 <include package=".rotterdamtree" />
 
-<zope:interface
+<zope:interface 
     name="EztranetSkin"
     interface=".interfaces.IEztranetSkin"
     type="zope.publisher.interfaces.browser.IBrowserSkinType" />
@@ -63,7 +64,10 @@
 <zope:adapter
     name="pagetitle"
     factory=".browser.PageTitleContentProvider"
-    permission="zope.Public"
-/>
+    permission="zope.Public" />
+<zope:adapter 
+    name="langchoice"
+    factory=".browser.LangChoiceContentProvider"
+    permission="zope.Public" />
 
 </configure>

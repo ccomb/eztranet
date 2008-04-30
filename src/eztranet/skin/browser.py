@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
@@ -80,3 +81,58 @@ class RootFolderView(BrowserPage):
     __call__ = ViewPageTemplateFile('rootfolder.pt')
     def eztranet_sites(self):
         return list(self.context.keys())
+
+class LangChoiceContentProvider(object):
+    """
+    Content provider that allow to choose the language::
+    
+    >>> from eztranet.skin.browser import LangChoiceContentProvider
+    >>> from zope.publisher.browser import TestRequest
+    >>> dummyrequest = TestRequest(PATH_INFO='/eztranet/projects')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang is None
+    True
+    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++fr/eztranet/projects')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    u'fr'
+    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++en/eztranet/projects')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    u'en'
+    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++xx/eztranet/projects')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    u'xx'
+    >>> dummyrequest = TestRequest(PATH_INFO='/')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang is None
+    True
+    >>> dummyrequest = TestRequest(PATH_INFO='/', langchoice='fr')
+    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    'fr'
+
+    """
+    implements(IContentProvider)
+    adapts(Interface, IDefaultBrowserLayer, Interface)
+    lang = None
+
+    def __init__(self, context, request, view):
+        self.context = context
+        self.request = request
+        if 'PATH_INFO' in self.request \
+        and self.request['PATH_INFO'].startswith('/++lang++'):
+            self.lang = self.request['PATH_INFO'][9:11]
+        if 'langchoice' in self.request:
+            self.lang = self.request['langchoice'][:2]
+            if self.request['langchoice'] == 'auto':
+                self.lang = None
+            path = self.request['PATH_INFO']
+            if path.startswith('/++lang++'):
+                path = path[11:]
+            if self.lang is None:
+                self.request.response.redirect(path)
+            else:
+                self.request.response.redirect('/++lang++' + self.lang + path)
+
+    def update(self):
+        self.langs = {'en':u'english', 'fr':u'français'}
+
+    def render(self):
+       return ViewPageTemplateFile('languagechoice.pt')(self) 
+

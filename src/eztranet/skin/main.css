@@ -167,4 +167,10 @@ th { border: solid 5px #6C77AD; }
 p#description {
     margin: 5px;
 }
-
+div#lang {
+    float:right;
+}
+div#lang select {
+    background: #6C77AE;
+    color: #B8BEDF;
+}

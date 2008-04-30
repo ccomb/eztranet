@@ -388,8 +388,24 @@ to check that the new testuser cannot access the project-2::
     ...
     HTTPError: HTTP Error 403: Forbidden
 
+=========================
+Check the language choice
+=========================
 
-
-
+    >>> browser.getLink(text='Projects').click()
+    >>> 'Here is' in browser.contents
+    True
+    >>> browser.getControl('english').selected=True
+    >>> browser.getControl(name='lang.submit').click()
+    >>> 'Here is' in browser.contents
+    True
+    >>> browser.getControl('français').selected=True
+    >>> browser.getControl(name='lang.submit').click()
+    >>> 'Voici' in browser.contents
+    True
+    >>> browser.getControl('auto').selected=True
+    >>> browser.getControl(name='lang.submit').click()
+    >>> 'Here is' in browser.contents
+    True
 
 

@@ -51,6 +51,11 @@
     <tal:block replace="structure context/@@login_logout" />
 </div>
 
+<div id="lang"
+     tal:content="structure provider:langchoice">
+  Lang choice form
+</div>
+
 <!-- breadcrumb -->
 <div id="breadcrumb">
 <tal:block condition="python: 'main_page' not in dir(view)"
@@ -60,7 +65,8 @@
        tal:condition="repeat/breadcrumb/index">
      item
     </a>
-    <tal:block condition="python: repeat['breadcrumb'].index() and not repeat['breadcrumb'].end()" content="string: / "/>
+    <tal:block condition="python: repeat['breadcrumb'].index() and not repeat['breadcrumb'].end()"
+               content="string: / "/>
 </tal:block>
 </div>
 
@@ -96,6 +102,12 @@ Here, the page content
   </a>
 </div>
 
+<script type="text/javascript">
+title = document.getElementById('form.title')
+description = document.getElementById('form.description')
+if (title != null) { title.focus(); }
+else if (description != null) { description.focus(); }
+</script>
 </body>
 
 </html>
