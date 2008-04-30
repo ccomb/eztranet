@@ -130,13 +130,7 @@ class ProjectItemAdd(Upload):
     label = _(u'Adding a file')
     extra_script = u"""
         document.open()
-        document.write("<p id='loading' style='display: none'>
-                        <img src='/@@/loading.gif'
-                             alt='loading'
-                             style='float: left\;
-                                    margin-right: 10px\;' />
-                        %s
-                        </p>")
+        document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' /> %s</p>")
         document.close()
         document.getElementById('form.actions.add').onclick = function() { document.getElementById('loading').style.display='block'; }
     """ % _(u'The file is being uploaded, this can take several minutes...<br/>\

@@ -57,6 +57,8 @@ src/eztranet/ftests/__init__.py
 src/eztranet/ftests/eztranet.txt
 src/eztranet/ftests/ftesting.zcml
 src/eztranet/ftests/ftests.py
+src/eztranet/locales/eztranet.pot
+src/eztranet/locales/fr/LC_MESSAGES/eztranet.po
 src/eztranet/project/__init__.py
 src/eztranet/project/configure.zcml
 src/eztranet/project/interfaces.py
@@ -79,10 +81,12 @@ src/eztranet/skin/configure.zcml
 src/eztranet/skin/functions.js
 src/eztranet/skin/home.pt
 src/eztranet/skin/interfaces.py
+src/eztranet/skin/languagechoice.pt
 src/eztranet/skin/main.css
 src/eztranet/skin/main_template.pt
 src/eztranet/skin/rootfolder.pt
 src/eztranet/skin/standardmacros.py
+src/eztranet/skin/tests.py
 src/eztranet/skin/images/fond.png
 src/eztranet/skin/images/fondmain.png
 src/eztranet/skin/rotterdamtree/__init__.py

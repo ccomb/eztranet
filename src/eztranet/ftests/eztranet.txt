@@ -148,11 +148,20 @@ We check the different views::
     >>> 'new subproject' in browser.contents
     False
     >>> browser.getLink('Modify').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('Comment').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('Permissions').click()
-
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('project-2').click()
 
+We try to submit the empty add form::
+
+   >>> browser.getLink(text='new file').click()
+   >>> browser.getControl(name='form.actions.add').click()
 
 Adding an Image
 ---------------
@@ -177,10 +186,15 @@ We check the different views::
     >>> 'new subproject' in browser.contents
     False
     >>> browser.getLink('Modify').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('Comment').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('Permissions').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
     >>> browser.getLink('Project').click()
-
 
 Read permissions
 ----------------
