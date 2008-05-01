@@ -12,13 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Thu May  1 15:31:04 2008\n"
-"PO-Revision-Date: 2008-04-30 19:35+0200\n"
+"POT-Creation-Date: Thu May  1 23:06:03 2008\n"
+"PO-Revision-Date: 2008-05-01 23:08+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: site.zcml:36
 msgid "Site Manager"
@@ -69,19 +69,19 @@ msgstr "Voir les commentaires"
 msgid "Edit comments"
 msgstr "Modifier les commentaires"
 
-#: src/eztranet/configure.zcml:41
+#: src/eztranet/configure.zcml:42
 msgid "Eztranet site"
 msgstr "Site Eztranet"
 
-#: src/eztranet/configure.zcml:41
+#: src/eztranet/configure.zcml:42
 msgid "An Eztranet application"
 msgstr "Une application Eztranet"
 
-#: src/eztranet/configure.zcml:55
+#: src/eztranet/configure.zcml:56
 msgid "Add an Eztranet Site"
 msgstr "Ajouter un Eztranet"
 
-#: src/eztranet/configure.zcml:77
+#: src/eztranet/configure.zcml:78
 msgid "Eztranet Site"
 msgstr "Site Eztranet"
 
@@ -216,53 +216,53 @@ msgstr "Détails du projet"
 msgid "View of a project"
 msgstr "Vue d'un projet"
 
-#: src/eztranet/project/browser/configure.zcml:117
-#: src/eztranet/project/browser/configure.zcml:122
-msgid "Comment"
-msgstr "Commenter"
-
-#: src/eztranet/project/browser/configure.zcml:17
-#: src/eztranet/project/browser/configure.zcml:56
-msgid "List"
-msgstr "Liste"
-
-#: src/eztranet/project/browser/configure.zcml:23
-#: src/eztranet/project/browser/configure.zcml:31
-#: src/eztranet/users/configure.zcml:59
-msgid "Modify"
-msgstr "Modifier"
-
-#: src/eztranet/project/browser/configure.zcml:39
-#: src/eztranet/project/browser/configure.zcml:45
-#: src/eztranet/users/configure.zcml:63
-msgid "View"
-msgstr "Voir"
-
-#: src/eztranet/project/browser/configure.zcml:62
-msgid "new subproject"
-msgstr "ajouter sous-projet"
-
-#: src/eztranet/project/browser/configure.zcml:69
-msgid "new project"
-msgstr "ajouter projet"
-
-#: src/eztranet/project/browser/configure.zcml:77
-msgid "new file"
-msgstr "ajouter fichier"
-
-#: src/eztranet/project/browser/configure.zcml:88
-#: src/eztranet/project/browser/configure.zcml:99
+#: src/eztranet/project/browser/configure.zcml:107
+#: src/eztranet/project/browser/configure.zcml:118
 msgid "edit"
 msgstr "modifier"
 
-#: src/eztranet/project/browser/configure.zcml:90
-#: src/eztranet/users/configure.zcml:37 src/eztranet/users/configure.zcml:44
+#: src/eztranet/project/browser/configure.zcml:109
+#: src/eztranet/users/configure.zcml:40 src/eztranet/users/configure.zcml:48
 msgid "Permissions"
 msgstr "Permissions"
 
-#: src/eztranet/project/browser/configure.zcml:92
+#: src/eztranet/project/browser/configure.zcml:111
 msgid "Contents"
 msgstr "Contenu"
+
+#: src/eztranet/project/browser/configure.zcml:123
+#: src/eztranet/project/browser/configure.zcml:129
+msgid "Comment"
+msgstr "Commenter"
+
+#: src/eztranet/project/browser/configure.zcml:13
+#: src/eztranet/project/browser/configure.zcml:58
+msgid "List"
+msgstr "Liste"
+
+#: src/eztranet/project/browser/configure.zcml:21
+#: src/eztranet/project/browser/configure.zcml:30
+#: src/eztranet/users/configure.zcml:68
+msgid "Modify"
+msgstr "Modifier"
+
+#: src/eztranet/project/browser/configure.zcml:38
+#: src/eztranet/project/browser/configure.zcml:45
+#: src/eztranet/users/configure.zcml:73
+msgid "View"
+msgstr "Voir"
+
+#: src/eztranet/project/browser/configure.zcml:64
+msgid "new subproject"
+msgstr "ajouter sous-projet"
+
+#: src/eztranet/project/browser/configure.zcml:72
+msgid "new project"
+msgstr "ajouter projet"
+
+#: src/eztranet/project/browser/configure.zcml:81
+msgid "new file"
+msgstr "ajouter fichier"
 
 #: src/eztranet/project/browser/image.pt:42
 #: src/eztranet/project/browser/video.pt:35
@@ -352,7 +352,7 @@ msgstr "ko"
 msgid "Eztranet : your photo/video extranet"
 msgstr "Eztranet : votre extranet photo/vidéo"
 
-#: src/eztranet/skin/browser.py:77
+#: src/eztranet/skin/browser.py:77 src/eztranet/skin/main_template.pt:75
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -376,21 +376,34 @@ msgstr ""
 "Vous pouvez essayer l'Eztranet en cliquant sur « projets » (en haut) ou sur « "
 "connexion » (en haut à gauche)"
 
+#: src/eztranet/skin/home.pt:34
+msgid "Login:"
+msgstr "Login :"
+
+#: src/eztranet/skin/home.pt:35
+msgid "Password:"
+msgstr "Mot de passe :"
+
 #: src/eztranet/skin/languagechoice.pt:3
 msgid "Language:"
 msgstr "Langue :"
 
-#: src/eztranet/skin/main_template.pt:99
+#: src/eztranet/skin/main_template.pt:108
 msgid "Made to measure by Gorfou"
 msgstr "Fabriqué sur mesure par un Gorfou"
 
-#: src/eztranet/skin/rootfolder.pt:15
+#: src/eztranet/skin/rootfolder.pt:17
 msgid "List of your eztranet sites:"
 msgstr "Liste de vos sites eztranet :"
 
 #: src/eztranet/skin/rootfolder.pt:9
-msgid "You don't have any eztranet site yet"
-msgstr "Vous n'avez aucun site eztranet"
+msgid ""
+"You don't have any eztranet site yet. Login in the <a href=\"++skin+"
+"+Rotterdam\">ZMI</a> and add an Eztranet Site.<br /> Then get back to this "
+"page."
+msgstr ""
+"Vous n'avez pas encore de site eztranet. Connectez-vous sur la <a href=\"++skin+"
+"+Rotterdam\">ZMI</a> et ajoutez un « Site Eztranet ».<br />Revenez ensuite sur cette page."
 
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:162
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:165
@@ -418,33 +431,34 @@ msgstr "Écrire les vignettes"
 msgid "The URL of a thumbnail"
 msgstr "L'URL d'une vignette"
 
-#: src/eztranet/users/browser.py:38
+#: src/eztranet/users/browser.py:39
 msgid "Permissions modified"
 msgstr "Permissions modifiées"
 
-#: src/eztranet/users/browser.py:47 src/eztranet/users/configure.zcml:55
+#: src/eztranet/users/browser.py:48 src/eztranet/users/configure.zcml:56
+#: src/eztranet/users/configure.zcml:63
 msgid "New user"
 msgstr "Nouvel utilisateur"
 
-#: src/eztranet/users/browser.py:60
+#: src/eztranet/users/browser.py:63
 msgid "User"
 msgstr "Utilisateur"
 
-#: src/eztranet/users/browser.py:70
+#: src/eztranet/users/browser.py:73
 msgid "Modifying a user"
 msgstr "Modifier un utilisateur"
 
-#: src/eztranet/users/configure.zcml:74
-msgid "Eztranet User"
-msgstr "Utilisateur Eztranet"
-
-#: src/eztranet/users/configure.zcml:78
+#: src/eztranet/users/configure.zcml:129
 msgid "view user"
 msgstr "voir utilisateur"
 
-#: src/eztranet/users/configure.zcml:84
+#: src/eztranet/users/configure.zcml:136
 msgid "edit user"
 msgstr "modifier utilisateur"
+
+#: src/eztranet/users/configure.zcml:27
+msgid "Users list"
+msgstr "Liste des utilisateurs"
 
 #: src/eztranet/users/interfaces.py:17
 msgid "Administrator"
@@ -453,6 +467,12 @@ msgstr "Administrateur"
 #: src/eztranet/users/users.py:91
 msgid "eztranet initial administrator"
 msgstr "Administrateur initial de l'Eztranet"
+
+#~ msgid "You don't have any eztranet site yet"
+#~ msgstr "Vous n'avez aucun site eztranet"
+
+#~ msgid "Eztranet User"
+#~ msgstr "Utilisateur Eztranet"
 
 #~ msgid "réalisé par un Gorfou"
 #~ msgstr "fabriqué sur mesure par un Gorfou"
