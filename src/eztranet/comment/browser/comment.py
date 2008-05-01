@@ -17,6 +17,8 @@ $Id: comment.py 38895 2005-10-07 15:09:36Z dominikhuber $
 """
 __docformat__ = 'restructuredtext'
 
+from zope.interface import implements, Interface
+from zope.component import adapts
 from zope.dublincore.interfaces import IZopeDublinCore
 from zope.app import zapi
 from zope.publisher.browser import BrowserView
@@ -24,8 +26,10 @@ from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
 from zope.security.checker import canAccess
 from zope.security.interfaces import ForbiddenAttribute
+from zope.contentprovider.interfaces import IContentProvider
+from zope.publisher.browser import IDefaultBrowserLayer
 
-from eztranet.comment import IComments
+from eztranet.comment import IComments, IAnnotatableComments
 
 
 def getFullName(principal_id) :
@@ -118,8 +122,20 @@ class AddComment(BrowserView) :
         comments.addComment(text)
         
         self.request.response.redirect(self.nextURL())
-        
+
+class NbComments(object):
+    """
+    Content provider that gives the number of comments
+    """
+    implements(IContentProvider)
+    adapts(IAnnotatableComments, IDefaultBrowserLayer, Interface)
     
-    
-    
-    
+    def __init__(self, context, request, view):
+        self.context, self.request, self.view = context, request, view
+
+    def update(self):
+        self.nb_comments = len(IComments(self.context))
+
+    def render(self):
+        return self.nb_comments
+

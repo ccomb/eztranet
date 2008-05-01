@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Wed Apr 30 19:35:21 2008\n"
+"POT-Creation-Date: Thu May  1 15:31:04 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -256,22 +256,24 @@ msgstr ""
 msgid "Contents"
 msgstr ""
 
-#: src/eztranet/project/browser/image.pt:26
-#: src/eztranet/project/browser/video.pt:23
-#: src/eztranet/project/browser/file.pt:23
+#: src/eztranet/project/browser/image.pt:42
+#: src/eztranet/project/browser/video.pt:35
+#: src/eztranet/project/browser/file.pt:35
+msgid "download"
+msgstr ""
+
+#: src/eztranet/project/browser/project.pt:15
+#: src/eztranet/project/browser/image.pt:20
+#: src/eztranet/project/browser/video.pt:19
+#: src/eztranet/project/browser/file.pt:19
 msgid "comment"
 msgstr ""
 
-#: src/eztranet/project/browser/image.pt:36
-#: src/eztranet/project/browser/video.pt:33
-#: src/eztranet/project/browser/file.pt:33
+#: src/eztranet/project/browser/project.pt:19
+#: src/eztranet/project/browser/image.pt:24
+#: src/eztranet/project/browser/video.pt:23
+#: src/eztranet/project/browser/file.pt:23
 msgid "comments"
-msgstr ""
-
-#: src/eztranet/project/browser/image.pt:56
-#: src/eztranet/project/browser/video.pt:47
-#: src/eztranet/project/browser/file.pt:47
-msgid "download"
 msgstr ""
 
 #: src/eztranet/project/configure.zcml:12

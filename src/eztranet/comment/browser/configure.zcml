@@ -15,5 +15,9 @@
           class=".comment.AddComment"
           attribute="addComment"
           permission="eztranet.comment.add" />
+
+<zope:adapter name="nb_comments"
+              factory=".comment.NbComments"
+              permission="eztranet.comment.view" />
       
 </configure>

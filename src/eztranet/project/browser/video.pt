@@ -5,38 +5,26 @@
       xml:lang="en" lang="en"
       i18n:domain="eztranet"
       metal:use-macro="context/@@standard_macros/page">
+
 <body>
 <div id="body"
      metal:fill-slot="body">
 
-<tal:block tal:define="IComments nocall:modules/eztranet.comment.interfaces/IComments;
-                       IAttributeAnnotatableComments nocall:modules/eztranet.comment.interfaces/IAttributeAnnotatableComments"
-           tal:condition="python: IAttributeAnnotatableComments.providedBy(context)">
-    <div class="nb_comments"
-         tal:define="nb python: len(IComments(context))"
-         tal:condition="nb">
-       <a class="nb_comments"
-          href="@@comments.html"
-          tal:define="comment string:comment"
-          tal:condition="python:nb == 1">
-        <span tal:replace="nb">N</span>
-        <span tal:omit-tag=""
-              i18n:translate="">
-          comment
-        </span>
-       </a>
-       <a class="nb_comments"
-          href="@@comments.html"
-          tal:define="comment string:comment"
-          tal:condition="python:nb > 1">
-        <span tal:replace="nb">N</span>
-        <span tal:omit-tag=""
-              i18n:translate="">
-          comments
-        </span>
-       </a>
-    </div>
-</tal:block>
+<a class="nb_comments"
+   href="#"
+   tal:define="nb provider:nb_comments"
+   tal:condition="nb"
+   tal:attributes="href string:@@comments.html">
+  <span tal:replace="nb">N</span>
+  <span tal:condition="python:nb == 1"
+        i18n:translate="">
+    comment
+  </span>
+  <span tal:condition="python:nb > 1"
+        i18n:translate="">
+    comments
+  </span>
+</a>
 
 <p id="description"
    tal:content="structure view/description">
