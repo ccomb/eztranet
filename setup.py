@@ -58,7 +58,8 @@ setup(name='eztranet',
                         'zope.app.security',
                         'zope.mimetype',
                         'zope.file',
-                        'zope.testbrowser'
+                        'zope.testbrowser',
+                        'z3c.layer.minimal'
                         ],
       entry_points = """
       [console_scripts]

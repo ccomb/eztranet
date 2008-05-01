@@ -28,11 +28,13 @@
 <browser:view name="thumbnail_image"
               for=".interfaces.IThumbnailed"
               class=".browser.ThumbnailImageView"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.thumbnail.view" />
 
 <browser:view name="thumbnail_url"
               for=".interfaces.IThumbnailed"
               class=".browser.ThumbnailUrlView"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.thumbnail.view" />
 
 <zope:subscriber handler=".thumbnail.ThumbnailedModified" />

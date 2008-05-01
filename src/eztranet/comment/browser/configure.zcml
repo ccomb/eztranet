@@ -5,6 +5,7 @@
     <page name="comments.html"
           for="eztranet.comment.IAttributeAnnotatableComments"
           class=".comment.ListComments"
+          layer="eztranet.skin.interfaces.IEztranetSkin"
           template="./templates/comments.pt"
           permission="eztranet.comment.view"
           title="Comments"
@@ -13,6 +14,7 @@
     <page name="addcomment.html"
           for="eztranet.comment.IAttributeAnnotatableComments"
           class=".comment.AddComment"
+          layer="eztranet.skin.interfaces.IEztranetSkin"
           attribute="addComment"
           permission="eztranet.comment.add" />
 

@@ -27,8 +27,11 @@
 <browser:page name="contents.html"
               class=".browser.EztranetUsers"
               for=".interfaces.IEztranetUsersContainer"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               template="userscontainer.pt"
-              permission="eztranet.manage" />
+              permission="eztranet.manage"
+              menu="eztranet_actions"
+              title="Users list"/>
 
 <zope:utility component=".users.EztranetUsersContainer"
               name="EztranetUsers"
@@ -37,6 +40,7 @@
 <browser:page name="permissions.html"
               class=".browser.ProjectGranting"
               for="eztranet.project.interfaces.IProject"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
               template="granting.pt"
               menu="eztranet_actions"
@@ -44,46 +48,95 @@
 <browser:page name="permissions.html"
               class=".browser.ProjectGranting"
               for="eztranet.project.interfaces.IProjectItem"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
               template="granting.pt"
               menu="eztranet_actions"
               title="Permissions" />
-<browser:page name="eztranet.User"
+<browser:page name="add_user.html"
               class=".browser.EztranetUserAdd"
-              for="zope.app.container.interfaces.IAdding"
-              permission="eztranet.manage" />
+              for=".interfaces.IEztranetUsersContainer"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
+              permission="eztranet.manage"
+              menu="eztranet_actions"
+              title="New user" />
 <browser:menuItem menu="eztranet_actions"
                   title="New user"
                   action="+/eztranet.User"
+                  layer="eztranet.skin.interfaces.IEztranetSkin"
                   for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
 <browser:menuItem menu="eztranet_actions"
                   title="Modify"
                   action="edit_user.html"
-                  for="eztranet.users.interfaces.IEztranetUser" />
+                  for="eztranet.users.interfaces.IEztranetUser"
+                  layer="eztranet.skin.interfaces.IEztranetSkin" />
 <browser:menuItem menu="eztranet_actions"
                   title="View"
                   action="index.html"
-                  for="eztranet.users.interfaces.IEztranetUser" />
+                  for="eztranet.users.interfaces.IEztranetUser"
+                  layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <zope:adapter factory=".users.UserNameChooser" />
 <zope:utility component=".users.EztranetUserFactory"
               name="eztranet.EztranetUser"
               permission="eztranet.manage" />
 
-<!-- juste pour la ZMI -->
-<browser:addMenuItem title="Eztranet User"
-                     factory="eztranet.EztranetUser"
-                     permission="eztranet.manage"
-                     view="eztranet.User" />
+<!-- EXTERNAL PACKAGES -->
+<configure package="zope.app.security">
+<browser:page
+    name="login_logout"
+    for="*"
+    class=".browser.auth.LoginLogout"
+    permission="zope.Public"
+    layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:page
+    name="login.html"
+    for="*"
+    class=".browser.auth.HTTPAuthenticationLogin"
+    attribute="login"
+    permission="zope.Public"
+    allowed_interface="zope.app.publisher.interfaces.http.ILogin"
+    layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:page
+    name="logout.html"
+    for="*"
+    class=".browser.auth.HTTPAuthenticationLogout"
+    attribute="logout"
+    permission="zope.Public"
+    allowed_interface="zope.app.publisher.interfaces.http.ILogout"
+    layer="eztranet.skin.interfaces.IEztranetSkin" />
+</configure>
+
+<configure package="zope.app.authentication.browser">
+<browser:page
+    for="*"
+    permission="zope.Public"
+    name="loginForm.html"
+    template="loginform.pt"
+    layer="eztranet.skin.interfaces.IEztranetSkin" />
+</configure>
+
+<configure package="zope.app.publisher">
+<browser:page
+    for="*"
+    name="view_get_menu"
+    permission="zope.Public"
+    class=".browser.menu.MenuAccessView"
+    allowed_interface="zope.app.publisher.interfaces.browser.IMenuAccessView"
+    layer="eztranet.skin.interfaces.IEztranetSkin" /> 
+</configure>
+
 <browser:page name="index.html"
               class=".browser.EztranetUserView"
               for=".interfaces.IEztranetUser"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
               menu="zmi_views"
               title="view user" />
 <browser:page name="edit_user.html"
               class=".browser.EztranetUserEdit"
               for=".interfaces.IEztranetUser"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
               menu="zmi_views"
               title="edit user" />

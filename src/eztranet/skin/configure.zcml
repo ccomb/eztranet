@@ -55,7 +55,8 @@
     layer=".interfaces.IEztranetSkin" />
 <browser:resourceDirectory
     name="images"
-    directory="images" />
+    directory="images"
+    layer=".interfaces.IEztranetSkin" />
 <browser:resource
     name="functions.js"
     file="functions.js"

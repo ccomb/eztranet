@@ -63,7 +63,7 @@
             </td>
             <td width='100'><a href="#"
                  tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                                 string:${url}/edit_user.html"
                  tal:content="structure item/icon|default">
                 </a
                 ><span tal:condition="item/rename"
@@ -75,7 +75,7 @@
                 ><span tal:condition="not:item/rename">
                   <a href="#"
                      tal:attributes="href
-                                 string:${url}/@@SelectedManagementView.html"
+                                 string:${url}/edit_user.html"
                      tal:content="item/id"
                      >foo</a
                   ></span

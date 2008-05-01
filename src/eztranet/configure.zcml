@@ -34,6 +34,7 @@
   <include package="zope.dublincore" />
   <include package="zope.mimetype" />
   <include package="zope.file" />
+  <include package="z3c.layer.minimal" />
 
   <!-- Add your own component registrations here -->
 

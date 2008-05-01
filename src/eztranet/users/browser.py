@@ -5,6 +5,7 @@ from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
+from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
@@ -45,12 +46,14 @@ class EztranetUserAdd(AddForm):
     """
     form_fields = Fields(IEztranetUser).select('login','password','IsAdmin')
     label = _(u'New user')
-    def create(self, data):
+    def createAndAdd(self, data):
         user=EztranetUser("","","")
         applyChanges(user, self.form_fields, data)
-        self.context.contentName=INameChooser(user).chooseName(user.title, user)
+        contentName = INameChooser(user).chooseName(user.login, user)
         user.title = user.login
-        return user
+        self.context[contentName] = user
+        self.request.response.redirect(AbsoluteURL(self.context,
+                                                   self.request)()+'/contents.html')
 
 class EztranetUserView(DisplayForm):
     """

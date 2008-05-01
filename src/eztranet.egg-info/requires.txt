@@ -28,3 +28,4 @@ zope.app.security
 zope.mimetype
 zope.file
 zope.testbrowser
+z3c.layer.minimal

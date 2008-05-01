@@ -2,7 +2,7 @@ import os
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import Interface, implements
 from zope.component import adapts
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+from z3c.layer.minimal import IMinimalBrowserLayer
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.file.file import File
 from eztranet.flashpreview.interfaces import IFlashPreview
@@ -15,7 +15,7 @@ _ = MessageFactory('eztranet')
 
 class FlashContentProvider(object):
     implements(IContentProvider)
-    adapts(Interface, IDefaultBrowserLayer, Interface)
+    adapts(Interface, IMinimalBrowserLayer, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
     def update(self):

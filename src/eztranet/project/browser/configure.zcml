@@ -10,48 +10,50 @@
 <containerViews for="..interfaces.IProjectContainer"
                 add="eztranet.manage" />
 
-<!-- VIEW -->
-<pages for="..interfaces.IProject"
-       class=".browser.ProjectView"
-       permission="eztranet.project.view">
-    <page name="index.html"
-          menu="eztranet_actions"
-          title="List" />
-    <page name="contents.html" />
-</pages>
+<page name="index.html"
+      for="..interfaces.IProject"
+      class=".browser.ProjectView"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
+      permission="eztranet.project.view"
+      menu="eztranet_actions"
+      title="List" />
 
 <page name="edit.html"
       for="..interfaces.IProject"
       class=".browser.ProjectEdit"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="Modify" />
 
-<!-- EDIT -->
+<!-- Projectitem views -->
 <page name="edit.html"
       for="..interfaces.IProjectItem"
       class=".browser.ProjectItemEdit"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="Modify" />
 
-<!-- VIEW -->
 <page name="index.html"
       for="..interfaces.IProjectImage"
       class=".browser.ProjectImageView"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.view"
       menu="eztranet_actions"
       title="View" />
 <page name="index.html"
       for="..interfaces.IProjectVideo"
       class=".browser.ProjectVideoView"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.view"
       menu="eztranet_actions"
       title="View" />
 
-<!-- Project Container view -->
+<!-- ProjectContainer views -->
 <pages for="..interfaces.IProjectContainer"
        class=".browser.ProjectContainerView"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
        permission="eztranet.view" >
     <page name="index.html"
           menu="eztranet_actions"
@@ -62,6 +64,7 @@
 <page name="add_project.html"
       for="..interfaces.IProject"
       class=".browser.ProjectAdd"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="new subproject" />
@@ -69,6 +72,7 @@
 <page name="add_project.html"
       for="..interfaces.IProjectContainer"
       class=".browser.ProjectAdd"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="new project" />
@@ -77,9 +81,24 @@
 <page name="add_projectitem.html"
       for="..interfaces.IProject"
       class=".browser.ProjectItemAdd"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
       permission="eztranet.project.edit"
       menu="eztranet_actions"
       title="new file" />
+
+<!-- Ressources -->
+<resource name="folder.png"
+          file="folder.png"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="up.png"
+          file="up.png"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="loading.gif"
+          file="loading.gif"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <!-- juste pour la ZMI -->
 <menuItems menu="zmi_views"
@@ -100,28 +119,17 @@
               action="edit.html" />
 </menuItems>
 
-<resource name="folder.png"
-          file="folder.png"
-          permission="zope.Public"
-          layer="eztranet.skin.interfaces.IEztranetSkin" />
-<resource name="up.png"
-          file="up.png"
-          permission="zope.Public"
-          layer="eztranet.skin.interfaces.IEztranetSkin" />
-<resource name="loading.gif"
-          file="loading.gif"
-          permission="zope.Public"
-          layer="eztranet.skin.interfaces.IEztranetSkin" />
-
 <!-- comment management -->
 <menuItem title="Comment"
           action="@@comments.html"
           for="..interfaces.IProject"
+          layer="eztranet.skin.interfaces.IEztranetSkin"
           menu="eztranet_actions"
           permission="eztranet.comment.view" />
 <menuItem title="Comment"
           action="@@comments.html"
           for="..interfaces.IProjectItem"
+          layer="eztranet.skin.interfaces.IEztranetSkin"
           menu="eztranet_actions"
           permission="eztranet.comment.view" />
 

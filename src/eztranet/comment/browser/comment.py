@@ -27,8 +27,7 @@ from zope.app.security.interfaces import PrincipalLookupError
 from zope.security.checker import canAccess
 from zope.security.interfaces import ForbiddenAttribute
 from zope.contentprovider.interfaces import IContentProvider
-from zope.publisher.browser import IDefaultBrowserLayer
-
+from z3c.layer.minimal import IMinimalBrowserLayer
 from eztranet.comment import IComments, IAnnotatableComments
 
 
@@ -128,7 +127,7 @@ class NbComments(object):
     Content provider that gives the number of comments
     """
     implements(IContentProvider)
-    adapts(IAnnotatableComments, IDefaultBrowserLayer, Interface)
+    adapts(IAnnotatableComments, IMinimalBrowserLayer, Interface)
     
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view

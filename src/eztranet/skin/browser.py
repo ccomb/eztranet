@@ -2,7 +2,6 @@
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.app.component.hooks import getSite
 from zope.component import adapts, queryUtility
 from zope.security.checker import canAccess
@@ -11,13 +10,14 @@ from zope.publisher.browser import BrowserPage
 from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
+from interfaces import IEztranetSkin
 
 class PageTitleContentProvider(object):
     """
     A Content Provider that allows to display the page titlee (in the html header)
     """
     implements(IContentProvider)
-    adapts(Interface, IDefaultBrowserLayer, Interface)
+    adapts(Interface, IEztranetSkin, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
         self._sitename = getSite().__name__ or "Zope3"
@@ -37,7 +37,7 @@ class LogoProvider(object):
     The view that provides the logo and its html accessories
     """
     implements(IContentProvider)
-    adapts(Interface, IDefaultBrowserLayer, Interface)
+    adapts(Interface, IEztranetSkin, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
     def update(self):
@@ -62,7 +62,7 @@ class EztranetMainMenu(object):
     The content provider that provides the main menu
     """
     implements(IContentProvider)
-    adapts(Interface, IDefaultBrowserLayer, Interface)
+    adapts(Interface, IEztranetSkin, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
         self.menuitems = []
@@ -111,7 +111,7 @@ class LangChoiceContentProvider(object):
 
     """
     implements(IContentProvider)
-    adapts(Interface, IDefaultBrowserLayer, Interface)
+    adapts(Interface, IEztranetSkin, Interface)
     lang = None
 
     def __init__(self, context, request, view):
