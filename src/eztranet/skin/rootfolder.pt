@@ -8,7 +8,9 @@
 <body>
 <span tal:condition="python: not len(context)"
       i18n:translate="">
-   You don't have any eztranet site yet
+   You don't have any eztranet site yet. Login in the <a
+   href="++skin++Rotterdam">ZMI</a> and add an Eztranet Site.<br/>
+   Then get back to this page.
 </span>
 
 <ul tal:condition="python: len(context)">

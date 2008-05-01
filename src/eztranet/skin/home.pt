@@ -30,6 +30,10 @@
 You can try the Eztranet by clicking on "projects" (at the top) or on
 "connection" (top-left corner).
 </p>
+<ul>
+  <li><span i18n:translate="">Login: </span>admin</li>
+  <li><span i18n:translate="">Password: </span>eztranet</li>
+</ul>
 </div>
 
 </div>

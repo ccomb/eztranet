@@ -79,7 +79,7 @@ class EztranetUsers(Contents):
     def supportsRename(self):
         return False
     def removeObjects(self):
-        # on empeche de se supprimer soi-même
+        # prevent from deleting ourself
         ppal_id = unicode(self.request.principal.id)
         ids_to_remove = []
         if 'ids' in self.request.form:

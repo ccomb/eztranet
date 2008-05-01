@@ -54,8 +54,8 @@ def EztranetInitialSetup(event):
     event.object['projects'] = createObject('eztranet.ProjectContainer')
     event.object['projects'].title = _(u'Projects')
     
-    # cet setup pourrait être fait dans un event déclenché lors de l'ajout du EztranetSite
-    # en disant que l'EztranetSite implémente une interface marqueur du style IHaveUserManagement
+    # this setup could be done in an event triggered when adding the eztranet
+    # by saying that EztranetSite implements a marker interface such as IHaveUserManagement
     users.initial_setup(site)
     
     #create an intid for all objects added in content space and site manager. (the intid is not yet active)"

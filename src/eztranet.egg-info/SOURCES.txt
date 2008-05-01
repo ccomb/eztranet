@@ -58,6 +58,7 @@ src/eztranet/ftests/eztranet.txt
 src/eztranet/ftests/ftesting.zcml
 src/eztranet/ftests/ftests.py
 src/eztranet/locales/eztranet.pot
+src/eztranet/locales/fr/LC_MESSAGES/eztranet.mo
 src/eztranet/locales/fr/LC_MESSAGES/eztranet.po
 src/eztranet/project/__init__.py
 src/eztranet/project/configure.zcml
