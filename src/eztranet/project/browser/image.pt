@@ -50,9 +50,12 @@
      width="800"
      src="#"
      alt="image"
+     style="cursor: -moz-zoom-in"
      tal:attributes="src string:${context/@@absolute_url}/@@display; 
                      alt context/title;
-                     width view/wantedWidth" />
+                     width view/wantedWidth;
+                     onclick string:toggle_image_size(${view/wantedWidth},
+                                                      ${view/originalWidth})"/>
 
 </div>
 
