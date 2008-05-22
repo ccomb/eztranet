@@ -16,7 +16,8 @@ from interfaces import IEztranetUsersContainer, IEztranetUser
 
 class EztranetUsersContainer(PrincipalFolder):
     implements(IEztranetUsersContainer)
-    __name__=__parent__=None
+    __name__ = __parent__ = None
+    title = u'Users'
 
 class EztranetUser(InternalPrincipal):
     """

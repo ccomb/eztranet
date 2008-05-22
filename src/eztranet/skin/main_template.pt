@@ -81,7 +81,8 @@
 
 <!-- object title -->
 <h1>
-    <span tal:content="context/title | context/__name__ | nothing">
+    <span i18n:translate=""
+          tal:content="context/title | context/__name__ | nothing">
         Item
     </span>
 </h1>

@@ -1,3 +1,4 @@
+from zope.interface import Attribute
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
 from zope.schema import Bool
@@ -8,6 +9,7 @@ _ = MessageFactory('eztranet')
 
 class IEztranetUsersContainer(IInternalPrincipalContainer, IAuthenticatorPlugin, IContainer, IContained):
     contains("eztranet.users.interfaces.IEztranetUser")
+    title = Attribute(u'title of the users container')
 
 class IEztranetUser(IInternalPrincipal):
     """
