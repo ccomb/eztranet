@@ -86,7 +86,7 @@ class RootFolderView(BrowserPage):
 
 class LangChoiceContentProvider(object):
     """
-    Content provider that allow to choose the language::
+    Content provider that allows to choose the language::
     
     >>> from eztranet.skin.browser import LangChoiceContentProvider
     >>> from zope.publisher.browser import TestRequest

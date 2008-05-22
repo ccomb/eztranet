@@ -1,6 +1,7 @@
 <form action=""
       method="POST">
-  <span i18n:translate="">
+  <span i18n:domain="eztranet"
+        i18n:translate="">
     Language:
   </span>
   <select name="langchoice"
