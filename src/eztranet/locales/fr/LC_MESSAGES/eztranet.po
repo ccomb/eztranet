@@ -12,13 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Thu May  1 23:06:03 2008\n"
-"PO-Revision-Date: 2008-05-01 23:08+0200\n"
+"POT-Creation-Date: Thu May 22 14:21:12 2008\n"
+"PO-Revision-Date: 2008-05-01 23:37+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: site.zcml:36
 msgid "Site Manager"
@@ -85,7 +85,7 @@ msgstr "Ajouter un Eztranet"
 msgid "Eztranet Site"
 msgstr "Site Eztranet"
 
-#: src/eztranet/eztranet.py:55 src/eztranet/project/browser/browser.py:109
+#: src/eztranet/eztranet.py:55 src/eztranet/project/browser/browser.py:112
 msgid "Projects"
 msgstr "Projets"
 
@@ -171,15 +171,15 @@ msgstr "Voir l'Eztranet"
 msgid "Manage the eztranet"
 msgstr "Gérer l'Eztranet"
 
-#: src/eztranet/project/browser/browser.py:111
+#: src/eztranet/project/browser/browser.py:114
 msgid "Here is the list of your projects"
 msgstr "Voici la liste de vos projets"
 
-#: src/eztranet/project/browser/browser.py:130
+#: src/eztranet/project/browser/browser.py:133
 msgid "Adding a file"
 msgstr "Ajout d'un fichier"
 
-#: src/eztranet/project/browser/browser.py:136
+#: src/eztranet/project/browser/browser.py:139
 msgid ""
 "The file is being uploaded, this can take several minutes...<br/"
 ">              If you stop the loading of this page, the transfer will be "
@@ -188,57 +188,61 @@ msgstr ""
 "Le fichier est en cours d'envoi, ceci peut durer plusieurs minutes...<br/>Si "
 "vous interrompez le chargement de la page, le transfert sera annulé."
 
-#: src/eztranet/project/browser/browser.py:158
+#: src/eztranet/project/browser/browser.py:162
 msgid "Modification"
 msgstr "Modification"
 
-#: src/eztranet/project/browser/browser.py:184
+#: src/eztranet/project/browser/browser.py:188
 msgid "File"
 msgstr "Fichier"
 
-#: src/eztranet/project/browser/browser.py:196
+#: src/eztranet/project/browser/browser.py:200
 msgid "Image"
 msgstr "Image"
 
-#: src/eztranet/project/browser/browser.py:220
+#: src/eztranet/project/browser/browser.py:224
 msgid "Video"
 msgstr "Vidéo"
 
-#: src/eztranet/project/browser/browser.py:38
+#: src/eztranet/project/browser/browser.py:40
 msgid "Adding a project"
 msgstr "Ajout d'un projet"
 
-#: src/eztranet/project/browser/browser.py:50
+#: src/eztranet/project/browser/browser.py:53
 msgid "Project details"
 msgstr "Détails du projet"
 
-#: src/eztranet/project/browser/browser.py:89
+#: src/eztranet/project/browser/browser.py:92
 msgid "View of a project"
 msgstr "Vue d'un projet"
 
-#: src/eztranet/project/browser/configure.zcml:107
-#: src/eztranet/project/browser/configure.zcml:118
+#: src/eztranet/project/browser/configure.zcml:101
+msgid "new file"
+msgstr "ajouter fichier"
+
+#: src/eztranet/project/browser/configure.zcml:127
+#: src/eztranet/project/browser/configure.zcml:138
 msgid "edit"
 msgstr "modifier"
 
-#: src/eztranet/project/browser/configure.zcml:109
+#: src/eztranet/project/browser/configure.zcml:129
 #: src/eztranet/users/configure.zcml:40 src/eztranet/users/configure.zcml:48
 msgid "Permissions"
 msgstr "Permissions"
 
-#: src/eztranet/project/browser/configure.zcml:111
+#: src/eztranet/project/browser/configure.zcml:13
+#: src/eztranet/project/browser/configure.zcml:78
+msgid "List"
+msgstr "Liste"
+
+#: src/eztranet/project/browser/configure.zcml:131
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/eztranet/project/browser/configure.zcml:123
-#: src/eztranet/project/browser/configure.zcml:129
+#: src/eztranet/project/browser/configure.zcml:143
+#: src/eztranet/project/browser/configure.zcml:149
 msgid "Comment"
 msgstr "Commenter"
-
-#: src/eztranet/project/browser/configure.zcml:13
-#: src/eztranet/project/browser/configure.zcml:58
-msgid "List"
-msgstr "Liste"
 
 #: src/eztranet/project/browser/configure.zcml:21
 #: src/eztranet/project/browser/configure.zcml:30
@@ -247,22 +251,19 @@ msgid "Modify"
 msgstr "Modifier"
 
 #: src/eztranet/project/browser/configure.zcml:38
-#: src/eztranet/project/browser/configure.zcml:45
+#: src/eztranet/project/browser/configure.zcml:46
+#: src/eztranet/project/browser/configure.zcml:53
 #: src/eztranet/users/configure.zcml:73
 msgid "View"
 msgstr "Voir"
 
-#: src/eztranet/project/browser/configure.zcml:64
+#: src/eztranet/project/browser/configure.zcml:84
 msgid "new subproject"
 msgstr "ajouter sous-projet"
 
-#: src/eztranet/project/browser/configure.zcml:72
+#: src/eztranet/project/browser/configure.zcml:92
 msgid "new project"
 msgstr "ajouter projet"
-
-#: src/eztranet/project/browser/configure.zcml:81
-msgid "new file"
-msgstr "ajouter fichier"
 
 #: src/eztranet/project/browser/image.pt:42
 #: src/eztranet/project/browser/video.pt:35
@@ -276,6 +277,14 @@ msgstr "télécharger"
 #: src/eztranet/project/browser/file.pt:19
 msgid "comment"
 msgstr "commentaire"
+
+#: src/eztranet/project/browser/project.pt:170
+msgid "Created: ${time-created}"
+msgstr "Créé : ${time-created}"
+
+#: src/eztranet/project/browser/project.pt:178
+msgid "Modified: ${time-modified}"
+msgstr "Modifié : ${time-modified}"
 
 #: src/eztranet/project/browser/project.pt:19
 #: src/eztranet/project/browser/image.pt:24
@@ -402,8 +411,9 @@ msgid ""
 "+Rotterdam\">ZMI</a> and add an Eztranet Site.<br /> Then get back to this "
 "page."
 msgstr ""
-"Vous n'avez pas encore de site eztranet. Connectez-vous sur la <a href=\"++skin+"
-"+Rotterdam\">ZMI</a> et ajoutez un « Site Eztranet ».<br />Revenez ensuite sur cette page."
+"Vous n'avez pas encore de site eztranet. Connectez-vous sur la <a href=\"+"
+"+skin++Rotterdam\">ZMI</a> et ajoutez un « Site Eztranet ».<br />Revenez "
+"ensuite sur cette page."
 
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:162
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:165

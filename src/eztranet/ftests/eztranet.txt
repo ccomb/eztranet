@@ -156,12 +156,20 @@ We check the different views::
     >>> browser.getLink('Permissions').click()
     >>> browser.headers['status'] == '200 Ok'
     True
-    >>> browser.getLink('project-2').click()
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.ogg/@@display')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.ogg/@@download')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
 
 We try to submit the empty add form::
+-------------------------------------
 
-   >>> browser.getLink(text='new file').click()
-   >>> browser.getControl(name='form.actions.add').click()
+    >>> browser.getLink(text='new file').click()
+    >>> browser.getControl(name='form.actions.add').click()
 
 Adding an Image
 ---------------
@@ -170,7 +178,7 @@ We add an image from eztranet.thumbnail
 
     >>> imagepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
     >>> browser.getLink(text='new file').click()
-    >>> browser.getControl(name='form.data').mech_control.add_file(open(imagepath), 'image/png', 'a sample.png')
+    >>> browser.getControl(name='form.data').add_file(open(imagepath), 'image/png', 'a sample.png')
     >>> browser.getControl(name='form.actions.add').click()
     >>> '<a href="a-sample.png">a sample.png</a>' in browser.contents
     True
@@ -194,8 +202,58 @@ We check the different views::
     >>> browser.getLink('Permissions').click()
     >>> browser.headers['status'] == '200 Ok'
     True
-    >>> browser.getLink('Project').click()
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/@@display')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/@@download')
+    >>> browser.headers['status'] == '200 Ok'
+    True
 
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+
+Adding an item
+--------------
+We add an item (some text)
+
+    >>> from StringIO import StringIO
+    >>> browser.getLink(text='new file').click()
+    >>> browser.getControl(name='form.data').add_file(StringIO('dummytext'),
+    ...                                               'text/plain',
+    ...                                               'dummytext.txt')
+    >>> browser.getControl(name='form.actions.add').click()
+    >>> '<a href="dummytext.txt">dummytext.txt</a>' in browser.contents
+    True
+    >>> browser.getLink(url='dummytext.txt').click()
+    >>> '<span>dummytext.txt</span>' in browser.contents
+    True
+
+We check the different views::
+
+    >>> browser.getLink('View').click()
+    >>> 'new file' in browser.contents
+    False
+    >>> 'new subproject' in browser.contents
+    False
+    >>> browser.getLink('Modify').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.getLink('Comment').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.getLink('Permissions').click()
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.getLink('Project').click()
+    >>> browser.open('http://localhost/eztranet/projects/project-2/dummytext.txt/@@display')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-2/dummytext.txt/@@download')
+    >>> browser.headers['status'] == '200 Ok'
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+
+
+Views for the image, video 
 Read permissions
 ----------------
 
@@ -338,7 +396,7 @@ We delete the second project and add it again
 to check that testuser cannot access it after recreation::
 
     >>> browser.getLink(text='Projects').click()
-    >>> browser.getControl(name='ids:list').options
+    >>> sorted(browser.getControl(name='ids:list').options)
     ['Project', 'project-2']
     >>> browser.getControl(name='ids:list').value = ['project-2']
     >>> browser.getControl(name="container_delete_button").click()

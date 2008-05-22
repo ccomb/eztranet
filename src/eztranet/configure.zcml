@@ -28,10 +28,10 @@
   <include package="zope.app.catalog" />
   <include package="zope.app.securitypolicy" />
   <include package="zope.contentprovider" />
+  <include package="zope.dublincore" />
   <include package="zope.app.container" />
   <include package="zope.app.file" />
   <include package="zope.app.folder" />
-  <include package="zope.dublincore" />
   <include package="zope.mimetype" />
   <include package="zope.file" />
   <include package="z3c.layer.minimal" />

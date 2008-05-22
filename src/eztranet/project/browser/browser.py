@@ -18,6 +18,8 @@ from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project, ProjectItem, \
                                      ProjectImage, ProjectVideo
 from zope.size.interfaces import ISized
+import zope.event
+from zope.lifecycleevent import ObjectCreatedEvent
 from eztranet.thumbnail.interfaces import IThumbnail
 from zope.component import adapts
 from zope.interface import implements
@@ -43,6 +45,7 @@ class ProjectAdd(AddForm):
         contentName = \
             INameChooser(self.context).chooseName(project.title,
                                                   project)
+        zope.event.notify(ObjectCreatedEvent(project))
         self.context[contentName] = project
         self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 
@@ -151,6 +154,7 @@ class ProjectItemAdd(Upload):
         applyChanges(item, self.form_fields, data)
         contentName = INameChooser(self.context).chooseName(item.title,
                                                             item)
+        zope.event.notify(ObjectCreatedEvent(item))
         self.context[contentName] = item
         self.request.response.redirect(AbsoluteURL(self.context, self.request)())
 

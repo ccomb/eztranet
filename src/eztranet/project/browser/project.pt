@@ -164,17 +164,21 @@
                   &nbsp;
               </span>
             <div class="itemcreated"
-                 tal:define="created item/created|default;
-                             createdstr string:Created"
-                 tal:content="string: ${createdstr} : ${created}"
+                 i18n:domain="eztranet"
                  i18n:translate="">
-               &nbsp;
+               Created:
+               <span tal:replace="item/created|nothing"
+                     i18n:name="time-created">date
+               </span>
             </div>
             <div class="itemmodified"
-                 tal:define="modified item/modified|default;
-                             modifiedstr string:Modified"
-                 tal:content="string: ${modifiedstr} : ${modified}"
-                 i18n:translate="">&nbsp;</div>
+                 i18n:domain="eztranet"
+                 i18n:translate="">
+              Modified:
+               <span tal:replace="item/modified|nothing"
+                     i18n:name="time-modified">date
+               </span>
+            </div>
          </div>
         </metal:block>
 
