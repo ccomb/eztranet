@@ -1,0 +1,19 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           i18n_domain="eztranet">
+
+
+<zope:subscriber handler=".users.EztranetUserAdded" />
+<zope:subscriber handler=".users.EztranetUserModified" />
+
+<browser:page name="showpassword.html"
+              for="eztranet.users.interfaces.IEztranetUser"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
+              class=".users.ShowPassword"
+              template="showpassword.pt"
+              menu="eztranet_actions"
+              title="Show password"
+              permission="eztranet.manage" />
+
+
+</configure>

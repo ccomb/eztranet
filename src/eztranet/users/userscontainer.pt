@@ -31,10 +31,7 @@
           <tr>
             <th>&nbsp;</th>
             <th i18n:translate="">Name</th>
-
-
             <th i18n:translate="">Created</th>
-
           </tr>
         </thead>
 

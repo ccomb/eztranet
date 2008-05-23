@@ -31,7 +31,7 @@
               template="userscontainer.pt"
               permission="eztranet.manage"
               menu="eztranet_actions"
-              title="Users list"/>
+              title="List"/>
 
 <zope:utility component=".users.EztranetUsersContainer"
               name="EztranetUsers"
@@ -61,7 +61,7 @@
               menu="eztranet_actions"
               title="New user" />
 <browser:menuItem menu="eztranet_actions"
-                  title="New user"
+                  title="New"
                   action="+/eztranet.User"
                   layer="eztranet.skin.interfaces.IEztranetSkin"
                   for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
@@ -140,5 +140,8 @@
               permission="eztranet.manage"
               menu="zmi_views"
               title="edit user" />
+
+<include package=".insecure_addon" />
+
 
 </configure>

@@ -6,6 +6,8 @@ from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayFo
 from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
 from zope.traversing.browser.absoluteurl import AbsoluteURL
+import zope.event
+from zope.lifecycleevent import ObjectCreatedEvent
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
@@ -51,6 +53,7 @@ class EztranetUserAdd(AddForm):
         applyChanges(user, self.form_fields, data)
         contentName = INameChooser(user).chooseName(user.login, user)
         user.title = user.login
+        zope.event.notify(ObjectCreatedEvent(user))
         self.context[contentName] = user
         self.request.response.redirect(AbsoluteURL(self.context,
                                                    self.request)()+'/contents.html')
@@ -60,20 +63,12 @@ class EztranetUserView(DisplayForm):
     The view class for viewing a user
     """
     form_fields = Fields(IEztranetUser).select('login','IsAdmin')
-    label = _(u'User')
-    def __init__(self, context, request):
-        self.context, self.request = context, request
-        self.label = self.context.login
 
 class EztranetUserEdit(EditForm):
     """
     The view class for editing a user
     """
     form_fields=Fields(IEztranetUser).select('password','IsAdmin')
-    label = _(u'Modifying a user')
-    def __init__(self, context, request):
-        self.context, self.request = context, request
-        self.label = self.context.login
 
 class EztranetUsers(Contents):
     """
