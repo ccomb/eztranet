@@ -174,3 +174,6 @@ div#lang select {
     background: #6C77AE;
     color: #B8BEDF;
 }
+div#viewspace {
+    margin-top: 10px;
+}

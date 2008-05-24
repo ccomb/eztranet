@@ -141,7 +141,7 @@
               menu="zmi_views"
               title="edit user" />
 
-<include package=".insecure_addon" />
+<!-- <include package=".insecure_addon" /> -->
 
 
 </configure>

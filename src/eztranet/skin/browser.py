@@ -27,6 +27,8 @@ class PageTitleContentProvider(object):
             self._pagetitle = self.context.__name__ + " - " + self._sitename
             if self.context.__name__ == 'eztranet':
                 self._pagetitle = _(u'Eztranet : your photo/video extranet')
+            if self.context.__name__ == 'EztranetUsers':
+                self._pagetitle = _(u'Users')
         else:
             self._pagetitle = self._sitename
     def render(self):
