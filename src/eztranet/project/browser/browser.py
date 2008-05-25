@@ -26,6 +26,7 @@ from zope.interface import implements
 from os.path import basename
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
+from hachoir_parser import createParser
 
 class CustomTextWidget(TextAreaWidget):
     width=40
@@ -140,7 +141,15 @@ class ProjectItemAdd(Upload):
               If you stop the loading of this page, the transfer will be canceled.')
 
     def _create_instance(self, data):
-        majormimetype = self.request.form['form.data'].headers['Content-Type'].split('/')[0]
+        try:
+            # determine the mime_type with the hachoir
+            hachoir_parser = createParser(unicode(self.request.form['form.data'].name))
+            mimetype = hachoir_parser.mime_type
+            self.request.form['form.data'].headers['Content-Type'] = mimetype
+        except:
+            # revert to what is told by the browser
+            mimetype = self.request.form['form.data'].headers['Content-Type']
+        majormimetype = mimetype.split('/')[0]
         if majormimetype == 'video':
             return ProjectVideo()
         elif majormimetype == 'image':

@@ -59,7 +59,9 @@ setup(name='eztranet',
                         'zope.mimetype',
                         'zope.file',
                         'zope.testbrowser',
-                        'z3c.layer.minimal'
+                        'z3c.layer.minimal',
+                        'hachoir_core',
+                        'hachoir_parser',
                         ],
       entry_points = """
       [console_scripts]

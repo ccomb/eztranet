@@ -115,4 +115,8 @@ src/eztranet/users/interfaces.py
 src/eztranet/users/new_user.pt
 src/eztranet/users/users.py
 src/eztranet/users/userscontainer.pt
+src/eztranet/users/insecure_addon/__init__.py
+src/eztranet/users/insecure_addon/configure.zcml
+src/eztranet/users/insecure_addon/showpassword.pt
+src/eztranet/users/insecure_addon/users.py
 var/README.txt
