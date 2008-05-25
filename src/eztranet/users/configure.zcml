@@ -60,21 +60,6 @@
               permission="eztranet.manage"
               menu="eztranet_actions"
               title="New user" />
-<browser:menuItem menu="eztranet_actions"
-                  title="New"
-                  action="+/eztranet.User"
-                  layer="eztranet.skin.interfaces.IEztranetSkin"
-                  for="zope.app.authentication.principalfolder.IInternalPrincipalContainer" />
-<browser:menuItem menu="eztranet_actions"
-                  title="Modify"
-                  action="edit_user.html"
-                  for="eztranet.users.interfaces.IEztranetUser"
-                  layer="eztranet.skin.interfaces.IEztranetSkin" />
-<browser:menuItem menu="eztranet_actions"
-                  title="View"
-                  action="index.html"
-                  for="eztranet.users.interfaces.IEztranetUser"
-                  layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <zope:adapter factory=".users.UserNameChooser" />
 <zope:utility component=".users.EztranetUserFactory"
@@ -131,14 +116,14 @@
               for=".interfaces.IEztranetUser"
               layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
-              menu="zmi_views"
+              menu="eztranet_actions"
               title="view user" />
 <browser:page name="edit_user.html"
               class=".browser.EztranetUserEdit"
               for=".interfaces.IEztranetUser"
               layer="eztranet.skin.interfaces.IEztranetSkin"
               permission="eztranet.manage"
-              menu="zmi_views"
+              menu="eztranet_actions"
               title="edit user" />
 
 <!-- <include package=".insecure_addon" /> -->

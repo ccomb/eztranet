@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Thu May 22 14:21:12 2008\n"
+"POT-Creation-Date: Mon May 26 01:07:51 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -89,7 +89,7 @@ msgid "Eztranet Site"
 msgstr ""
 
 #: src/eztranet/eztranet.py:55
-#: src/eztranet/project/browser/browser.py:112
+#: src/eztranet/project/browser/browser.py:113
 msgid "Projects"
 msgstr ""
 
@@ -167,43 +167,43 @@ msgstr ""
 msgid "Manage the eztranet"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:114
+#: src/eztranet/project/browser/browser.py:115
 msgid "Here is the list of your projects"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:133
+#: src/eztranet/project/browser/browser.py:134
 msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:139
+#: src/eztranet/project/browser/browser.py:140
 msgid "The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:162
+#: src/eztranet/project/browser/browser.py:171
 msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:188
+#: src/eztranet/project/browser/browser.py:197
 msgid "File"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:200
+#: src/eztranet/project/browser/browser.py:209
 msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:224
+#: src/eztranet/project/browser/browser.py:233
 msgid "Video"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:40
+#: src/eztranet/project/browser/browser.py:41
 msgid "Adding a project"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:53
+#: src/eztranet/project/browser/browser.py:54
 msgid "Project details"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:92
+#: src/eztranet/project/browser/browser.py:93
 msgid "View of a project"
 msgstr ""
 
@@ -224,6 +224,7 @@ msgstr ""
 
 #: src/eztranet/project/browser/configure.zcml:13
 #: src/eztranet/project/browser/configure.zcml:78
+#: src/eztranet/users/configure.zcml:27
 msgid "List"
 msgstr ""
 
@@ -238,14 +239,12 @@ msgstr ""
 
 #: src/eztranet/project/browser/configure.zcml:21
 #: src/eztranet/project/browser/configure.zcml:30
-#: src/eztranet/users/configure.zcml:68
 msgid "Modify"
 msgstr ""
 
 #: src/eztranet/project/browser/configure.zcml:38
 #: src/eztranet/project/browser/configure.zcml:46
 #: src/eztranet/project/browser/configure.zcml:53
-#: src/eztranet/users/configure.zcml:73
 msgid "View"
 msgstr ""
 
@@ -270,11 +269,11 @@ msgstr ""
 msgid "comment"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:170
+#: src/eztranet/project/browser/project.pt:171
 msgid "Created: ${time-created}"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:178
+#: src/eztranet/project/browser/project.pt:179
 msgid "Modified: ${time-modified}"
 msgstr ""
 
@@ -354,7 +353,8 @@ msgstr ""
 msgid "Eztranet : your photo/video extranet"
 msgstr ""
 
-#: src/eztranet/skin/browser.py:77
+#: src/eztranet/skin/browser.py:31
+#: src/eztranet/skin/browser.py:79
 #: src/eztranet/skin/main_template.pt:75
 msgid "Users"
 msgstr ""
@@ -425,41 +425,28 @@ msgstr ""
 msgid "The URL of a thumbnail"
 msgstr ""
 
-#: src/eztranet/users/browser.py:39
+#: src/eztranet/users/browser.py:41
 msgid "Permissions modified"
 msgstr ""
 
-#: src/eztranet/users/browser.py:48
+#: src/eztranet/users/browser.py:50
 #: src/eztranet/users/configure.zcml:56
-#: src/eztranet/users/configure.zcml:63
 msgid "New user"
 msgstr ""
 
-#: src/eztranet/users/browser.py:63
-msgid "User"
-msgstr ""
-
-#: src/eztranet/users/browser.py:73
-msgid "Modifying a user"
-msgstr ""
-
-#: src/eztranet/users/configure.zcml:129
+#: src/eztranet/users/configure.zcml:114
 msgid "view user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:136
+#: src/eztranet/users/configure.zcml:121
 msgid "edit user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:27
-msgid "Users list"
-msgstr ""
-
-#: src/eztranet/users/interfaces.py:17
+#: src/eztranet/users/interfaces.py:19
 msgid "Administrator"
 msgstr ""
 
-#: src/eztranet/users/users.py:91
+#: src/eztranet/users/users.py:92
 msgid "eztranet initial administrator"
 msgstr ""
 

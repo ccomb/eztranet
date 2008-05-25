@@ -128,7 +128,8 @@
             <span>
                 <a href="..">..</a>
             </span>
-            <span class="itemsize">
+            <span class="itemsize"
+                  i18n:translate="">
                 go up one level
             </span>
          </div>
