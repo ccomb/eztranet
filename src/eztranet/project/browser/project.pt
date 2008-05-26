@@ -118,7 +118,8 @@
       <div id="sortable"
            class="listing"
            summary="Content listing"
-           i18n:attributes="summary">
+           i18n:attributes="summary"
+           i18n:domain="eztranet">
         
          <div class="item">
             <a href="..">
@@ -160,12 +161,10 @@
                   </a>
 
               <span class="itemsize"
-                    tal:content="item/size/sizeForDisplay|nothing"
-                    i18n:translate="">
+                    tal:content="item/size/sizeForDisplay|nothing">
                   &nbsp;
               </span>
             <div class="itemcreated"
-                 i18n:domain="eztranet"
                  i18n:translate="">
                Created:
                <span tal:replace="item/created|nothing"
@@ -173,7 +172,6 @@
                </span>
             </div>
             <div class="itemmodified"
-                 i18n:domain="eztranet"
                  i18n:translate="">
               Modified:
                <span tal:replace="item/modified|nothing"

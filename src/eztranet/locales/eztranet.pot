@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Mon May 26 01:07:51 2008\n"
+"POT-Creation-Date: Mon May 26 09:51:41 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -262,6 +262,14 @@ msgstr ""
 msgid "download"
 msgstr ""
 
+#: src/eztranet/project/browser/project.pt:118
+msgid "Content listing"
+msgstr ""
+
+#: src/eztranet/project/browser/project.pt:132
+msgid "go up one level"
+msgstr ""
+
 #: src/eztranet/project/browser/project.pt:15
 #: src/eztranet/project/browser/image.pt:20
 #: src/eztranet/project/browser/video.pt:19
@@ -269,11 +277,11 @@ msgstr ""
 msgid "comment"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:171
+#: src/eztranet/project/browser/project.pt:170
 msgid "Created: ${time-created}"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:179
+#: src/eztranet/project/browser/project.pt:177
 msgid "Modified: ${time-modified}"
 msgstr ""
 
