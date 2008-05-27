@@ -177,3 +177,27 @@ div#lang select {
 div#viewspace {
     margin-top: 10px;
 }
+div.multiupload{
+        float:left;
+        padding:3px;
+        background:#6C77AD;
+}
+div.multiupload div.list{
+        background: #6C77AD;
+}
+div.multiupload div.list div.item{
+        border:1px outset gray;
+        margin:1px;
+        background: #6C77AD;
+        height: auto;
+        padding: 3px;
+}
+div.multiupload div.list div.item:hover{
+        background: #6C77AD;
+}
+div.multiupload div.list img{
+        float:left;
+        margin: 3px;
+        cursor:pointer;
+}
+

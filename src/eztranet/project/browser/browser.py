@@ -27,10 +27,14 @@ from os.path import basename
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 from hachoir_parser import createParser
+from os.path import join
+from eztranet.project.browser.multiupload.browser import MultiUploadWidget
+import zope.publisher
 
 class CustomTextWidget(TextAreaWidget):
     width=40
     height=5
+
 
 class ProjectAdd(AddForm):
     """
@@ -129,8 +133,9 @@ class ProjectItemAdd(Upload):
     """
     The view class for adding a ProjectItem
     """
-    form_fields=Fields(IProjectItem).omit('__name__', '__parent__', 'title')
-    form_fields['description'].custom_widget=CustomTextWidget
+    form_fields = Fields(IProjectItem).omit('__name__', '__parent__', 'title')
+    form_fields['description'].custom_widget = CustomTextWidget
+    form_fields['data'].custom_widget = MultiUploadWidget
     label = _(u'Adding a file')
     extra_script = u"""
         document.open()
@@ -140,32 +145,58 @@ class ProjectItemAdd(Upload):
     """ % _(u'The file is being uploaded, this can take several minutes...<br/>\
               If you stop the loading of this page, the transfer will be canceled.')
 
-    def _create_instance(self, data):
-        try:
-            # determine the mime_type with the hachoir
-            hachoir_parser = createParser(unicode(self.request.form['form.data'].name))
-            mimetype = hachoir_parser.mime_type
-            self.request.form['form.data'].headers['Content-Type'] = mimetype
-        except:
-            # revert to what is told by the browser
-            mimetype = self.request.form['form.data'].headers['Content-Type']
-        majormimetype = mimetype.split('/')[0]
-        if majormimetype == 'video':
-            return ProjectVideo()
-        elif majormimetype == 'image':
-            return ProjectImage()
-        else :
-            return ProjectItem()
-
     def createAndAdd(self, data):
-        item = super(ProjectItemAdd, self).create(data)
-        item.title = basename(self.request.form['form.data'].filename).split('\\')[-1]
-        applyChanges(item, self.form_fields, data)
-        contentName = INameChooser(self.context).chooseName(item.title,
-                                                            item)
-        zope.event.notify(ObjectCreatedEvent(item))
-        self.context[contentName] = item
-        self.request.response.redirect(AbsoluteURL(self.context, self.request)())
+        #data['data'] is empty because the main file field is empty
+        # however we get the uploaded file ready for use
+        i = 0
+        for num,index in enumerate(self.request.form):
+            if index != 'form.data' and not index.startswith('defaults_'):
+                i += 1
+                continue
+            uploaded_file = self.request.form[index]
+            if type(uploaded_file) != zope.publisher.browser.FileUpload:
+                i+=1
+                continue
+            try:
+                # determine the mime_type with the hachoir
+                hachoir_parser = createParser(unicode(uploaded_file.name))
+                mimetype = hachoir_parser.mime_type
+                self.request.form[index].headers['Content-Type'] = mimetype
+            except:
+                # revert to what is told by the browser
+                mimetype = uploaded_file.headers['Content-Type']
+            majormimetype = mimetype.split('/')[0]
+            if majormimetype == 'video':
+                item = ProjectVideo()
+            elif majormimetype == 'image':
+                item = ProjectImage()
+            else :
+                item = ProjectItem()
+
+            item.title = basename(uploaded_file.filename).split('\\')[-1]
+            applyChanges(item, self.form_fields.omit('data'), data)
+            contentName = INameChooser(self.context).chooseName(item.title,
+                                                                item)
+            major, minor, parameters = zope.publisher.contenttype.parse(
+                                                            mimetype)
+            if "charset" in parameters:
+                parameters["charset"] = parameters["charset"].lower()
+            item.mimeType = mimetype
+            item.parameters = parameters
+            f = item.open('w')
+            uploaded_file.seek(0)
+            chunk = uploaded_file.read(1000000)
+            while chunk:
+                f.write(chunk)
+                chunk = uploaded_file.read(1000000)
+            f.close()
+
+            self.context[contentName] = item
+            zope.event.notify(ObjectCreatedEvent(item))
+            i += 1
+
+        self.request.response.redirect(AbsoluteURL(self.context,
+                                                   self.request)())
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')

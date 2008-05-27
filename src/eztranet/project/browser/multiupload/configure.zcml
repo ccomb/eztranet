@@ -1,0 +1,17 @@
+<configure xmlns="http://namespaces.zope.org/browser"
+           i18n_domain="eztranet">
+
+<resource name="mootools.js"
+          file="mootools-release-1.11.js"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="Stickman.MultiUpload.js"
+          file="Stickman.MultiUpload.packed.js"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="cross_small.gif"
+          file="cross_small.gif"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+</configure>

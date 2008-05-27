@@ -153,4 +153,6 @@
           menu="eztranet_actions"
           permission="eztranet.comment.view" />
 
+<include package=".multiupload" />
+
 </configure>

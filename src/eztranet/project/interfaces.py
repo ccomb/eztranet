@@ -31,7 +31,7 @@ class IProjectItem(Interface):
     containers("eztranet.project.interfaces.IProject")
     data = Bytes(title=u'File',
                  description=_(u'The file you want to upload'),
-                 required=True)
+                 required=False)
     title = TextLine(title=_(u'File name'),
                      description=_(u'Name of the uploaded file'),
                      required=False)
