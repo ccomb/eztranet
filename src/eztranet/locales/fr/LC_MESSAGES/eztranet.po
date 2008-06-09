@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Mon May 26 09:51:41 2008\n"
-"PO-Revision-Date: 2008-05-26 09:52+0200\n"
+"POT-Creation-Date: Wed May 28 15:34:19 2008\n"
+"PO-Revision-Date: 2008-05-28 15:34+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
@@ -85,7 +85,7 @@ msgstr "Ajouter un Eztranet"
 msgid "Eztranet Site"
 msgstr "Site Eztranet"
 
-#: src/eztranet/eztranet.py:55 src/eztranet/project/browser/browser.py:113
+#: src/eztranet/eztranet.py:55 src/eztranet/project/browser/browser.py:117
 msgid "Projects"
 msgstr "Projets"
 
@@ -171,48 +171,80 @@ msgstr "Voir l'Eztranet"
 msgid "Manage the eztranet"
 msgstr "Gérer l'Eztranet"
 
-#: src/eztranet/project/browser/browser.py:115
-msgid "Here is the list of your projects"
-msgstr "Voici la liste de vos projets"
-
-#: src/eztranet/project/browser/browser.py:134
-msgid "Adding a file"
-msgstr "Ajout d'un fichier"
-
-#: src/eztranet/project/browser/browser.py:140
+#: src/eztranet/project/browser/add_projectitem.pt:169
 msgid ""
-"The file is being uploaded, this can take several minutes...<br/"
-">              If you stop the loading of this page, the transfer will be "
-"canceled."
+"The file is being uploaded, this can take several minutes...<br /> If you "
+"stop the loading of this page, the transfer will be canceled."
 msgstr ""
 "Le fichier est en cours d'envoi, ceci peut durer plusieurs minutes...<br/>Si "
 "vous interrompez le chargement de la page, le transfert sera annulé."
 
-#: src/eztranet/project/browser/browser.py:171
+#: src/eztranet/project/browser/add_projectitem.pt:60
+#: src/eztranet/project/browser/add_projectitem.pt:72
+#: src/eztranet/project/browser/add_projectitem.pt:108
+#: src/eztranet/project/browser/add_projectitem.pt:114
+#: src/eztranet/project/browser/add_projectitem.pt:120
+msgid "${DYNAMIC_CONTENT}"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:119
+msgid "Here is the list of your projects"
+msgstr "Voici la liste de vos projets"
+
+#: src/eztranet/project/browser/browser.py:140
+msgid "Adding a file"
+msgstr "Ajout d'un fichier"
+
+#: src/eztranet/project/browser/browser.py:141
+msgid ""
+"\n"
+"        document.open()\n"
+"        document.write(\"<p id='loading' style='display: none'><img src='/@@/"
+"loading.gif' alt='loading' style='float: left\\; margin-right: 10px\\;' /> %"
+"s</p>\")\n"
+"        document.close()\n"
+"        document.getElementById('form.actions.add').onclick = function() "
+"{ document.getElementById('loading').style.display='block'; }\n"
+"    The file is being uploaded, this can take several minutes...<br/"
+">              If you stop the loading of this page, the transfer will be "
+"canceled."
+msgstr ""
+"\n"
+"        document.open()\n"
+"        document.write(\"<p id='loading' style='display: none'><img src='/@@/"
+"loading.gif' alt='loading' style='float: left\\; margin-right: 10px\\;' /> %"
+"s</p>\")\n"
+"        document.close()\n"
+"        document.getElementById('form.actions.add').onclick = function() "
+"{ document.getElementById('loading').style.display='block'; }\n"
+"    Le fichier est en cours d'envoi, ceci peut durer plusieurs minutes...<br/"
+">Si vous interrompez le chargement de la page, le transfert sera annulé."
+
+#: src/eztranet/project/browser/browser.py:203
 msgid "Modification"
 msgstr "Modification"
 
-#: src/eztranet/project/browser/browser.py:197
+#: src/eztranet/project/browser/browser.py:229
 msgid "File"
 msgstr "Fichier"
 
-#: src/eztranet/project/browser/browser.py:209
+#: src/eztranet/project/browser/browser.py:241
 msgid "Image"
 msgstr "Image"
 
-#: src/eztranet/project/browser/browser.py:233
+#: src/eztranet/project/browser/browser.py:265
 msgid "Video"
 msgstr "Vidéo"
 
-#: src/eztranet/project/browser/browser.py:41
+#: src/eztranet/project/browser/browser.py:45
 msgid "Adding a project"
 msgstr "Ajout d'un projet"
 
-#: src/eztranet/project/browser/browser.py:54
+#: src/eztranet/project/browser/browser.py:58
 msgid "Project details"
 msgstr "Détails du projet"
 
-#: src/eztranet/project/browser/browser.py:93
+#: src/eztranet/project/browser/browser.py:97
 msgid "View of a project"
 msgstr "Vue d'un projet"
 
@@ -464,6 +496,10 @@ msgstr "voir utilisateur"
 #: src/eztranet/users/configure.zcml:121
 msgid "edit user"
 msgstr "modifier utilisateur"
+
+#: src/eztranet/users/insecure_addon/configure.zcml:9
+msgid "Show password"
+msgstr "Voir le mot de passe"
 
 #: src/eztranet/users/interfaces.py:19
 msgid "Administrator"

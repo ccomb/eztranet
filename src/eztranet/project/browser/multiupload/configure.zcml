@@ -6,7 +6,7 @@
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 <resource name="Stickman.MultiUpload.js"
-          file="Stickman.MultiUpload.packed.js"
+          file="Stickman.MultiUpload.js"
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 <resource name="cross_small.gif"

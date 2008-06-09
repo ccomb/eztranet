@@ -76,6 +76,15 @@ src/eztranet/project/browser/loading.gif
 src/eztranet/project/browser/project.pt
 src/eztranet/project/browser/up.png
 src/eztranet/project/browser/video.pt
+src/eztranet/project/browser/multiupload/Stickman.MultiUpload.js
+src/eztranet/project/browser/multiupload/Stickman.MultiUpload.packed.js
+src/eztranet/project/browser/multiupload/__init__.py
+src/eztranet/project/browser/multiupload/browser.py
+src/eztranet/project/browser/multiupload/configure.zcml
+src/eztranet/project/browser/multiupload/cross_small.gif
+src/eztranet/project/browser/multiupload/mootools-release-1.11.js
+src/eztranet/project/browser/multiupload/multiupload.pt
+src/eztranet/project/browser/multiupload/readme.txt
 src/eztranet/skin/__init__.py
 src/eztranet/skin/browser.py
 src/eztranet/skin/configure.zcml

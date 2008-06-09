@@ -232,7 +232,7 @@ var MultiUpload = new Class(
 			var delete_button = new Element(
 				'img',
 				{
-					'src':'/@@/cross_small.gif',
+					'src':'++resource++cross_small.gif',
 					'alt':'Delete',
 					'title':'Delete',
 					'events':{

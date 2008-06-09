@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Mon May 26 09:51:41 2008\n"
+"POT-Creation-Date: Wed May 28 15:34:19 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -89,7 +89,7 @@ msgid "Eztranet Site"
 msgstr ""
 
 #: src/eztranet/eztranet.py:55
-#: src/eztranet/project/browser/browser.py:113
+#: src/eztranet/project/browser/browser.py:117
 msgid "Projects"
 msgstr ""
 
@@ -167,43 +167,61 @@ msgstr ""
 msgid "Manage the eztranet"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:115
+#: src/eztranet/project/browser/add_projectitem.pt:169
+msgid "The file is being uploaded, this can take several minutes...<br /> If you stop the loading of this page, the transfer will be canceled."
+msgstr ""
+
+#: src/eztranet/project/browser/add_projectitem.pt:60
+#: src/eztranet/project/browser/add_projectitem.pt:72
+#: src/eztranet/project/browser/add_projectitem.pt:108
+#: src/eztranet/project/browser/add_projectitem.pt:114
+#: src/eztranet/project/browser/add_projectitem.pt:120
+msgid "${DYNAMIC_CONTENT}"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:119
 msgid "Here is the list of your projects"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:134
+#: src/eztranet/project/browser/browser.py:140
 msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:140
-msgid "The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
+#: src/eztranet/project/browser/browser.py:141
+msgid ""
+"\n"
+"        document.open()\n"
+"        document.write(\"<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\\; margin-right: 10px\\;' /> %s</p>\")\n"
+"        document.close()\n"
+"        document.getElementById('form.actions.add').onclick = function() { document.getElementById('loading').style.display='block'; }\n"
+"    The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:171
+#: src/eztranet/project/browser/browser.py:203
 msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:197
+#: src/eztranet/project/browser/browser.py:229
 msgid "File"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:209
+#: src/eztranet/project/browser/browser.py:241
 msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:233
+#: src/eztranet/project/browser/browser.py:265
 msgid "Video"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:41
+#: src/eztranet/project/browser/browser.py:45
 msgid "Adding a project"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:54
+#: src/eztranet/project/browser/browser.py:58
 msgid "Project details"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:93
+#: src/eztranet/project/browser/browser.py:97
 msgid "View of a project"
 msgstr ""
 
@@ -448,6 +466,10 @@ msgstr ""
 
 #: src/eztranet/users/configure.zcml:121
 msgid "edit user"
+msgstr ""
+
+#: src/eztranet/users/insecure_addon/configure.zcml:9
+msgid "Show password"
 msgstr ""
 
 #: src/eztranet/users/interfaces.py:19

@@ -133,16 +133,17 @@ class ProjectItemAdd(Upload):
     """
     The view class for adding a ProjectItem
     """
+    template = ViewPageTemplateFile('add_projectitem.pt')
     form_fields = Fields(IProjectItem).omit('__name__', '__parent__', 'title')
     form_fields['description'].custom_widget = CustomTextWidget
     form_fields['data'].custom_widget = MultiUploadWidget
     label = _(u'Adding a file')
-    extra_script = u"""
+    extra_script = _(u"""
         document.open()
         document.write("<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\; margin-right: 10px\;' /> %s</p>")
         document.close()
         document.getElementById('form.actions.add').onclick = function() { document.getElementById('loading').style.display='block'; }
-    """ % _(u'The file is being uploaded, this can take several minutes...<br/>\
+    """ % u'The file is being uploaded, this can take several minutes...<br/>\
               If you stop the loading of this page, the transfer will be canceled.')
 
     def createAndAdd(self, data):
