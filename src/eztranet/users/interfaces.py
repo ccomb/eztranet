@@ -17,5 +17,4 @@ class IEztranetUser(IInternalPrincipal):
     """
     containers(IEztranetUsersContainer)
     IsAdmin = Bool(_(u'Administrator'))
-    invariant(no_space_in_username)
 
