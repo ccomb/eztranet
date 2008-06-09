@@ -27,15 +27,22 @@
 </h2>
 
 <p i18n:translate="">
-You can try the Eztranet by clicking on "projects" (at the top) or on
-"connection" (top-left corner).
+You can try the Eztranet by clicking on "projects" (at the top), on
+"connection" (top-left corner), or on the icon below.
 </p>
 <ul>
   <li><span i18n:translate="">Login: </span>admin</li>
   <li><span i18n:translate="">Password: </span>eztranet</li>
 </ul>
 </div>
-
+<div class="item">
+ <a href="projects">
+   <img src="++resource++folder.png"
+        alt="projects" />
+</a>
+<a href="projects"
+   i18n:translate="">Projects</a>
+</div>
 </div>
 
 </body>
