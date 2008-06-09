@@ -1,4 +1,4 @@
-from zope.interface import Attribute
+from zope.interface import Attribute, Invalid, invariant
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
 from zope.schema import Bool
@@ -17,3 +17,5 @@ class IEztranetUser(IInternalPrincipal):
     """
     containers(IEztranetUsersContainer)
     IsAdmin = Bool(_(u'Administrator'))
+    invariant(no_space_in_username)
+

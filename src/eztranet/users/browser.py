@@ -51,10 +51,9 @@ class EztranetUserAdd(AddForm):
     def createAndAdd(self, data):
         user=EztranetUser("","","")
         applyChanges(user, self.form_fields, data)
-        contentName = INameChooser(user).chooseName(user.login, user)
         user.title = user.login
         zope.event.notify(ObjectCreatedEvent(user))
-        self.context[contentName] = user
+        self.context[user.login] = user
         self.request.response.redirect(AbsoluteURL(self.context,
                                                    self.request)()+'/contents.html')
 
