@@ -13,6 +13,7 @@
 <meta http-equiv="imagetoolbar" content="no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
+<link rel="shortcut icon" type="image/png" href="++resource++images/icon.png" />
 <link rel="stylesheet" type="text/css" href="/@@/main.css"/>
 <script type="text/javascript" src="/@@/functions.js"></script>
 <metal:block define-slot="headers" />
