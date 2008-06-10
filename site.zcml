@@ -1,9 +1,11 @@
 <configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:zcml="http://namespaces.zope.org/zcml"
            i18n_domain="eztranet">
 
   <!-- Remove this reference to disable the APIDoc tool.
        You should do this for production -->
-  <include file="apidoc.zcml" />
+
+  <include zcml:condition="have devmode" file="apidoc.zcml" />
 
   <include package="eztranet" />
   <includeOverrides package="eztranet" file="overrides.zcml" />
