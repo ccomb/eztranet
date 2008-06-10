@@ -107,10 +107,12 @@ div#item_toolbar a:hover {
 }
 div.item {
     float: left;
-    height: 15em;
+    height: 12em;
     text-align: center;
     overflow: hidden;
-    margin-right: 10px;
+    min-width: 160px;
+    margin-left: 20px;
+    margin-bottom: 1em;
 }
 div.item a {
     display: block;

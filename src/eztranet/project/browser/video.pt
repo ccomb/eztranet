@@ -42,6 +42,9 @@
 <div tal:content="structure provider:eztranet.flashpreview.flashvideo">
     flash preview
 </div>
+<div i18n:translate="" style="font-size: 90%; padding-top: 5px;">This video is
+just an online preview. You can download the original video by clicking on the
+"download" link.</div>
 
 </div>
 </body>

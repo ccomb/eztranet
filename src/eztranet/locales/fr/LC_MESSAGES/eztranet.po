@@ -12,19 +12,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Wed May 28 15:34:19 2008\n"
-"PO-Revision-Date: 2008-05-28 15:34+0200\n"
+"POT-Creation-Date: Tue Jun 10 21:12:56 2008\n"
+"PO-Revision-Date: 2008-06-10 21:15+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: site.zcml:36
+#: site.zcml:38
 msgid "Site Manager"
 msgstr "Gestionnaire de Site"
 
-#: site.zcml:37
+#: site.zcml:39
 msgid "Site Member"
 msgstr "Membre du Site"
 
@@ -86,6 +86,7 @@ msgid "Eztranet Site"
 msgstr "Site Eztranet"
 
 #: src/eztranet/eztranet.py:55 src/eztranet/project/browser/browser.py:117
+#: src/eztranet/skin/home.pt:43
 msgid "Projects"
 msgstr "Projets"
 
@@ -332,6 +333,13 @@ msgstr "Modifié : ${time-modified}"
 msgid "comments"
 msgstr "commentaires"
 
+#: src/eztranet/project/browser/video.pt:45
+msgid ""
+"This video is just an online preview. You can download the original video by "
+"clicking on the \"download\" link."
+msgstr "Cette vidéo est juste un aperçu en ligne. Vous pouvez télécharger l'originale "
+"en cliquant sur « télécharger »."
+
 #: src/eztranet/project/configure.zcml:12
 msgid "view"
 msgstr "voir"
@@ -419,11 +427,11 @@ msgstr "Démo Eztranet"
 
 #: src/eztranet/skin/home.pt:29
 msgid ""
-"You can try the Eztranet by clicking on \"projects\" (at the top) or on "
-"\"connection\" (top-left corner)."
+"You can try the Eztranet by clicking on \"projects\" (at the top), on "
+"\"connection\" (top-left corner), or on the icon below."
 msgstr ""
-"Vous pouvez essayer l'Eztranet en cliquant sur « projets » (en haut) ou sur « "
-"connexion » (en haut à gauche)"
+"Vous pouvez essayer l'Eztranet en cliquant sur « projets » (en haut), sur « "
+"connexion » (en haut à gauche) ou sur l'icône ci-dessous."
 
 #: src/eztranet/skin/home.pt:34
 msgid "Login:"
@@ -497,10 +505,6 @@ msgstr "voir utilisateur"
 msgid "edit user"
 msgstr "modifier utilisateur"
 
-#: src/eztranet/users/insecure_addon/configure.zcml:9
-msgid "Show password"
-msgstr "Voir le mot de passe"
-
 #: src/eztranet/users/interfaces.py:19
 msgid "Administrator"
 msgstr "Administrateur"
@@ -508,6 +512,9 @@ msgstr "Administrateur"
 #: src/eztranet/users/users.py:92
 msgid "eztranet initial administrator"
 msgstr "Administrateur initial de l'Eztranet"
+
+#~ msgid "Show password"
+#~ msgstr "Voir le mot de passe"
 
 #~ msgid "User"
 #~ msgstr "Utilisateur"

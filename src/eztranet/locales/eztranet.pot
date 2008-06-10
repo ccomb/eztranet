@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Wed May 28 15:34:19 2008\n"
+"POT-Creation-Date: Tue Jun 10 21:12:56 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -23,11 +23,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
-#: site.zcml:36
+#: site.zcml:38
 msgid "Site Manager"
 msgstr ""
 
-#: site.zcml:37
+#: site.zcml:39
 msgid "Site Member"
 msgstr ""
 
@@ -90,6 +90,7 @@ msgstr ""
 
 #: src/eztranet/eztranet.py:55
 #: src/eztranet/project/browser/browser.py:117
+#: src/eztranet/skin/home.pt:43
 msgid "Projects"
 msgstr ""
 
@@ -310,6 +311,10 @@ msgstr ""
 msgid "comments"
 msgstr ""
 
+#: src/eztranet/project/browser/video.pt:45
+msgid "This video is just an online preview. You can download the original video by clicking on the \"download\" link."
+msgstr ""
+
 #: src/eztranet/project/configure.zcml:12
 msgid "view"
 msgstr ""
@@ -398,7 +403,7 @@ msgid "Eztranet demo"
 msgstr ""
 
 #: src/eztranet/skin/home.pt:29
-msgid "You can try the Eztranet by clicking on \"projects\" (at the top) or on \"connection\" (top-left corner)."
+msgid "You can try the Eztranet by clicking on \"projects\" (at the top), on \"connection\" (top-left corner), or on the icon below."
 msgstr ""
 
 #: src/eztranet/skin/home.pt:34
@@ -466,10 +471,6 @@ msgstr ""
 
 #: src/eztranet/users/configure.zcml:121
 msgid "edit user"
-msgstr ""
-
-#: src/eztranet/users/insecure_addon/configure.zcml:9
-msgid "Show password"
 msgstr ""
 
 #: src/eztranet/users/interfaces.py:19

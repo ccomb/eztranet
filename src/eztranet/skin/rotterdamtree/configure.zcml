@@ -31,5 +31,12 @@
         name="singleBranchTree.xml"
         attribute="singleBranchTree" />
   </browser:pages>
+  <browser:page
+      name="singleBranchTree.xml"
+      for="zope.interface.interface.Interface"
+      permission="zope.View"
+      class=".xmlobject.XmlObjectView"
+      attribute="singleBranchTree"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 </configure>
