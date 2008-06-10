@@ -114,8 +114,10 @@ Here, the page content
 <script type="text/javascript">
 title = document.getElementById('form.title')
 description = document.getElementById('form.description')
+login = document.getElementById('form.login')
 if (title != null) { title.focus(); }
 else if (description != null) { description.focus(); }
+else if (login != null) { login.focus(); }
 </script>
 </body>
 
