@@ -28,8 +28,10 @@
 
 <div id="main">
 
-<!-- Logo -->
-<!-- <img src="#" alt="logo" id="logo" tal:define="logo provider:eztranet.logo" tal:attributes="src logo/url; alt logo/title; title logo/title" /> -->
+<a href="http://gorfou.fr"
+   id="company-logo">
+&nbsp;
+</a>
 
 <!-- Main menu -->
 <ul id="main_menu">

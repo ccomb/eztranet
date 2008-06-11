@@ -171,6 +171,7 @@ p#description {
 }
 div#lang {
     float:right;
+    margin: 5px;
 }
 div#lang select {
     background: #6C77AE;
@@ -202,4 +203,18 @@ div.multiupload div.list img{
         margin: 3px;
         cursor:pointer;
 }
-
+#company-logo {
+        position: absolute;
+        width: 180px;
+        height: 55px;
+        margin-left: 520px;
+}
+form div.row, table.form-fields, div#actionsView {
+        margin-left: 10px;
+}
+tr.odd {
+    background: #707AB3;
+}
+tr.even {
+    background: #6973A8;
+}

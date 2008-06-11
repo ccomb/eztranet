@@ -31,6 +31,7 @@
           <tr>
             <th>&nbsp;</th>
             <th i18n:translate="">Name</th>
+            <th i18n:translate="">admin</th>
             <th i18n:translate="">Created</th>
           </tr>
         </thead>
@@ -71,14 +72,18 @@
                      /></span
                 ><span tal:condition="not:item/rename">
                   <a href="#"
-                     tal:attributes="href
-                                 string:${url}/edit_user.html"
+                     tal:attributes="href string:${url}/edit_user.html;
+                                     style python:item['object'].IsAdmin and 'font-weight: bold' or ''"
+
                      tal:content="item/id"
                      >foo</a
                   ></span
                ></td>
 
-
+            <td style="text-align: center">
+                <span tal:define="isadmin item/object/IsAdmin"
+                      tal:content="python: item['object'].IsAdmin and 'X' or ''"
+                      i18n:translate="">&nbsp;</span></td>
 
             <td><span tal:define="created item/created|default"
                       tal:content="created"
