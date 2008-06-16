@@ -168,7 +168,10 @@ class ReadContainerXmlObjectView(BrowserView):
 
         rootName = translate(rootName, context=self.request, default=rootName)
 
-        for item in parents:
+        for item in [self.context] + parents:
+            active = ''
+            if oldItem is self.context:
+                active = 'true'
             # skip skin if present
             #if item == oldItem:
             #        continue
@@ -194,16 +197,16 @@ class ReadContainerXmlObjectView(BrowserView):
                     if subItem == oldItem:
                         subItems.append(xmlEscapeWithCData(
                             u'<collection name=%s length=%s '
-                            u'icon_url="">%s</collection>', 
-                            name, subitem_len, result))
+                            u'icon_url="" selected=%s>%s</collection>', 
+                            name, subitem_len, active, result))
                     else:
                         subItems.append(xmlEscape(
                             u'<collection name=%s length=%s '
-                            u'icon_url=""/>',
+                            u'icon_url="" />',
                             name, subitem_len))
                 else:
                     subItems.append(xmlEscape(
-                        u'<item name=%s icon_url="" />', name))
+                        u'<item name=%s icon_url="" active=%s/>', name, active))
 
             result = u' '.join(subItems)
             oldItem = item

@@ -427,6 +427,8 @@ function createNavigationTreeNode(source, basePath, deep) {
 
     var icon_url = source.getAttribute('icon_url');
 
+    var selected = source.getAttribute('selected');
+
     var targetUrl = elemPath + CONTENT_VIEW;
 
     var expandElem = createPresentationNodes(elemTitle, targetUrl, icon_url, length);
@@ -436,7 +438,7 @@ function createNavigationTreeNode(source, basePath, deep) {
     if (length == '0') expandElem.setAttribute('disabled','1');
 
     // If this is the selected node, we want to highlight it with CSS
-    if (source.firstChild && source.firstChild.nodeValue == 'selected')
+    if (selected == 'true')
         navTreeNode.setSelected();
 
     if (deep) {
