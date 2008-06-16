@@ -1,15 +1,20 @@
-from zope.interface import implements
-from zope.component import adapter, adapts
-from zope.app.container.interfaces import IObjectAddedEvent, IObjectRemovedEvent, INameChooser
-from zope.app.container.contained import NameChooser
 from zope.app.authentication import PluggableAuthentication
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
-from zope.component.factory import Factory
-from zope.app.authentication.principalfolder import InternalPrincipal, PrincipalFolder
-from zope.app.security.interfaces import IAuthentication
-from zope.securitypolicy.interfaces import IPrincipalRoleManager
+from zope.app.authentication.principalfolder import InternalPrincipal
+from zope.app.authentication.principalfolder import PrincipalFolder
 from zope.app.component.hooks import getSite
+from zope.app.container.contained import NameChooser
+from zope.app.container.interfaces import IContainer
+from zope.app.container.interfaces import INameChooser
+from zope.app.container.interfaces import IObjectAddedEvent
+from zope.app.container.interfaces import IObjectRemovedEvent
+from zope.app.security.interfaces import IAuthentication
+from zope.component import adapter
+from zope.component import adapts
+from zope.component.factory import Factory
 from zope.i18nmessageid import MessageFactory
+from zope.interface import implements
+from zope.securitypolicy.interfaces import IPrincipalRoleManager
 _ = MessageFactory('eztranet')
 
 from interfaces import IEztranetUsersContainer, IEztranetUser
@@ -57,7 +62,7 @@ def recursively_unsetrole(obj, userlogin):
     roles = rolemanager.getRolesForPrincipal(userlogin)
     for role in roles:
         rolemanager.unsetRoleForPrincipal(role[0], userlogin)
-    for subobj in obj.values():
+    for subobj in (o for o in obj.values() if IContainer.providedBy(o)):
         recursively_unsetrole(subobj, userlogin)
 
 @adapter(IEztranetUser, IObjectRemovedEvent)

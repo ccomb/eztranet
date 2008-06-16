@@ -67,6 +67,7 @@ src/eztranet/project/project.py
 src/eztranet/project/project.txt
 src/eztranet/project/tests.py
 src/eztranet/project/browser/__init__.py
+src/eztranet/project/browser/add_projectitem.pt
 src/eztranet/project/browser/browser.py
 src/eztranet/project/browser/configure.zcml
 src/eztranet/project/browser/file.pt
@@ -99,6 +100,7 @@ src/eztranet/skin/standardmacros.py
 src/eztranet/skin/tests.py
 src/eztranet/skin/images/fond.png
 src/eztranet/skin/images/fondmain.png
+src/eztranet/skin/images/icon.png
 src/eztranet/skin/rotterdamtree/__init__.py
 src/eztranet/skin/rotterdamtree/configure.zcml
 src/eztranet/skin/rotterdamtree/mi.gif

@@ -15,5 +15,6 @@
   
   <apidoc:rootModule module="eztranet" />
   <apidoc:rootModule module="zc" />
+  <apidoc:moduleImport allow="True" />
   
 </configure>
