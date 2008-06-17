@@ -66,6 +66,7 @@
 <include package=".thumbnail" />
 <include package=".comment" />
 <include package=".flashpreview" />
+<include package=".generations" />
 
 <i18n:registerTranslations directory="locales" /> 
 <include file="permissions.zcml" />
