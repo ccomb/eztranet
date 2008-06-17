@@ -47,7 +47,7 @@ def EztranetUserAdded(user, event):
 @adapter(IEztranetUser, IObjectModifiedEvent)
 def EztranetUserModified(user, event):
     """
-    a silly subscriber that store the password in an annotation
+    a silly subscriber that stores the password in an annotation
     Please don't use!
     """
     __store_password_like_you_never_should(user)
