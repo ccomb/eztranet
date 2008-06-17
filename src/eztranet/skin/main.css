@@ -96,6 +96,7 @@ div#body {
 div#item_toolbar {
     background: #6C77AE;
     width: 100%;
+    padding: 5px;
 }
 div#item_toolbar a {
     margin-right: 10px;
@@ -107,7 +108,7 @@ div#item_toolbar a:hover {
 }
 div.item {
     float: left;
-    height: 12em;
+    height: 13em;
     text-align: center;
     overflow: hidden;
     min-width: 160px;
@@ -119,7 +120,7 @@ div.item a {
     font-weight: bold;
 }
 div#buttons {
-    margin-left: 68%;
+    margin-left: 60%;
     right: 0;
 }
 div.listing {

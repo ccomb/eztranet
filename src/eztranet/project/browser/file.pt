@@ -32,6 +32,10 @@
 </p>
 
 <div id="item_toolbar">
+<i18n:block translate="">
+This item has no preview but you can download the file:
+</i18n:block>
+<br/><br/>
     <a href="#"
        tal:attributes="href string:${context/@@absolute_url}/@@download"
        i18n:translate="">
@@ -39,9 +43,6 @@
     </a>
 </div>
 
-<div tal:content="structure provider:eztranet.flashpreview.flashvideo">
-    flash preview
-</div>
 
 </div>
 </body>
