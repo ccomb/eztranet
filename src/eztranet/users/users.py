@@ -72,7 +72,7 @@ def EztranetUserRemoved(user, event):
     We loop on every project and remove role assignment.
     """
     site = getSite()
-    if 'projects' in site:
+    if site is not None and 'projects' in site:
         for project in getSite()['projects'].values():
             recursively_unsetrole(project, user.login)
 

@@ -5,6 +5,10 @@ from eztranet.interfaces import IEztranetSite
 from eztranet.project.project import ProjectItem, ProjectVideo, ProjectImage
 from eztranet.comment.comments import Comments, Comment
 from tempfile import mkstemp
+from zope.component import ComponentLookupError
+from zope.interface import Interface
+from zope.app.intid.interfaces import IIntIds
+from zope.app.catalog.interfaces import ICatalog
 
 def fix_annotations(item, newitem=None):
     """fix or copy annotations"""
@@ -30,14 +34,26 @@ def evolve(context):
     evolution script from version 0 to version 1 of the db schema
     (from eztranet 1.0 to eztranet 1.1)
     """
+    root = getRootFolder(context)
 
     # Eztranet site
-    for site in findObjectsProviding(getRootFolder(context),IEztranetSite):
+    for site in findObjectsProviding(root, IEztranetSite):
         if not hasattr(site, 'title'):
             site.title=None
+        # remove the intid and catalog since it creates cyclic refs
+        sm = site.getSiteManager()
+        sm.unregisterUtility(sm['catalog'], ICatalog)
+        sm.unregisterUtility(sm['unique integer IDs'], IIntIds)
+        del sm['catalog']
+        del sm['unique integer IDs']
 
+    # Projects
+    for item in findObjectsProviding(root, IProject):
+        # annotations
+        fix_annotations(item)
+        
     # Project items
-    for item in findObjectsProviding(getRootFolder(context),IProjectItem):
+    for item in findObjectsProviding(root, IProjectItem):
         if type(item) is ProjectVideo:
             newitem = ProjectVideo()
         if type(item) is ProjectImage:
@@ -64,8 +80,3 @@ def evolve(context):
         newitemname = item.__name__
         del parent[newitemname]
         parent[newitemname] = newitem
-
-    # Projects
-    for item in findObjectsProviding(getRootFolder(context),IProject):
-        # annotations
-        fix_annotations(item)

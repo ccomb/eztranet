@@ -25,7 +25,6 @@
   <include package="zope.app.session" />
   <include package="zope.app.intid" />
   <include package="zope.app.keyreference" />
-  <include package="zope.app.catalog" />
   <include package="zope.app.securitypolicy" />
   <include package="zope.contentprovider" />
   <include package="zope.dublincore" />

@@ -4,6 +4,8 @@ from zope.schema import TextLine, Text, Bytes
 from zope.file.interfaces import IFile
 from zope.interface import Interface
 from zope.i18nmessageid import MessageFactory
+from zope.index.text.interfaces import ISearchableText
+
 _ = MessageFactory('eztranet')
 
 class IProject(IContainer, IContained):
@@ -57,3 +59,16 @@ class IProjectContainer(IContainer, IContained):
     contains(IProject)
     title=TextLine(title=_(u'Title'),
                    description=_(u'Title of the project container'))
+
+class ISearchableTextOfProject(ISearchableText):
+    u"""
+        on déclare un index juste pour cette interface de façon à indexer juste
+        les projets
+            """
+
+class ISearchableTextOfProjectItem(ISearchableText):
+    u"""
+        on déclare un index juste pour cette interface de façon à indexer juste
+        les articles
+            """
+
