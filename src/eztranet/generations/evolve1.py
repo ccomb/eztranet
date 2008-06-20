@@ -66,10 +66,10 @@ def evolve(context):
             file.close()
             newitem._data.consumeFile(filename)
         # attributes
-        newitem.title = item.title
+        newitem.title = item.title.split('\\')[-1]
         newitem.description = item.description
         newitem.mimeType = item.contentType
-        newitem.__name__ = item.__name__
+        newitem.__name__ = item.__name__.split('\\')[-1]
         newitem.__parent = item.__parent__
         newitem.parameters = {}
         # annotations
