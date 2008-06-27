@@ -13,6 +13,8 @@ import transaction
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
+CHUNKSIZE = 1048576
+
 class FlashContentProvider(object):
     implements(IContentProvider)
     adapts(Interface, IMinimalBrowserLayer, Interface)
@@ -28,7 +30,10 @@ class FlashContentProvider(object):
                 flvfile = open(flvname)
                 self.flashpreview.flash_movie = File()
                 openfile = self.flashpreview.flash_movie.open('w')
-                openfile.write(flvfile.read())
+                chunk = flvfile.read(CHUNKSIZE)
+                while chunk:
+                    openfile.write(chunk)
+                    chunk = flvfile.read(CHUNKSIZE)
                 openfile.close()
                 flvfile.close()
                 transaction.savepoint() # be sure to save before removing the file

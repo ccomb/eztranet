@@ -1,8 +1,9 @@
 from zope.app.zopeappgenerations import getRootFolder
 from zope.app.generations.utility import findObjectsProviding
-from eztranet.project.interfaces import IProjectItem, IProject
+from eztranet.project.interfaces import IProjectItem, IProject, IProjectVideo
 from eztranet.interfaces import IEztranetSite
 from eztranet.project.project import ProjectItem, ProjectVideo, ProjectImage
+from eztranet.flashpreview.browser.flashpreview import FlashContentProvider
 from eztranet.comment.comments import Comments, Comment
 from tempfile import mkstemp
 from zope.component import ComponentLookupError
@@ -85,6 +86,13 @@ def evolve(context):
         newitemname = item.__name__
         del parent[newitemname]
         parent[newitemname] = newitem
+
+    # move the compressed videos to the blob by calling the Flash content
+    # provider update method
+    for item in findObjectsProviding(root, IProjectVideo):
+        cp = FlashContentProvider(item, None, None)
+        cp.update()
+
 
 
 
