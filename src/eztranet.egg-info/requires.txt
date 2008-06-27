@@ -31,3 +31,4 @@ zope.testbrowser
 z3c.layer.minimal
 hachoir_core
 hachoir_parser
+zope.index

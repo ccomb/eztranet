@@ -62,6 +62,7 @@ setup(name='eztranet',
                         'z3c.layer.minimal',
                         'hachoir_core',
                         'hachoir_parser',
+                        'zope.index',
                         ],
       entry_points = """
       [console_scripts]
