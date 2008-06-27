@@ -9,6 +9,8 @@ from zope.component import ComponentLookupError
 from zope.interface import Interface
 from zope.app.intid.interfaces import IIntIds
 from zope.app.catalog.interfaces import ICatalog
+import os
+import time
 
 def fix_annotations(item, newitem=None):
     """fix or copy annotations"""
@@ -54,6 +56,9 @@ def evolve(context):
         
     # Project items
     for item in findObjectsProviding(root, IProjectItem):
+        # this works only on GNU systems
+        while 'ffmpeg' in os.popen('ps -eo comm').read().split():
+            time.sleep(2)
         if type(item) is ProjectVideo:
             newitem = ProjectVideo()
         if type(item) is ProjectImage:
@@ -80,3 +85,6 @@ def evolve(context):
         newitemname = item.__name__
         del parent[newitemname]
         parent[newitemname] = newitem
+
+
+

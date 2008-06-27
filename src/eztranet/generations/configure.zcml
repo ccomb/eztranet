@@ -1,9 +1,9 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
 
-<!-- <utility factory="zope.app.generations.generations.SchemaManager"
+<utility factory="zope.app.generations.generations.SchemaManager"
          name="eztranet" />
--->
+
 
 
 <!-- If no manager has ever been used, you must enable the manager above
@@ -11,7 +11,9 @@ to write the generation to zero. Then, enable the manager below to
 evolve to a higher generation. 
 -->
 
+<!--
 <utility component=".EztranetSchemaManager"
          name="eztranet" />
+-->
 
 </configure>
