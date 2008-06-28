@@ -98,12 +98,12 @@ class ProjectImageSized(object):
         self.width = image.size[0]
         self.height = image.size[1]
         self.size = self.context.size
+        image.close()
 
     def sizeForDisplay(self):
         """
         returns a size of the form '3125KB 640x480'
         """
-        image = PIL.Image.open(self.context._data._current_filename())
         return _(u'%sKB %sx%s') % (self.size/1024, self.width, self.height)
 
     def sizeForSorting(self):
