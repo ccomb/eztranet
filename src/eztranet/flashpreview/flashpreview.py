@@ -28,10 +28,10 @@ class FlashPreview(object):
         start encoding and return the thread
         """
         transaction.commit() # to be able to open the blob later
-        tmpfile, tmpname = mkstemp()
-        thread = FlashConverterThread(self.context, tmpname)
+        target_tmp = mkstemp()
+        thread = FlashConverterThread(self.context, target_tmp)
         thread.start()
-        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = tmpname
+        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = target_tmp[1]
         return thread
 
     def get_flash_movie(self):
@@ -47,8 +47,9 @@ class FlashConverterThread(Thread):
     The thread that runs ffmpeg and write the resulting video file
     The name of the file gives the status of the compression
     """
-    def __init__(self, sourcefile, targetpath):
-        self.sourcefile, self.targetpath = sourcefile, targetpath
+    def __init__(self, sourcefile, target_tmp):
+        self.sourcefile = sourcefile
+        self.targetfd, self.targetpath = target_tmp
         super(FlashConverterThread, self).__init__()
     def run(self):
         fd = self.sourcefile.open()
@@ -58,9 +59,11 @@ class FlashConverterThread(Thread):
                                                      '-g', '240',
                                                      self.targetpath + '.flv'):
             fd.close()
+            os.close(self.targetfd)
             os.rename(self.targetpath, self.targetpath+".FAILED")
             return
         fd.close()
+        os.close(self.targetfd)
         os.remove(self.targetpath)
         os.rename(self.targetpath + '.flv', self.targetpath+".OK")
         

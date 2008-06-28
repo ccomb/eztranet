@@ -98,7 +98,7 @@ class ProjectImageSized(object):
         self.width = image.size[0]
         self.height = image.size[1]
         self.size = self.context.size
-        image.close()
+        image.fp.close()
 
     def sizeForDisplay(self):
         """
