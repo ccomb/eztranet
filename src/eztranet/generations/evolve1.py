@@ -66,8 +66,8 @@ def evolve(context):
             newitem = ProjectImage()
         # file content
         if item._data._data is not None:
-            handle,filename = mkstemp()
-            file = open(filename, 'w')
+            handle, filename = mkstemp()
+            file = os.fdopen(handle, 'w')
             file.write(item._data._data)
             file.close()
             newitem._data.consumeFile(filename)
