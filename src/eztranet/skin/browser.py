@@ -138,10 +138,7 @@ class LangChoiceContentProvider(object):
             self.lang = self.request['PATH_INFO'].split('/++lang++')[1][:2]
         if 'langchoice' in self.request:
             # if we asked for a language, we must redirect to it
-            if self.lang == self.request['langchoice'][:2]:
-                return
-            else:
-                self.lang = self.request['langchoice'][:2]
+            self.lang = self.request['langchoice'][:2]
             if self.request['langchoice'] == 'auto':
                 self.lang = None
             if self.lang:
