@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from zope.traversing.browser.absoluteurl import AbsoluteURL
+from zope.traversing.browser.absoluteurl import absoluteURL
+from zope.traversing.api import getPath
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
 from zope.app.component.hooks import getSite
@@ -51,7 +52,7 @@ class LogoProvider(object):
             self.title = u'Eztranet'
             return
         self.title = getSite().__name__
-        self.url = AbsoluteURL(self.logo, self.request)()
+        self.url = absoluteURL(self.logo, self.request)
     def render(self):
         """
         Instead of rendering HTML,
@@ -72,12 +73,12 @@ class EztranetMainMenu(object):
         site = getSite()
         if site is not None:
             self.menuitems = [{'name':site[i].title,
-                               'url':AbsoluteURL(site[i], self.request)()}
+                               'url':absoluteURL(site[i], self.request)}
                                for i in site.keys() if i not in ['logo']]
             users = queryUtility(IAuthenticatorPlugin, name="EztranetUsers", context=site, default=None)
             if users is not None and canAccess(users, '__name__'):
                 self.menuitems.append({'name': _(u'Users'),
-                                       'url': AbsoluteURL(users, self.request)() + '/contents.html'})
+                                       'url': absoluteURL(users, self.request) + '/contents.html'})
     def render(self):
         return self.menuitems
 
@@ -93,22 +94,35 @@ class LangChoiceContentProvider(object):
     >>> from eztranet.skin.browser import LangChoiceContentProvider
     >>> from zope.publisher.browser import TestRequest
     >>> dummyrequest = TestRequest(PATH_INFO='/eztranet/projects')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang is None
+    >>> import zope.app.folder
+    >>> root = zope.app.folder.folder.rootFolder()
+    >>> root.__name__ = u'root'
+    >>> root['foo'] = zope.app.folder.Folder()
+    >>> root['foo'].__parent__ = root
+    >>> dummyobj = root['bar'] = zope.app.folder.Folder()
+    >>> dummyobj.__parent__ = root['foo']
+    >>> from zope.publisher.browser import BrowserPage
+    >>> dummyview = BrowserPage(dummyobj, dummyrequest)
+    >>> dummyview.__name__ = 'index.html'
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang is None
     True
     >>> dummyrequest = TestRequest(PATH_INFO='/++lang++fr/eztranet/projects')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
     u'fr'
     >>> dummyrequest = TestRequest(PATH_INFO='/++lang++en/eztranet/projects')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
     u'en'
     >>> dummyrequest = TestRequest(PATH_INFO='/++lang++xx/eztranet/projects')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
+    u'xx'
+    >>> dummyrequest = TestRequest(PATH_INFO='/++vh++http:eztranet.gorfou.fr:80/++/++lang++xx/eztranet/projects')
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
     u'xx'
     >>> dummyrequest = TestRequest(PATH_INFO='/')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang is None
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang is None
     True
     >>> dummyrequest = TestRequest(PATH_INFO='/', langchoice='fr')
-    >>> LangChoiceContentProvider(None, dummyrequest, None).lang
+    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
     'fr'
 
     """
@@ -117,22 +131,23 @@ class LangChoiceContentProvider(object):
     lang = None
 
     def __init__(self, context, request, view):
-        self.context = context
-        self.request = request
+        self.context, self.request, self.view = context, request, view
+        current_path = getPath(view)
         if 'PATH_INFO' in self.request \
-        and self.request['PATH_INFO'].startswith('/++lang++'):
-            self.lang = self.request['PATH_INFO'][9:11]
+        and '/++lang++' in self.request['PATH_INFO']:
+            # get the lang from the url
+            self.lang = self.request['PATH_INFO'].split('/++lang++')[1][:2]
         if 'langchoice' in self.request:
-            self.lang = self.request['langchoice'][:2]
+            # if we asked for a language, we must redirect to it
+            if self.lang == self.request['langchoice'][:2]:
+                return
+            else:
+                self.lang = self.request['langchoice'][:2]
             if self.request['langchoice'] == 'auto':
                 self.lang = None
-            path = self.request['PATH_INFO']
-            if path.startswith('/++lang++'):
-                path = path[11:]
-            if self.lang is None:
-                self.request.response.redirect(path)
-            else:
-                self.request.response.redirect('/++lang++' + self.lang + path)
+            if self.lang:
+                current_path = '/++lang++' + self.lang + current_path
+            self.request.response.redirect(current_path)
 
     def update(self):
         self.langs = {'en':u'english', 'fr':u'français'}
