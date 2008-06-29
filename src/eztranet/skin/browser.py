@@ -132,10 +132,12 @@ class LangChoiceContentProvider(object):
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
         current_path = request.getURL(path_only=True)
-        if 'PATH_INFO' in self.request \
-        and '/++lang++' in self.request['PATH_INFO']:
+        langindex = current_path.find('/++lang++')
+        if langindex >= 0:
             # get the lang from the url
-            self.lang = self.request['PATH_INFO'].split('/++lang++')[1][:2]
+            self.lang = current_path[langindex+9:langindex+11]
+            # rebuild the url without language
+            current_path = current_path[:langindex] + current_path[langindex+11:]
         if 'langchoice' in self.request:
             # if we asked for a language, we must redirect to it
             self.lang = self.request['langchoice'][:2]
