@@ -88,42 +88,7 @@ class RootFolderView(BrowserPage):
 
 class LangChoiceContentProvider(object):
     """
-    Content provider that allows to choose the language::
-    
-    >>> from eztranet.skin.browser import LangChoiceContentProvider
-    >>> from zope.publisher.browser import TestRequest
-    >>> dummyrequest = TestRequest(PATH_INFO='/eztranet/projects')
-    >>> import zope.app.folder
-    >>> root = zope.app.folder.folder.rootFolder()
-    >>> root.__name__ = u'root'
-    >>> root['foo'] = zope.app.folder.Folder()
-    >>> root['foo'].__parent__ = root
-    >>> dummyobj = root['bar'] = zope.app.folder.Folder()
-    >>> dummyobj.__parent__ = root['foo']
-    >>> from zope.publisher.browser import BrowserPage
-    >>> dummyview = BrowserPage(dummyobj, dummyrequest)
-    >>> dummyview.__name__ = 'index.html'
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang is None
-    True
-    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++fr/eztranet/projects')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
-    u'fr'
-    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++en/eztranet/projects')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
-    u'en'
-    >>> dummyrequest = TestRequest(PATH_INFO='/++lang++xx/eztranet/projects')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
-    u'xx'
-    >>> dummyrequest = TestRequest(PATH_INFO='/++vh++http:eztranet.gorfou.fr:80/++/++lang++xx/eztranet/projects')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
-    u'xx'
-    >>> dummyrequest = TestRequest(PATH_INFO='/')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang is None
-    True
-    >>> dummyrequest = TestRequest(PATH_INFO='/', langchoice='fr')
-    >>> LangChoiceContentProvider(dummyobj, dummyrequest, dummyview).lang
-    'fr'
-
+    Content provider that allows to choose the language
     """
     implements(IContentProvider)
     adapts(Interface, IEztranetSkin, Interface)
