@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.traversing.api import getPath
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import implements, Interface
 from zope.app.component.hooks import getSite
@@ -132,7 +131,7 @@ class LangChoiceContentProvider(object):
 
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
-        current_path = getPath(view)
+        current_path = request.getURL(path_only=True)
         if 'PATH_INFO' in self.request \
         and '/++lang++' in self.request['PATH_INFO']:
             # get the lang from the url
