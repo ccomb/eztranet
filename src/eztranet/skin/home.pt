@@ -31,8 +31,8 @@ You can try the Eztranet by clicking on "projects" (at the top), on
 "connection" (top-left corner), or on the icon below.
 </p>
 <ul>
-  <li><span i18n:translate="">Login: </span>admin</li>
-  <li><span i18n:translate="">Password: </span>eztranet</li>
+  <li><span i18n:translate="">Login: </span> admin</li>
+  <li><span i18n:translate="">Password: </span> eztranet</li>
 </ul>
 </div>
 <div class="item">
