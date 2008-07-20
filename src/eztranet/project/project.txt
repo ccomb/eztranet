@@ -101,7 +101,7 @@ The project and projectcontainer have a name chooser::
     >>> project = Project(title=u'my project')
     >>> namechooser = ProjectItemNameChooser(project)
     >>> namechooser.chooseName(u'', item)
-    'ProjectItem'
+    u'ProjectItem'
 
 We try a unicode and a weird name::
 
