@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(name='eztranet',
 
       # Fill in project info below
-      version='1.1dev',
+      version='1.1.0',
       description="",
       long_description="",
       keywords='eztranet extranet video photo',

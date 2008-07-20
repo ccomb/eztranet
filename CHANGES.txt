@@ -1,0 +1,16 @@
+1.1.0 (2007-07-20)
+------------------
+- use blobs for uploaded files
+- allow uploading of several files
+- optimized memory during upload and browsing
+- graphical enhancements
+- antialiasing on thumbnails
+- improved left tree menu
+- automatic detection of uploaded files
+- internationalization (with en + fr)
+- new flash movie reader
+- move to buildout and zope3.4
+
+1.0 (
+--------
+- initial version for Purple Productions
