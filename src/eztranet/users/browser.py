@@ -3,7 +3,6 @@ from zope.component import getUtility, getAllUtilitiesRegisteredFor
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
 from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.formlib.form import EditForm, Fields, AddForm, applyChanges, DisplayForm
-from zope.app.container.interfaces import INameChooser
 from zope.app.container.browser.contents import Contents
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 import zope.event

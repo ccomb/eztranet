@@ -27,7 +27,6 @@ from os.path import basename
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 from hachoir_parser import createParser
-from os.path import join
 from eztranet.project.browser.multiupload.browser import MultiUploadWidget
 import zope.publisher
 

@@ -8,9 +8,8 @@
 <body>
 <span tal:condition="python: not len(context)"
       i18n:translate="">
-   You don't have any eztranet site yet. Login in the <a
-   href="++skin++Rotterdam">ZMI</a> with user/pass: admin/istanbul and add an Eztranet Site.<br/>
-   Then <b>disable the admin acount in site.zcml</b> and get back to this page.
+   You don't have any eztranet site yet.
+   Login as admin/istanbul to <a href="add_eztranet.html">add an eztranet</a>.
 </span>
 
 <ul tal:condition="python: len(context)">
@@ -26,6 +25,8 @@
 </li>
 <li tal:condition="python:False">another eztranet site</li>
 </ul>
+<a tal:condition="python: len(context) > 0"
+   href="add_eztranet.html">add an eztranet</a>
 
 
 </body>

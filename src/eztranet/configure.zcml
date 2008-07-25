@@ -52,13 +52,6 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
 </class>
 
-<browser:addform name="eztranet.eztranet.EztranetSite"
-                 schema="eztranet.interfaces.IEztranetSite"
-                 permission="zope.ManageContent"
-                 class=".eztranet.EztranetSiteAdd"
-                 label="Add an Eztranet Site"
-                 content_factory="eztranet.eztranet.EztranetSite" />
-
 <include package=".skin" />
 <include package=".project" />
 <include package=".users" />
@@ -74,6 +67,13 @@
 <subscriber handler=".eztranet.newEztranetSiteAdded" />
 <subscriber handler=".eztranet.EztranetInitialSetup" />
 
+<browser:page name="add_eztranet.html"
+              for="zope.app.folder.interfaces.IRootFolder"
+              class=".eztranet.EztranetSiteAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
+              permission="zope.ManageContent" />
+              
+          
 
 <browser:addMenuItem title="Eztranet Site"
                      class=".eztranet.EztranetSite"

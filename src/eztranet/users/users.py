@@ -10,6 +10,7 @@ from zope.app.container.interfaces import IObjectAddedEvent
 from zope.app.container.interfaces import IObjectRemovedEvent
 from zope.app.security.interfaces import IAuthentication
 from zope.component import adapter
+from zope.component import provideUtility
 from zope.component import adapts
 from zope.component.factory import Factory
 from zope.i18nmessageid import MessageFactory
@@ -86,6 +87,9 @@ def initial_setup(site):
     users = EztranetUsersContainer()
     sm['authentication']['EztranetUsers'] = users
     sm.registerUtility(users, IAuthenticatorPlugin, name="EztranetUsers")
+    # register a second time globally so that it is available in the current transaction for
+    # subsequent setup inits
+    provideUtility(users, IAuthenticatorPlugin, name="EztranetUsers")
     # activate the auth plugins in the pau
     pau.authenticatorPlugins = (users.__name__, ) # a tuple with one element
     #activate the wanted credential plugins

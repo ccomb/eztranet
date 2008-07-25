@@ -1,3 +1,4 @@
+from zope.interface import Interface
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.component.interfaces import IPossibleSite
 from zope.component.interfaces import IObjectEvent
@@ -20,7 +21,13 @@ class IEztranetSiteManagerSetEvent(IObjectEvent):
     in particular the IntId, the catalog and indices, the trash, etc.
     """ 
 
-class IConfigurator(object):
+class IConfigurator(Interface):
     """
     The interface of the root dummy configuration object
     """
+
+class IInitialSetup(Interface):
+    """
+    The interface of each initial setup utility
+    """
+

@@ -4,6 +4,10 @@
 
 <zope:adapter factory="zope.app.security.LogoutSupported" />
 
+<zope:utility name="users initial setup"
+              component=".users.initial_setup"
+              provides="eztranet.interfaces.IInitialSetup" />
+
 <zope:class class=".users.EztranetUser">
   <require permission="eztranet.manage"
            interface=".interfaces.IEztranetUser" />

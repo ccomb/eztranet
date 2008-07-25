@@ -1,18 +1,20 @@
-from interfaces import IEztranetSiteManagerSetEvent, IEztranetSite
+from interfaces import IEztranetSiteManagerSetEvent, IEztranetSite, IInitialSetup
 from zope.app.folder.folder import Folder
 from zope.interface import implements, Interface
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
-from zope.component import adapter
+from zope.component import adapter, getUtilitiesFor
 from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
 from zope.event import notify
 from zope.app.intid.interfaces import IIntIds
 from zope.app.intid import IntIds
 from zope.component import createObject
 from zope.app.generations.utility import findObjectsProviding
-from users import users
 from zope.formlib.form import AddForm, Fields, applyChanges
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
+import logging
+
+logger = logging.getLogger(__name__)
 
 class EztranetSiteManagerSetEvent(object):
     implements(IEztranetSiteManagerSetEvent)
@@ -56,7 +58,10 @@ def EztranetInitialSetup(event):
     
     # this setup could be done in an event triggered when adding the eztranet
     # by saying that EztranetSite implements a marker interface such as IHaveUserManagement
-    users.initial_setup(site)
+    #By now, we just run all the utilities providing IInitialSetup
+    for utility_name, utility in getUtilitiesFor(IInitialSetup):
+        logger.info(u'Running initial setup from %s' % utility.__module__)
+        utility(site)
     
     #create an intid for all objects added in content space and site manager. (the intid is not yet active)"
     #KEEP THIS AT THE BOTTOM"
@@ -70,14 +75,15 @@ class EztranetSiteAdd(AddForm):
     form_fields['__name__'].field.title = _(u'Name (used in the URL)')
     form_fields['__name__'].field.description = _(u'Name used in the URL')
     label = _(u'Adding an Eztranet Site')
+    nextURL = '/'
 
-    def create(self, data):
+    def createAndAdd(self, data):
         eztranet_site = EztranetSite()
         applyChanges(eztranet_site, self.form_fields, data)
-        self.context.contentName = INameChooser(self.context.context).\
-                                    chooseName(eztranet_site.__name__,
-                                               eztranet_site)
-        return eztranet_site
+        name = INameChooser(self.context).chooseName(eztranet_site.__name__,
+                                                     eztranet_site)
+        self.context[name] = eztranet_site
+        return self.request.response.redirect('/')
 
 
 
