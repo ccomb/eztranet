@@ -50,7 +50,7 @@ We can now visit the eztranet site::
     >>> browser.open('http://localhost/eztranet')
     >>> browser.headers['status'] == '200 Ok'
     True
-    >>> 'Eztranet demo' in browser.contents
+    >>> 'Gorfou' in browser.contents
     True
 
 We cannot yet visit the projects, and we are redirected

@@ -1,4 +1,4 @@
-1.1.0 (2007-07-20)
+1.1dev (unreleased)
 ------------------
 - use blobs for uploaded files
 - allow uploading of several files
@@ -11,6 +11,6 @@
 - new flash movie reader
 - move to buildout and zope3.4
 
-1.0 (
---------
+1.0 (2007-07-10)
+----------------
 - initial version for Purple Productions
