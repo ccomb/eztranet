@@ -1,7 +1,9 @@
+CHANGES.txt
 apidoc.zcml
 buildout.cfg
 debug.ini
 deploy.ini
+setup.cfg
 setup.py
 site.zcml
 zdaemon.conf
