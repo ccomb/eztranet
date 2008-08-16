@@ -22,14 +22,18 @@ from zope.component import adapts
 from zope.dublincore.interfaces import IZopeDublinCore
 from zope.app import zapi
 from zope.publisher.browser import BrowserView
+from z3c.pagelet.browser import BrowserPagelet
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
 from zope.security.checker import canAccess
 from zope.security.interfaces import ForbiddenAttribute
 from zope.contentprovider.interfaces import IContentProvider
-from z3c.layer.minimal import IMinimalBrowserLayer
+from z3c.layer.pagelet import IPageletBrowserLayer
+from z3c.menu.simple.menu import SimpleMenuItem
 from eztranet.comment import IComments, IAnnotatableComments
+from zope.i18nmessageid import MessageFactory
 
+_ = MessageFactory('eztranet')
 
 def getFullName(principal_id) :
     """ Returns the full name or title of a principal that can be used
@@ -43,7 +47,7 @@ def getFullName(principal_id) :
         return principal_id
         
 
-class ListComments(BrowserView) :
+class ListComments(BrowserPagelet) :
     """ A simple list view for comments.
     
     >>> from eztranet.comment.browser.tests import buildTestFile
@@ -54,7 +58,7 @@ class ListComments(BrowserView) :
     >>> AddComment(file, TestRequest()).addComment("Another comment")
     
     >>> comments = ListComments(file, TestRequest())
-    >>> print comments.render()
+    >>> print comments.render_comments()
     <div id="comments"><a name="comment1">
     ...
     <div class="comment">A comment</div>
@@ -74,7 +78,7 @@ class ListComments(BrowserView) :
         super(ListComments, self).__init__(context, request)
         self.comments = IComments(self.context)
         
-    def render(self) :
+    def render_comments(self) :
         delkey = None
         if 'del' in self.request.form: # removal of comments (disabled)
             for key, value in self.comments.items() :
@@ -104,8 +108,11 @@ class ListComments(BrowserView) :
                 return True
         except ForbiddenAttribute:
             return False
-        
-        
+
+class ListCommentsMenuItem(SimpleMenuItem):
+    url = 'comments.html'
+    title = _(u'Comments')
+
 class AddComment(BrowserView) :
     """ A simple add view for comments. Allows the user to type comments
         and submit them.
@@ -127,7 +134,7 @@ class NbComments(object):
     Content provider that gives the number of comments
     """
     implements(IContentProvider)
-    adapts(IAnnotatableComments, IMinimalBrowserLayer, Interface)
+    adapts(IAnnotatableComments, IPageletBrowserLayer, Interface)
     
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view

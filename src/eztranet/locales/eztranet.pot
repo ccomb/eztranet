@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Tue Jun 10 21:12:56 2008\n"
+"POT-Creation-Date: Sat Aug 16 14:58:57 2008\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -31,7 +31,8 @@ msgstr ""
 msgid "Site Member"
 msgstr ""
 
-#: src/eztranet/comment/browser/configure.zcml:5
+#: src/eztranet/comment/browser/comment.py:114
+#: src/eztranet/project/browser/browser.py:352
 msgid "Comments"
 msgstr ""
 
@@ -43,17 +44,17 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: src/eztranet/comment/browser/templates/comments.pt:21
+#: src/eztranet/comment/browser/templates/comments.pt:16
 msgid "New comment"
 msgstr ""
 
-#: src/eztranet/comment/browser/templates/comments.pt:32
-#. Default: "Add comment"
-msgid "save-comment-button"
+#: src/eztranet/comment/browser/templates/comments.pt:2
+msgid "Add first comment"
 msgstr ""
 
-#: src/eztranet/comment/browser/templates/comments.pt:7
-msgid "Add first comment"
+#: src/eztranet/comment/browser/templates/comments.pt:27
+#. Default: "Add comment"
+msgid "save-comment-button"
 msgstr ""
 
 #: src/eztranet/comment/configure.zcml:10
@@ -72,45 +73,40 @@ msgstr ""
 msgid "Edit comments"
 msgstr ""
 
-#: src/eztranet/configure.zcml:42
-msgid "Eztranet site"
-msgstr ""
-
-#: src/eztranet/configure.zcml:42
-msgid "An Eztranet application"
-msgstr ""
-
-#: src/eztranet/configure.zcml:56
-msgid "Add an Eztranet Site"
-msgstr ""
-
-#: src/eztranet/configure.zcml:78
+#: src/eztranet/configure.zcml:104
 msgid "Eztranet Site"
 msgstr ""
 
-#: src/eztranet/eztranet.py:55
-#: src/eztranet/project/browser/browser.py:117
-#: src/eztranet/skin/home.pt:43
+#: src/eztranet/configure.zcml:53
+msgid "Eztranet site"
+msgstr ""
+
+#: src/eztranet/configure.zcml:53
+msgid "An Eztranet application"
+msgstr ""
+
+#: src/eztranet/eztranet.py:60
+#: src/eztranet/skin/home.pt:30
 msgid "Projects"
 msgstr ""
 
-#: src/eztranet/eztranet.py:70
+#: src/eztranet/eztranet.py:78
 msgid "Name (used in the URL)"
 msgstr ""
 
-#: src/eztranet/eztranet.py:71
+#: src/eztranet/eztranet.py:79
 msgid "Name used in the URL"
 msgstr ""
 
-#: src/eztranet/eztranet.py:72
+#: src/eztranet/eztranet.py:80
 msgid "Adding an Eztranet Site"
 msgstr ""
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:43
+#: src/eztranet/flashpreview/browser/flashpreview.py:48
 msgid "Flash compression failed.<br/>                           However you can still download the original movie."
 msgstr ""
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:46
+#: src/eztranet/flashpreview/browser/flashpreview.py:51
 msgid "<br/><br/>Currently compressing...                           (<a href=\".\">click to reload</a>)"
 msgstr ""
 
@@ -144,11 +140,11 @@ msgstr ""
 msgid "the flash movie blob, or compressed temporary filename"
 msgstr ""
 
-#: src/eztranet/interfaces.py:13
+#: src/eztranet/interfaces.py:15
 msgid "Title (used for display)"
 msgstr ""
 
-#: src/eztranet/interfaces.py:14
+#: src/eztranet/interfaces.py:16
 msgid "The name of your Eztranet Site"
 msgstr ""
 
@@ -168,150 +164,108 @@ msgstr ""
 msgid "Manage the eztranet"
 msgstr ""
 
-#: src/eztranet/project/browser/add_projectitem.pt:169
-msgid "The file is being uploaded, this can take several minutes...<br /> If you stop the loading of this page, the transfer will be canceled."
-msgstr ""
-
-#: src/eztranet/project/browser/add_projectitem.pt:60
-#: src/eztranet/project/browser/add_projectitem.pt:72
-#: src/eztranet/project/browser/add_projectitem.pt:108
-#: src/eztranet/project/browser/add_projectitem.pt:114
-#: src/eztranet/project/browser/add_projectitem.pt:120
-msgid "${DYNAMIC_CONTENT}"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:119
+#: src/eztranet/project/browser/browser.py:136
 msgid "Here is the list of your projects"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:140
-msgid "Adding a file"
+#: src/eztranet/project/browser/browser.py:150
+msgid "Name"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:141
-msgid ""
-"\n"
-"        document.open()\n"
-"        document.write(\"<p id='loading' style='display: none'><img src='/@@/loading.gif' alt='loading' style='float: left\\; margin-right: 10px\\;' /> %s</p>\")\n"
-"        document.close()\n"
-"        document.getElementById('form.actions.add').onclick = function() { document.getElementById('loading').style.display='block'; }\n"
-"    The file is being uploaded, this can take several minutes...<br/>              If you stop the loading of this page, the transfer will be canceled."
+#: src/eztranet/project/browser/browser.py:158
+msgid "Size"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:203
-msgid "Modification"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:229
-msgid "File"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:241
-msgid "Image"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:265
-msgid "Video"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:45
-msgid "Adding a project"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:58
-msgid "Project details"
-msgstr ""
-
-#: src/eztranet/project/browser/browser.py:97
-msgid "View of a project"
-msgstr ""
-
-#: src/eztranet/project/browser/configure.zcml:101
-msgid "new file"
-msgstr ""
-
-#: src/eztranet/project/browser/configure.zcml:127
-#: src/eztranet/project/browser/configure.zcml:138
-msgid "edit"
-msgstr ""
-
-#: src/eztranet/project/browser/configure.zcml:129
-#: src/eztranet/users/configure.zcml:40
-#: src/eztranet/users/configure.zcml:48
-msgid "Permissions"
-msgstr ""
-
-#: src/eztranet/project/browser/configure.zcml:13
-#: src/eztranet/project/browser/configure.zcml:78
-#: src/eztranet/users/configure.zcml:27
+#: src/eztranet/project/browser/browser.py:178
+#: src/eztranet/users/browser.py:235
 msgid "List"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:131
-msgid "Contents"
+#: src/eztranet/project/browser/browser.py:189
+msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:143
-#: src/eztranet/project/browser/configure.zcml:149
-msgid "Comment"
+#: src/eztranet/project/browser/browser.py:250
+msgid "New file"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:21
-#: src/eztranet/project/browser/configure.zcml:30
-msgid "Modify"
+#: src/eztranet/project/browser/browser.py:255
+msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:38
-#: src/eztranet/project/browser/configure.zcml:46
-#: src/eztranet/project/browser/configure.zcml:53
+#: src/eztranet/project/browser/browser.py:285
+msgid "File"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:293
 msgid "View"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:84
-msgid "new subproject"
+#: src/eztranet/project/browser/browser.py:301
+msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:92
-msgid "new project"
+#: src/eztranet/project/browser/browser.py:324
+msgid "Video"
 msgstr ""
 
-#: src/eztranet/project/browser/image.pt:42
-#: src/eztranet/project/browser/video.pt:35
-#: src/eztranet/project/browser/file.pt:35
-msgid "download"
+#: src/eztranet/project/browser/browser.py:363
+msgid "Send files..."
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:118
-msgid "Content listing"
+#: src/eztranet/project/browser/browser.py:364
+msgid "Add more files..."
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:132
-msgid "go up one level"
+#: src/eztranet/project/browser/browser.py:53
+msgid "Adding a project"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:15
-#: src/eztranet/project/browser/image.pt:20
-#: src/eztranet/project/browser/video.pt:19
-#: src/eztranet/project/browser/file.pt:19
-msgid "comment"
+#: src/eztranet/project/browser/browser.py:66
+msgid "New folder"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:170
-msgid "Created: ${time-created}"
+#: src/eztranet/project/browser/browser.py:71
+msgid "Project details"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:177
-msgid "Modified: ${time-modified}"
+#: src/eztranet/project/browser/browser.py:91
+#: src/eztranet/project/browser/browser.py:277
+msgid "Modify"
 msgstr ""
 
-#: src/eztranet/project/browser/project.pt:19
-#: src/eztranet/project/browser/image.pt:24
-#: src/eztranet/project/browser/video.pt:23
-#: src/eztranet/project/browser/file.pt:23
+#: src/eztranet/project/browser/configure.zcml:200
+#: src/eztranet/project/browser/configure.zcml:211
+msgid "edit"
+msgstr ""
+
+#: src/eztranet/project/browser/configure.zcml:204
+msgid "Contents"
+msgstr ""
+
+#: src/eztranet/project/browser/file.pt:24
+msgid "This item has no preview but you can download the file:"
+msgstr ""
+
+#: src/eztranet/project/browser/image.pt:11
+#: src/eztranet/project/browser/video.pt:11
+#: src/eztranet/project/browser/file.pt:11
 msgid "comments"
 msgstr ""
 
-#: src/eztranet/project/browser/video.pt:45
+#: src/eztranet/project/browser/image.pt:30
+#: src/eztranet/project/browser/video.pt:24
+#: src/eztranet/project/browser/file.pt:28
+msgid "download"
+msgstr ""
+
+#: src/eztranet/project/browser/image.pt:7
+#: src/eztranet/project/browser/video.pt:7
+#: src/eztranet/project/browser/file.pt:7
+msgid "comment"
+msgstr ""
+
+#: src/eztranet/project/browser/video.pt:34
 msgid "This video is just an online preview. You can download the original video by clicking on the \"download\" link."
 msgstr ""
 
@@ -331,44 +285,44 @@ msgstr ""
 msgid "modify"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:18
+#: src/eztranet/project/interfaces.py:20
 msgid "title"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:19
+#: src/eztranet/project/interfaces.py:21
 msgid "Project title"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:20
-#: src/eztranet/project/interfaces.py:38
+#: src/eztranet/project/interfaces.py:22
+#: src/eztranet/project/interfaces.py:40
 msgid "Description"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:21
+#: src/eztranet/project/interfaces.py:23
 msgid "Project description"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:33
+#: src/eztranet/project/interfaces.py:35
 msgid "The file you want to upload"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:35
+#: src/eztranet/project/interfaces.py:37
 msgid "File name"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:36
+#: src/eztranet/project/interfaces.py:38
 msgid "Name of the uploaded file"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:39
+#: src/eztranet/project/interfaces.py:41
 msgid "File description"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:58
+#: src/eztranet/project/interfaces.py:60
 msgid "Title"
 msgstr ""
 
-#: src/eztranet/project/interfaces.py:59
+#: src/eztranet/project/interfaces.py:61
 msgid "Title of the project container"
 msgstr ""
 
@@ -380,54 +334,50 @@ msgstr ""
 msgid "KB"
 msgstr ""
 
-#: src/eztranet/skin/browser.py:29
+#: src/eztranet/rootfolder.pt:1
+msgid "You don't have any eztranet site yet. Login as admin/istanbul to <a href=\"add_eztranet.html\">add an eztranet</a>."
+msgstr ""
+
+#: src/eztranet/rootfolder.pt:8
+msgid "List of your eztranet sites:"
+msgstr ""
+
+#: src/eztranet/skin/browser.py:44
 msgid "Eztranet : your photo/video extranet"
 msgstr ""
 
-#: src/eztranet/skin/browser.py:31
-#: src/eztranet/skin/browser.py:79
-#: src/eztranet/skin/main_template.pt:75
+#: src/eztranet/skin/browser.py:46
+#: src/eztranet/skin/browser.py:97
+#: src/eztranet/skin/main_template.pt:71
 msgid "Users"
 msgstr ""
 
-#: src/eztranet/skin/configure.zcml:39
-msgid "Eztranet actions Menu"
-msgstr ""
-
-#: src/eztranet/skin/home.pt:18
-msgid "(Back to Gorfou)"
-msgstr ""
-
-#: src/eztranet/skin/home.pt:25
+#: src/eztranet/skin/home.pt:12
 msgid "Eztranet demo"
 msgstr ""
 
-#: src/eztranet/skin/home.pt:29
+#: src/eztranet/skin/home.pt:16
 msgid "You can try the Eztranet by clicking on \"projects\" (at the top), on \"connection\" (top-left corner), or on the icon below."
 msgstr ""
 
-#: src/eztranet/skin/home.pt:34
+#: src/eztranet/skin/home.pt:21
 msgid "Login:"
 msgstr ""
 
-#: src/eztranet/skin/home.pt:35
+#: src/eztranet/skin/home.pt:22
 msgid "Password:"
+msgstr ""
+
+#: src/eztranet/skin/home.pt:5
+msgid "(Back to Gorfou)"
 msgstr ""
 
 #: src/eztranet/skin/languagechoice.pt:3
 msgid "Language:"
 msgstr ""
 
-#: src/eztranet/skin/main_template.pt:108
+#: src/eztranet/skin/main_template.pt:96
 msgid "Made to measure by Gorfou"
-msgstr ""
-
-#: src/eztranet/skin/rootfolder.pt:17
-msgid "List of your eztranet sites:"
-msgstr ""
-
-#: src/eztranet/skin/rootfolder.pt:9
-msgid "You don't have any eztranet site yet. Login in the <a href=\"++skin++Rotterdam\">ZMI</a> and add an Eztranet Site.<br /> Then get back to this page."
 msgstr ""
 
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:162
@@ -456,28 +406,116 @@ msgstr ""
 msgid "The URL of a thumbnail"
 msgstr ""
 
-#: src/eztranet/users/browser.py:41
+#: src/eztranet/users/browser.py:105
+msgid "[Login]"
+msgstr ""
+
+#: src/eztranet/users/browser.py:111
+msgid "[Logout]"
+msgstr ""
+
+#: src/eztranet/users/browser.py:171
 msgid "Permissions modified"
 msgstr ""
 
-#: src/eztranet/users/browser.py:50
-#: src/eztranet/users/configure.zcml:56
+#: src/eztranet/users/browser.py:176
+#: src/eztranet/project/browser/configure.zcml:202
+msgid "Permissions"
+msgstr ""
+
+#: src/eztranet/users/browser.py:185
+#: src/eztranet/users/browser.py:195
 msgid "New user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:114
-msgid "view user"
+#: src/eztranet/users/browser.py:205
+msgid "View user"
 msgstr ""
 
-#: src/eztranet/users/configure.zcml:121
-msgid "edit user"
+#: src/eztranet/users/browser.py:215
+msgid "Edit user"
+msgstr ""
+
+#: src/eztranet/users/granting.pt:33
+#. Default: "Change"
+msgid "grant-submit"
+msgstr ""
+
+#: src/eztranet/users/insecure_addon/showpassword.pt:3
+msgid "The password for this user is: ${password}"
+msgstr ""
+
+#: src/eztranet/users/insecure_addon/showpassword.pt:6
+msgid "Change the password to let it appear here"
 msgstr ""
 
 #: src/eztranet/users/interfaces.py:19
 msgid "Administrator"
 msgstr ""
 
-#: src/eztranet/users/users.py:92
+#: src/eztranet/users/login.pt:10
+#: src/eztranet/users/logout.pt:8
+msgid "Back to the main page."
+msgstr ""
+
+#: src/eztranet/users/login.pt:14
+msgid "Login Failed!"
+msgstr ""
+
+#: src/eztranet/users/login.pt:16
+msgid "You cancelled the login procedure."
+msgstr ""
+
+#: src/eztranet/users/login.pt:18
+msgid "Click here to return."
+msgstr ""
+
+#: src/eztranet/users/login.pt:2
+msgid "Login successful!"
+msgstr ""
+
+#: src/eztranet/users/login.pt:6
+msgid "You are now logged in as ${UserTitle}."
+msgstr ""
+
+#: src/eztranet/users/loginform.pt:14
+msgid "User Name"
+msgstr ""
+
+#: src/eztranet/users/loginform.pt:22
+msgid "Password"
+msgstr ""
+
+#: src/eztranet/users/loginform.pt:3
+msgid "Please provide Login Information"
+msgstr ""
+
+#: src/eztranet/users/loginform.pt:35
+#. Default: "Log in"
+msgid "login-button"
+msgstr ""
+
+#: src/eztranet/users/loginform.pt:5
+msgid "You are not authorized to perform this action. However, you may login as a different user who is authorized."
+msgstr ""
+
+#: src/eztranet/users/logout.pt:11
+msgid "You are being redirected!"
+msgstr ""
+
+#: src/eztranet/users/logout.pt:14
+msgid "If you see this screen for more than 5 seconds, click here."
+msgstr ""
+
+#: src/eztranet/users/logout.pt:2
+msgid "Logout successful!"
+msgstr ""
+
+#: src/eztranet/users/logout.pt:4
+msgid "You are now logged out."
+msgstr ""
+
+#: src/eztranet/users/users.py:101
 msgid "eztranet initial administrator"
 msgstr ""
 

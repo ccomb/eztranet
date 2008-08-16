@@ -2,7 +2,7 @@ import os
 from zope.contentprovider.interfaces import IContentProvider
 from zope.interface import Interface, implements
 from zope.component import adapts
-from z3c.layer.minimal import IMinimalBrowserLayer
+from z3c.layer.pagelet import IPageletBrowserLayer
 from zope.traversing.browser.absoluteurl import AbsoluteURL
 from zope.file.file import File
 from eztranet.flashpreview.interfaces import IFlashPreview
@@ -17,7 +17,7 @@ CHUNKSIZE = 1048576
 
 class FlashContentProvider(object):
     implements(IContentProvider)
-    adapts(Interface, IMinimalBrowserLayer, Interface)
+    adapts(Interface, IPageletBrowserLayer, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
     def update(self):

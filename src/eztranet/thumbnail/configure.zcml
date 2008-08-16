@@ -44,4 +44,5 @@
                   file="default_thumbnail.png"
                   permission="zope.Public"
                   layer="..skin.interfaces.IEztranetSkin" />
+                  
 </configure>

@@ -16,5 +16,5 @@ class IEztranetUser(IInternalPrincipal):
     A user of the eztranet. This is an extended Principal
     """
     containers(IEztranetUsersContainer)
-    IsAdmin = Bool(_(u'Administrator'))
+    IsAdmin = Bool(_(u'Administrator'), default=False)
 

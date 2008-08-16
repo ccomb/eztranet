@@ -1,5 +1,6 @@
 <configure xmlns="http://namespaces.zope.org/zope"
            xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
            xmlns:i18n="http://namespaces.zope.org/i18n"
            i18n_domain="eztranet">
 
@@ -19,7 +20,6 @@
   <include package="zope.i18n" file="meta.zcml" />
   <include package="zope.annotation" />
   <include package="zope.copypastemove" />
-  <include package="zope.formlib" />
   <include package="zope.i18n.locales" />
   <include package="zope.app.authentication" />
   <include package="zope.app.session" />
@@ -33,7 +33,19 @@
   <include package="zope.app.folder" />
   <include package="zope.mimetype" />
   <include package="zope.file" />
-  <include package="z3c.layer.minimal" />
+  <include package="zope.viewlet" file="meta.zcml" />
+  <include package="zope.viewlet" />
+  <include package="z3c.macro" />
+  <include package="z3c.macro" file="meta.zcml" />
+  <include package="z3c.template" file="meta.zcml" />
+  <include package="z3c.pagelet" file="meta.zcml" />
+  <include package="z3c.layer.pagelet" />
+  <include package="z3c.pagelet" />
+  <include package="z3c.contents" />
+  <include package="z3c.form" file="meta.zcml" />
+  <include package="z3c.form" />
+  <include package="z3c.formui" />
+
 
   <!-- Add your own component registrations here -->
 
@@ -67,14 +79,28 @@
 <subscriber handler=".eztranet.newEztranetSiteAdded" />
 <subscriber handler=".eztranet.EztranetInitialSetup" />
 
-<browser:page name="add_eztranet.html"
-              for="zope.app.folder.interfaces.IRootFolder"
-              class=".eztranet.EztranetSiteAdd"
-              layer="eztranet.skin.interfaces.IEztranetSkin"
-              permission="zope.ManageContent" />
-              
-          
+<!-- view and layout of the root without any eztranet -->
+<z3c:pagelet name="index.html"
+             for="zope.app.folder.interfaces.IRootFolder"
+             class=".eztranet.RootFolderView"
+             permission="zope.Public"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:template template="rootfolder.pt"
+              for=".eztranet.RootFolderView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:layout template="root_layout.pt"
+            for=".eztranet.RootFolderView"
+            layer="eztranet.skin.interfaces.IEztranetSkin" />
 
+<z3c:pagelet name="add_eztranet.html"
+             for="zope.app.folder.interfaces.IRootFolder"
+             class=".eztranet.EztranetSiteAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="zope.ManageContent" />
+<z3c:layout template="root_layout.pt"
+            for=".eztranet.EztranetSiteAdd"
+            layer="eztranet.skin.interfaces.IEztranetSkin" />
+              
 <browser:addMenuItem title="Eztranet Site"
                      class=".eztranet.EztranetSite"
                      permission="zope.ManageContent" />

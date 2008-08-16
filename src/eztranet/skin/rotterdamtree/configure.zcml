@@ -1,37 +1,45 @@
-<configure xmlns:zope="http://namespaces.zope.org/zope" xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns="http://namespaces.zope.org/browser">
 
 <!-- Reuse in eztranet skin the xmltree from Rotterdam -->
-  <browser:resource
+  <z3c:macro name="navigation_tree_box"
+             template="rotterdamtree.pt"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <z3c:macro name="navigation_tree_js"
+             template="rotterdamtree.pt"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+  <resource
       name="pl.gif"
       file="pl.gif"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:resource
+  <resource
       name="mi.gif"
       file="mi.gif"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:resource
+  <resource
       name="xmltree.js"
       file="xmltree.js"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
-  <browser:page
+  <page
       for="*"
       name="rotterdamtree"
       permission="zope.View"
       layer="eztranet.skin.interfaces.IEztranetSkin"
       template="rotterdamtree.pt" />
-  <browser:pages
+  <pages
       for="zope.app.container.interfaces.IReadContainer"
       permission="zope.View"
       class=".xmlobject.ReadContainerXmlObjectView"
       layer="eztranet.skin.interfaces.IEztranetSkin">
-    <browser:page
+    <page
         name="children.xml"
         attribute="children" />
-    <browser:page
+    <page
         name="singleBranchTree.xml"
         attribute="singleBranchTree" />
-  </browser:pages>
-  <browser:page
+  </pages>
+  <page
       name="singleBranchTree.xml"
       for="zope.interface.interface.Interface"
       permission="zope.View"

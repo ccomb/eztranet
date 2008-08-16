@@ -60,12 +60,15 @@ class FlashConverterThread(Thread):
                                                      self.targetpath + '.flv'):
             fd.close()
             os.close(self.targetfd)
-            os.rename(self.targetpath, self.targetpath+".FAILED")
+            if os.path.exists(self.targetpath):
+                os.rename(self.targetpath, self.targetpath+".FAILED")
             return
         fd.close()
         os.close(self.targetfd)
-        os.remove(self.targetpath)
-        os.rename(self.targetpath + '.flv', self.targetpath+".OK")
+        if os.path.exists(self.targetpath):
+            os.remove(self.targetpath)
+        if os.path.exists(self.targetpath + '.flv'):
+            os.rename(self.targetpath + '.flv', self.targetpath+".OK")
         
 @adapter(IFlashPreviewable, IObjectAddedEvent)
 def FlashPreviewableAdded(video, event):

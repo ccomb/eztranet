@@ -1,17 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html 
-    xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:tal="http://xml.zope.org/namespaces/tal" 
-    xmlns:metal="http://xml.zope.org/namespaces/metal" 
-    xml:lang="en" lang="en"
-    metal:use-macro="context/@@standard_macros/page"
-    i18n:domain="eztranet"
->
-
-<body>
-
-<div id="body" metal:fill-slot="body">
-
+<i18n:block domain="eztranet">
 <div style="margin-top: 5%">
 
 <div style="width: 100%; text-align: right">
@@ -37,13 +24,10 @@ You can try the Eztranet by clicking on "projects" (at the top), on
 </div>
 <div class="item">
  <a href="projects">
-   <img src="++resource++folder.png"
+   <img src="++resource++project_img/folder.png"
         alt="projects" />
 </a>
 <a href="projects"
    i18n:translate="">Projects</a>
 </div>
-</div>
-
-</body>
-</html>
+</i18n:block>

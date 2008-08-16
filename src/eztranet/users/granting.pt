@@ -1,14 +1,7 @@
-<html metal:use-macro="context/@@standard_macros/page"
-      i18n:domain="zope">
-<body>
-<div metal:fill-slot="body"
-     i18n:domain="zope">
-
 <p class="status"
    tal:define="status view/status"
    tal:condition="status"
-   tal:content="status"
-   i18n:translate=""/>
+   tal:content="status" />
 
 <tal:block define="roles view/get_eztranet_roles">
 
@@ -44,7 +37,3 @@
 </form>
 
 </tal:block>
-
-</div>
-</body>
-</html>

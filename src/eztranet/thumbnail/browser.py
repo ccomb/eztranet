@@ -26,3 +26,4 @@ class ThumbnailUrlView(BrowserView):
         if thumbnail.image is not None:
             return absoluteURL(self.context, self.request) + "/@@thumbnail_image"
         return "/@@/default_thumbnail.png"
+

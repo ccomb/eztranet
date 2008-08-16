@@ -1,15 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:tal="http://xml.zope.org/namespaces/tal" 
-      xmlns:metal="http://xml.zope.org/namespaces/metal" 
-      xml:lang="en" lang="en"
-      i18n:domain="eztranet"
-      metal:use-macro="context/@@standard_macros/page">
-
-<body>
-<div id="body"
-     metal:fill-slot="body">
-
 <a class="nb_comments"
    href="#"
    tal:define="nb provider:nb_comments"
@@ -32,6 +20,7 @@
 </p>
 
 <div id="item_toolbar">
+<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>
 <i18n:block translate="">
 This item has no preview but you can download the file:
 </i18n:block>
@@ -42,8 +31,3 @@ This item has no preview but you can download the file:
      download
     </a>
 </div>
-
-
-</div>
-</body>
-</html>

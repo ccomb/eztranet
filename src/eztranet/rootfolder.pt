@@ -1,11 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html 
-    xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:tal="http://xml.zope.org/namespaces/tal"
-    xml:lang="en" lang="en"
->
-
-<body>
 <span tal:condition="python: not len(context)"
       i18n:translate="">
    You don't have any eztranet site yet.
@@ -27,7 +19,3 @@
 </ul>
 <a tal:condition="python: len(context) > 0"
    href="add_eztranet.html">add an eztranet</a>
-
-
-</body>
-</html>

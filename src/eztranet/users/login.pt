@@ -1,0 +1,21 @@
+<tal:block condition="python:request.principal.id != 'zope.anybody'">
+     <h1 i18n:translate="">Login successful!</h1>
+
+     <p i18n:translate="">
+       You are now logged in as 
+       <em tal:content="request/principal/title" 
+           i18n:name="UserTitle">Joe Smith</em>.
+     </p>
+
+     <a href="." i18n:translate="">Back to the main page.</a>
+</tal:block> 
+
+<tal:block condition="python:request.principal.id == 'zope.anybody'">
+     <h1 i18n:translate="">Login Failed!</h1>
+     <p>
+       <tal:block
+            i18n:translate="">You cancelled the login procedure.</tal:block>
+       <a tal:attributes="href python: view.request.get('nextURL', '.')"
+            i18n:translate="">Click here to return.</a>
+     </p>
+</tal:block> 

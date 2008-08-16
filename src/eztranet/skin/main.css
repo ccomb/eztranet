@@ -59,7 +59,7 @@ ul#main_menu li {
 ul#main_menu a {
     font-weight: bold;
 }
-ul#eztranet_actions {
+ul#tab_menu {
     width: 100%;
     list-style-type: none;
     margin: 0;
@@ -67,24 +67,25 @@ ul#eztranet_actions {
     background-color: #B8BEDF;
     border-top: solid 2px #B8BEDF;
 }
-ul#eztranet_actions a {
+ul#tab_menu a {
     color: #3F486E;
     margin-left: 5px;
 }
-ul#eztranet_actions li {
+ul#tab_menu li {
     display: inline;
 }
-ul#eztranet_actions li a {
+ul#tab_menu li a {
     padding-left: 5px;
     padding-right: 5px;
 }
-ul#eztranet_actions li a.selected {
+ul#tab_menu li a.active-menu-item {
     color: white;
     background-color: #6C77AE;
 }
-ul li a.selected { font-weight: bold; }
+ul li a.active-menu-item { font-weight: bold; }
 div#body {
     margin-top: 0px;
+    padding: 0.5em;
 }
 /*  Styles for xmltree */
 #navtreecontents a { cursor: pointer; height: 20px; }
@@ -181,29 +182,6 @@ div#lang select {
 div#viewspace {
     margin-top: 10px;
 }
-div.multiupload{
-        float:left;
-        padding:3px;
-        background:#6C77AD;
-}
-div.multiupload div.list{
-        background: #6C77AD;
-}
-div.multiupload div.list div.item{
-        border:1px outset gray;
-        margin:1px;
-        background: #6C77AD;
-        height: auto;
-        padding: 3px;
-}
-div.multiupload div.list div.item:hover{
-        background: #6C77AD;
-}
-div.multiupload div.list img{
-        float:left;
-        margin: 3px;
-        cursor:pointer;
-}
 #company-logo {
         position: absolute;
         width: 180px;
@@ -218,4 +196,27 @@ tr.odd {
 }
 tr.even {
     background: #6973A8;
+}
+td { padding: 7px; }
+td a { font-size: 140%; font-weight: bold; }
+.error, .errors { color: yellow; }
+.fuProgress {
+    color:white;
+    background:#586498;
+}
+.fuProgressSuccess {
+    color:white;
+    background:#76ad6c !important;
+}
+.fuProgressFailure {
+    color:white;
+    background:#ad6c76 !important;
+}
+.fuNext {
+    margin-left: 275px;
+}
+
+#main_video, #main_image {
+    min-height: 500px;
+    margin-left: -0.5em;
 }

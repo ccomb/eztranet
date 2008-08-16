@@ -1,30 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:tal="http://xml.zope.org/namespaces/tal" 
-    xmlns:metal="http://xml.zope.org/namespaces/metal"
-    xml:lang="en" lang="en"
-    i18n:domain="eztranet"
-    metal:define-macro="page"
->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xml:lang="en" lang="en"
+      i18n:domain="eztranet"
+      metal:define-macro="page">
 
 <head>
-<title tal:content="provider:pagetitle">Eztranet (main skin template)</title>
-<meta http-equiv="imagetoolbar" content="no"/>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8"/>
-<link rel="shortcut icon" type="image/png" href="++resource++images/icon.png" />
-<link rel="stylesheet" type="text/css" href="/@@/main.css"/>
-<script type="text/javascript" src="/@@/functions.js"></script>
-<metal:block define-slot="headers" />
-<metal:tree use-macro="context/@@standard_macros/navigation_tree_js" />
+  <title tal:content="provider:pagetitle">Eztranet (main skin template)</title>
+  <meta http-equiv="imagetoolbar" content="no"/>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" type="image/png" href="++resource++images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="/@@/main.css"/>
+  <script type="text/javascript" src="/@@/functions.js"></script>
+  <metal:block define-slot="headers" />
+  <metal:tree use-macro="macro:navigation_tree_js" />
+  <tal:block content="structure provider:headers" />
 </head>
 
 <body tal:attributes="onload body_onload | nothing">
 
 
 <!-- navigation tree -->
-<metal:tree use-macro="context/@@standard_macros/navigation_tree_box" />
+<metal:tree use-macro="macro:navigation_tree_box" />
 
 <div id="main">
 
@@ -45,13 +43,8 @@
     <li tal:condition="nothing"><a href="#">action2</a></li>
 </ul>
 
-<div id="login_logout">
-    <span tal:condition="python:request.principal.id!='zope.anybody'"
-          tal:content="request/principal/id">
-        user
-    </span>
-    <br/>
-    <tal:block replace="structure context/@@login_logout" />
+<div id="login_logout" tal:content="structure provider:login_logout">
+  login or logout link
 </div>
 
 <div id="lang"
@@ -89,25 +82,17 @@
     </span>
 </h1>
 
-<!-- Action menu -->
-<ul id="eztranet_actions">
-    <li tal:repeat="item context/@@view_get_menu/eztranet_actions">
-        <a href="#"
-           tal:attributes="href item/action; class item/selected"
-           tal:content="item/title">
-         action1
-        </a>
-    </li>
-    <li tal:condition="nothing"><a href="#">action2</a></li>
-</ul>
+<!-- Tabbed menu -->
+<tal:block tal:replace="structure provider:tab_menu" />
 
-<div metal:define-slot="body">
+<div id="body"
+     tal:content="structure provider:pagelet">
 Here, the page content
 </div>
 
 </div><!-- main -->
 <div id="author">
-  v1.1.0.dev&nbsp;&nbsp;&nbsp;
+  v.<span tal:content="provider:version">v1.x</span>&nbsp;&nbsp;&nbsp;
   <a href="http://gorfou.fr"
      i18n:translate="">
     Made to measure by Gorfou

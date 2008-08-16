@@ -50,7 +50,7 @@ EztranetUserFactory=Factory(EztranetUser)
 @adapter(IEztranetUser, IObjectAddedEvent)
 def EztranetUserAdded(user, event):
     """
-    a subscriber that do the necessary after a user has been added
+    a subscriber that does the necessary after a user has been added
     """
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
     srm.assignRoleToPrincipal('eztranet.Member', user.login)
@@ -69,7 +69,7 @@ def recursively_unsetrole(obj, userlogin):
 @adapter(IEztranetUser, IObjectRemovedEvent)
 def EztranetUserRemoved(user, event):
     """
-    A subscriber that do the necessary after a user has been added
+    A subscriber that does the necessary after a user has been removed
     We loop on every project and remove role assignment.
     """
     site = getSite()

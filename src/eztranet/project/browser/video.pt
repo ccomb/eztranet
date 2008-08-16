@@ -1,19 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:tal="http://xml.zope.org/namespaces/tal" 
-      xmlns:metal="http://xml.zope.org/namespaces/metal" 
-      xml:lang="en" lang="en"
-      i18n:domain="eztranet"
-      metal:use-macro="context/@@standard_macros/page">
-
-<body>
-<div id="body"
-     metal:fill-slot="body">
-
 <a class="nb_comments"
    href="#"
    tal:define="nb provider:nb_comments"
    tal:condition="nb"
+   i18n:domain="eztranet"
    tal:attributes="href string:@@comments.html">
   <span tal:replace="nb">N</span>
   <span tal:condition="python:nb == 1"
@@ -31,7 +20,8 @@
     brief description of the video
 </p>
 
-<div id="item_toolbar">
+<div id="item_toolbar" i18n:domain="eztranet">
+<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>
     <a href="#"
        tal:attributes="href string:${context/@@absolute_url}/@@download"
        i18n:translate="">
@@ -39,13 +29,13 @@
     </a>
 </div>
 
-<div tal:content="structure provider:eztranet.flashpreview.flashvideo">
+<div id="main_video"
+     tal:content="structure provider:eztranet.flashpreview.flashvideo">
     flash preview
 </div>
-<div i18n:translate="" style="font-size: 90%; padding-top: 5px;">This video is
-just an online preview. You can download the original video by clicking on the
-"download" link.</div>
-
+<div i18n:domain="eztranet"
+     i18n:translate=""
+     style="font-size: 90%; padding-top: 5px;">
+  This video is just an online preview. You can download the original video by clicking on the
+"download" link.
 </div>
-</body>
-</html>

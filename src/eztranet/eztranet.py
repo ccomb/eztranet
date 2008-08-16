@@ -1,19 +1,22 @@
 from interfaces import IEztranetSiteManagerSetEvent, IEztranetSite, IInitialSetup
-from zope.app.folder.folder import Folder
-from zope.interface import implements, Interface
+from z3c.pagelet.browser import BrowserPagelet
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
-from zope.component import adapter, getUtilitiesFor
 from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
-from zope.event import notify
-from zope.app.intid.interfaces import IIntIds
-from zope.app.intid import IntIds
-from zope.component import createObject
+from zope.app.folder.folder import Folder
 from zope.app.generations.utility import findObjectsProviding
-from zope.formlib.form import AddForm, Fields, applyChanges
+from zope.app.intid import IntIds
+from zope.app.intid.interfaces import IIntIds
+from zope.component import adapter, getUtilitiesFor
+from zope.component import createObject
+from zope.event import notify
+from z3c.form.form import applyChanges
+from z3c.form.field import Fields
+from z3c.formui.form import AddForm
 from zope.i18nmessageid import MessageFactory
-_ = MessageFactory('eztranet')
+from zope.interface import implements, Interface
 import logging
 
+_ = MessageFactory('eztranet')
 logger = logging.getLogger(__name__)
 
 class EztranetSiteManagerSetEvent(object):
@@ -71,19 +74,28 @@ def EztranetInitialSetup(event):
         intid.register(object)
 
 class EztranetSiteAdd(AddForm):
-    form_fields = Fields(IEztranetSite)
-    form_fields['__name__'].field.title = _(u'Name (used in the URL)')
-    form_fields['__name__'].field.description = _(u'Name used in the URL')
+    fields = Fields(IEztranetSite)
+    fields['__name__'].field.title = _(u'Name (used in the URL)')
+    fields['__name__'].field.description = _(u'Name used in the URL')
     label = _(u'Adding an Eztranet Site')
-    nextURL = '/'
 
-    def createAndAdd(self, data):
+    def create(self, data):
         eztranet_site = EztranetSite()
-        applyChanges(eztranet_site, self.form_fields, data)
+        applyChanges(self, eztranet_site, data)
+        return eztranet_site
+    def add(self, eztranet_site):
         name = INameChooser(self.context).chooseName(eztranet_site.__name__,
                                                      eztranet_site)
         self.context[name] = eztranet_site
-        return self.request.response.redirect('/')
+        #return self.request.response.redirect('/')
+
+    def nextURL(self):
+        return '/'
+        
+class RootFolderView(BrowserPagelet):
+    def eztranet_sites(self):
+        return [eztranet[0] for eztranet in self.context.items()
+                if IEztranetSite.providedBy(eztranet[1])]
 
 
 

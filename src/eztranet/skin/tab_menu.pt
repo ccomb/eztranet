@@ -1,0 +1,7 @@
+<ul id="tab_menu">
+    <li tal:repeat="item view/viewlets"
+        tal:content="structure item/render">
+    action1
+    </li>
+    <li tal:condition="nothing"><a href="#">action2</a></li>
+</ul>

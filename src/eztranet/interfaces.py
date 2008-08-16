@@ -1,9 +1,10 @@
-from zope.interface import Interface
-from zope.app.container.interfaces import IContainer, IContained
 from zope.app.component.interfaces import IPossibleSite
+from zope.app.container.interfaces import IContainer, IContained
 from zope.component.interfaces import IObjectEvent
-from zope.schema import TextLine
 from zope.i18nmessageid import MessageFactory
+from zope.interface import Interface
+from zope.schema import TextLine
+
 _ = MessageFactory('eztranet')
 
 
@@ -30,4 +31,3 @@ class IInitialSetup(Interface):
     """
     The interface of each initial setup utility
     """
-

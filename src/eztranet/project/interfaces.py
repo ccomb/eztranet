@@ -61,14 +61,12 @@ class IProjectContainer(IContainer, IContained):
                    description=_(u'Title of the project container'))
 
 class ISearchableTextOfProject(ISearchableText):
-    u"""
-        on déclare un index juste pour cette interface de façon à indexer juste
-        les projets
-            """
+     """
+        we declare an index just for this interface to index just projects
+     """
 
 class ISearchableTextOfProjectItem(ISearchableText):
-    u"""
-        on déclare un index juste pour cette interface de façon à indexer juste
-        les articles
-            """
+     """
+        we declare an index just for this interface to index just items
+     """
 
