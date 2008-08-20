@@ -9,6 +9,9 @@ from os.path import basename
 from z3c.contents.browser import Contents
 from z3c.contents.column import RenameColumn
 from z3c.form.action import Actions, Action
+from z3c.form.converter import BaseDataConverter
+from zope.schema.interfaces import IBytes
+from z3c.form.interfaces import IFileWidget
 from z3c.form.field import Fields
 from z3c.form.form import applyChanges
 from z3c.formui.form import EditForm, AddForm
@@ -188,9 +191,6 @@ class ProjectItemAdd(AddForm):
     label = _(u'Adding a file')
     id = "addform"
 
-    def update(self):
-        return super(ProjectItemAdd, self).update()
-
     def createAndAdd(self, data):
         # We parse the form, looking for file fields
         at_least_one_file = False
@@ -244,6 +244,34 @@ class ProjectItemAdd(AddForm):
         if not at_least_one_file:
             return
         self.request.response.redirect(absoluteURL(self.context, self.request))
+
+class BigFileWidget(FileWidget):
+    implements(IBigFileWidget)
+
+class BigFileUploadDataConverter(BaseDataConverter):
+    """A special data converter for big files
+
+    This prevents from loading the whole uploaded file in memory"""
+
+    adapts(IBytes, IBigFileWidget)
+
+    def toFieldValue(self, value):
+        """See interfaces.IDataConverter"""
+        if value is None or value == '':
+            return self.field.missing_value
+    
+        if isinstance(value, zope.publisher.browser.FileUpload):
+            self.widget.headers = value.headers
+            self.widget.filename = value.filename
+            if data or getattr(value, 'filename', ''):
+                # we return the FileUpload itself!
+                return value
+            else:
+                return self.field.missing_value
+        else:
+            return unicode(value)
+
+
 
 class ProjectItemAddMenuItem(SimpleMenuItem):
     title = _(u'New file')

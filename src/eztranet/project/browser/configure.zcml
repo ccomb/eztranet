@@ -180,6 +180,9 @@
 <z3c:template template="add.pt"
               for=".browser.ProjectItemAdd"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
+<zope:adapter factory=".browser.BigFileUploadDataConverter" />
+<zope:adapter factory="BigFileWidget" />
+
 <viewlet name="ProjectItemAddMenuItem"
          class=".browser.ProjectItemAddMenuItem"
          for="..interfaces.IProject"
