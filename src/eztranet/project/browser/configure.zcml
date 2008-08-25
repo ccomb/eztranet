@@ -181,7 +181,8 @@
               for=".browser.ProjectItemAdd"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 <zope:adapter factory=".browser.BigFileUploadDataConverter" />
-<zope:adapter factory="BigFileWidget" />
+<zope:adapter factory=".browser.BigFileValidator" />
+<zope:adapter factory=".browser.BigFileFieldWidget" />
 
 <viewlet name="ProjectItemAddMenuItem"
          class=".browser.ProjectItemAddMenuItem"

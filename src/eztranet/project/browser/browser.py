@@ -1,3 +1,4 @@
+from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project
 from eztranet.project.project import ProjectImage
@@ -8,12 +9,13 @@ from hachoir_parser import createParser
 from os.path import basename
 from z3c.contents.browser import Contents
 from z3c.contents.column import RenameColumn
-from z3c.form.action import Actions, Action
+from z3c.form.browser.file import FileWidget
 from z3c.form.converter import BaseDataConverter
-from zope.schema.interfaces import IBytes
-from z3c.form.interfaces import IFileWidget
 from z3c.form.field import Fields
 from z3c.form.form import applyChanges
+from z3c.form.widget import FieldWidget
+from z3c.form.validator import SimpleFieldValidator
+from z3c.form.interfaces import IFieldWidget, IValidator
 from z3c.formui.form import EditForm, AddForm
 from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
@@ -21,21 +23,20 @@ from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
 from zope.app.form.browser import TextAreaWidget
 from zope.app.form.browser.textwidgets import escape
-from zope.app.pagetemplate import ViewPageTemplateFile
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
-from zope.component import adapts
+from zope.component import adapts, adapter
 from zope.copypastemove import ContainerItemRenamer
 from zope.dublincore.interfaces import IDCTimes
 from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
-from zope.interface import implements
+from zope.interface import implements, implementer, Interface
 from zope.lifecycleevent import ObjectCreatedEvent
+from zope.schema.interfaces import IBytes
 from zope.security.checker import canAccess
 from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
 from zope.traversing.api import getPath
 from zope.traversing.browser.absoluteurl import absoluteURL
-from zope.viewlet.manager import ViewletManager
 
 import zope.event
 import zope.publisher
@@ -192,12 +193,9 @@ class ProjectItemAdd(AddForm):
     id = "addform"
 
     def createAndAdd(self, data):
-        # We parse the form, looking for file fields
-        at_least_one_file = False
-        for num,fieldname in enumerate(self.request.form):
-            uploaded_file = self.request.form[fieldname]
-            if type(uploaded_file) is not zope.publisher.browser.FileUpload:
-                continue
+        if ('data' in data
+                and type(data['data']) is zope.publisher.browser.FileUpload):
+            uploaded_file = data['data']
             try: # to determine the mime_type with the hachoir
                 hachoir_parser = createParser(unicode(uploaded_file.name))
                 mimetype = hachoir_parser.mime_type
@@ -212,7 +210,6 @@ class ProjectItemAdd(AddForm):
                 item = ProjectImage()
             else :
                 item = ProjectItem()
-            at_least_one_file = True
             item.title = basename(uploaded_file.filename).split('\\')[-1]
             contentName = INameChooser(self.context).chooseName(item.title,
                                                                 item)
@@ -235,25 +232,28 @@ class ProjectItemAdd(AddForm):
             self.context[contentName] = item
             # notify the file is added
             zope.event.notify(ObjectCreatedEvent(item))
-            # remove the file field for the final applyChanges
-            self.fields = self.fields.omit(fieldname)
-            
+            # remove the 'data' field for the final applyChanges
+            data.pop('data')
             # update all fields excepted the file fields removed in the previous loop
             applyChanges(self, item, data) # applychanges except the data
 
-        if not at_least_one_file:
-            return
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
 class BigFileWidget(FileWidget):
-    implements(IBigFileWidget)
+    adapts(IBytes, IEztranetSkin)
+
+@adapter(IBytes, IEztranetSkin)
+@implementer(IFieldWidget)
+def BigFileFieldWidget(field, request):
+    """IFieldWidget factory for BigFileWidget."""
+    return FieldWidget(field, BigFileWidget(request))
 
 class BigFileUploadDataConverter(BaseDataConverter):
     """A special data converter for big files
 
     This prevents from loading the whole uploaded file in memory"""
 
-    adapts(IBytes, IBigFileWidget)
+    adapts(IBytes, BigFileWidget)
 
     def toFieldValue(self, value):
         """See interfaces.IDataConverter"""
@@ -263,7 +263,7 @@ class BigFileUploadDataConverter(BaseDataConverter):
         if isinstance(value, zope.publisher.browser.FileUpload):
             self.widget.headers = value.headers
             self.widget.filename = value.filename
-            if data or getattr(value, 'filename', ''):
+            if getattr(value, 'filename', ''):
                 # we return the FileUpload itself!
                 return value
             else:
@@ -271,6 +271,17 @@ class BigFileUploadDataConverter(BaseDataConverter):
         else:
             return unicode(value)
 
+class BigFileValidator(SimpleFieldValidator):
+    implements(IValidator)
+    zope.component.adapts(
+        Interface,
+        Interface,
+        ProjectItemAdd,
+        IBytes,
+        Interface)
+
+    def validate(self, data):
+        return type(data) is zope.publisher.browser.FileUpload
 
 
 class ProjectItemAddMenuItem(SimpleMenuItem):
