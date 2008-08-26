@@ -113,10 +113,10 @@ def project_sorting(p1, p2):
 
 
 class ProjectView(Contents):
-    """
-    The view used to display a project
-    """
+    """The view used to display a project"""
+
     startBatchingAt = 1000000
+
     def description(self):
         if not self.context.description:
             return None
@@ -125,6 +125,7 @@ class ProjectView(Contents):
     def setUpColumns(self):
         columns = super(ProjectView, self).setUpColumns()
         return [c for c in columns if type(c) is not RenameColumn]
+
     @property
     def values(self):
         values = [ item for item in super(ProjectView, self).values 
@@ -199,7 +200,7 @@ class ProjectItemAdd(AddForm):
             try: # to determine the mime_type with the hachoir
                 hachoir_parser = createParser(unicode(uploaded_file.name))
                 mimetype = hachoir_parser.mime_type
-                self.request.form[fieldname].headers['Content-Type'] = mimetype
+                data['data'].headers['Content-Type'] = mimetype
             except: # revert to what is told by the browser
                 print u'**Hachoir determination failed**'
                 mimetype = uploaded_file.headers['Content-Type']

@@ -100,14 +100,13 @@ Here, the page content
 </div>
 
 <script type="text/javascript">
-title = document.getElementById('form.title')
-description = document.getElementById('form.description')
-login = document.getElementById('form.login')
-login2 = document.getElementById('login')
-if (title != null) { title.focus(); }
-else if (description != null) { description.focus(); }
-else if (login != null) { login.focus(); }
-else if (login2 != null) { login2.focus(); }
+tags = document.getElementsByTagName('input')
+for (elem in tags) {
+  if (tags[elem].type == 'text') {
+    tags[elem].focus()
+    break
+  }
+}
 </script>
 </body>
 
