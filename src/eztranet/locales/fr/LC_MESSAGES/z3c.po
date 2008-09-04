@@ -1,0 +1,575 @@
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Eztranet 1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: Thu Sep  4 21:28:27 2008\n"
+"PO-Revision-Date: 2008-09-04 21:38+0200\n"
+"Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
+"Language-Team: french <ccomb@free.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit"
+
+#: g/z3c/table/column.py:133 g/z3c/table/column.py:273
+msgid "Name"
+msgstr "Nom"
+
+#: g/z3c/table/column.py:142 g/z3c/table/column.py:174
+msgid "X"
+msgstr "X"
+
+#: g/z3c/table/column.py:235
+msgid "Created"
+msgstr "Créé"
+
+#: g/z3c/table/column.py:254
+msgid "Modified"
+msgstr "Modifié"
+
+#: g/z3c/table/interfaces.py:105
+msgid "Batch start index"
+msgstr "Index de début de lot"
+
+#: g/z3c/table/interfaces.py:106
+msgid "Index the batch starts with"
+msgstr "Index de démarrage du lot"
+
+#: g/z3c/table/interfaces.py:110
+msgid "Batch size"
+msgstr "Taille de lot"
+
+#: g/z3c/table/interfaces.py:111
+msgid "The batch size"
+msgstr "La taille des lots"
+
+#: g/z3c/table/interfaces.py:115
+msgid "Batch start size"
+msgstr "Taille de démarrage des lots"
+
+#: g/z3c/table/interfaces.py:116
+msgid "The minimal size the batch starts to get used"
+msgstr "La taille minimale où on utilise des lots"
+
+#: g/z3c/table/interfaces.py:201
+msgid "Id"
+msgstr "Id"
+
+#: g/z3c/table/interfaces.py:202
+msgid "The column id"
+msgstr "L'id. de colonne"
+
+#: g/z3c/table/interfaces.py:207
+msgid "Colspan"
+msgstr "Colspan"
+
+#: g/z3c/table/interfaces.py:208
+msgid "The colspan value"
+msgstr "La valeur de Colspan"
+
+#: g/z3c/table/interfaces.py:212
+msgid "Weight"
+msgstr "Poids"
+
+#: g/z3c/table/interfaces.py:213
+msgid "The column weight"
+msgstr "Le poids de la colonne"
+
+#: g/z3c/table/interfaces.py:217
+msgid "Header name"
+msgstr "Nom d'en-tête"
+
+#: g/z3c/table/interfaces.py:218
+msgid "The header name"
+msgstr "Le nom d'en-tête"
+
+#: g/z3c/table/interfaces.py:38 g/z3c/table/interfaces.py:39
+msgid "Column counter"
+msgstr "Compteur de colonne"
+
+#: g/z3c/table/interfaces.py:55
+msgid "Prefix"
+msgstr "Préfixe"
+
+#: g/z3c/table/interfaces.py:56
+msgid "The prefix of the table used to uniquely identify it."
+msgstr "Le préfixe de la table, utilisé pour l'identifier de manière unique."
+
+#: g/z3c/table/interfaces.py:84 g/z3c/table/interfaces.py:85
+msgid "Sort on table index"
+msgstr "Trier sur l'index de table"
+
+#: g/z3c/table/interfaces.py:89
+msgid "Sort order"
+msgstr "Ordre de tri"
+
+#: g/z3c/table/interfaces.py:90
+msgid "Row sort order"
+msgstr "Ordre de tri des lignes"
+
+#: g/z3c/table/interfaces.py:97 g/z3c/table/interfaces.py:98
+msgid "Reverse sort order name"
+msgstr "Nom de l'ordre de tri inverse"
+
+#~ msgid "Site Manager"
+#~ msgstr "Gestionnaire de Site"
+
+#~ msgid "Site Member"
+#~ msgstr "Membre du Site"
+
+#~ msgid "Comments"
+#~ msgstr "Commentaires"
+
+#~ msgid ". par &nbsp;"
+#~ msgstr ". by &nbsp;"
+
+#~ msgid "delete"
+#~ msgstr "effacer"
+
+#~ msgid "New comment"
+#~ msgstr "Nouveau commentaire"
+
+#~ msgid "Add first comment"
+#~ msgstr "Ajouter le premier commentaire"
+
+#~ msgid "save-comment-button"
+#~ msgstr "Ajouter le commentaire"
+
+#~ msgid "Add comments"
+#~ msgstr "Ajouter des commentaires"
+
+#~ msgid "Delete comments"
+#~ msgstr "Effacer des commentaires"
+
+#~ msgid "View comments"
+#~ msgstr "Voir les commentaires"
+
+#~ msgid "Edit comments"
+#~ msgstr "Modifier les commentaires"
+
+#~ msgid "Eztranet Site"
+#~ msgstr "Site Eztranet"
+
+#~ msgid "Eztranet site"
+#~ msgstr "Site Eztranet"
+
+#~ msgid "An Eztranet application"
+#~ msgstr "Une application Eztranet"
+
+#~ msgid "Projects"
+#~ msgstr "Projets"
+
+#~ msgid "Name (used in the URL)"
+#~ msgstr "Nom (utilisé dans l'URL)"
+
+#~ msgid "Name used in the URL"
+#~ msgstr "Nom utilisé dans l'URL"
+
+#~ msgid "Adding an Eztranet Site"
+#~ msgstr "Ajout d'un Eztranet"
+
+#~ msgid ""
+#~ "Flash compression failed.<br/>                           However you can "
+#~ "still download the original movie."
+#~ msgstr ""
+#~ "La compression Flash a échoué.<br/>Cependant vous pouvez télécharger la "
+#~ "vidéo d'origine."
+
+#~ msgid ""
+#~ "<br/><br/>Currently compressing...                           (<a href=\"."
+#~ "\">click to reload</a>)"
+#~ msgstr ""
+#~ "<br/><br/>En cours de compression... (<a href=\".\">cliquez pour "
+#~ "recharger</a>)"
+
+#~ msgid "View the flash preview"
+#~ msgstr "Voir l'aperçu flash"
+
+#~ msgid "Edit the flash preview"
+#~ msgstr "Modifier l'aperçu flash"
+
+#~ msgid "bitrate (kb/s)"
+#~ msgstr "débit (kbit/s)"
+
+#~ msgid "encoding bitrate of the video"
+#~ msgstr "débit d'encodage de la vidéo"
+
+#~ msgid "width (px)"
+#~ msgstr "largeur (px)"
+
+#~ msgid "height (px)"
+#~ msgstr "hauteur (px)"
+
+#~ msgid "the flash movie blob, or compressed temporary filename"
+#~ msgstr ""
+#~ "le blob de la vidéo flash, ou le nom de fichier de la vidéo compressée"
+
+#~ msgid "Title (used for display)"
+#~ msgstr "Titre (utilisé pour l'affichage)"
+
+#~ msgid "The name of your Eztranet Site"
+#~ msgstr "Le nom de votre Eztranet"
+
+#~ msgid "Eztranet Administrator"
+#~ msgstr "Administrateur Eztranet"
+
+#~ msgid "Eztranet Member"
+#~ msgstr "Membre Eztranet"
+
+#~ msgid "View the eztranet"
+#~ msgstr "Voir l'Eztranet"
+
+#~ msgid "Manage the eztranet"
+#~ msgstr "Gérer l'Eztranet"
+
+#~ msgid "Here is the list of your projects"
+#~ msgstr "Voici la liste de vos projets"
+
+#~ msgid "Size"
+#~ msgstr "Taille"
+
+#~ msgid "List"
+#~ msgstr "Liste"
+
+#~ msgid "Adding a file"
+#~ msgstr "Ajout d'un fichier"
+
+#~ msgid "New file"
+#~ msgstr "Nouveau fichier"
+
+#~ msgid "Modification"
+#~ msgstr "Modification"
+
+#~ msgid "File"
+#~ msgstr "Fichier"
+
+#~ msgid "View"
+#~ msgstr "Voir"
+
+#~ msgid "Image"
+#~ msgstr "Image"
+
+#~ msgid "Video"
+#~ msgstr "Vidéo"
+
+#~ msgid "Send files..."
+#~ msgstr "Envoyer les fichiers..."
+
+#~ msgid "Add more files..."
+#~ msgstr "Ajouter plus de fichiers..."
+
+#~ msgid "Adding a project"
+#~ msgstr "Ajout d'un projet"
+
+#~ msgid "New folder"
+#~ msgstr "Nouveau dossier"
+
+#~ msgid "Project details"
+#~ msgstr "Détails du projet"
+
+#~ msgid "Modify"
+#~ msgstr "Modifier"
+
+#~ msgid "Contents"
+#~ msgstr "Contenu"
+
+#~ msgid "This item has no preview but you can download the file:"
+#~ msgstr ""
+#~ "Cet élément n'a pas d'aperçu, mais vous pouvez télécharger le fichier :"
+
+#~ msgid "comments"
+#~ msgstr "commentaires"
+
+#~ msgid "download"
+#~ msgstr "télécharger"
+
+#~ msgid "comment"
+#~ msgstr "commentaire"
+
+#~ msgid ""
+#~ "This video is just an online preview. You can download the original video "
+#~ "by clicking on the \"download\" link."
+#~ msgstr ""
+#~ "Cette vidéo est juste un aperçu en ligne. Vous pouvez télécharger "
+#~ "l'originale en cliquant sur « télécharger »."
+
+#~ msgid "view"
+#~ msgstr "voir"
+
+#~ msgid "View the project"
+#~ msgstr "Voir le projet"
+
+#~ msgid "Edit the project"
+#~ msgstr "Modifier le projet"
+
+#~ msgid "modify"
+#~ msgstr "modifier"
+
+#~ msgid "title"
+#~ msgstr "titre"
+
+#~ msgid "Project title"
+#~ msgstr "Titre du projet"
+
+#~ msgid "Description"
+#~ msgstr "Description"
+
+#~ msgid "Project description"
+#~ msgstr "Description du projet"
+
+#~ msgid "The file you want to upload"
+#~ msgstr "Le fichier que vous voulez téléverser"
+
+#~ msgid "Name of the uploaded file"
+#~ msgstr "Nom du fichier téléversé"
+
+#~ msgid "File description"
+#~ msgstr "Description du fichier"
+
+#~ msgid "Title"
+#~ msgstr "Titre"
+
+#~ msgid "Title of the project container"
+#~ msgstr "Titre du conteneur de projets"
+
+#~ msgid "%sKB %sx%s"
+#~ msgstr "%sko %sx%s"
+
+#~ msgid "KB"
+#~ msgstr "ko"
+
+#~ msgid ""
+#~ "You don't have any eztranet site yet. Login as admin/istanbul to <a href="
+#~ "\"add_eztranet.html\">add an eztranet</a>."
+#~ msgstr ""
+#~ "Vous n'avez pas encore de site Eztranet. Connectez-vous en tant qu'admin/"
+#~ "istanbul pour <a href=\"add_eztranet.html\">ajouter un Eztranet</a>."
+
+#~ msgid "List of your eztranet sites:"
+#~ msgstr "Liste de vos sites eztranet :"
+
+#~ msgid "Eztranet : your photo/video extranet"
+#~ msgstr "Eztranet : votre extranet photo/vidéo"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
+
+#~ msgid "Eztranet demo"
+#~ msgstr "Démo Eztranet"
+
+#~ msgid ""
+#~ "You can try the Eztranet by clicking on \"projects\" (at the top), on "
+#~ "\"connection\" (top-left corner), or on the icon below."
+#~ msgstr ""
+#~ "Vous pouvez essayer l'Eztranet en cliquant sur « projets » (en haut), sur « "
+#~ "connexion » (en haut à gauche) ou sur l'icône ci-dessous."
+
+#~ msgid "Login:"
+#~ msgstr "Login :"
+
+#~ msgid "Password:"
+#~ msgstr "Mot de passe :"
+
+#~ msgid "(Back to Gorfou)"
+#~ msgstr "(Retour à Gorfou)"
+
+#~ msgid "Language:"
+#~ msgstr "Langue :"
+
+#~ msgid "Made to measure by Gorfou"
+#~ msgstr "Fabriqué sur mesure par un Gorfou"
+
+#~ msgid "[top]"
+#~ msgstr "[sommet]"
+
+#~ msgid "Contains $${num} item(s)"
+#~ msgstr "Contient $${num} élément(s)"
+
+#~ msgid "Loading..."
+#~ msgstr "Chargement..."
+
+#~ msgid "View thumbnails"
+#~ msgstr "Voir les vignettes"
+
+#~ msgid "Write thumbnails"
+#~ msgstr "Écrire les vignettes"
+
+#~ msgid "The URL of a thumbnail"
+#~ msgstr "L'URL d'une vignette"
+
+#~ msgid "[Login]"
+#~ msgstr "[Se connecter]"
+
+#~ msgid "[Logout]"
+#~ msgstr "[Se déconnecter]"
+
+#~ msgid "Permissions modified"
+#~ msgstr "Permissions modifiées"
+
+#~ msgid "Permissions"
+#~ msgstr "Permissions"
+
+#~ msgid "New user"
+#~ msgstr "Nouvel utilisateur"
+
+#~ msgid "View user"
+#~ msgstr "Voir utilisateur"
+
+#~ msgid "Edit user"
+#~ msgstr "Modifier utilisateur"
+
+#~ msgid "grant-submit"
+#~ msgstr "Valider"
+
+#~ msgid "The password for this user is: ${password}"
+#~ msgstr "Le mot de passe de cet utilisateur est : ${password}"
+
+#~ msgid "Change the password to let it appear here"
+#~ msgstr "Modifiez le mot de passe pour le faire apparaître ici."
+
+#~ msgid "Administrator"
+#~ msgstr "Administrateur"
+
+#~ msgid "Back to the main page."
+#~ msgstr "Retour à la page principale."
+
+#~ msgid "Login Failed!"
+#~ msgstr "Échec de la connexion !"
+
+#~ msgid "You cancelled the login procedure."
+#~ msgstr "Vous avez annulé la procédure de connexion."
+
+#~ msgid "Click here to return."
+#~ msgstr "Cliquez ici pour revenir."
+
+#~ msgid "Login successful!"
+#~ msgstr "Connexion réussie !"
+
+#~ msgid "You are now logged in as ${UserTitle}."
+#~ msgstr "Vous êtes maintenant connecté en tant que ${UserTitle}."
+
+#~ msgid "User Name"
+#~ msgstr "Nom utilisateur"
+
+#~ msgid "Password"
+#~ msgstr "Mot de passe"
+
+#~ msgid "Please provide Login Information"
+#~ msgstr "Veuillez fournir les informations de connexion"
+
+#~ msgid "login-button"
+#~ msgstr "Connexion"
+
+#~ msgid ""
+#~ "You are not authorized to perform this action. However, you may login as "
+#~ "a different user who is authorized."
+#~ msgstr ""
+#~ "Vous n'êtes pas autorisé à effectuer cette action. Cependant vous pouvez "
+#~ "vous reconnecter sous un autre utilisateur ayant les droits."
+
+#~ msgid "You are being redirected!"
+#~ msgstr "Vous allez être redirigé !"
+
+#~ msgid "If you see this screen for more than 5 seconds, click here."
+#~ msgstr "Si vous voyez cette page plus de 5 secondes, cliquez ici."
+
+#~ msgid "Logout successful!"
+#~ msgstr "Déconnexion réussie !"
+
+#~ msgid "You are now logged out."
+#~ msgstr "Vous êtes maintenant déconnecté(e)."
+
+#~ msgid "eztranet initial administrator"
+#~ msgstr "Administrateur initial de l'Eztranet"
+
+#~ msgid "Add an Eztranet Site"
+#~ msgstr "Ajouter un Eztranet"
+
+#~ msgid ""
+#~ "The file is being uploaded, this can take several minutes...<br /> If you "
+#~ "stop the loading of this page, the transfer will be canceled."
+#~ msgstr ""
+#~ "Le fichier est en cours d'envoi, ceci peut durer plusieurs minutes...<br/"
+#~ ">Si vous interrompez le chargement de la page, le transfert sera annulé."
+
+#~ msgid ""
+#~ "\n"
+#~ "        document.open()\n"
+#~ "        document.write(\"<p id='loading' style='display: none'><img src='/"
+#~ "@@/loading.gif' alt='loading' style='float: left\\; margin-right: 10px"
+#~ "\\;' /> %s</p>\")\n"
+#~ "        document.close()\n"
+#~ "        document.getElementById('form.actions.add').onclick = function() "
+#~ "{ document.getElementById('loading').style.display='block'; }\n"
+#~ "    The file is being uploaded, this can take several minutes...<br/"
+#~ ">              If you stop the loading of this page, the transfer will be "
+#~ "canceled."
+#~ msgstr ""
+#~ "\n"
+#~ "        document.open()\n"
+#~ "        document.write(\"<p id='loading' style='display: none'><img src='/"
+#~ "@@/loading.gif' alt='loading' style='float: left\\; margin-right: 10px"
+#~ "\\;' /> %s</p>\")\n"
+#~ "        document.close()\n"
+#~ "        document.getElementById('form.actions.add').onclick = function() "
+#~ "{ document.getElementById('loading').style.display='block'; }\n"
+#~ "    Le fichier est en cours d'envoi, ceci peut durer plusieurs minutes..."
+#~ "<br/>Si vous interrompez le chargement de la page, le transfert sera "
+#~ "annulé."
+
+#~ msgid "View of a project"
+#~ msgstr "Vue d'un projet"
+
+#~ msgid "Comment"
+#~ msgstr "Commenter"
+
+#~ msgid "new subproject"
+#~ msgstr "ajouter sous-projet"
+
+#~ msgid "new project"
+#~ msgstr "ajouter projet"
+
+#~ msgid "Content listing"
+#~ msgstr "Contenu"
+
+#~ msgid "go up one level"
+#~ msgstr "Niveau supérieur"
+
+#~ msgid "Created: ${time-created}"
+#~ msgstr "Créé : ${time-created}"
+
+#~ msgid "Modified: ${time-modified}"
+#~ msgstr "Modifié : ${time-modified}"
+
+#~ msgid "Eztranet actions Menu"
+#~ msgstr "Menu d'actions Eztranet"
+
+#~ msgid "Show password"
+#~ msgstr "Voir le mot de passe"
+
+#~ msgid "Modifying a user"
+#~ msgstr "Modifier un utilisateur"
+
+#~ msgid "Users list"
+#~ msgstr "Liste des utilisateurs"
+
+#~ msgid "You don't have any eztranet site yet"
+#~ msgstr "Vous n'avez aucun site eztranet"
+
+#~ msgid "Eztranet User"
+#~ msgstr "Utilisateur Eztranet"
+
+#~ msgid "réalisé par un Gorfou"
+#~ msgstr "fabriqué sur mesure par un Gorfou"
+
+#~ msgid "Voir"
+#~ msgstr "Voir"
