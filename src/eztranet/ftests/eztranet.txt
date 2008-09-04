@@ -360,33 +360,33 @@ Trying to see the unauthorized pages leads to an error::
     >>> browser.open('http://localhost/eztranet/projects/Project')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/Project/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/Project/@@edit.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/Project/@@comments.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@edit.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 We cannot delete the project:
 
@@ -397,7 +397,7 @@ We cannot delete the project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 =================
 Write permissions
@@ -438,31 +438,31 @@ Trying to see the unauthorized project leads to an error::
     >>> browser.open('http://localhost/eztranet/projects/project-2')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@edit.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@add_project.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@add_projectitem.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 But we ca see all the views for the project we are manager of, excepted
 permissions::
@@ -495,7 +495,7 @@ permissions::
     >>> browser.open('http://localhost/eztranet/projects/Project/@@permissions.html')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 We cannot delete the project:
 
@@ -506,7 +506,7 @@ We cannot delete the project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 We authorize testuser to modify Project but not read project-2::
 
@@ -556,7 +556,7 @@ We cannot delete a comment::
     >>> browser.open('http://localhost/eztranet/projects/project-2/@@comments.html?del=1')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 However we can login as admin and delete the first comment::
 
@@ -617,7 +617,7 @@ We should not be able to view it as testuser::
     >>> browser.open('http://localhost/eztranet/projects/project-2')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 We give access to project-2 to testuser again,
 then we delete and add again testuser
@@ -670,7 +670,7 @@ Now we delete the testuser
     >>> browser.open('http://localhost/eztranet/projects/project-2')
     Traceback (most recent call last):
     ...
-    HTTPError: HTTP Error 403: Forbidden
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
 
 =========================
 Check the language choice

@@ -1,9 +1,9 @@
-from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.project.interfaces import IProject, IProjectItem
 from eztranet.project.project import Project
 from eztranet.project.project import ProjectImage
 from eztranet.project.project import ProjectItem
 from eztranet.project.project import ProjectVideo
+from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
 from hachoir_parser import createParser
 from os.path import basename
@@ -13,9 +13,9 @@ from z3c.form.browser.file import FileWidget
 from z3c.form.converter import BaseDataConverter
 from z3c.form.field import Fields
 from z3c.form.form import applyChanges
-from z3c.form.widget import FieldWidget
-from z3c.form.validator import SimpleFieldValidator
 from z3c.form.interfaces import IFieldWidget, IValidator
+from z3c.form.validator import SimpleFieldValidator
+from z3c.form.widget import FieldWidget
 from z3c.formui.form import EditForm, AddForm
 from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
@@ -43,14 +43,15 @@ import zope.publisher
 
 _ = MessageFactory('eztranet')
 
+
 class CustomTextWidget(TextAreaWidget):
     width=40
     height=5
 
+
 class ProjectAdd(AddForm):
-    """
-    The view class for adding an project
-    """
+    """The view class for adding an project"""
+
     fields=Fields(IProject).omit('__name__', '__parent__')
     fields['description'].custom_widget=CustomTextWidget
     label = _(u'Adding a project')
@@ -65,11 +66,13 @@ class ProjectAdd(AddForm):
         self.context[contentName] = project
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
+
 class ProjectAddMenuItem(SimpleMenuItem):
     title = _(u'New folder')
     url = 'add_project.html'
     weight = 50
     
+
 class ProjectEdit(EditForm):
     label = _(u'Project details')
     #actions = Actions(Action('Apply', success='handle_edit_action'), )
@@ -90,15 +93,15 @@ class ProjectEdit(EditForm):
             renamer.renameItem(oldname, newname)
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
+
 class ProjectEditMenuItem(SimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
     weight = 50
     
 def project_sorting(p1, p2):
-    """
-    We put projects in the beginning, and order by date, most recent first
-    """
+    """We put projects in the beginning, and order by date, most recent first"""
+
     if IProject.providedBy(p1) and IProjectItem.providedBy(p2):
         return -1
     if IProject.providedBy(p2) and IProjectItem.providedBy(p1):
@@ -133,10 +136,10 @@ class ProjectView(Contents):
         values.sort(project_sorting)
         return values
 
+
 class ProjectContainerView(Contents):
-    """
-    The view for project containers
-    """
+    """The view for project containers"""
+
     allowRename = False
     description = _(u'Here is the list of your projects')
     startBatchingAt = 1000000
@@ -151,6 +154,7 @@ class ProjectContainerView(Contents):
         values.sort(project_sorting)
         return values
 
+
 class TitleColumn(RenameColumn):
     header = _(u'Name')
     weight = 11
@@ -159,16 +163,18 @@ class TitleColumn(RenameColumn):
     def renderCell(self, item):
         return '<a href="%s">%s</a>' % (item.__name__, item.title)
 
+
 class SizeColumn(Column):
     header = _(u'Size')
     weight = 120 # The 'Modified' column has a weight of 110
     def renderCell(self, item):
         return translate(ISized(item).sizeForDisplay(), context=self.request)
 
+
 class ThumbnailColumn(Column):
-    """
-    column with thumbnail for z3c.contents page of
-    object that are thumbnailed (see zcml)
+    """column with thumbnail
+    
+    for z3c.contents page of object that are thumbnailed (see zcml)
     """
     header = '<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>'
     weight = 11
@@ -179,15 +185,16 @@ class ThumbnailColumn(Column):
             thumb_url = absoluteURL(item, self.request) + '/@@thumbnail_image'
         return '<a href="%s"><img src="%s" class="table_thumbnail" /></a>' % (item_url, thumb_url)
 
+
 class ProjectContainerViewMenuItem(SimpleMenuItem):
     title = _(u'List')
     url = 'index.html'
     weight = 10
 
+
 class ProjectItemAdd(AddForm):
-    """
-    The view class for adding a ProjectItem
-    """
+    """The view class for adding a ProjectItem"""
+
     fields = Fields(IProjectItem).omit('__name__', '__parent__', 'title')
     #fields['description'].custom_widget = CustomTextWidget
     label = _(u'Adding a file')
@@ -240,6 +247,7 @@ class ProjectItemAdd(AddForm):
 
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
+
 class BigFileWidget(FileWidget):
     adapts(IBytes, IEztranetSkin)
 
@@ -248,6 +256,7 @@ class BigFileWidget(FileWidget):
 def BigFileFieldWidget(field, request):
     """IFieldWidget factory for BigFileWidget."""
     return FieldWidget(field, BigFileWidget(request))
+
 
 class BigFileUploadDataConverter(BaseDataConverter):
     """A special data converter for big files
@@ -272,6 +281,7 @@ class BigFileUploadDataConverter(BaseDataConverter):
         else:
             return unicode(value)
 
+
 class BigFileValidator(SimpleFieldValidator):
     implements(IValidator)
     zope.component.adapts(
@@ -289,6 +299,7 @@ class ProjectItemAddMenuItem(SimpleMenuItem):
     title = _(u'New file')
     url = 'add_projectitem.html'
     weight = 50
+
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')
@@ -312,15 +323,15 @@ class ProjectItemEdit(EditForm):
             renamer.renameItem(oldname, newname)
         return self.request.response.redirect(absoluteURL(self.context, self.request))
 
+
 class ProjectItemEditMenuItem(SimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
     weight = 50
 
+
 class ProjectItemView(BrowserPagelet):
-    """
-    The base view for project items
-    """
+    """The base view for project items"""
     label = _(u'File')
 
     def description(self):
@@ -328,15 +339,15 @@ class ProjectItemView(BrowserPagelet):
             return None
         return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
+
 class ProjectItemViewMenuItem(SimpleMenuItem):
     title = _(u'View')
     url = 'index.html'
     weight = 10
 
+
 class ProjectImageView(ProjectItemView):
-    """
-    The view that allows to display an image
-    """
+    """The view that allows to display an image"""
     label = _(u'Image')
 
     def __init__(self, context, request):
@@ -356,10 +367,9 @@ class ProjectImageView(ProjectItemView):
     def originalWidth(self):
         return self.size.sizeForDisplay().split(' ')[1].split('x')[0]
 
+
 class ProjectVideoView(ProjectItemView):
-    """
-    The view that allows to display a video
-    """
+    """The view that allows to display a video"""
     label = _(u'Video')
 
     def __init__(self, context, request):
@@ -372,10 +382,9 @@ class ProjectVideoView(ProjectItemView):
         self.context = self.context.flash_video
         return removeSecurityProxy(self.context).openDetached().read()
 
+
 class ProjectThumbnail(object):
-    """
-    adapter from a project to a thumbnail
-    """
+    """adapter from a project to a thumbnail"""
     adapts(IProject)
     implements(IThumbnail)
     image = None
@@ -387,10 +396,12 @@ class ProjectThumbnail(object):
     def compute_thumbnail(self):
         pass
 
+
 class CommentMenuItem(SimpleMenuItem):
     title = _(u'Comments')
     url = "comments.html"
     weight = 90
+
 
 class FileUploadHeader(object):
     """Content provider for the js header of gp.fileupload"""

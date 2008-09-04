@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from eztranet.interfaces import IEztranetSite
 from interfaces import IEztranetSkin
 from interfaces import ITabMenu
 from z3c.pagelet.browser import BrowserPagelet

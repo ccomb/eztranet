@@ -12,16 +12,19 @@ from interfaces import IProjectContainer, IProjectItem, IProject, \
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
+
 class ProjectContainer(BTreeContainer):
-  """
-  a project container
-  """
+  """a project container"""
+
   implements(IProjectContainer)
   __name__ = __parent__ = None
 
 ProjectContainerFactory = Factory(ProjectContainer)
     
+
 class Project(BTreeContainer):
+    """a project (also a container for sub-projects)"""
+
     implements(IProject)
     __name__ = __parent__ = None
 
@@ -32,10 +35,10 @@ class Project(BTreeContainer):
 
 ProjectFactory = Factory(Project)
 
+
 class ProjectItem(File):
-    """
-    A project item is just a blob file
-    """
+    """A project item is just a blob file"""
+    
     implements(IProjectItem)
     __name__ = __parent__ = data = None
 
@@ -46,26 +49,26 @@ class ProjectItem(File):
 
 ProjectItemFactory = Factory(ProjectItem)
 
+
 class ProjectImage(ProjectItem):
-    """
-    a project image
-    """
+    """a project image"""
+    
     implements(IProjectImage)
 
 ProjectImageFactory = Factory(ProjectImage)
 
+
 class ProjectVideo(ProjectItem):
-    """
-    a project video
-    """
+    """a project video"""
+    
     implements(IProjectVideo)
 
 ProjectVideoFactory = Factory(ProjectVideo)
 
+
 class ProjectItemNameChooser(NameChooser):
-    """
-    adapter that allows to choose the __name__ of a projectitem
-    """
+    """adapter that allows to choose the __name__ of a projectitem"""
+    
     adapts(IProjectContainer)
     implements(INameChooser)
 
@@ -78,17 +81,17 @@ class ProjectItemNameChooser(NameChooser):
             newname = unicode.lower(rawname).strip(' @+').replace(' ','-').replace('/','-')
         return super(ProjectItemNameChooser, self).chooseName(newname, item)
 
+
 class ProjectNameChooser(ProjectItemNameChooser):
-    """
-    adapter that allows to choose the __name__ of a project
-    """
+    """adapter that allows to choose the __name__ of a project"""
+    
     adapts(IProject)
     implements(INameChooser)
 
+
 class ProjectImageSized(object):
-    """
-    adapter to ISized for an image
-    """
+    """adapter to ISized for an image"""
+    
     adapts(IProjectImage)
     implements(ISized)
 
@@ -101,9 +104,8 @@ class ProjectImageSized(object):
         image.fp.close()
 
     def sizeForDisplay(self):
-        """
-        returns a size of the form '3125KB 640x480'
-        """
+        """returns a size of the form '3125KB 640x480'"""
+
         return _(u'%sKB %sx%s') % (self.size/1024, self.width, self.height)
 
     def sizeForSorting(self):

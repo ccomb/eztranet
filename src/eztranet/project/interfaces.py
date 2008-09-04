@@ -8,9 +8,10 @@ from zope.index.text.interfaces import ISearchableText
 
 _ = MessageFactory('eztranet')
 
+
 class IProject(IContainer, IContained):
-    """
-    a project that will contain items or subprojects.
+    """a project that will contain items or subprojects.
+
     This interface is added on regular zope folders.
     """
     containers("eztranet.project.interfaces.IProjectContainer",
@@ -24,12 +25,14 @@ class IProject(IContainer, IContained):
                        required=False,
                        max_length=1000)
 
+
 class IProjectItem(Interface):
-    """
-    a project item (image or video)
+    """a project item (image or video)
+
     This interface is only used to describe data of interest
     in an uploaded file, and to generate the adding and edit forms.
     """
+
     containers("eztranet.project.interfaces.IProject")
     data = Bytes(title=u'File',
                  description=_(u'The file you want to upload'),
@@ -42,31 +45,29 @@ class IProjectItem(Interface):
                        required=False,
                        max_length=1000)
 
+
 class IProjectVideo(IProjectItem, IFile):
-    """
-    a marker interface to distinguish a video
-    """
+    """a marker interface to distinguish a video"""
+
 
 class IProjectImage(IProjectItem, IFile):
-    """
-    a marker interface to distinguish an image
-    """
+    """a marker interface to distinguish an image"""
+
 
 class IProjectContainer(IContainer, IContained):
-    """
-    a toplevel container for the projects should only contain projects or items
-    """
+    """a toplevel container for the projects
+    
+    It should only contain projects or items"""
+
     contains(IProject)
     title=TextLine(title=_(u'Title'),
                    description=_(u'Title of the project container'))
 
+
 class ISearchableTextOfProject(ISearchableText):
-     """
-        we declare an index just for this interface to index just projects
-     """
+     """we declare an index just for this interface to index just projects"""
+
 
 class ISearchableTextOfProjectItem(ISearchableText):
-     """
-        we declare an index just for this interface to index just items
-     """
+     """we declare an index just for this interface to index just items"""
 

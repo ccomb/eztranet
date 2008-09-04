@@ -19,17 +19,23 @@ import logging
 _ = MessageFactory('eztranet')
 logger = logging.getLogger(__name__)
 
+
 class EztranetSiteManagerSetEvent(object):
+    """event received when the site manager is set"""
+    
     implements(IEztranetSiteManagerSetEvent)
     def __init__(self, site):
         self.object=site
 
+
 class EztranetSite(Folder, SiteManagerContainer):
-    """
+    """The main container object
+    
     We add an eztranet site, then we trigger a subscriber when adding it that
     will turn it into a site. Then another event is triggered that calls another
     subscriber which do the necessary to make the site work
     """
+
     implements(IEztranetSite)
     title = u''
 
@@ -38,14 +44,18 @@ class EztranetSite(Folder, SiteManagerContainer):
         super(EztranetSite, self).setSiteManager(sm)
         notify(EztranetSiteManagerSetEvent(self))
 
+
 @adapter(IEztranetSite, IObjectAddedEvent)
 def newEztranetSiteAdded(site, event):
-    "a subscriber that do the necessary after the site is added"
+    """a subscriber that do the necessary after the site is added"""
+
     site.setSiteManager(LocalSiteManager(site))
+
 
 @adapter(IEztranetSiteManagerSetEvent)
 def EztranetInitialSetup(event):
-    "create the initial objects required by the site"
+    """create the initial objects required by the site"""
+
     # do the necessary!
     site=event.object
     sm = site.getSiteManager()
@@ -73,7 +83,10 @@ def EztranetInitialSetup(event):
     for object in findObjectsProviding(sm,Interface):
         intid.register(object)
 
+
 class EztranetSiteAdd(AddForm):
+    """Form to add a new eztranet site"""
+    
     fields = Fields(IEztranetSite)
     fields['__name__'].field.title = _(u'Name (used in the URL)')
     fields['__name__'].field.description = _(u'Name used in the URL')
@@ -92,7 +105,10 @@ class EztranetSiteAdd(AddForm):
     def nextURL(self):
         return '/'
         
+
 class RootFolderView(BrowserPagelet):
+    """View of the zodb root object. Used when there is no eztranet"""
+
     def eztranet_sites(self):
         return [eztranet[0] for eztranet in self.context.items()
                 if IEztranetSite.providedBy(eztranet[1])]

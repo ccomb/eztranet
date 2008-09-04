@@ -1,9 +1,7 @@
 from z3c.contents.browser import Contents
 from z3c.form.field import Fields
 from z3c.form.form import applyChanges
-from z3c.formui.form import AddForm
 from z3c.formui.form import EditForm, AddForm, DisplayForm
-from z3c.menu.simple.menu import ContextMenuItem
 from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
@@ -19,10 +17,8 @@ from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, Interface
 from zope.lifecycleevent import ObjectCreatedEvent
-from zope.security.checker import canAccess
 from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
 from zope.traversing.browser.absoluteurl import AbsoluteURL
-from zope.viewlet.manager import WeightOrderedViewletManager
 from zope.viewlet.viewlet import ViewletBase
 import urllib
 import zope.event
