@@ -1,10 +1,10 @@
-1.2dev (unreleased)
--------------------
+1.2.0 (2008-09-04)
+------------------
 - port user interface to z3c components
 - added an upload progress bar (gp.fileupload, thanks gawel!)
 
-1.1 (unreleased)
-----------------
+1.1 (never released)
+--------------------
 - use blobs for uploaded files
 - allow uploading of several files
 - optimized memory during upload and browsing
