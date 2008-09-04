@@ -29,15 +29,13 @@ from users import EztranetUser
 
 _ = MessageFactory('eztranet')
 
+
 class LoginForm(BrowserPagelet):
-    """
-    view class for the login form
-    """
+    """view class for the login form"""
+
 
 class HTTPAuthenticationLogin(BrowserPagelet):
-    """
-    view class for the login
-    """
+    """view class for the login"""
     implements(ILogin)
     def login(self, nextURL=None):
         "see ILogin"
@@ -60,10 +58,10 @@ class HTTPAuthenticationLogin(BrowserPagelet):
             return self.login()
         
 
+
 class HTTPAuthenticationLogout(BrowserPagelet):
-    """
-    logout view
-    """
+    """logout view"""
+
     implements(ILogout)
 
     def logout(self, nextURL=None):
@@ -82,9 +80,10 @@ class HTTPAuthenticationLogout(BrowserPagelet):
         else:
             return self.logout()
 
+
 class LoginLogout(ViewletBase):
-    """
-    content provider the login or logout link
+    """viewlet for the login or logout link
+
     (same as zope.app.security LoginLogout view
     """
     implements(IContentProvider)    
@@ -111,10 +110,11 @@ class LoginLogout(ViewletBase):
 
 
 class LogoutHeader(ViewletBase):
-    """
-    viewlet offering the part of header used for logout,
+    """viewlet offering the part of header used for logout
+    
     inspired from zope.app.security logout.pt
     """
+
     def render(self):
         output = ''
         if 'nextURL' in self.request:
@@ -141,6 +141,7 @@ class LogoutHeader(ViewletBase):
         """
         return output
 
+
 class ProjectGranting(Granting):
     def get_all_users(self):
         users = getUtility(IAuthenticatorPlugin, name="EztranetUsers")
@@ -153,9 +154,10 @@ class ProjectGranting(Granting):
         if rolemanager.getSetting(role, user).getName()=="Allow":
             return "1"
     def status(self):
+        """This method is called at the beginning of the template.
+        So do the job and return the status
         """
-        This method is called at the beginning of the template. So do the job and return the status
-        """
+
         if 'GRANT_SUBMIT' in self.request.form:
             rolemanager = IPrincipalRoleManager(self.context)
             for role in self.get_eztranet_roles():
@@ -168,15 +170,16 @@ class ProjectGranting(Granting):
         else:
             return False
 
+
 class ProjectGrantingMenuItem(SimpleMenuItem):
     title = _('Permissions')
     url = 'permissions.html'
     weight = 150
 
+
 class EztranetUserAdd(AddForm):
-    """
-    The view class for adding a user
-    """
+    """The view class for adding a user"""
+
     fields = Fields(IEztranetUser).select('login','password','IsAdmin')
     label = _(u'New user')
     def createAndAdd(self, data):
@@ -187,34 +190,37 @@ class EztranetUserAdd(AddForm):
         self.context[user.login] = user
         self.request.response.redirect(AbsoluteURL(self.context,
                                                    self.request)()+'/contents.html')
+
+
 class EztranetUserAddMenuItem(SimpleMenuItem):
     title = _('New user')
     url = 'add_user.html'
 
+
 class EztranetUserView(DisplayForm):
-    """
-    The view class for viewing a user
-    """
+    """The view class for viewing a user"""
+
     fields = Fields(IEztranetUser).select('login','IsAdmin')
+
 
 class EztranetUserViewMenuItem(SimpleMenuItem):
     title = _('View user')
     url = 'index.html'
 
+
 class EztranetUserEdit(EditForm):
-    """
-    The view class for editing a user
-    """
+    """The view class for editing a user"""
+
     fields=Fields(IEztranetUser).select('password','IsAdmin')
+
 
 class EztranetUserEditMenuItem(SimpleMenuItem):
     title = _('Edit user')
     url = 'edit_user.html'
 
+
 class EztranetUsers(Contents):
-    """
-    The list of users
-"""
+    """The list of users"""
 
     startBatchingAt = 1000000
 
@@ -230,9 +236,11 @@ class EztranetUsers(Contents):
             ids_to_remove.remove(ppal_id)
         super(EztranetUsers, self).removeObjects()
 
+
 class EztranetUsersMenuItem(SimpleMenuItem):
     title = _('List')
     url = 'contents.html'
+
 
 class AdminColumn(Column):
     header = _(u'')
