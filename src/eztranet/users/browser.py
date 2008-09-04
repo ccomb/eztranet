@@ -214,7 +214,10 @@ class EztranetUserEditMenuItem(SimpleMenuItem):
 class EztranetUsers(Contents):
     """
     The list of users
-    """
+"""
+
+    startBatchingAt = 1000000
+
     def supportsRename(self):
         return False
     def removeObjects(self):
