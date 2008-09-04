@@ -1,4 +1,7 @@
 from interfaces import IEztranetSiteManagerSetEvent, IEztranetSite, IInitialSetup
+from z3c.form.field import Fields
+from z3c.form.form import applyChanges
+from z3c.formui.form import AddForm
 from z3c.pagelet.browser import BrowserPagelet
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
 from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
@@ -9,9 +12,6 @@ from zope.app.intid.interfaces import IIntIds
 from zope.component import adapter, getUtilitiesFor
 from zope.component import createObject
 from zope.event import notify
-from z3c.form.form import applyChanges
-from z3c.form.field import Fields
-from z3c.formui.form import AddForm
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, Interface
 import logging
