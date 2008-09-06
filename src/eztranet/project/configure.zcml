@@ -23,6 +23,7 @@
   <require permission="eztranet.manage"
            set_schema=".interfaces.IProjectContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
 </class>
 
 <utility component=".project.ProjectContainerFactory"
@@ -41,6 +42,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="..thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
 </class>
 
 <utility component=".project.ProjectFactory"
@@ -52,6 +54,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
   <require permission="eztranet.project.view"
            interface="zope.file.interfaces.IFile" />
   <require permission="eztranet.project.edit"

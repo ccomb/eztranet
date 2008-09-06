@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from zope.interface import implements
 from zope.component import adapts, adapter, queryAdapter
-from zope.app.container.interfaces import IObjectAddedEvent
+from zope.app.container.interfaces import IObjectAddedEvent, IContainer
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.annotation.interfaces import IAnnotations
 from zope.file.interfaces import IFile
 from zope.file.file import File
 from zope.security.proxy import removeSecurityProxy
-from interfaces import IThumbnail, IThumbnailed, IThumbnailer
-from eztranet.config.interfaces import IConfig
+from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
+from eztranet.config.interfaces import IConfig, IConfigurable
 import PIL.Image
 from StringIO import StringIO
 import os
@@ -32,9 +32,9 @@ class Thumbnail(object):
     def compute_thumbnail(self):
         # retrieve the config for the thumbnail size
         size = None
-        config = queryAdapter(self.context, IConfig, None)
+        config = queryAdapter(self.context, IConfig, default=None)
         if config is not None:
-            size = IConfig(self.context).get_config(SIZE_CONFIG_KEY)
+            size = config.get_config(SIZE_CONFIG_KEY)
         if type(size) is not int:
             size = 120
         # we get the named adapter (the name is the major mimeType)
@@ -121,3 +121,40 @@ def ThumbnailedAdded(video, event):
     warning, here the object is NOT security proxied
     """
     IThumbnail(video).compute_thumbnail()
+
+class ThumbnailConfig(object):
+    """adapter for the config form"""
+    implements(IThumbnailConfig)
+    adapts(IConfigurable)
+
+    def __init__(self, context):
+        self.context = context
+
+    def _get_size(self):
+        return IConfig(self.context).get_config(SIZE_CONFIG_KEY)
+
+    def _set_size(self, size):
+        IConfig(self.context).set_config(SIZE_CONFIG_KEY, size)
+
+    size = property(_get_size, _set_size)
+
+    def _get_recompute(self):
+        pass
+
+    def _set_recompute(self, value):
+        if value == True:
+            # recursively recompute thumbnails
+            self.__recursive_recompute(self.context)
+
+    def __recursive_recompute(self, obj):
+        if IContainer.providedBy(obj):
+            for o in obj:
+                self.__recursive_recompute(obj[o])
+        elif IThumbnailed.providedBy(obj):
+            IThumbnail(obj).compute_thumbnail()
+            
+
+    recompute = property(_get_recompute, _set_recompute)
+
+
+

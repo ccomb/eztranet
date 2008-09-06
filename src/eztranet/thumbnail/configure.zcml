@@ -44,5 +44,9 @@
                   file="default_thumbnail.png"
                   permission="zope.Public"
                   layer="..skin.interfaces.IEztranetSkin" />
-                  
+
+<zope:interface interface=".interfaces.IThumbnailConfig"
+                type="eztranet.config.interfaces.IConfigFormType" />
+
+<zope:adapter factory=".thumbnail.ThumbnailConfig" />
 </configure>

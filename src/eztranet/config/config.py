@@ -7,7 +7,7 @@ from persistent.dict import PersistentDict
 ANNOTATION_KEY = 'eztranet.config'
 
 class Config(object):
-    """adapter that offers the configuration"""
+    """adapter that offers the persistent configuration for an object"""
 
     adapts(IConfigurable)
     implements(IConfig)
@@ -38,8 +38,9 @@ class Config(object):
         annotations = IAnnotations(self.context)
         if ANNOTATION_KEY not in annotations:
             annotations[ANNOTATION_KEY] = PersistentDict()
-        if value is None:
+        if value is None and key in annotations[ANNOTATION_KEY]:
             del annotations[ANNOTATION_KEY][key]
         else:
             annotations[ANNOTATION_KEY][key] = value
+
 
