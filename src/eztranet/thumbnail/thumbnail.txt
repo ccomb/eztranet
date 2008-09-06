@@ -257,13 +257,37 @@ with the content of the thumbnail::
     True
 
 
+===========================
+configurable thumbnail size
+===========================
+We can set the thumbnail size in the persistent configuration of the object.
+Our object jusst have to be IConfigurable::
+
+    >>> from eztranet.config.interfaces import IConfigurable, IConfig
+    >>> alsoProvides(blobfile, IConfigurable)
+
+Now we can set the thumbnail size::
+
+    >>> IConfig(blobfile).set_config('eztranet.thumbnail.size', 100)
+    >>> IConfig(blobfile).get_config('eztranet.thumbnail.size')
+    100
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    1099
+    >>> IConfig(blobfile).set_config('eztranet.thumbnail.size', 200)
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    2585
+
+
+
+=======
+Cleanup
+=======
 We clean the temporary database::
 
     >>> import shutil
     >>> shutil.rmtree(blob_dir)
     >>> database.close()
-
-
-
-
 

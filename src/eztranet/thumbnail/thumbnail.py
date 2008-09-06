@@ -13,6 +13,8 @@ import PIL.Image
 from StringIO import StringIO
 import os
 
+SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
+
 class Thumbnail(object):
     u"""
     The adapter from any object to IThumbnail
@@ -32,7 +34,7 @@ class Thumbnail(object):
         size = None
         config = queryAdapter(self.context, IConfig, None)
         if config is not None:
-            size = IConfig(self.context).get_config('thumbnail_size')
+            size = IConfig(self.context).get_config(SIZE_CONFIG_KEY)
         if type(size) is not int:
             size = 120
         # we get the named adapter (the name is the major mimeType)
