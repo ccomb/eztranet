@@ -12,7 +12,10 @@ def setUp(test):
     from zope.annotation.interfaces import IAttributeAnnotatable
     from zope.annotation.attribute import AttributeAnnotations
     from zope.component import provideAdapter
+    from eztranet.config.interfaces import IConfigurable, IConfig
+    from eztranet.config.config import Config
     provideAdapter(AttributeAnnotations, [IAttributeAnnotatable], IAnnotations)
+    ztapi.provideAdapter(IConfigurable, IConfig, Config)
 
 
 def tearDown(test):

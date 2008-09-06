@@ -38,5 +38,8 @@ class Config(object):
         annotations = IAnnotations(self.context)
         if ANNOTATION_KEY not in annotations:
             annotations[ANNOTATION_KEY] = PersistentDict()
-        annotations[ANNOTATION_KEY][key] = value
+        if value is None:
+            del annotations[ANNOTATION_KEY][key]
+        else:
+            annotations[ANNOTATION_KEY][key] = value
 

@@ -65,6 +65,7 @@
 </class>
 
 <include package=".skin" />
+<include package=".config" />
 <include package=".project" />
 <include package=".users" />
 <include package=".thumbnail" />

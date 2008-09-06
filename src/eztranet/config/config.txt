@@ -1,6 +1,10 @@
+===========================
 test for the config adapter
 ===========================
 eztranet configurations are annotations that behave like acquisition
+
+Setup
+-----
 
 First some imports::
 
@@ -32,6 +36,9 @@ We set the three objects configurable::
     >>> alsoProvides(myobj, IConfigurable)
     >>> alsoProvides(folder1, IConfigurable)
     >>> alsoProvides(folder2, IConfigurable)
+
+Get and set config
+------------------
 
 Since our objects are configurable, we can set and get some configuration with
 the provided adapter::
@@ -81,5 +88,34 @@ If we set a configuration in the final object, it's available only for it::
 
     >>> IConfig(myobj).get_config('key3')
     'value3'
+
+We can override the config of the upper folder::
+
+    >>> IConfig(myobj).set_config('key', 'myvalue')
+    >>> IConfig(folder1).get_config('key')
+    'value'
+    >>> IConfig(folder2).get_config('key')
+    'value'
+    >>> IConfig(myobj).get_config('key')
+    'myvalue'
+
+A value of None is equivalent to a missing configuration::
+
+    >>> IConfig(myobj).set_config('key', None)
+    >>> IConfig(folder1).get_config('key')
+    'value'
+    >>> IConfig(folder2).get_config('key')
+    'value'
+    >>> IConfig(myobj).get_config('key')
+    'value'
+
+
+
+
+Cleanup the deleted config
+--------------------------
+
+
+
 
 

@@ -8,6 +8,7 @@ from zope.file.interfaces import IFile
 from zope.file.file import File
 from zope.security.proxy import removeSecurityProxy
 from interfaces import IThumbnail, IThumbnailed, IThumbnailer
+from eztranet.config.interfaces import IConfig
 import PIL.Image
 from StringIO import StringIO
 import os
@@ -27,6 +28,13 @@ class Thumbnail(object):
         self.image = IAnnotations(context)['eztranet.thumbnail']
 
     def compute_thumbnail(self):
+        # retrieve the config for the thumbnail size
+        size = None
+        config = queryAdapter(self.context, IConfig, None)
+        if config is not None:
+            size = IConfig(self.context).get_config('thumbnail_size')
+        if type(size) is not int:
+            size = 120
         # we get the named adapter (the name is the major mimeType)
         name = u''
         if hasattr(self.context, 'mimeType'):
@@ -35,7 +43,7 @@ class Thumbnail(object):
                                    IThumbnailer,
                                    name)
         if thumbnailer is not None:
-            thumbnail_content = thumbnailer()
+            thumbnail_content = thumbnailer(size)
             if thumbnail_content is not None:
                 self.image = IAnnotations(self.context)['eztranet.thumbnail'] = File()
                 file = self.image.open('w')
@@ -66,12 +74,12 @@ class ImageThumbnailer(BaseThumbnailer):
     This must be registered as a named adapter for IFile.
     The name corresponds to the major contentType: 'image'
     """
-    def __call__(self):
+    def __call__(self, size=120):
         tmp=StringIO()
         try:
             fd = self.context.open()
             i = PIL.Image.open(fd)
-            i.thumbnail((120,120), PIL.Image.ANTIALIAS)
+            i.thumbnail((size, size), PIL.Image.ANTIALIAS)
             i.save(tmp, "png")
             fd.close()
             return tmp.getvalue()
@@ -86,7 +94,7 @@ class VideoThumbnailer(BaseThumbnailer):
     It converts the video to png, without audio, with only 1 frame,
     at an offset of 3 seconds
     """
-    def __call__(self):
+    def __call__(self, size=120):
         blobpath = self.context._data._current_filename()
         thumbnail_content = os.popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath).read()
         if len(thumbnail_content) == 0: # maybe there is less than 3 seconds?
@@ -95,13 +103,14 @@ class VideoThumbnailer(BaseThumbnailer):
         fd = thumbfile.open('w')
         fd.write(thumbnail_content)
         fd.close()
-        return ImageThumbnailer(thumbfile)()
+        return ImageThumbnailer(thumbfile)(size)
 
 @adapter(IThumbnailed, IObjectModifiedEvent)
 def ThumbnailedModified(obj, event):
-    if event.descriptions \
-    and hasattr(event.descriptions[0],'attributes') \
-    and 'data' in event.descriptions[0].attributes:
+    if (event.descriptions
+        and hasattr(event.descriptions[0],'attributes')
+        and 'data' in event.descriptions[0].attributes
+       ):
         IThumbnail(obj).compute_thumbnail()
 
 @adapter(IThumbnailed, IObjectAddedEvent)

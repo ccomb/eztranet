@@ -19,8 +19,8 @@ class IThumbnail(Interface):
     """
     image = Attribute("The Image object corresponding to the thumbnail")
     url = Attribute(_(u'The URL of a thumbnail'))
-    def compute_thumbnail():
-        pass
+    def compute_thumbnail(size):
+        """compute a thumbnail with the given size"""
 
 class IThumbnailer(Interface):
     """
