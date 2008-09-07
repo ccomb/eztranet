@@ -108,6 +108,7 @@ We add two projects::
     >>> '<a href="Project">   @@@ ++++  </a>' in  browser.contents
     True
 
+
 In each project we add a subproject
 
     >>> browser.getLink(text='@@@ ++++').click()
@@ -127,20 +128,95 @@ In each project we add a subproject
     >>> browser.getControl(name='form.widgets.title').value = u'subproject'
     >>> browser.getControl(name='form.widgets.description').value = u'subproject description'
     >>> browser.getControl(name='form.buttons.add').click()
-    >>> 'subproject' in root['eztranet']['projects']['Project']
+    >>> 'subproject' in root['eztranet']['projects']['project-2']
     True
+
+We check the different views of the project-2::
+
+    >>> browser.getLink('Modify').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('New folder').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('New file').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Comment').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Permissions').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Config.').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('List').click()
+    >>> 'New file' in browser.contents
+    True
+    >>> 'New folder' in browser.contents
+    True
+
+We check the different views of the subproject::
+
     >>> browser.getLink(url='subproject', index=1).click()
     >>> 'subproject' in browser.contents
     True
-    >>> browser.getLink(url='..').click()
-
+    >>> browser.getLink('List').click()
+    >>> 'New file' in browser.contents
+    True
+    >>> 'New folder' in browser.contents
+    True
+    >>> browser.getLink('Modify').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('New folder').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('New file').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Comment').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Permissions').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.getLink('Config.').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
 
 ==============
 Adding a Video
 ==============
 
-We add a video from eztranet.thumbnail
+We add a video in the project-2::
 
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
     >>> videopath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
@@ -151,6 +227,8 @@ We add a video from eztranet.thumbnail
     True
     >>> browser.getLink(url='a-sample.ogg').click()
     >>> '<span>a sample.ogg</span>' in browser.contents
+    True
+    >>> 'compressing' in browser.contents
     True
 
 We check the different views::
@@ -175,9 +253,17 @@ We check the different views::
     '200 Ok'
     >>> 'system error' in browser.contents
     False
+    >>> browser.getLink('Config.').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+
+We wait for the compression to finish::
+
     >>> import time
-    >>> for i in range(5):
-    ...     time.sleep(1)
+    >>> for i in range(10):
+    ...     time.sleep(0.5)
     ...     browser.open('http://localhost/eztranet/projects/project-2/a-sample.ogg/')
     ...     if 'compressing' not in browser.contents or i > 9:
     ...         break
@@ -185,6 +271,9 @@ We check the different views::
     '200 Ok'
     >>> 'system error' in browser.contents
     False
+
+We check the video views::
+
     >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.ogg/@@display')
     >>> browser.headers['status']
     '200 Ok'
@@ -204,7 +293,7 @@ We check the different views::
     >>> browser.open('http://localhost/eztranet/projects/project-2/')
 
 =====================================
-We try to submit the empty add form::
+We try to submit an empty add form::
 =====================================
 
     >>> browser.getLink(text='New file').click()
@@ -216,9 +305,10 @@ We try to submit the empty add form::
 Adding an Image
 ===============
 
-We add an image from eztranet.thumbnail
+We add an image in the project-2::
 
     >>> imagepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
     >>> browser.getLink(text='New file').click()
     >>> browser.getControl(name='form.widgets.data').add_file(open(imagepath), 'image/png', 'a sample.png')
     >>> browser.getControl(name='form.buttons.add').click()
@@ -266,7 +356,7 @@ We check the different views::
 ==============
 Adding an item
 ==============
-We add an item (some text)
+We add an item (some text) in the project-2::
 
     >>> from StringIO import StringIO
     >>> browser.getLink(text='New file').click()
@@ -310,12 +400,18 @@ We check the different views::
     >>> browser.open('http://localhost/eztranet/projects/project-2/dummytext.txt/@@download')
     >>> browser.headers['status']
     '200 Ok'
-    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+
+    >>> list(root['eztranet']['projects']['project-2'])
+    [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt', u'subproject']
+    >>> list(root['eztranet']['projects']['Project'])
+    [u'subproject']
 
 
 ================
 Read permissions
 ================
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
 
 We create a new user 'testuser'::
 
@@ -587,22 +683,50 @@ Trying to delete a non existent comment does nothing::
     >>> 'this is a second comment' in browser.contents
     True
 
+We can also add a comment to a video::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.ogg/@@comments.html')
+    >>> browser.getControl(name='text').value = 'this is a comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a comment' in browser.contents
+    True
+    >>> browser.getControl(name='text').value = 'this is a second comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a second comment' in browser.contents
+    True
+    >>> 'this is a comment' in browser.contents
+    True
+
+Or an image::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/@@comments.html')
+    >>> browser.getControl(name='text').value = 'this is a comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a comment' in browser.contents
+    True
+    >>> browser.getControl(name='text').value = 'this is a second comment'
+    >>> browser.getControl(name='save').click()
+    >>> 'this is a second comment' in browser.contents
+    True
+    >>> 'this is a comment' in browser.contents
+    True
+
 =====================
 Resetting permissions
 =====================
 
-We delete the second project and add it again
+We delete the firsts project and add it again
 to check that testuser cannot access it after recreation::
 
     >>> browser.getLink(text='Projects').click()
     >>> sorted(browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options)
     ['Project', 'project-2']
-    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project-2']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['Project']
     >>> browser.getControl(name="contents.buttons.delete").click()
 
     >>> browser.getLink(text='New folder').click()
-    >>> browser.getControl(name='form.widgets.title').value = u'project 2'
-    >>> browser.getControl(name='form.widgets.description').value = u'project 2 description'
+    >>> browser.getControl(name='form.widgets.title').value = u'Project'
+    >>> browser.getControl(name='form.widgets.description').value = u'project description'
     >>> browser.getControl(name='form.buttons.add').click()
 
 We should not be able to view it as testuser::
@@ -612,30 +736,30 @@ We should not be able to view it as testuser::
     >>> browser.getControl(name='login').value = 'testuser'
     >>> browser.getControl(name='password').value = 'testpass'
     >>> browser.getControl(name='SUBMIT').click()
-    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    >>> '<a href="Project">project</a>' in  browser.contents
     False
-    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    >>> browser.open('http://localhost/eztranet/projects/project')
     Traceback (most recent call last):
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
 
-We give access to project-2 to testuser again,
+We give access to Project to testuser again,
 then we delete and add again testuser
-to check that the new testuser cannot access the project-2::
+to check that the new testuser cannot access the Project::
 
     >>> browser.getLink(text='Projects').click()
     >>> browser.getLink(text='Logout').click()
     >>> browser.getControl(name='login').value = 'admin'
     >>> browser.getControl(name='password').value = 'eztranet'
     >>> browser.getControl(name='SUBMIT').click()
-    >>> browser.getLink(text='project 2').click()
+    >>> browser.getLink(text='Project', index=1).click()
     >>> browser.getLink(text='Permissions').click()
     >>> browser.getControl(name='eztranet.project.Member').options
     ['admin', 'testuser']
     >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
     >>> browser.getControl(name='GRANT_SUBMIT').click()
 
-Before deleting the testuser, we first add a projectitem in the project-2
+Before deleting the testuser, we first add a projectitem in the Project
 to check that the recursive deletion of permissions works:
 
     >>> browser.getLink(text='New file').click()
@@ -665,9 +789,9 @@ Now we delete the testuser
     >>> browser.getControl(name='password').value = 'testpass'
     >>> browser.getControl(name='SUBMIT').click()
     
-    >>> '<a href="project-2">project 2</a>' in  browser.contents
+    >>> '<a href="Project">Project</a>' in  browser.contents
     False
-    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    >>> browser.open('http://localhost/eztranet/projects/project')
     Traceback (most recent call last):
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
@@ -696,18 +820,63 @@ Check the language choice
 Check the batching mode of z3c.table
 ====================================
 
-We add 25 folders::
+We add 30 folders::
+
+    >>> list(root['eztranet']['projects'])
+    [u'project', u'project-2']
+    >>> from eztranet.project.project import Project
+    >>> for i in range(3, 33):
+    ...     root['eztranet']['projects']['project-%s' % i] = Project()
+
+Login as admin and browse the large list of projects::
 
     >>> browser.getLink(text='Logout').click()
     >>> browser.getControl(name='login').value = 'admin'
     >>> browser.getControl(name='password').value = 'eztranet'
     >>> browser.getControl(name='SUBMIT').click()
-    >>> for i in range(30):
-    ...   browser.open('http://localhost/eztranet/projects/add_project.html')
-    ...   browser.getControl(name='form.widgets.title').value = u'project %i'%i
-    ...   browser.getControl(name='form.widgets.description').value = u''
-    ...   browser.getControl(name='form.buttons.add').click()
     >>> browser.open('http://localhost/eztranet/projects/')
+    >>> 'project-32' in browser.contents
+    True
     >>> 'system error' in browser.contents
     False
+
+===========================
+Removing items and projects
+===========================
+
+    >>> list(root['eztranet']['projects']['project-2'])
+    [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt', u'subproject']
+    >>> list(root['eztranet']['projects']['project'])
+    [u'dummytext.txt']
+
+We remove every project excepted the Project and project-2::
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> options = sorted(browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options)
+    >>> options
+    ['project', 'project-10', 'project-11',..., 'project-9']
+    >>> len(options)
+    32
+    >>> options.remove('project')
+    >>> options.remove('project-2')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = options
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['project', 'project-2']
+
+We remove the image and video::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+    >>> options = browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    >>> options
+    ['a-sample.ogg', 'a-sample.png', 'dummytext.txt', 'subproject']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = options
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    >>> list(root['eztranet']['projects']['project-2'])
+    []
+
+
+
+
+
 
