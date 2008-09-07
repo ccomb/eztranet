@@ -1,17 +1,20 @@
-import os
-from threading import Thread
+from interfaces import IFlashPreview, IFlashPreviewable
+from persistent.dict import PersistentDict
 from tempfile import mkstemp
-from zope.interface import implements
+from threading import Thread
+from zope.annotation.interfaces import IAnnotations
+from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
 from zope.component import adapts, adapter
 from zope.file.interfaces import IFile
-from interfaces import IFlashPreview, IFlashPreviewable
-from zope.annotation.interfaces import IAnnotations
-from persistent.dict import PersistentDict
-from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
+from zope.interface import implements
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+import os
+import subprocess
 import transaction
 
 class FlashPreview(object):
+    """Adapter that get or set the flash preview of a video file"""
+
     implements(IFlashPreview)
     adapts(IFile)
 
@@ -24,9 +27,8 @@ class FlashPreview(object):
             annotations['eztranet.flashpreview']['preview'] = None
 
     def encode(self):
-        """
-        start encoding and return the thread
-        """
+        """start encoding and return the thread"""
+
         transaction.commit() # to be able to open the blob later
         target_tmp = mkstemp()
         thread = FlashConverterThread(self.context, target_tmp)
@@ -43,8 +45,8 @@ class FlashPreview(object):
     flash_movie = property(get_flash_movie, set_flash_movie)
 
 class FlashConverterThread(Thread):
-    """
-    The thread that runs ffmpeg and write the resulting video file
+    """The thread that runs ffmpeg and write the resulting video file
+
     The name of the file gives the status of the compression
     """
     def __init__(self, sourcefile, target_tmp):
@@ -53,11 +55,13 @@ class FlashConverterThread(Thread):
         super(FlashConverterThread, self).__init__()
     def run(self):
         fd = self.sourcefile.open()
-        if os.spawnlp(os.P_WAIT, 'ffmpeg', 'ffmpeg', '-i', fd.name, '-y',
-                                                     '-ar', '22050',
-                                                     '-b', '800k',
-                                                     '-g', '240',
-                                                     self.targetpath + '.flv'):
+        if subprocess.call(['ffmpeg', '-i', fd.name, '-y',
+                                      '-ar', '22050',
+                                      '-b', '800k',
+                                      '-g', '240',
+                                       self.targetpath + '.flv'],
+                           stderr=subprocess.PIPE,
+                           stdout=subprocess.PIPE):
             fd.close()
             os.close(self.targetfd)
             if os.path.exists(self.targetpath):
@@ -72,14 +76,13 @@ class FlashConverterThread(Thread):
         
 @adapter(IFlashPreviewable, IObjectAddedEvent)
 def FlashPreviewableAdded(video, event):
-    """
-    warning, here the object is NOT security proxied
-    """
+    """warning, here the object is NOT security proxied"""
+
     IFlashPreview(video).encode()
 
 @adapter(IFlashPreviewable, IObjectModifiedEvent)
 def FlashPreviewableModified(video, event):
-    "warning, here the object IS security proxied"
+    """warning, here the object IS security proxied"""
     try:
         if 'data' in event.descriptions[0].attributes:
             # we compute the flash video only if we uploaded something

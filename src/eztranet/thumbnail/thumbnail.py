@@ -11,7 +11,7 @@ from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
 from eztranet.config.interfaces import IConfig, IConfigurable
 import PIL.Image
 from StringIO import StringIO
-import os
+from subprocess import Popen, PIPE
 
 SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
 
@@ -98,9 +98,15 @@ class VideoThumbnailer(BaseThumbnailer):
     """
     def __call__(self, size=120):
         blobpath = self.context._data._current_filename()
-        thumbnail_content = os.popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath).read()
+        p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath,
+                  shell=True, stderr=PIPE, stdout=PIPE)
+        thumbnail_content = p.stdout.read()
+        err = p.stderr.read()
         if len(thumbnail_content) == 0: # maybe there is less than 3 seconds?
-            thumbnail_content = os.popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobpath).read()
+            p = Popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobpath,
+                      shell=True, stderr=PIPE, stdout=PIPE)
+            thumbnail_content = p.stdout.read()
+            err = p.stderr.read()
         thumbfile = File()
         fd = thumbfile.open('w')
         fd.write(thumbnail_content)
