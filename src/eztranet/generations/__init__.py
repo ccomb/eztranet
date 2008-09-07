@@ -7,8 +7,8 @@ from zope.app.generations.generations import SchemaManager
 # current version
 
 EztranetSchemaManager = SchemaManager(
-    minimum_generation=1,
-    generation=1,
+    minimum_generation=0,
+    generation=0,
     package_name='eztranet.generations'
 )
 
