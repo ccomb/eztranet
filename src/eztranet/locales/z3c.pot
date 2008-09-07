@@ -1,0 +1,130 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Thu Sep  4 21:28:27 2008\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: g/z3c/table/column.py:133
+#: g/z3c/table/column.py:273
+msgid "Name"
+msgstr ""
+
+#: g/z3c/table/column.py:142
+#: g/z3c/table/column.py:174
+msgid "X"
+msgstr ""
+
+#: g/z3c/table/column.py:235
+msgid "Created"
+msgstr ""
+
+#: g/z3c/table/column.py:254
+msgid "Modified"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:105
+msgid "Batch start index"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:106
+msgid "Index the batch starts with"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:110
+msgid "Batch size"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:111
+msgid "The batch size"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:115
+msgid "Batch start size"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:116
+msgid "The minimal size the batch starts to get used"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:201
+msgid "Id"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:202
+msgid "The column id"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:207
+msgid "Colspan"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:208
+msgid "The colspan value"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:212
+msgid "Weight"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:213
+msgid "The column weight"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:217
+msgid "Header name"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:218
+msgid "The header name"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:38
+#: g/z3c/table/interfaces.py:39
+msgid "Column counter"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:55
+msgid "Prefix"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:56
+msgid "The prefix of the table used to uniquely identify it."
+msgstr ""
+
+#: g/z3c/table/interfaces.py:84
+#: g/z3c/table/interfaces.py:85
+msgid "Sort on table index"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:89
+msgid "Sort order"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:90
+msgid "Row sort order"
+msgstr ""
+
+#: g/z3c/table/interfaces.py:97
+#: g/z3c/table/interfaces.py:98
+msgid "Reverse sort order name"
+msgstr ""
+

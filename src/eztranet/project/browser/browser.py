@@ -244,6 +244,7 @@ class ProjectItemAdd(AddForm):
             data.pop('data')
             # update all fields excepted the file fields removed in the previous loop
             applyChanges(self, item, data) # applychanges except the data
+            # remove the uploaded file
 
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
