@@ -1,3 +1,5 @@
+from zope.security.proxy import removeSecurityProxy
+from zope.file.file import File
 from interfaces import IFlashPreview, IFlashPreviewable
 from persistent.dict import PersistentDict
 from tempfile import mkstemp
@@ -11,6 +13,8 @@ from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 import os
 import subprocess
 import transaction
+
+CHUNKSIZE = 1048576
 
 class FlashPreview(object):
     """Adapter that get or set the flash preview of a video file"""
@@ -44,41 +48,60 @@ class FlashPreview(object):
 
     flash_movie = property(get_flash_movie, set_flash_movie)
 
-class FlashConverterThread(Thread):
-    """The thread that runs ffmpeg and write the resulting video file
 
-    The name of the file gives the status of the compression
-    """
+class FlashConverterThread(Thread):
+    """The thread that runs ffmpeg and write the resulting video file"""
+    
     def __init__(self, sourcefile, target_tmp):
         self.sourcefile = sourcefile
         self.targetfd, self.targetpath = target_tmp
         super(FlashConverterThread, self).__init__()
+
     def run(self):
         fd = self.sourcefile.open()
-        if subprocess.call(['ffmpeg', '-i', fd.name, '-y',
-                                      '-ar', '22050',
-                                      '-b', '800k',
-                                      '-g', '240',
-                                       self.targetpath + '.flv'],
-                           stderr=subprocess.PIPE,
-                           stdout=subprocess.PIPE):
+        retcode = subprocess.call(['ffmpeg', '-i', fd.name, '-y',
+                                             '-ar', '22050',
+                                             '-b', '800k',
+                                             '-g', '240',
+                                             self.targetpath + '.flv'],
+                                  stderr=subprocess.PIPE,
+                                  stdout=subprocess.PIPE)
+        transaction.begin()
+        self.flashpreview = removeSecurityProxy(FlashPreview(self.sourcefile))
+        if retcode == 1:
+            # compression failed
+            fd.close()
+            os.close(self.targetfd)
+            os.remove(self.targetpath)
+            self.flashpreview.flash_movie = 'FAILED'
+            transaction.commit()
+            return
+        elif retcode == 0:
+            # compression succeeded
             fd.close()
             os.close(self.targetfd)
             if os.path.exists(self.targetpath):
-                os.rename(self.targetpath, self.targetpath+".FAILED")
-            return
-        fd.close()
-        os.close(self.targetfd)
-        if os.path.exists(self.targetpath):
-            os.remove(self.targetpath)
-        if os.path.exists(self.targetpath + '.flv'):
-            os.rename(self.targetpath + '.flv', self.targetpath+".OK")
-        
+                os.remove(self.targetpath)
+            flvname = self.targetpath + '.flv'
+            flvfile = open(flvname)
+            self.flashpreview.flash_movie = File()
+            openfile = self.flashpreview.flash_movie.open('w')
+            chunk = flvfile.read(CHUNKSIZE)
+            while chunk:
+                openfile.write(chunk)
+                chunk = flvfile.read(CHUNKSIZE)
+            openfile.close()
+            flvfile.close()
+            transaction.commit()
+            os.remove(flvname)
+
+
 @adapter(IFlashPreviewable, IObjectAddedEvent)
 def FlashPreviewableAdded(video, event):
     """warning, here the object is NOT security proxied"""
 
     IFlashPreview(video).encode()
+
 
 @adapter(IFlashPreviewable, IObjectModifiedEvent)
 def FlashPreviewableModified(video, event):
@@ -89,6 +112,7 @@ def FlashPreviewableModified(video, event):
             IFlashPreview(video).encode()
     except:
         return
+
 
 @adapter(IFlashPreviewable, IObjectRemovedEvent)
 def FlashPreviewableRemoved(video, event):

@@ -29,19 +29,15 @@ We have an adapter on any annotatable file that allows to encode the flash previ
     >>> thread = flashpreview.encode()
     >>> thread.join()
 
-Now the file has an annotation with an encoded flv filename::
+Now the file has an annotation with an encoded flv file::
 
     >>> from zope.annotation.interfaces import IAnnotations
-    >>> filename = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
-    >>> exists(filename + '.OK')
-    True
+    >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> type(file)
+    <class 'zope.file.file.File'>
 
-It's ok, we clean the tmp file
 
-    >>> import os
-    >>> os.remove(filename + '.OK')
-
-If we encode a bad file, we get a FAILED file::    
+If we encode a bad file, we get a FAILED string istead of a file::    
 
     >>> fd = blobfile.open('w')
     >>> fd.write('bad video content')
@@ -50,8 +46,7 @@ If we encode a bad file, we get a FAILED file::
     17
     >>> thread = flashpreview.encode()
     >>> thread.join()
-    >>> filename = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
-    >>> exists(filename + '.FAILED')
-    True
+    >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> file
+    'FAILED'
 
-    >>> os.remove(filename + '.FAILED')

@@ -13,7 +13,6 @@ import transaction
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
-CHUNKSIZE = 1048576
 
 class FlashContentProvider(object):
     implements(IContentProvider)
@@ -22,25 +21,6 @@ class FlashContentProvider(object):
         self.context, self.request, self.view = context, request, view
     def update(self):
         self.flashpreview = removeSecurityProxy(IFlashPreview(self.context))
-        if type(self.flashpreview.flash_movie) is str \
-        and self.flashpreview.flash_movie != 'OK' \
-        and self.flashpreview.flash_movie != 'FAILED':
-            if os.path.exists(self.flashpreview.flash_movie + '.OK'):
-                flvname = self.flashpreview.flash_movie + '.OK'
-                flvfile = open(flvname)
-                self.flashpreview.flash_movie = File()
-                openfile = self.flashpreview.flash_movie.open('w')
-                chunk = flvfile.read(CHUNKSIZE)
-                while chunk:
-                    openfile.write(chunk)
-                    chunk = flvfile.read(CHUNKSIZE)
-                openfile.close()
-                flvfile.close()
-                transaction.savepoint() # be sure to save before removing the file
-                os.remove(flvname)
-            elif os.path.exists(self.flashpreview.flash_movie + '.FAILED'):
-                os.remove(self.flashpreview.flash_movie + '.FAILED')
-                self.flashpreview.flash_movie = 'FAILED'
 
     def render(self):
         if type(self.flashpreview.flash_movie) is str:
