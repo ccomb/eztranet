@@ -191,6 +191,10 @@ div#viewspace {
 form div.row, table.form-fields, div#actionsView {
         margin-left: 10px;
 }
+#form-widgets-description {
+  width: 40em;
+  height: 10em;
+}
 tr.odd {
     background: #707AB3;
 }
