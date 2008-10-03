@@ -1,0 +1,18 @@
+<configure xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns:i18n="http://namespaces.zope.org/i18n"
+           i18n_domain="eztranet">
+
+<browser:resourceDirectory name="tinymce"
+                           directory="tinymce"
+                           layer="eztranet.skin.interfaces.IEztranetSkin" />
+                            
+
+<browser:viewlet name="tiny_js"
+                 class="eztranet.tinymce.TinyHeader"
+                 for="*"
+                 manager="eztranet.skin.interfaces.IHeaders"
+                 permission="zope.Public"
+                 layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+</configure>

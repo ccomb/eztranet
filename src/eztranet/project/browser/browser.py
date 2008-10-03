@@ -1,7 +1,8 @@
-from eztranet.project.interfaces import IProject, IProjectItem
+from eztranet.project.interfaces import IProject, IProjectItem, IProjectText
 from eztranet.project.project import Project
 from eztranet.project.project import ProjectImage
 from eztranet.project.project import ProjectItem
+from eztranet.project.project import ProjectText
 from eztranet.project.project import ProjectVideo
 from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
@@ -21,7 +22,6 @@ from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
-from zope.app.form.browser import TextAreaWidget
 from zope.app.form.browser.textwidgets import escape
 from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
 from zope.component import adapts, adapter
@@ -44,16 +44,10 @@ import zope.publisher
 _ = MessageFactory('eztranet')
 
 
-class CustomTextWidget(TextAreaWidget):
-    width=40
-    height=5
-
-
 class ProjectAdd(AddForm):
-    """The view class for adding an project"""
+    """The view class for adding a project"""
 
     fields=Fields(IProject).omit('__name__', '__parent__')
-    fields['description'].custom_widget=CustomTextWidget
     label = _(u'Adding a project')
     
     def createAndAdd(self, data):
@@ -74,21 +68,22 @@ class ProjectAddMenuItem(SimpleMenuItem):
     
 
 class ProjectEdit(EditForm):
+
     label = _(u'Project details')
-    #actions = Actions(Action('Apply', success='handle_edit_action'), )
+
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.fields=Fields(IProject).omit('__name__', '__parent__')
-        self.fields['description'].custom_widget=CustomTextWidget
         super(ProjectEdit, self).__init__(context, request)
-    def handle_edit_action(self, action, data):
+
+    def applyChanges(self, data):
         # First do the base class edit handling
-        super(ProjectEdit, self).handle_edit_action.success(data)
-        # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
-        newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
-        #INameChooser(self.context.__parent__).checkName(newname,self.context)
-        if oldname!=newname:
+        oldtitle = self.context.title
+        super(ProjectEdit, self).applyChanges(data)
+        # then rename the object in the parent container and redirect to it
+        if oldtitle != self.context.title:
+            newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
         self.request.response.redirect(absoluteURL(self.context, self.request))
@@ -97,7 +92,7 @@ class ProjectEdit(EditForm):
 class ProjectEditMenuItem(SimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
-    weight = 50
+    weight = 20
     
 def project_sorting(p1, p2):
     """We put projects in the beginning, and order by date, most recent first"""
@@ -123,7 +118,8 @@ class ProjectView(Contents):
     def description(self):
         if not self.context.description:
             return None
-        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
+        return self.context.description
+        #return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
     def setUpColumns(self):
         columns = super(ProjectView, self).setUpColumns()
@@ -196,7 +192,6 @@ class ProjectItemAdd(AddForm):
     """The view class for adding a ProjectItem"""
 
     fields = Fields(IProjectItem).omit('__name__', '__parent__', 'title')
-    #fields['description'].custom_widget = CustomTextWidget
     label = _(u'Adding a file')
     id = "addform"
 
@@ -304,31 +299,29 @@ class ProjectItemAddMenuItem(SimpleMenuItem):
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')
-    #actions = Actions(Action('Apply', success='handle_edit_action'), )
 
     def __init__(self, context, request):
         self.context, self.request = context, request
         self.fields=Fields(IProjectItem).omit('__name__', '__parent__', 'data')
-        self.fields['description'].custom_widget=CustomTextWidget
         super(ProjectItemEdit, self).__init__(context, request)
 
-    def handle_edit_action(self, action, data):
+    def applyChanges(self, data):
         # First do the base class edit handling
-        super(ProjectItemEdit, self).handle_edit_action.success(data)
-        # then rename the object in the parent container and redirect to it
         oldname=self.context.__name__
-        newname=INameChooser(self.context.__parent__).chooseName(u"",self.context)
-        if oldname!=newname:
-            INameChooser(self.context.__parent__).checkName(newname,self.context)
+        oldtitle = self.context.title
+        super(ProjectItemEdit, self).applyChanges(data)
+        # then rename the object in the parent container and redirect to it
+        if oldtitle != self.context.title:
+            newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
-        return self.request.response.redirect(absoluteURL(self.context, self.request))
+        self.request.response.redirect(absoluteURL(self.context, self.request))
 
 
 class ProjectItemEditMenuItem(SimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
-    weight = 50
+    weight = 20
 
 
 class ProjectItemView(BrowserPagelet):
@@ -338,7 +331,8 @@ class ProjectItemView(BrowserPagelet):
     def description(self):
         if not self.context.description:
             return None
-        return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
+        return self.context.description
+        #return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
 
 class ProjectItemViewMenuItem(SimpleMenuItem):
@@ -433,5 +427,58 @@ class FileUploadHeader(object):
         </script>
         """ % (translate(submit_label, context=self.request),
                translate(link_label, context=self.request))
+
+
+
+class ProjectTextAdd(AddForm):
+    """The view class for adding a text file"""
+
+    fields=Fields(IProjectText).select('title', 'text')
+    label = _(u'Adding a text page')
+    
+    def createAndAdd(self, data):
+        page = ProjectText()
+        applyChanges(self, page, data)
+        contentName = \
+            INameChooser(self.context).chooseName(page.title,
+                                                  page)
+        zope.event.notify(ObjectCreatedEvent(page))
+        self.context[contentName] = page
+        self.request.response.redirect(absoluteURL(self.context, self.request))
+
+
+class ProjectTextEdit(EditForm):
+    """the view for editing a text page"""
+
+    fields=Fields(IProjectText).select('title', 'text')
+    label = _(u'Editing a text page')
+
+    def applyChanges(self, data):
+        # First do the base class edit handling
+        oldname=self.context.__name__
+        oldtitle = self.context.title
+        super(ProjectTextEdit, self).applyChanges(data)
+        # then rename the object in the parent container and redirect to it
+        if oldtitle != self.context.title:
+            newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
+            renamer = ContainerItemRenamer(self.context.__parent__)
+            renamer.renameItem(oldname, newname)
+        self.request.response.redirect(absoluteURL(self.context, self.request))
+
+
+class ProjectTextView(BrowserPagelet):
+    """view that allows to display a text page"""
+    label = _(u'Text page')
+
+    def text(self):
+        if not self.context.text:
+            return None
+        return self.context.text
+        #return PlainTextToHTMLRenderer(escape(self.context.text), self.request).render()
+
+class ProjectTextAddMenuItem(SimpleMenuItem):
+    title = _(u'New text')
+    url = 'add_page.html'
+    weight = 60
 
 

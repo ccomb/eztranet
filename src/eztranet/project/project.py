@@ -1,14 +1,15 @@
-from zope.interface import implements
-from zope.component import adapts
-from zope.app.container.interfaces import INameChooser
-from zope.app.container.contained import NameChooser
+from persistent import Persistent
 from zope.app.container.btree import BTreeContainer
+from zope.app.container.contained import NameChooser
+from zope.app.container.interfaces import INameChooser
+from zope.component import adapts
 from zope.component.factory import Factory
 from zope.file.file import File
+from zope.interface import implements
 from zope.size.interfaces import ISized
 import PIL.Image
 from interfaces import IProjectContainer, IProjectItem, IProject, \
-                       IProjectImage, IProjectVideo
+                       IProjectImage, IProjectVideo, IProjectText
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
@@ -65,6 +66,13 @@ class ProjectVideo(ProjectItem):
 
 ProjectVideoFactory = Factory(ProjectVideo)
 
+
+class ProjectText(Persistent):
+    """a project text page"""
+    text = description = title = None 
+    implements(IProjectText)
+
+ProjectTextFactory = Factory(ProjectText)
 
 class ProjectItemNameChooser(NameChooser):
     """adapter that allows to choose the __name__ of a projectitem"""

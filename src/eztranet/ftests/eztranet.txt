@@ -210,6 +210,35 @@ We check the different views of the subproject::
     >>> 'system error' in browser.contents
     False
 
+==================
+Renaming a project
+==================
+
+If we change the title of a project, its url name is modified
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'Project 3'
+    >>> browser.getControl(name='form.widgets.description').value = u'modified description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.url
+    'http://localhost/eztranet/projects/project-3'
+    >>> 'Project 3' in browser.contents
+    True
+    >>> 'modified description' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-3/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'project 2'
+    >>> browser.getControl(name='form.widgets.description').value = u'description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+
+We can change the description withouy changing __name__::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'other description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.url
+    'http://localhost/eztranet/projects/project-2'
+
 ==============
 Adding a Video
 ==============
@@ -405,6 +434,33 @@ We check the different views::
     [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt', u'subproject']
     >>> list(root['eztranet']['projects']['Project'])
     [u'subproject']
+
+================
+Renaming an item
+================
+
+If we change the title of an item, its url name is modified
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'modified sample.png'
+    >>> browser.getControl(name='form.widgets.description').value = u'modified description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.url
+    'http://localhost/eztranet/projects/project-2/modified-sample.png'
+    >>> 'modified description' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project-2/modified-sample.png/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'A sample.png'
+    >>> browser.getControl(name='form.widgets.description').value = u'description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+
+We try to change only the description (the __name__ is not modified)::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'new description'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.url
+    'http://localhost/eztranet/projects/project-2/a-sample.png'
 
 
 ================

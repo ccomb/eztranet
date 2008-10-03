@@ -46,7 +46,6 @@
   <include package="z3c.form" />
   <include package="z3c.formui" />
 
-
   <!-- Add your own component registrations here -->
 
 <class class=".eztranet.EztranetSite">
@@ -66,6 +65,7 @@
 
 <include package=".skin" />
 <include package=".config" />
+<include package=".tinymce" />
 <include package=".project" />
 <include package=".users" />
 <include package=".thumbnail" />

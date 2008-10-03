@@ -1,0 +1,10 @@
+<script type="text/javascript">
+	tinyMCE.init({
+		mode : "textareas",
+		theme : "simple"
+	});
+</script>
+
+	<textarea id="elm1" name="elm1" rows="15" cols="80" style="width: 80%">
+
+	</textarea>

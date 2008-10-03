@@ -193,7 +193,11 @@ form div.row, table.form-fields, div#actionsView {
 }
 #form-widgets-description {
   width: 40em;
-  height: 10em;
+  height: 15em;
+}
+#form-widgets-text {
+  width: 50em;
+  height: 30em;
 }
 tr.odd {
     background: #707AB3;
@@ -223,4 +227,10 @@ td a { font-size: 140%; font-weight: bold; }
 #main_video, #main_image {
     min-height: 500px;
     margin-left: -0.5em;
+}
+.toto {
+font-weight: 120%;
+}
+.tiioto {
+font-weight: 120%;
 }

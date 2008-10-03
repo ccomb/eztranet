@@ -171,7 +171,7 @@
          layer="eztranet.skin.interfaces.IEztranetSkin"
          permission="eztranet.project.edit" />
 
-<!-- ADDING PROJECTITEM -->
+<!-- ADDING A FILE -->
 <z3c:pagelet name="add_projectitem.html"
              for="..interfaces.IProject"
              class=".browser.ProjectItemAdd"
@@ -190,6 +190,49 @@
          manager="eztranet.skin.interfaces.ITabMenu"
          layer="eztranet.skin.interfaces.IEztranetSkin"
          permission="eztranet.project.edit" />
+
+<!-- TEXT PAGE -->
+<z3c:pagelet name="add_page.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectTextAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:pagelet name="add_page.html"
+             for="..interfaces.IProjectContainer"
+             class=".browser.ProjectTextAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:template template="add.pt"
+              for=".browser.ProjectTextAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectText"
+             class=".browser.ProjectTextView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="text.pt"
+              for=".browser.ProjectTextView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<viewlet name="ProjectTextAddMenuItem"
+         class=".browser.ProjectTextAddMenuItem"
+         for="..interfaces.IProjectContainer"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+
+<viewlet name="ProjectTextAddMenuItem"
+         class=".browser.ProjectTextAddMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+         
+<z3c:pagelet name="edit.html"
+             for="..interfaces.IProjectText"
+             class=".browser.ProjectTextEdit"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
 
 <!-- Static images -->
 <resourceDirectory name="project_img"
@@ -238,5 +281,10 @@
          permission="zope.Public"
          layer="eztranet.skin.interfaces.IEztranetSkin" />
 
+
+<!-- for the ZMI -->
+<addMenuItem title="Eztranet text page"
+             class="eztranet.project.project.ProjectText"
+             permission="zope.ManageContent" />
 
 </configure>

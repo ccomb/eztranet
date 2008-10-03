@@ -39,7 +39,7 @@ class Thumbnail(object):
             size = 120
         # we get the named adapter (the name is the major mimeType)
         name = u''
-        if hasattr(self.context, 'mimeType'):
+        if hasattr(self.context, 'mimeType') and self.context.mimeType is not None:
             name = self.context.mimeType.split('/')[0]
         thumbnailer = queryAdapter(removeSecurityProxy(self.context),
                                    IThumbnailer,

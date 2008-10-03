@@ -1,0 +1,66 @@
+================
+Functional tests
+================
+
+    To see errors, enable this line just before the wanted line:
+    >> browser.handleErrors = False
+
+==================
+Adding a text page
+==================
+
+We create the test browser, the eztranet, and a project::
+
+    >>> from zope.testbrowser.testing import Browser
+    >>> browser = Browser()
+    >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
+    >>> browser.addHeader('Accept-Language', 'en-US')
+    >>> browser.open('http://localhost/add_eztranet.html')
+    >>> browser.getControl(name='form.widgets.__name__').value = 'eztranet'
+    >>> browser.getControl(name='form.widgets.title').value = 'My Eztranet Site'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> del browser
+    >>> browser = Browser()
+    >>> browser.open('http://localhost/eztranet/projects/add_project.html')
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.getControl(name='form.widgets.title').value = u'project'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+
+Now we can add a text page::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/add_page.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'text page'
+    >>> browser.getControl(name='form.widgets.text').value = u'textcontent\nanother line'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+We check the object exists, and we can see the page::
+
+    >>> root = getRootFolder()
+    >>> 'text-page' in root['eztranet']['projects']['project']
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/text-page/')
+    >>> 'another line' in browser.contents
+    True
+
+We can edit the text page again::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/text-page/edit.html')
+    >>> 'another line' in browser.contents
+    True
+
+And we can change the title and the text::
+
+    >>> browser.getControl(name='form.widgets.title').value = u'new title'
+    >>> browser.getControl(name='form.widgets.text').value = u'modified textcontent\nanother line'
+    >>> browser.getControl(name='form.buttons.apply').click()
+
+And check the content has been saved::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/new-title/')
+    >>> 'modified textcontent' in browser.contents
+    True
+    >>> 'new title' in browser.contents
+    True
