@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Thu Sep  4 21:27:49 2008\n"
-"PO-Revision-Date: 2008-08-16 14:59+0200\n"
+"POT-Creation-Date: Sat Oct  4 00:35:55 2008\n"
+"PO-Revision-Date: 2008-10-04 00:20+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgid "Site Member"
 msgstr "Membre du Site"
 
 #: src/eztranet/comment/browser/comment.py:114
-#: src/eztranet/project/browser/browser.py:401
+#: src/eztranet/project/browser/browser.py:396
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -43,7 +43,7 @@ msgstr "effacer"
 
 #: src/eztranet/comment/browser/templates/comments.pt:16
 msgid "New comment"
-msgstr "Nouveau commentaire"
+msgstr "Nouv. commentaire"
 
 #: src/eztranet/comment/browser/templates/comments.pt:2
 msgid "Add first comment"
@@ -70,15 +70,19 @@ msgstr "Voir les commentaires"
 msgid "Edit comments"
 msgstr "Modifier les commentaires"
 
-#: src/eztranet/configure.zcml:104
+#: src/eztranet/config/browser.py:20
+msgid "Config."
+msgstr "Config."
+
+#: src/eztranet/configure.zcml:105
 msgid "Eztranet Site"
 msgstr "Site Eztranet"
 
-#: src/eztranet/configure.zcml:53
+#: src/eztranet/configure.zcml:52
 msgid "Eztranet site"
 msgstr "Site Eztranet"
 
-#: src/eztranet/configure.zcml:53
+#: src/eztranet/configure.zcml:52
 msgid "An Eztranet application"
 msgstr "Une application Eztranet"
 
@@ -98,7 +102,7 @@ msgstr "Nom utilisé dans l'URL"
 msgid "Adding an Eztranet Site"
 msgstr "Ajout d'un Eztranet"
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:48
+#: src/eztranet/flashpreview/browser/flashpreview.py:28
 msgid ""
 "Flash compression failed.<br/>                           However you can "
 "still download the original movie."
@@ -106,7 +110,7 @@ msgstr ""
 "La compression Flash a échoué.<br/>Cependant vous pouvez télécharger la "
 "vidéo d'origine."
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:51
+#: src/eztranet/flashpreview/browser/flashpreview.py:31
 msgid ""
 "<br/><br/>Currently compressing...                           (<a href=\"."
 "\">click to reload</a>)"
@@ -144,11 +148,11 @@ msgstr "hauteur (px)"
 msgid "the flash movie blob, or compressed temporary filename"
 msgstr "le blob de la vidéo flash, ou le nom de fichier de la vidéo compressée"
 
-#: src/eztranet/interfaces.py:15
+#: src/eztranet/interfaces.py:13
 msgid "Title (used for display)"
 msgstr "Titre (utilisé pour l'affichage)"
 
-#: src/eztranet/interfaces.py:16
+#: src/eztranet/interfaces.py:14
 msgid "The name of your Eztranet Site"
 msgstr "Le nom de votre Eztranet"
 
@@ -168,84 +172,104 @@ msgstr "Voir l'Eztranet"
 msgid "Manage the eztranet"
 msgstr "Gérer l'Eztranet"
 
-#: src/eztranet/project/browser/browser.py:144
+#: src/eztranet/project/browser/browser.py:140
 msgid "Here is the list of your projects"
 msgstr "Voici la liste de vos projets"
 
-#: src/eztranet/project/browser/browser.py:159
+#: src/eztranet/project/browser/browser.py:155
 msgid "Name"
 msgstr "Nom"
 
-#: src/eztranet/project/browser/browser.py:168
+#: src/eztranet/project/browser/browser.py:164
 msgid "Size"
 msgstr "Taille"
 
-#: src/eztranet/project/browser/browser.py:190
-#: src/eztranet/users/browser.py:231
+#: src/eztranet/project/browser/browser.py:186
+#: src/eztranet/users/browser.py:241
 msgid "List"
 msgstr "Liste"
 
-#: src/eztranet/project/browser/browser.py:200
+#: src/eztranet/project/browser/browser.py:195
 msgid "Adding a file"
 msgstr "Ajout d'un fichier"
 
-#: src/eztranet/project/browser/browser.py:299
+#: src/eztranet/project/browser/browser.py:295
 msgid "New file"
-msgstr "Nouveau fichier"
+msgstr "Nouv. fichier"
 
-#: src/eztranet/project/browser/browser.py:305
+#: src/eztranet/project/browser/browser.py:301
 msgid "Modification"
 msgstr "Modification"
 
-#: src/eztranet/project/browser/browser.py:335
+#: src/eztranet/project/browser/browser.py:329
 msgid "File"
 msgstr "Fichier"
 
-#: src/eztranet/project/browser/browser.py:344
+#: src/eztranet/project/browser/browser.py:339
 msgid "View"
 msgstr "Voir"
 
-#: src/eztranet/project/browser/browser.py:351
+#: src/eztranet/project/browser/browser.py:346
 msgid "Image"
 msgstr "Image"
 
-#: src/eztranet/project/browser/browser.py:373
+#: src/eztranet/project/browser/browser.py:368
 msgid "Video"
 msgstr "Vidéo"
 
-#: src/eztranet/project/browser/browser.py:413
+#: src/eztranet/project/browser/browser.py:408
 msgid "Send files..."
 msgstr "Envoyer les fichiers..."
 
-#: src/eztranet/project/browser/browser.py:414
+#: src/eztranet/project/browser/browser.py:409
 msgid "Add more files..."
 msgstr "Ajouter plus de fichiers..."
 
-#: src/eztranet/project/browser/browser.py:57
+#: src/eztranet/project/browser/browser.py:437
+msgid "Adding a text page"
+msgstr "Ajout d'un texte"
+
+#: src/eztranet/project/browser/browser.py:454
+msgid "Editing a text page"
+msgstr "Modification du texte"
+
+#: src/eztranet/project/browser/browser.py:471
+msgid "Text page"
+msgstr "Page de texte"
+
+#: src/eztranet/project/browser/browser.py:480
+msgid "New text"
+msgstr "Nouv. texte"
+
+#: src/eztranet/project/browser/browser.py:51
 msgid "Adding a project"
 msgstr "Ajout d'un projet"
 
-#: src/eztranet/project/browser/browser.py:71
+#: src/eztranet/project/browser/browser.py:65
 msgid "New folder"
-msgstr "Nouveau dossier"
+msgstr "Nouv. dossier"
 
-#: src/eztranet/project/browser/browser.py:77
+#: src/eztranet/project/browser/browser.py:72
 msgid "Project details"
 msgstr "Détails du projet"
 
-#: src/eztranet/project/browser/browser.py:98
-#: src/eztranet/project/browser/browser.py:328
+#: src/eztranet/project/browser/browser.py:93
+#: src/eztranet/project/browser/browser.py:322
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/eztranet/project/browser/configure.zcml:204
-#: src/eztranet/project/browser/configure.zcml:215
+#: src/eztranet/project/browser/configure.zcml:247
+#: src/eztranet/project/browser/configure.zcml:258
 msgid "edit"
 msgstr "modifier"
 
-#: src/eztranet/project/browser/configure.zcml:208
+#: src/eztranet/project/browser/configure.zcml:251
 msgid "Contents"
 msgstr "Contenu"
+
+#: src/eztranet/project/browser/configure.zcml:286
+msgid "Eztranet text page"
+msgstr "Page de texte Eztranet"
 
 #: src/eztranet/project/browser/file.pt:24
 msgid "This item has no preview but you can download the file:"
@@ -291,51 +315,55 @@ msgstr "Modifier le projet"
 msgid "modify"
 msgstr "modifier"
 
-#: src/eztranet/project/interfaces.py:21
+#: src/eztranet/project/interfaces.py:23
 msgid "title"
 msgstr "titre"
 
-#: src/eztranet/project/interfaces.py:22
+#: src/eztranet/project/interfaces.py:24
 msgid "Project title"
 msgstr "Titre du projet"
 
-#: src/eztranet/project/interfaces.py:23 src/eztranet/project/interfaces.py:43
+#: src/eztranet/project/interfaces.py:25 src/eztranet/project/interfaces.py:45
 msgid "Description"
 msgstr "Description"
 
-#: src/eztranet/project/interfaces.py:24
+#: src/eztranet/project/interfaces.py:26
 msgid "Project description"
 msgstr "Description du projet"
 
-#: src/eztranet/project/interfaces.py:38
+#: src/eztranet/project/interfaces.py:40
 msgid "The file you want to upload"
 msgstr "Le fichier que vous voulez téléverser"
 
-#: src/eztranet/project/interfaces.py:40
+#: src/eztranet/project/interfaces.py:42
 msgid "File name"
 msgstr "Nom de fichier"
 
-#: src/eztranet/project/interfaces.py:41
+#: src/eztranet/project/interfaces.py:43
 msgid "Name of the uploaded file"
 msgstr "Nom du fichier téléversé"
 
-#: src/eztranet/project/interfaces.py:44
+#: src/eztranet/project/interfaces.py:46
 msgid "File description"
 msgstr "Description du fichier"
 
-#: src/eztranet/project/interfaces.py:63
+#: src/eztranet/project/interfaces.py:61
+msgid "page content"
+msgstr "contenu de la page"
+
+#: src/eztranet/project/interfaces.py:70
 msgid "Title"
 msgstr "Titre"
 
-#: src/eztranet/project/interfaces.py:64
+#: src/eztranet/project/interfaces.py:71
 msgid "Title of the project container"
 msgstr "Titre du conteneur de projets"
 
-#: src/eztranet/project/project.py:109
+#: src/eztranet/project/project.py:117
 msgid "%sKB %sx%s"
 msgstr "%sko %sx%s"
 
-#: src/eztranet/project/project.py:112
+#: src/eztranet/project/project.py:120
 msgid "KB"
 msgstr "ko"
 
@@ -414,36 +442,52 @@ msgstr "Voir les vignettes"
 msgid "Write thumbnails"
 msgstr "Écrire les vignettes"
 
-#: src/eztranet/thumbnail/interfaces.py:21
+#: src/eztranet/thumbnail/interfaces.py:22
 msgid "The URL of a thumbnail"
 msgstr "L'URL d'une vignette"
 
-#: src/eztranet/users/browser.py:101
+#: src/eztranet/thumbnail/interfaces.py:35
+msgid "Thumbnail size"
+msgstr "Taille des vignettes"
+
+#: src/eztranet/thumbnail/interfaces.py:36
+msgid "The size of the thumbnail"
+msgstr "La taille des vignettes"
+
+#: src/eztranet/thumbnail/interfaces.py:41
+msgid "Recompute thumbnails?"
+msgstr "Recalculer les vignettes ?"
+
+#: src/eztranet/thumbnail/interfaces.py:42
+msgid "Allows to recompute all thumbnails in the current folder"
+msgstr "Permet de recalculer toutes les vignettes du dossier en cours"
+
+#: src/eztranet/users/browser.py:100
 msgid "[Login]"
 msgstr "[Se connecter]"
 
-#: src/eztranet/users/browser.py:107
+#: src/eztranet/users/browser.py:106
 msgid "[Logout]"
 msgstr "[Se déconnecter]"
 
-#: src/eztranet/users/browser.py:167
+#: src/eztranet/users/browser.py:169
 msgid "Permissions modified"
 msgstr "Permissions modifiées"
 
-#: src/eztranet/users/browser.py:172
-#: src/eztranet/project/browser/configure.zcml:206
+#: src/eztranet/users/browser.py:175
+#: src/eztranet/project/browser/configure.zcml:249
 msgid "Permissions"
 msgstr "Permissions"
 
-#: src/eztranet/users/browser.py:181 src/eztranet/users/browser.py:191
+#: src/eztranet/users/browser.py:184 src/eztranet/users/browser.py:196
 msgid "New user"
 msgstr "Nouvel utilisateur"
 
-#: src/eztranet/users/browser.py:201
+#: src/eztranet/users/browser.py:207
 msgid "View user"
 msgstr "Voir utilisateur"
 
-#: src/eztranet/users/browser.py:211
+#: src/eztranet/users/browser.py:218
 msgid "Edit user"
 msgstr "Modifier utilisateur"
 
@@ -533,6 +577,33 @@ msgstr "Vous êtes maintenant déconnecté(e)."
 msgid "eztranet initial administrator"
 msgstr "Administrateur initial de l'Eztranet"
 
+#~ msgid "Welcome on the Purple Productions Extranet."
+#~ msgstr "Bienvenue sur l'Extranet de Purple Productions."
+
+#~ msgid ""
+#~ "You can access your projects by clicking on the <a href=\"projects"
+#~ "\">projects</a> link at the top,<br /> or by using the navigation menu on "
+#~ "the left."
+#~ msgstr ""
+#~ "Vous pouvez accéder à vos projets en cliquant sur le lien <a href="
+#~ "\"projects\">projets</a> en haut, ou en utilisant le menu de navigation "
+#~ "sur la gauche."
+
+#~ msgid "Web site"
+#~ msgstr "Site web"
+
+#~ msgid "Content listing"
+#~ msgstr "Contenu"
+
+#~ msgid "go up one level"
+#~ msgstr "Niveau supérieur"
+
+#~ msgid "Created: ${time-created}"
+#~ msgstr "Créé : ${time-created}"
+
+#~ msgid "Modified: ${time-modified}"
+#~ msgstr "Modifié : ${time-modified}"
+
 #~ msgid "Add an Eztranet Site"
 #~ msgstr "Ajouter un Eztranet"
 
@@ -579,18 +650,6 @@ msgstr "Administrateur initial de l'Eztranet"
 
 #~ msgid "new project"
 #~ msgstr "ajouter projet"
-
-#~ msgid "Content listing"
-#~ msgstr "Contenu"
-
-#~ msgid "go up one level"
-#~ msgstr "Niveau supérieur"
-
-#~ msgid "Created: ${time-created}"
-#~ msgstr "Créé : ${time-created}"
-
-#~ msgid "Modified: ${time-modified}"
-#~ msgstr "Modifié : ${time-modified}"
 
 #~ msgid "Eztranet actions Menu"
 #~ msgstr "Menu d'actions Eztranet"
