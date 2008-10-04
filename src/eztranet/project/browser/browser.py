@@ -22,9 +22,7 @@ from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
-from zope.app.form.browser.textwidgets import escape
-from zope.app.renderer.plaintext import PlainTextToHTMLRenderer
-from zope.component import adapts, adapter
+from zope.component import adapts, adapter, getAdapter
 from zope.copypastemove import ContainerItemRenamer
 from zope.dublincore.interfaces import IDCTimes
 from zope.i18n import translate
@@ -37,9 +35,11 @@ from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
 from zope.traversing.api import getPath
 from zope.traversing.browser.absoluteurl import absoluteURL
-
 import zope.event
 import zope.publisher
+import zope.publisher.interfaces
+import zope.security.interfaces
+import zope.security.management
 
 _ = MessageFactory('eztranet')
 
@@ -378,12 +378,29 @@ class ProjectVideoView(ProjectItemView):
         return removeSecurityProxy(self.context).openDetached().read()
 
 
+def _getRequest():
+    #TODO : move this into a thumbnail view in eztranet.thumbnail
+    i = zope.security.management.getInteraction() # raises NoInteraction
+
+    for p in i.participations:
+        if zope.publisher.interfaces.IRequest.providedBy(p):
+            return p
+    
+    raise RuntimeError('Could not find current request.')
+
+
 class ProjectThumbnail(object):
+    #TODO : move this into a thumbnail view in eztranet.thumbnail?
     """adapter from a project to a thumbnail"""
     adapts(IProject)
     implements(IThumbnail)
-    image = None
     url = '/++resource++project_img/folder.png'
+
+    @property
+    def image(self):
+        # a resource is just an adapter on the request!
+        request = _getRequest()
+        return getAdapter(request, name='project_img')['folder.png']
 
     def __init__(self, context):
         self.context = context

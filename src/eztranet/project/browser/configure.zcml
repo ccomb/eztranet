@@ -237,8 +237,8 @@
 <!-- Static images -->
 <resourceDirectory name="project_img"
                    directory="img"
-                    permission="zope.Public"
-                    layer="eztranet.skin.interfaces.IEztranetSkin" />
+                   permission="zope.Public"
+                   layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <!-- just for the ZMI -->
 <menuItems menu="zmi_views"

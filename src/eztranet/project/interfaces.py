@@ -1,6 +1,6 @@
 from zope.app.container.interfaces import IContainer, IContained
 from zope.app.container.constraints import contains, containers
-from zope.schema import TextLine, Text, Bytes
+from zope.schema import TextLine, Bytes
 from zope.file.interfaces import IFile
 from zope.interface import Interface
 from zope.i18nmessageid import MessageFactory
