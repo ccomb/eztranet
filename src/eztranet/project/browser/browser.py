@@ -499,3 +499,21 @@ class ProjectTextAddMenuItem(SimpleMenuItem):
     weight = 60
 
 
+class ProjectTextThumbnail(object):
+    #TODO : move this into a thumbnail view in eztranet.thumbnail?
+    """adapter from a project text to a thumbnail"""
+    adapts(IProjectText)
+    implements(IThumbnail)
+    url = '/++resource++project_img/text.png'
+
+    @property
+    def image(self):
+        # a resource is just an adapter on the request!
+        request = _getRequest()
+        return getAdapter(request, name='project_img')['text.png']
+
+    def __init__(self, context):
+        self.context = context
+
+    def compute_thumbnail(self):
+        pass
