@@ -82,9 +82,6 @@
 <grant role="eztranet.Member"
        permission="eztranet.thumbnail.view" />
             
-<grant role="eztranet.Member"
-       permission="eztranet.thumbnail.write" />
-            
 
 <!-- PROJECT MEMBER (can read a project)-->
 <grant role="eztranet.project.Member"
@@ -119,5 +116,8 @@
 <grant role="eztranet.project.Manager"
        permission="eztranet.flashpreview.edit" />
 
+<grant role="eztranet.Member"
+       permission="eztranet.thumbnail.write" />
+            
 
 </configure>

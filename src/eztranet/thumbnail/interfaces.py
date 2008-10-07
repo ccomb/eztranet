@@ -11,11 +11,6 @@ class IThumbnailed(IAttributeAnnotatable):
 
 class IThumbnail(Interface):
     """Interface offered by an object that has a thumbnail.
-
-    Implementations can decide to provides either the thumbnail, or the URL,
-    or both.
-    'url' is good for static resource images (to be cached),
-    'image' can be used for a generated thumbnail that have no view nor URL
     """
 
     image = Bytes(title=_(u'Thumbnail'),
