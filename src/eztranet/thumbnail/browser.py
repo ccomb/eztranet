@@ -39,11 +39,11 @@ class ThumbnailUrlView(BrowserView):
     """
 
     def __call__(self):
-        thumbnail = IThumbnail(self.context)
-        if thumbnail.url is not None:
-            return thumbnail.url
+        thumbnail = removeSecurityProxy(IThumbnail(self.context)) #TODO check this
         if thumbnail.image is not None:
             return absoluteURL(self.context, self.request) + "/@@thumbnail_image"
+        if thumbnail.resource is not None:
+            return '/@@/%s' % thumbnail.resource
         return "/@@/default_thumbnail.png"
 
 

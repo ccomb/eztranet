@@ -272,6 +272,8 @@ We check the different views::
     '200 Ok'
     >>> 'system error' in browser.contents
     False
+    >>> '<span>File</span>' in browser.contents
+    False
     >>> browser.getLink('Comment').click()
     >>> browser.headers['status']
     '200 Ok'
@@ -359,6 +361,8 @@ We check the different views::
     '200 Ok'
     >>> 'system error' in browser.contents
     False
+    >>> '<span>File</span>' in browser.contents
+    False
     >>> browser.getLink('Comment').click()
     >>> browser.headers['status']
     '200 Ok'
@@ -411,6 +415,8 @@ We check the different views::
     >>> browser.headers['status']
     '200 Ok'
     >>> 'system error' in browser.contents
+    False
+    >>> '<span>File</span>' in browser.contents
     False
     >>> browser.getLink('Comment').click()
     >>> browser.headers['status']

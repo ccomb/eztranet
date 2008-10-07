@@ -81,6 +81,12 @@ So now if we compute the thumbnail image, we get it in the thumbnail object::
     >>> thumb.image.open().read()
     'dummy content'
 
+We can also remove the thumbnail::
+
+    >>> thumb.image = None
+    >>> thumb.image is None
+    True
+
 =================
 Image thumbnailer
 =================
@@ -273,7 +279,7 @@ Then create and register the resource factory::
     >>> d = ThumbnailImageView(blobfile, TestRequest())()
     >>> len(d)
     3172
-    
+
 
 We restore our previous thumbnails adapter and mimetype::
 

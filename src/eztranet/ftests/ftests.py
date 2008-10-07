@@ -8,6 +8,7 @@ ftesting_zcml = os.path.join(os.path.dirname(__file__), 'ftesting.zcml')
 def test_suite( ):
     suite = [FunctionalBlobDocFileSuite('eztranet.txt'),
              FunctionalBlobDocFileSuite('thumbnailconfig.txt'),
+             FunctionalBlobDocFileSuite('thumbnail.txt'),
              FunctionalBlobDocFileSuite('textpage.txt'),
             ]
     for s in suite:

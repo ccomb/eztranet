@@ -1,4 +1,4 @@
-from eztranet.thumbnail.thumbnail import Thumbnail
+from eztranet.project.interfaces import ILargeBytes
 from eztranet.project.interfaces import IProject, IProjectItem, IProjectText
 from eztranet.project.project import Project
 from eztranet.project.project import ProjectImage
@@ -7,6 +7,7 @@ from eztranet.project.project import ProjectText
 from eztranet.project.project import ProjectVideo
 from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
+from eztranet.thumbnail.thumbnail import Thumbnail
 from hachoir_parser import createParser
 from os.path import basename
 from z3c.contents.browser import Contents
@@ -30,7 +31,6 @@ from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, implementer, Interface
 from zope.lifecycleevent import ObjectCreatedEvent
-from eztranet.project.interfaces import ILargeBytes
 from zope.security.checker import canAccess
 from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
@@ -77,6 +77,8 @@ class ProjectEdit(EditForm):
         # First do the base class edit handling
         oldname=self.context.__name__
         oldtitle = self.context.title
+        if 'image' in data and data['image'] is None:
+            del data['image'] # don't overwrite the thumbnail
         super(ProjectEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
         if oldtitle != self.context.title:
@@ -294,12 +296,14 @@ class ProjectItemAddMenuItem(SimpleMenuItem):
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')
-    fields=Fields(IProjectItem, IThumbnail).omit('__name__', '__parent__')
+    fields=Fields(IProjectItem, IThumbnail).omit('__name__', '__parent__', 'data')
 
     def applyChanges(self, data):
         # First do the base class edit handling
         oldname=self.context.__name__
         oldtitle = self.context.title
+        if 'image' in data and data['image'] is None:
+            del data['image'] # don't overwrite the thumbnail
         super(ProjectItemEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
         if oldtitle != self.context.title:
@@ -444,6 +448,8 @@ class ProjectTextEdit(EditForm):
         # First do the base class edit handling
         oldname=self.context.__name__
         oldtitle = self.context.title
+        if 'image' in data and data['image'] is None:
+            del data['image'] # don't overwrite the thumbnail
         super(ProjectTextEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
         if oldtitle != self.context.title:
