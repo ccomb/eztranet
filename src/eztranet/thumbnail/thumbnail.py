@@ -14,6 +14,7 @@ from StringIO import StringIO
 from subprocess import Popen, PIPE
 
 SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
+CONFIG_KEY = 'eztranet.thumbnail'
 
 class Thumbnail(object):
     u"""
@@ -24,10 +25,10 @@ class Thumbnail(object):
     image = url = None
     def __init__(self, context):
         self.context = self.__parent__ = context
-        if 'eztranet.thumbnail' not in IAnnotations(context):
-            self.image = IAnnotations(context)['eztranet.thumbnail'] = None
+        if CONFIG_KEY not in IAnnotations(context):
+            self.image = IAnnotations(context)[CONFIG_KEY] = None
             #self.compute_thumbnail()
-        self.image = IAnnotations(context)['eztranet.thumbnail']
+        self.image = IAnnotations(context)[CONFIG_KEY]
 
     def compute_thumbnail(self):
         # retrieve the config for the thumbnail size
@@ -47,16 +48,16 @@ class Thumbnail(object):
         if thumbnailer is not None:
             thumbnail_content = thumbnailer(size)
             if thumbnail_content is not None:
-                self.image = IAnnotations(self.context)['eztranet.thumbnail'] = File()
+                self.image = IAnnotations(self.context)[CONFIG_KEY] = File()
                 file = self.image.open('w')
                 file.write(thumbnail_content)
                 file.close()
                 self.url = None
             else:
-                self.image = IAnnotations(self.context)['eztranet.thumbnail'] = None
+                self.image = IAnnotations(self.context)[CONFIG_KEY] = None
                 self.url = '/@@/default_thumbnail.png'
         else:
-            self.image = IAnnotations(self.context)['eztranet.thumbnail'] = None
+            self.image = IAnnotations(self.context)[CONFIG_KEY] = None
             self.url = '/@@/default_thumbnail.png'
 
 
