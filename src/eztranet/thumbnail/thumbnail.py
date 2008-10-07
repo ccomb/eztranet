@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-from zope.interface import implements
-from zope.component import adapts, adapter, queryAdapter
-from zope.app.container.interfaces import IObjectAddedEvent, IContainer
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
-from zope.annotation.interfaces import IAnnotations
-from zope.file.interfaces import IFile
-from zope.file.file import File
-from zope.security.proxy import removeSecurityProxy
-from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
-from eztranet.config.interfaces import IConfig, IConfigurable
-import PIL.Image
 from StringIO import StringIO
+from eztranet.config.interfaces import IConfig, IConfigurable
+from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
 from subprocess import Popen, PIPE
+from zope.annotation.interfaces import IAnnotations
+from zope.app.container.interfaces import IObjectAddedEvent, IContainer
+from zope.component import adapts, adapter, queryAdapter
+from zope.file.file import File
+from zope.file.interfaces import IFile
+from zope.interface import implements
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.security.proxy import removeSecurityProxy
+import PIL.Image
 
-SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
 CONFIG_KEY = 'eztranet.thumbnail'
+SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
 
 class Thumbnail(object):
     u"""
@@ -22,15 +22,27 @@ class Thumbnail(object):
     """
     implements(IThumbnail)
     adapts(IThumbnailed)
-    image = url = None
+    resource = None
     def __init__(self, context):
         self.context = self.__parent__ = context
-        if CONFIG_KEY not in IAnnotations(context):
-            self.image = IAnnotations(context)[CONFIG_KEY] = None
-            #self.compute_thumbnail()
-        self.image = IAnnotations(context)[CONFIG_KEY]
+
+    def _get_image(self):
+        return IAnnotations(self.context).get(CONFIG_KEY)
+
+    def _set_image(self, data):
+        if data is not None:
+            blob = IAnnotations(self.context)[CONFIG_KEY] = File()
+            file = blob.open('w')
+            file.write(data)
+            file.close()
+        else:
+            IAnnotations(self.context)[CONFIG_KEY] = None
+
+    image = property(_get_image, _set_image)
 
     def compute_thumbnail(self):
+        # remove the previous thumbnail
+        self.image = None
         # retrieve the config for the thumbnail size
         size = None
         config = queryAdapter(self.context, IConfig, default=None)
@@ -39,26 +51,15 @@ class Thumbnail(object):
         if type(size) is not int:
             size = 120
         # we get the named adapter (the name is the major mimeType)
-        name = u''
-        if hasattr(self.context, 'mimeType') and self.context.mimeType is not None:
-            name = self.context.mimeType.split('/')[0]
+        name = getattr(self.context, 'mimeType', u'').split('/')[0]
         thumbnailer = queryAdapter(removeSecurityProxy(self.context),
                                    IThumbnailer,
                                    name)
         if thumbnailer is not None:
+            # compute the thumbnail
             thumbnail_content = thumbnailer(size)
             if thumbnail_content is not None:
-                self.image = IAnnotations(self.context)[CONFIG_KEY] = File()
-                file = self.image.open('w')
-                file.write(thumbnail_content)
-                file.close()
-                self.url = None
-            else:
-                self.image = IAnnotations(self.context)[CONFIG_KEY] = None
-                self.url = '/@@/default_thumbnail.png'
-        else:
-            self.image = IAnnotations(self.context)[CONFIG_KEY] = None
-            self.url = '/@@/default_thumbnail.png'
+                self.image = thumbnail_content
 
 
 class BaseThumbnailer(object):

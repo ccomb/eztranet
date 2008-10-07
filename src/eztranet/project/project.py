@@ -69,7 +69,7 @@ ProjectVideoFactory = Factory(ProjectVideo)
 
 class ProjectText(Persistent):
     """a project text page"""
-    text = description = title = None 
+    text = description = title = data = None 
     implements(IProjectText)
 
 ProjectTextFactory = Factory(ProjectText)

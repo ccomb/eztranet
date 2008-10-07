@@ -1,3 +1,4 @@
+from eztranet.thumbnail.thumbnail import Thumbnail
 from eztranet.project.interfaces import IProject, IProjectItem, IProjectText
 from eztranet.project.project import Project
 from eztranet.project.project import ProjectImage
@@ -29,7 +30,7 @@ from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, implementer, Interface
 from zope.lifecycleevent import ObjectCreatedEvent
-from zope.schema.interfaces import IBytes
+from eztranet.project.interfaces import ILargeBytes
 from zope.security.checker import canAccess
 from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
@@ -47,7 +48,7 @@ _ = MessageFactory('eztranet')
 class ProjectAdd(AddForm):
     """The view class for adding a project"""
 
-    fields=Fields(IProject).omit('__name__', '__parent__')
+    fields = Fields(IProject).omit('__name__', '__parent__')
     label = _(u'Adding a project')
     
     def createAndAdd(self, data):
@@ -70,11 +71,7 @@ class ProjectAddMenuItem(SimpleMenuItem):
 class ProjectEdit(EditForm):
 
     label = _(u'Project details')
-
-    def __init__(self, context, request):
-        self.context, self.request = context, request
-        self.fields=Fields(IProject).omit('__name__', '__parent__')
-        super(ProjectEdit, self).__init__(context, request)
+    fields = Fields(IProject, IThumbnail).omit('__name__', '__parent__')
 
     def applyChanges(self, data):
         # First do the base class edit handling
@@ -176,9 +173,7 @@ class ThumbnailColumn(Column):
     weight = 11
     def renderCell(self, item):
         item_url = absoluteURL(item, self.request)
-        thumb_url = IThumbnail(item).url
-        if thumb_url is None:
-            thumb_url = absoluteURL(item, self.request) + '/@@thumbnail_image'
+        thumb_url = item_url + '/@@thumbnail_image'
         return '<a href="%s"><img src="%s" class="table_thumbnail" /></a>' % (item_url, thumb_url)
 
 
@@ -245,9 +240,9 @@ class ProjectItemAdd(AddForm):
 
 
 class BigFileWidget(FileWidget):
-    adapts(IBytes, IEztranetSkin)
+    adapts(ILargeBytes, IEztranetSkin)
 
-@adapter(IBytes, IEztranetSkin)
+@adapter(ILargeBytes, IEztranetSkin)
 @implementer(IFieldWidget)
 def BigFileFieldWidget(field, request):
     """IFieldWidget factory for BigFileWidget."""
@@ -259,7 +254,7 @@ class BigFileUploadDataConverter(BaseDataConverter):
 
     This prevents from loading the whole uploaded file in memory"""
 
-    adapts(IBytes, BigFileWidget)
+    adapts(ILargeBytes, BigFileWidget)
 
     def toFieldValue(self, value):
         """See interfaces.IDataConverter"""
@@ -284,7 +279,7 @@ class BigFileValidator(SimpleFieldValidator):
         Interface,
         Interface,
         ProjectItemAdd,
-        IBytes,
+        ILargeBytes,
         Interface)
 
     def validate(self, data):
@@ -299,11 +294,7 @@ class ProjectItemAddMenuItem(SimpleMenuItem):
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')
-
-    def __init__(self, context, request):
-        self.context, self.request = context, request
-        self.fields=Fields(IProjectItem).omit('__name__', '__parent__', 'data')
-        super(ProjectItemEdit, self).__init__(context, request)
+    fields=Fields(IProjectItem, IThumbnail).omit('__name__', '__parent__')
 
     def applyChanges(self, data):
         # First do the base class edit handling
@@ -378,35 +369,14 @@ class ProjectVideoView(ProjectItemView):
         return removeSecurityProxy(self.context).openDetached().read()
 
 
-def _getRequest():
-    #TODO : move this into a thumbnail view in eztranet.thumbnail
-    i = zope.security.management.getInteraction() # raises NoInteraction
-
-    for p in i.participations:
-        if zope.publisher.interfaces.IRequest.providedBy(p):
-            return p
+class ProjectThumbnail(Thumbnail):
+    """adapter from a project to a thumbnail
     
-    raise RuntimeError('Could not find current request.')
-
-
-class ProjectThumbnail(object):
-    #TODO : move this into a thumbnail view in eztranet.thumbnail?
-    """adapter from a project to a thumbnail"""
+    This adapter provides a default static thumbnail,
+    but allows to upload a custom one"""
     adapts(IProject)
     implements(IThumbnail)
-    url = '/++resource++project_img/folder.png'
-
-    @property
-    def image(self):
-        # a resource is just an adapter on the request!
-        request = _getRequest()
-        return getAdapter(request, name='project_img')['folder.png']
-
-    def __init__(self, context):
-        self.context = context
-
-    def compute_thumbnail(self):
-        pass
+    resource = 'folder.png'
 
 
 class CommentMenuItem(SimpleMenuItem):
@@ -450,7 +420,7 @@ class FileUploadHeader(object):
 class ProjectTextAdd(AddForm):
     """The view class for adding a text file"""
 
-    fields=Fields(IProjectText).select('title', 'text')
+    fields=Fields(IProjectText).omit('__name__', '__parent__')
     label = _(u'Adding a text page')
     
     def createAndAdd(self, data):
@@ -467,7 +437,7 @@ class ProjectTextAdd(AddForm):
 class ProjectTextEdit(EditForm):
     """the view for editing a text page"""
 
-    fields=Fields(IProjectText).select('title', 'text')
+    fields=Fields(IProjectText, IThumbnail).omit('__name__', '__parent__', 'description', 'data')
     label = _(u'Editing a text page')
 
     def applyChanges(self, data):
@@ -499,21 +469,9 @@ class ProjectTextAddMenuItem(SimpleMenuItem):
     weight = 60
 
 
-class ProjectTextThumbnail(object):
-    #TODO : move this into a thumbnail view in eztranet.thumbnail?
+class ProjectTextThumbnail(Thumbnail):
     """adapter from a project text to a thumbnail"""
     adapts(IProjectText)
     implements(IThumbnail)
-    url = '/++resource++project_img/text.png'
+    resource = 'text.png'
 
-    @property
-    def image(self):
-        # a resource is just an adapter on the request!
-        request = _getRequest()
-        return getAdapter(request, name='project_img')['text.png']
-
-    def __init__(self, context):
-        self.context = context
-
-    def compute_thumbnail(self):
-        pass

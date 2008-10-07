@@ -3,7 +3,8 @@
            xmlns:zope="http://namespaces.zope.org/zope"
            i18n_domain="eztranet">
 
-<zope:adapter factory=".browser.ProjectThumbnail" />
+<zope:adapter factory=".browser.ProjectThumbnail"
+              trusted="yes"/>
 
 <!-- ProjectContainer views -->
 <z3c:pagelet name="index.html"
@@ -214,7 +215,8 @@
               for=".browser.ProjectTextView"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<zope:adapter factory=".browser.ProjectTextThumbnail" />
+<zope:adapter factory=".browser.ProjectTextThumbnail"
+              trusted="yes"/>
 
 <viewlet name="ProjectTextAddMenuItem"
          class=".browser.ProjectTextAddMenuItem"
@@ -241,6 +243,13 @@
                    directory="img"
                    permission="zope.Public"
                    layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<resource name="folder.png"
+          file="img/folder.png"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="text.png"
+          file="img/text.png"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <!-- just for the ZMI -->
 <menuItems menu="zmi_views"

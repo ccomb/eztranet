@@ -40,7 +40,7 @@
   <require permission="eztranet.project.edit"
            interface=" zope.app.container.interfaces.IWriteContainer" />
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-  <implements interface="..thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <implements interface="eztranet.config.interfaces.IConfigurable" />
 </class>

@@ -1,7 +1,5 @@
 import unittest
 from zope.testing import doctest, doctestunit
-from zope.app import zapi
-from zope.app.testing import ztapi
 from zope.app.testing.setup import placefulSetUp, placefulTearDown
 
 def setUp(test):
@@ -14,8 +12,8 @@ def setUp(test):
     from zope.component import provideAdapter
     from eztranet.config.interfaces import IConfigurable, IConfig
     from eztranet.config.config import Config
-    provideAdapter(AttributeAnnotations, [IAttributeAnnotatable], IAnnotations)
-    ztapi.provideAdapter(IConfigurable, IConfig, Config)
+    provideAdapter(AttributeAnnotations, (IAttributeAnnotatable,), IAnnotations)
+    provideAdapter(Config, (IConfigurable,), IConfig)
 
 
 def tearDown(test):
@@ -26,9 +24,7 @@ def test_suite( ):
         doctest.DocFileSuite('thumbnail.txt', 
                              setUp=setUp, 
                              tearDown=tearDown,
-                             globs={'zapi': zapi,
-                                    'ztapi': ztapi,
-                                    'pprint': doctestunit.pprint},
+                             globs={'pprint': doctestunit.pprint},
                              optionflags=doctest.NORMALIZE_WHITESPACE+
                                          doctest.ELLIPSIS
                              ),

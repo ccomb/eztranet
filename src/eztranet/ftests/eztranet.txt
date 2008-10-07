@@ -616,7 +616,7 @@ Trying to see the unauthorized project leads to an error::
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
 
-But we ca see all the views for the project we are manager of, excepted
+But we can see all the views for the project we are manager of, excepted
 permissions::
 
     >>> browser.open('http://localhost/eztranet/projects/Project/')

@@ -1,11 +1,12 @@
-from zope.app.container.interfaces import IContainer, IContained
+from eztranet.tinymce import HtmlText
 from zope.app.container.constraints import contains, containers
-from zope.schema import TextLine, Bytes
+from zope.app.container.interfaces import IContainer, IContained
 from zope.file.interfaces import IFile
-from zope.interface import Interface
 from zope.i18nmessageid import MessageFactory
 from zope.index.text.interfaces import ISearchableText
-from eztranet.tinymce import HtmlText
+from zope.interface import Interface, implements
+from zope.schema import TextLine, Bytes
+from zope.schema.interfaces import IBytes, IField
 
 _ = MessageFactory('eztranet')
 
@@ -27,6 +28,16 @@ class IProject(IContainer, IContained):
                        required=False,
                        max_length=1000)
 
+class ILargeBytes(IField):
+    """schema field interface for a large file"""
+
+class LargeBytes(Bytes):
+    """schema field for a large file"""
+    implements(ILargeBytes)
+
+    def _validate(self, value):
+        super(LargeBytes, self)._validate(value)
+
 
 class IProjectItem(Interface):
     """a project item (image or video)
@@ -36,7 +47,7 @@ class IProjectItem(Interface):
     """
 
     #containers("eztranet.project.interfaces.IProject")
-    data = Bytes(title=u'File',
+    data = LargeBytes(title=_(u'File'),
                  description=_(u'The file you want to upload'),
                  required=False)
     title = TextLine(title=_(u'File name'),

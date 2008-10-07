@@ -1,8 +1,8 @@
-from zope.schema import Int, Bool
-from zope.interface import Interface, Attribute
+from eztranet.config.interfaces import IConfigForm
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.i18nmessageid import MessageFactory
-from eztranet.config.interfaces import IConfigForm
+from zope.interface import Interface, Attribute
+from zope.schema import Int, Bool, Bytes
 _ = MessageFactory('eztranet')
 
 class IThumbnailed(IAttributeAnnotatable):
@@ -18,9 +18,10 @@ class IThumbnail(Interface):
     'image' can be used for a generated thumbnail that have no view nor URL
     """
 
-    image = Attribute("The Image object corresponding to the thumbnail")
-    url = Attribute(_(u'The URL of a thumbnail'))
-
+    image = Bytes(title=_(u'Thumbnail'),
+                  description=_(u'The Image object corresponding to the thumbnail'),
+                  required=False)
+                  
     def compute_thumbnail(size):
         """compute a thumbnail with the given size"""
 
