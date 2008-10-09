@@ -45,6 +45,10 @@ We check the object exists, and we can see the page::
     >>> 'another line' in browser.contents
     True
 
+================================
+Editing and renaming a textpage:
+================================
+
 We can edit the text page again::
 
     >>> browser.open('http://localhost/eztranet/projects/project/text-page/edit.html')
@@ -64,3 +68,23 @@ And check the content has been saved::
     True
     >>> 'new title' in browser.contents
     True
+
+We can completely remove the title of an item, this leaves the __name__
+unchanged::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/new-title/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u''
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> browser.url
+    'http://localhost/eztranet/projects/project/new-title'
+    >>> root['eztranet']['projects']['project']['new-title'].title
+    ''
+    >>> browser.open('http://localhost/eztranet/projects/project/new-title/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u''
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> root['eztranet']['projects']['project']['new-title'].title
+    ''
+    >>> root['eztranet']['projects']['project']['new-title'].__name__
+    ''

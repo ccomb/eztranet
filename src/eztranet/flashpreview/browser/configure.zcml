@@ -11,8 +11,9 @@
       permission="eztranet.flashpreview.view"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
 
+<!-- flowplayer version 2.2.4 -->
 <resource name="flowplayer.swf"
-          file="flowplayer.swf"
+          file="FlowPlayerLight.swf"
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 

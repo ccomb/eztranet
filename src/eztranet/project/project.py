@@ -80,13 +80,15 @@ class ProjectItemNameChooser(NameChooser):
     adapts(IProjectContainer)
     implements(INameChooser)
 
-    def chooseName(self, name, item):
+    def chooseName(self, provided_name, item):
         rawname = item.title
         newname = u''
-        if name:
-            newname = name
-        if item is not None and len(rawname)>0:
+        if provided_name:
+            newname = provided_name
+        if item is not None and rawname:
             newname = unicode.lower(rawname).strip(' @+').replace(' ','-').replace('/','-')
+        if item is not None and not rawname and item.__name__:
+            newname = item.__name__
         return super(ProjectItemNameChooser, self).chooseName(newname, item)
 
 

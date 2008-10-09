@@ -231,13 +231,21 @@ If we change the title of a project, its url name is modified
     >>> browser.getControl(name='form.widgets.description').value = u'description'
     >>> browser.getControl(name='form.buttons.apply').click()
 
-We can change the description withouy changing __name__::
+We can change the description without changing __name__::
 
     >>> browser.open('http://localhost/eztranet/projects/project-2/edit.html')
     >>> browser.getControl(name='form.widgets.description').value = u'other description'
     >>> browser.getControl(name='form.buttons.apply').click()
     >>> browser.url
     'http://localhost/eztranet/projects/project-2'
+
+We cannot submit an empty title for a project::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u''
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'missing' in browser.contents
+    True
 
 ==============
 Adding a Video
@@ -467,6 +475,26 @@ We try to change only the description (the __name__ is not modified)::
     >>> browser.getControl(name='form.buttons.apply').click()
     >>> browser.url
     'http://localhost/eztranet/projects/project-2/a-sample.png'
+
+We can completely remove the title of an item, this leaves the __name__
+unchanged::
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u''
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.url
+    'http://localhost/eztranet/projects/project-2/a-sample-2.png'
+    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].title
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.png/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u''
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].title
+    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].__name__
+    u'a-sample-2.png'
 
 
 ================
@@ -761,7 +789,7 @@ We can also add a comment to a video::
 
 Or an image::
 
-    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/@@comments.html')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.png/@@comments.html')
     >>> browser.getControl(name='text').value = 'this is a comment'
     >>> browser.getControl(name='save').click()
     >>> 'this is a comment' in browser.contents
@@ -907,7 +935,7 @@ Removing items and projects
 ===========================
 
     >>> list(root['eztranet']['projects']['project-2'])
-    [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt', u'subproject']
+    [u'a-sample-2.png', u'a-sample.ogg', u'dummytext.txt', u'subproject']
     >>> list(root['eztranet']['projects']['project'])
     [u'dummytext.txt']
 
@@ -931,7 +959,7 @@ We remove the image and video::
     >>> browser.open('http://localhost/eztranet/projects/project-2/')
     >>> options = browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
     >>> options
-    ['a-sample.ogg', 'a-sample.png', 'dummytext.txt', 'subproject']
+    ['a-sample-2.png', 'a-sample.ogg', 'dummytext.txt', 'subproject']
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = options
     >>> browser.getControl(name="contents.buttons.delete").click()
     >>> list(root['eztranet']['projects']['project-2'])

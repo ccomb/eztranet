@@ -42,6 +42,7 @@ class FlashContentProvider(object):
                                             baseURL: '%s/',
                                             videoFile: '@@flv',
                                             loop: false,
+                                            backgroundColor: -1,
                                             controlBarBackgroundColor: 0x6C77AE,
                                             useNativeFullScreen: false,
                                             autoRewind: true,
