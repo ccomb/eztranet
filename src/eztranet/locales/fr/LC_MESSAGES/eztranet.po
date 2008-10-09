@@ -12,13 +12,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Eztranet 1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: Sat Oct  4 00:35:55 2008\n"
-"PO-Revision-Date: 2008-10-04 00:20+0200\n"
+"POT-Creation-Date: Thu Oct  9 20:01:44 2008\n"
+"PO-Revision-Date: 2008-10-09 20:02+0200\n"
 "Last-Translator: Christophe Combelles <ccomb@free.fr>\n"
 "Language-Team: french <ccomb@free.fr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: site.zcml:38
 msgid "Site Manager"
@@ -29,7 +29,7 @@ msgid "Site Member"
 msgstr "Membre du Site"
 
 #: src/eztranet/comment/browser/comment.py:114
-#: src/eztranet/project/browser/browser.py:396
+#: src/eztranet/project/browser/browser.py:387
 msgid "Comments"
 msgstr "Commentaires"
 
@@ -172,102 +172,103 @@ msgstr "Voir l'Eztranet"
 msgid "Manage the eztranet"
 msgstr "Gérer l'Eztranet"
 
-#: src/eztranet/project/browser/browser.py:140
+#: src/eztranet/project/browser/browser.py:139
 msgid "Here is the list of your projects"
 msgstr "Voici la liste de vos projets"
 
-#: src/eztranet/project/browser/browser.py:155
+#: src/eztranet/project/browser/browser.py:154
 msgid "Name"
 msgstr "Nom"
 
-#: src/eztranet/project/browser/browser.py:164
+#: src/eztranet/project/browser/browser.py:163
 msgid "Size"
 msgstr "Taille"
 
-#: src/eztranet/project/browser/browser.py:186
+#: src/eztranet/project/browser/browser.py:183
 #: src/eztranet/users/browser.py:241
 msgid "List"
 msgstr "Liste"
 
-#: src/eztranet/project/browser/browser.py:195
+#: src/eztranet/project/browser/browser.py:192
 msgid "Adding a file"
 msgstr "Ajout d'un fichier"
 
-#: src/eztranet/project/browser/browser.py:295
+#: src/eztranet/project/browser/browser.py:292
 msgid "New file"
 msgstr "Nouv. fichier"
 
-#: src/eztranet/project/browser/browser.py:301
+#: src/eztranet/project/browser/browser.py:298
 msgid "Modification"
 msgstr "Modification"
 
-#: src/eztranet/project/browser/browser.py:329
+#: src/eztranet/project/browser/browser.py:324
+#: src/eztranet/project/interfaces.py:50
 msgid "File"
 msgstr "Fichier"
 
-#: src/eztranet/project/browser/browser.py:339
+#: src/eztranet/project/browser/browser.py:334
 msgid "View"
 msgstr "Voir"
 
-#: src/eztranet/project/browser/browser.py:346
+#: src/eztranet/project/browser/browser.py:341
 msgid "Image"
 msgstr "Image"
 
-#: src/eztranet/project/browser/browser.py:368
+#: src/eztranet/project/browser/browser.py:363
 msgid "Video"
 msgstr "Vidéo"
 
-#: src/eztranet/project/browser/browser.py:408
+#: src/eztranet/project/browser/browser.py:399
 msgid "Send files..."
 msgstr "Envoyer les fichiers..."
 
-#: src/eztranet/project/browser/browser.py:409
+#: src/eztranet/project/browser/browser.py:400
 msgid "Add more files..."
 msgstr "Ajouter plus de fichiers..."
 
-#: src/eztranet/project/browser/browser.py:437
+#: src/eztranet/project/browser/browser.py:428
 msgid "Adding a text page"
 msgstr "Ajout d'un texte"
 
-#: src/eztranet/project/browser/browser.py:454
+#: src/eztranet/project/browser/browser.py:445
 msgid "Editing a text page"
 msgstr "Modification du texte"
 
-#: src/eztranet/project/browser/browser.py:471
+#: src/eztranet/project/browser/browser.py:464
 msgid "Text page"
 msgstr "Page de texte"
 
-#: src/eztranet/project/browser/browser.py:480
+#: src/eztranet/project/browser/browser.py:473
 msgid "New text"
 msgstr "Nouv. texte"
 
-#: src/eztranet/project/browser/browser.py:51
+#: src/eztranet/project/browser/browser.py:52
 msgid "Adding a project"
 msgstr "Ajout d'un projet"
 
-#: src/eztranet/project/browser/browser.py:65
+#: src/eztranet/project/browser/browser.py:66
 msgid "New folder"
 msgstr "Nouv. dossier"
 
-#: src/eztranet/project/browser/browser.py:72
+#: src/eztranet/project/browser/browser.py:73
 msgid "Project details"
 msgstr "Détails du projet"
 
-#: src/eztranet/project/browser/browser.py:93
-#: src/eztranet/project/browser/browser.py:322
+#: src/eztranet/project/browser/browser.py:92
+#: src/eztranet/project/browser/browser.py:317
 msgid "Modify"
 msgstr "Modifier"
 
-#: src/eztranet/project/browser/configure.zcml:247
 #: src/eztranet/project/browser/configure.zcml:258
+#: src/eztranet/project/browser/configure.zcml:269
 msgid "edit"
 msgstr "modifier"
 
-#: src/eztranet/project/browser/configure.zcml:251
+#: src/eztranet/project/browser/configure.zcml:262
 msgid "Contents"
 msgstr "Contenu"
 
-#: src/eztranet/project/browser/configure.zcml:286
+#: src/eztranet/project/browser/configure.zcml:297
 msgid "Eztranet text page"
 msgstr "Page de texte Eztranet"
 
@@ -315,55 +316,55 @@ msgstr "Modifier le projet"
 msgid "modify"
 msgstr "modifier"
 
-#: src/eztranet/project/interfaces.py:23
+#: src/eztranet/project/interfaces.py:24
 msgid "title"
 msgstr "titre"
 
-#: src/eztranet/project/interfaces.py:24
+#: src/eztranet/project/interfaces.py:25
 msgid "Project title"
 msgstr "Titre du projet"
 
-#: src/eztranet/project/interfaces.py:25 src/eztranet/project/interfaces.py:45
+#: src/eztranet/project/interfaces.py:26 src/eztranet/project/interfaces.py:56
 msgid "Description"
 msgstr "Description"
 
-#: src/eztranet/project/interfaces.py:26
+#: src/eztranet/project/interfaces.py:27
 msgid "Project description"
 msgstr "Description du projet"
 
-#: src/eztranet/project/interfaces.py:40
+#: src/eztranet/project/interfaces.py:51
 msgid "The file you want to upload"
 msgstr "Le fichier que vous voulez téléverser"
 
-#: src/eztranet/project/interfaces.py:42
+#: src/eztranet/project/interfaces.py:53
 msgid "File name"
 msgstr "Nom de fichier"
 
-#: src/eztranet/project/interfaces.py:43
+#: src/eztranet/project/interfaces.py:54
 msgid "Name of the uploaded file"
 msgstr "Nom du fichier téléversé"
 
-#: src/eztranet/project/interfaces.py:46
+#: src/eztranet/project/interfaces.py:57
 msgid "File description"
 msgstr "Description du fichier"
 
-#: src/eztranet/project/interfaces.py:61
+#: src/eztranet/project/interfaces.py:72
 msgid "page content"
 msgstr "contenu de la page"
 
-#: src/eztranet/project/interfaces.py:70
+#: src/eztranet/project/interfaces.py:81
 msgid "Title"
 msgstr "Titre"
 
-#: src/eztranet/project/interfaces.py:71
+#: src/eztranet/project/interfaces.py:82
 msgid "Title of the project container"
 msgstr "Titre du conteneur de projets"
 
-#: src/eztranet/project/project.py:117
+#: src/eztranet/project/project.py:119
 msgid "%sKB %sx%s"
 msgstr "%sko %sx%s"
 
-#: src/eztranet/project/project.py:120
+#: src/eztranet/project/project.py:122
 msgid "KB"
 msgstr "ko"
 
@@ -442,23 +443,27 @@ msgstr "Voir les vignettes"
 msgid "Write thumbnails"
 msgstr "Écrire les vignettes"
 
-#: src/eztranet/thumbnail/interfaces.py:22
-msgid "The URL of a thumbnail"
-msgstr "L'URL d'une vignette"
+#: src/eztranet/thumbnail/interfaces.py:16
+msgid "Thumbnail"
+msgstr "Vignette"
 
-#: src/eztranet/thumbnail/interfaces.py:35
+#: src/eztranet/thumbnail/interfaces.py:17
+msgid "The Image object corresponding to the thumbnail"
+msgstr "L'image correspondant à la vignette"
+
+#: src/eztranet/thumbnail/interfaces.py:31
 msgid "Thumbnail size"
 msgstr "Taille des vignettes"
 
-#: src/eztranet/thumbnail/interfaces.py:36
+#: src/eztranet/thumbnail/interfaces.py:32
 msgid "The size of the thumbnail"
 msgstr "La taille des vignettes"
 
-#: src/eztranet/thumbnail/interfaces.py:41
+#: src/eztranet/thumbnail/interfaces.py:37
 msgid "Recompute thumbnails?"
 msgstr "Recalculer les vignettes ?"
 
-#: src/eztranet/thumbnail/interfaces.py:42
+#: src/eztranet/thumbnail/interfaces.py:38
 msgid "Allows to recompute all thumbnails in the current folder"
 msgstr "Permet de recalculer toutes les vignettes du dossier en cours"
 
@@ -475,7 +480,7 @@ msgid "Permissions modified"
 msgstr "Permissions modifiées"
 
 #: src/eztranet/users/browser.py:175
-#: src/eztranet/project/browser/configure.zcml:249
+#: src/eztranet/project/browser/configure.zcml:260
 msgid "Permissions"
 msgstr "Permissions"
 
@@ -576,6 +581,9 @@ msgstr "Vous êtes maintenant déconnecté(e)."
 #: src/eztranet/users/users.py:101
 msgid "eztranet initial administrator"
 msgstr "Administrateur initial de l'Eztranet"
+
+#~ msgid "The URL of a thumbnail"
+#~ msgstr "L'URL d'une vignette"
 
 #~ msgid "Welcome on the Purple Productions Extranet."
 #~ msgstr "Bienvenue sur l'Extranet de Purple Productions."
