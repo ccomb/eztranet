@@ -1,3 +1,4 @@
+from eztranet.config.interfaces import IConfigForm
 from eztranet.tinymce import HtmlText
 from zope.app.container.constraints import contains, containers
 from zope.app.container.interfaces import IContainer, IContained
@@ -5,7 +6,7 @@ from zope.file.interfaces import IFile
 from zope.i18nmessageid import MessageFactory
 from zope.index.text.interfaces import ISearchableText
 from zope.interface import Interface, implements
-from zope.schema import TextLine, Bytes
+from zope.schema import TextLine, Bytes, Int
 from zope.schema.interfaces import IBytes, IField
 
 _ = MessageFactory('eztranet')
@@ -89,3 +90,10 @@ class ISearchableTextOfProject(ISearchableText):
 class ISearchableTextOfProjectItem(ISearchableText):
      """we declare an index just for this interface to index just items"""
 
+class IOrderConfig(IConfigForm):
+    """Interface of the configuration form for ordering"""
+
+    order = Int(title = _(u'Order'),
+                description = _(u'A number allowing to order the items'),
+                required = False,
+                default = None)

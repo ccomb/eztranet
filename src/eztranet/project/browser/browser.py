@@ -9,6 +9,7 @@ from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
 from eztranet.thumbnail.thumbnail import Thumbnail
 from hachoir_parser import createParser
+from eztranet.project.interfaces import IOrderConfig
 from os.path import basename
 from z3c.contents.browser import Contents
 from z3c.contents.column import RenameColumn
@@ -102,10 +103,19 @@ def project_sorting(p1, p2):
         return 1
     created1 = IDCTimes(p1).created
     created2 = IDCTimes(p2).created
-    if created1 and created2 and created1 > created2:
-        return -1
-    else:
-        return 1
+    order1 = IOrderConfig(removeSecurityProxy(p1)).order
+    order2 = IOrderConfig(removeSecurityProxy(p2)).order
+    if order1 and order2:
+        if order1 < order2:
+            return -1
+        else:
+            return 1
+    elif created1 and created2:
+        if created1 > created2:
+            return -1
+        else:
+            return 1
+
     return 0
 
 
@@ -424,7 +434,7 @@ class FileUploadHeader(object):
 class ProjectTextAdd(AddForm):
     """The view class for adding a text file"""
 
-    fields=Fields(IProjectText).omit('__name__', '__parent__')
+    fields=Fields(IProjectText).omit('__name__', '__parent__', 'description', 'data')
     label = _(u'Adding a text page')
     
     def createAndAdd(self, data):

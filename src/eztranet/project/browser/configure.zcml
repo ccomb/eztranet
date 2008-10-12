@@ -298,4 +298,7 @@
              class="eztranet.project.project.ProjectText"
              permission="zope.ManageContent" />
 
+<zope:interface interface="eztranet.project.interfaces.IOrderConfig"
+                type="eztranet.config.interfaces.IConfigFormType" />
+
 </configure>
