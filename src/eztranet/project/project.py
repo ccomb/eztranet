@@ -15,10 +15,10 @@ _ = MessageFactory('eztranet')
 
 
 class ProjectContainer(BTreeContainer):
-  """a project container"""
+    """a project container"""
 
-  implements(IProjectContainer)
-  __name__ = __parent__ = None
+    implements(IProjectContainer)
+    __name__ = __parent__ = None
 
 ProjectContainerFactory = Factory(ProjectContainer)
     
