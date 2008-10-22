@@ -32,9 +32,9 @@ class FlashContentProvider(object):
                           (<a href=".">click to reload</a>)')
         else:
             return u"""
-<object id="flowplayer" type="application/x-shockwave-flash" data="/@@/flowplayer.swf" width="720" height="576">
+<object id="flowplayer" type="application/x-shockwave-flash" data="/++resource++flowplayer.swf" width="720" height="576">
 	<param name="allowScriptAccess" value="sameDomain" />
-	<param name="movie" value="/@@/flowplayer.swf" />
+	<param name="movie" value="/++resource++flowplayer.swf" />
 	<param name="quality" value="high" />
 	<param name="scale" value="noScale" />
 	<param name="wmode" value="transparent" />
