@@ -21,7 +21,7 @@
 </p>
 
 <div id="item_toolbar" i18n:domain="eztranet">
-<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
     <a href="#"
        tal:attributes="href string:${context/@@absolute_url}/@@download"
        i18n:translate="">

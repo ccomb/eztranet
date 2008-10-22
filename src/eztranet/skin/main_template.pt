@@ -10,9 +10,9 @@
   <title tal:content="provider:pagetitle">Eztranet (main skin template)</title>
   <meta http-equiv="imagetoolbar" content="no"/>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-  <link rel="shortcut icon" type="image/png" href="/++resource++images/icon.png" />
-  <link rel="stylesheet" type="text/css" href="/++resource++main.css"/>
-  <script type="text/javascript" src="/++resource++functions.js"></script>
+  <link rel="shortcut icon" type="image/png" href="++resource++images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="++resource++main.css"/>
+  <script type="text/javascript" src="++resource++functions.js"></script>
   <metal:block define-slot="headers" />
   <metal:tree use-macro="macro:navigation_tree_js" />
   <tal:block content="structure provider:headers" />

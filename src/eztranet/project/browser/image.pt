@@ -20,7 +20,7 @@
 </p>
 
 <div id="item_toolbar">
-<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
     <a href="#"
        tal:condition="python: view.originalWidth() > view.wantedWidth()"
        onclick="toggle_image_size(800,1000)"

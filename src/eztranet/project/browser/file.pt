@@ -20,7 +20,7 @@
 </p>
 
 <div id="item_toolbar">
-<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
 <i18n:block translate="">
 This item has no preview but you can download the file:
 </i18n:block>

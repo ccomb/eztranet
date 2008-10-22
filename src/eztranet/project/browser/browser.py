@@ -181,7 +181,7 @@ class ThumbnailColumn(Column):
     
     for z3c.contents page of object that are thumbnailed (see zcml)
     """
-    header = '<a href=".."><img src="/++resource++project_img/up.png" alt="up" /></a>'
+    header = '<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>'
     weight = 11
     def renderCell(self, item):
         item_url = absoluteURL(item, self.request)
