@@ -1,0 +1,62 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns="http://namespaces.zope.org/browser">
+
+<include package=".rotterdamtree" />
+
+<zope:interface name="EztranetSkin"
+                interface=".interfaces.IEztranetSkin"
+                type="zope.publisher.interfaces.browser.IBrowserSkinType" />
+
+<z3c:layout template="main_template.pt"
+            layer=".interfaces.IEztranetSkin" />
+
+
+<z3c:pagelet name="index.html"
+             for="eztranet.interfaces.IEztranetSite"
+             class=".browser.EztranetSiteView"
+             permission="zope.Public"
+             layer=".interfaces.IEztranetSkin" />
+<z3c:template template="home.pt"
+              for=".browser.EztranetSiteView"
+              layer=".interfaces.IEztranetSkin" />
+
+<viewletManager name="headers"
+                permission="zope.Public"
+                provides=".interfaces.IHeaders"
+                layer=".interfaces.IEztranetSkin" />
+
+<viewletManager name="tab_menu"
+                class=".browser.TabMenu"
+                template="tab_menu.pt"
+                permission="zope.Public"
+                layer=".interfaces.IEztranetSkin" />
+
+<zope:adapter name="eztranet.logo"
+              factory=".browser.LogoProvider"
+              permission="zope.View" />
+<zope:adapter name="eztranet.main_menu"
+              factory=".browser.EztranetMainMenu"
+              permission="zope.View" />
+<zope:adapter name="pagetitle"
+              factory=".browser.PageTitleContentProvider"
+              permission="zope.Public" />
+<zope:adapter name="langchoice"
+              factory=".browser.LangChoiceContentProvider"
+              permission="zope.Public" />
+<zope:adapter name="version"
+              factory=".browser.VersionNumberProvider"
+              permission="zope.Public" />
+
+<resource name="main.css"
+          file="main.css"
+          permission="zope.Public"
+          layer=".interfaces.IEztranetSkin" />
+<resourceDirectory name="images"
+                   directory="images"
+                   layer=".interfaces.IEztranetSkin" />
+<resource name="functions.js"
+          file="functions.js"
+          permission="zope.Public"
+          layer=".interfaces.IEztranetSkin" />
+</configure>

@@ -1,0 +1,42 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           i18n_domain="eztranet">
+
+<zope:adapter factory="zope.app.security.LogoutSupported" />
+
+<!-- initial setup -->
+<zope:utility name="users initial setup"
+              component=".users.initial_setup"
+              provides="eztranet.interfaces.IInitialSetup" />
+
+<!-- content objects -->
+<zope:class class=".users.EztranetUser">
+  <require permission="eztranet.manage"
+           interface=".interfaces.IEztranetUser" />
+  <require permission="eztranet.manage"
+           set_schema=".interfaces.IEztranetUser" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+</zope:class>
+<zope:class class=".users.EztranetUsersContainer">
+  <require permission="eztranet.manage"
+           interface=".interfaces.IEztranetUsersContainer" />
+  <require permission="eztranet.manage"
+           set_schema=".interfaces.IEztranetUsersContainer" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+</zope:class>
+<zope:subscriber handler=".users.EztranetUserAdded" />
+<zope:subscriber handler=".users.EztranetUserRemoved" />
+
+<zope:adapter factory=".users.UserNameChooser" />
+<!-- FIXME not sure it's useful -->
+<zope:utility component=".users.EztranetUserFactory"
+              name="eztranet.EztranetUser"
+              permission="eztranet.manage" />
+<zope:utility name="EztranetUsers"
+              component=".users.EztranetUsersContainer"
+              provides="zope.app.authentication.principalfolder.IInternalPrincipalContainer"
+              permission="eztranet.manage" />
+
+<include file="browser.zcml" />
+<!-- <include package=".insecure_addon" /> -->
+
+</configure>

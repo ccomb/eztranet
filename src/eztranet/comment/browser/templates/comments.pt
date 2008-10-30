@@ -1,0 +1,35 @@
+<p></p>
+<p tal:condition="not: view/comments"
+   i18n:translate="">Add first comment</p>
+<div class="page_error" tal:condition="view/error | nothing" tal:content="view/error">error</div>
+
+<div id="comments" tal:content="structure view/render_comments">
+
+</div>
+
+<form action="./@@addcomment.html"
+  method="post"
+  >
+
+
+ <div class="row">
+   <div class="label"
+        i18n:translate="">
+     New comment
+   </div>
+   <div class="field">
+     <textarea name="text" rows="5" cols="45"></textarea>
+   </div>
+ </div>
+
+ <div class="row">
+   <div class="controls">
+     <input type="submit"
+            name="save"
+            value="Add comment"
+            i18n:attributes="value save-comment-button"/>
+   </div>
+ </div>
+
+</form>
+

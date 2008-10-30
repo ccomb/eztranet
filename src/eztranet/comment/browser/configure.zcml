@@ -1,0 +1,33 @@
+<configure xmlns="http://namespaces.zope.org/browser"
+           xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           i18n_domain="eztranet" >
+
+<z3c:pagelet name="comments.html"
+             class=".comment.ListComments"
+             for="eztranet.comment.IAttributeAnnotatableComments"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.comment.view" />
+<z3c:template template="templates/comments.pt"
+              for=".comment.ListComments"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+ 
+<page name="addcomment.html"
+      for="eztranet.comment.IAttributeAnnotatableComments"
+      class=".comment.AddComment"
+      layer="eztranet.skin.interfaces.IEztranetSkin"
+      attribute="addComment"
+      permission="eztranet.comment.add" />
+
+<z3c:pagelet name="addcomment.html"
+             for="eztranet.comment.IAttributeAnnotatableComments"
+             class=".comment.AddComment"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             attribute="addComment"
+             permission="eztranet.comment.add" />
+
+<zope:adapter name="nb_comments"
+              factory=".comment.NbComments"
+              permission="eztranet.comment.view" />
+      
+</configure>

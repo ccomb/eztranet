@@ -1,0 +1,304 @@
+<configure xmlns="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns:zope="http://namespaces.zope.org/zope"
+           i18n_domain="eztranet">
+
+<zope:adapter factory=".browser.ProjectThumbnail"
+              trusted="yes" />
+
+<!-- ProjectContainer views -->
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectContainer"
+             class=".browser.ProjectContainerView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.view" />
+<z3c:template template="project.pt"
+              for=".browser.ProjectContainerView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<viewlet name="ProjectContainerViewMenuItem"
+         class=".browser.ProjectContainerViewMenuItem"
+         for="..interfaces.IProjectContainer"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.view" />
+
+<zope:adapter name="TitleColumn"
+              factory=".browser.TitleColumn"
+              for="..interfaces.IProjectContainer
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+<zope:adapter name="SizeColumn"
+              factory=".browser.SizeColumn"
+              for="..interfaces.IProjectContainer
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+<zope:adapter name="ThumbnailColumn"
+              factory=".browser.ThumbnailColumn"
+              for="..interfaces.IProjectContainer
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+
+<!-- Project views -->
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="project.pt"
+              for=".browser.ProjectView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<viewlet name="ProjectContainerViewMenuItem"
+         class=".browser.ProjectContainerViewMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.view" />
+
+<z3c:pagelet name="edit.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectEdit"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<viewlet name="ProjectEditMenuItem"
+         class=".browser.ProjectEditMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+<zope:adapter name="TitleColumn"
+              factory=".browser.TitleColumn"
+              for="..interfaces.IProject
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+<zope:adapter name="SizeColumn"
+              factory=".browser.SizeColumn"
+              for="..interfaces.IProject
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+<zope:adapter name="ThumbnailColumn"
+              factory=".browser.ThumbnailColumn"
+              for="..interfaces.IProject
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+
+
+<!-- Projectitem views -->
+<z3c:pagelet name="edit.html"
+             for="..interfaces.IProjectItem"
+             class=".browser.ProjectItemEdit"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<viewlet name="ProjectItemEditMenuItem"
+         class=".browser.ProjectItemEditMenuItem"
+         for="..interfaces.IProjectItem"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectItem"
+             class=".browser.ProjectItemView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="file.pt"
+              for=".browser.ProjectItemView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectImage"
+             class=".browser.ProjectImageView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="image.pt"
+              for=".browser.ProjectImageView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectVideo"
+             class=".browser.ProjectVideoView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="video.pt"
+              for=".browser.ProjectVideoView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<viewlet name="ProjectItemViewMenuItem"
+         class=".browser.ProjectItemViewMenuItem"
+         for="..interfaces.IProjectItem"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.view" />
+
+<configure package="zope.file">
+<view class="zope.file.download.Display"
+      permission="zope.View"
+      for="zope.file.interfaces.IFile"
+      name="display"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+<view class="zope.file.download.Download"
+      permission="zope.View"
+      for="zope.file.interfaces.IFile"
+      name="download"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+</configure>
+
+<!-- ADDING PROJECT-->
+<z3c:pagelet name="add_project.html"
+             for="..interfaces.IProjectContainer"
+             class=".browser.ProjectAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:template template="add.pt"
+              for=".browser.ProjectAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<viewlet name="ProjectAddMenuItem"
+         class=".browser.ProjectAddMenuItem"
+         for="..interfaces.IProjectContainer"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+<z3c:pagelet name="add_project.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<viewlet name="ProjectAddMenuItem"
+         class=".browser.ProjectAddMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+
+<!-- ADDING A FILE -->
+<z3c:pagelet name="add_projectitem.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectItemAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:template template="add.pt"
+              for=".browser.ProjectItemAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<zope:adapter factory=".browser.BigFileUploadDataConverter" />
+<zope:adapter factory=".browser.BigFileValidator" />
+<zope:adapter factory=".browser.BigFileFieldWidget" />
+
+<viewlet name="ProjectItemAddMenuItem"
+         class=".browser.ProjectItemAddMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+
+<!-- TEXT PAGE -->
+<z3c:pagelet name="add_page.html"
+             for="..interfaces.IProject"
+             class=".browser.ProjectTextAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:pagelet name="add_page.html"
+             for="..interfaces.IProjectContainer"
+             class=".browser.ProjectTextAdd"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+<z3c:template template="add.pt"
+              for=".browser.ProjectTextAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:pagelet name="index.html"
+             for="..interfaces.IProjectText"
+             class=".browser.ProjectTextView"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+<z3c:template template="text.pt"
+              for=".browser.ProjectTextView"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<zope:adapter factory=".browser.ProjectTextThumbnail"
+              trusted="yes"/>
+
+<viewlet name="ProjectTextAddMenuItem"
+         class=".browser.ProjectTextAddMenuItem"
+         for="..interfaces.IProjectContainer"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+
+<viewlet name="ProjectTextAddMenuItem"
+         class=".browser.ProjectTextAddMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.edit" />
+         
+<z3c:pagelet name="edit.html"
+             for="..interfaces.IProjectText"
+             class=".browser.ProjectTextEdit"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.edit" />
+
+<!-- Static images -->
+<resourceDirectory name="project_img"
+                   directory="img"
+                   permission="zope.Public"
+                   layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<resource name="folder.png"
+          file="img/folder.png"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+<resource name="text.png"
+          file="img/text.png"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<!-- just for the ZMI -->
+<menuItems menu="zmi_views"
+           for="..interfaces.IProject"
+           permission="eztranet.project.view">
+    <menuItem title="edit"
+              action="edit.html" />
+    <menuItem title="Permissions"
+              action="permissions.html" />
+    <menuItem title="Contents"
+              action="contents.html" />
+</menuItems>
+
+<menuItems menu="zmi_views"
+           for="..interfaces.IProjectItem"
+           permission="eztranet.project.edit">
+    <menuItem title="edit"
+              action="edit.html" />
+</menuItems>
+
+<!-- comment management -->
+<viewlet name="CommentsMenuItem"
+         class=".browser.CommentMenuItem"
+         for="..interfaces.IProjectItem"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.view" />
+<viewlet name="CommentsMenuItem"
+         class=".browser.CommentMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.project.view" />
+
+<viewlet name="fileuploadjs"
+         class=".browser.FileUploadHeader"
+         for="*"
+         view=".browser.ProjectItemAdd"
+         manager="eztranet.skin.interfaces.IHeaders"
+         permission="zope.Public"
+         layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+
+<!-- for the ZMI -->
+<addMenuItem title="Eztranet text page"
+             class="eztranet.project.project.ProjectText"
+             permission="zope.ManageContent" />
+
+<zope:interface interface="eztranet.project.interfaces.IOrderConfig"
+                type="eztranet.config.interfaces.IConfigFormType" />
+
+</configure>

@@ -1,0 +1,121 @@
+===========================
+test for the config adapter
+===========================
+eztranet configurations are annotations that behave like acquisition
+
+Setup
+-----
+
+First some imports::
+
+    >>> from zope.interface import alsoProvides
+    >>> from zope.app.folder import Folder
+    >>> from zope.app.container.contained import Contained
+    
+We create a dummy locatable object hosted by a container::
+
+    >>> folder1 = Folder()
+    >>> folder2 = Folder()
+    >>> class MyObject(Contained):
+    ...     pass
+    >>> myobj = MyObject()
+
+The hierarchy is as follows::
+
+    folder1
+        folder2
+            myobj
+
+    >>> folder2['myobj'] = myobj
+    >>> folder1['folder2'] = folder2
+
+
+We set the three objects configurable::
+
+    >>> from eztranet.config.interfaces import IConfigurable
+    >>> alsoProvides(myobj, IConfigurable)
+    >>> alsoProvides(folder1, IConfigurable)
+    >>> alsoProvides(folder2, IConfigurable)
+
+Get and set config
+------------------
+
+Since our objects are configurable, we can set and get some configuration with
+the provided adapter::
+
+    >>> from eztranet.config.interfaces import IConfig
+    >>> IConfig(folder1)
+    <eztranet.config.config.Config object at ...>
+
+    >>> IConfig(folder1).get_config('foobar')
+
+    >>> IConfig(folder2)
+    <eztranet.config.config.Config object at ...>
+
+    >>> IConfig(folder2).get_config('foobar')
+
+    >>> IConfig(myobj)
+    <eztranet.config.config.Config object at ...>
+ 
+    >>> IConfig(myobj).get_config('foobar')
+
+If we set a configuration in the top folder, it's available everywhere::
+
+    >>> IConfig(folder1).set_config('key', 'value')
+    >>> IConfig(folder1).get_config('key')
+    'value'
+    >>> IConfig(folder2).get_config('key')
+    'value'
+    >>> IConfig(myobj).get_config('key')
+    'value'
+
+If we set a configuration in the middle folder, it's available only below::
+
+    >>> IConfig(folder2).set_config('key2', 'value2')
+    >>> IConfig(folder1).get_config('key2')
+
+    >>> IConfig(folder2).get_config('key2')
+    'value2'
+    >>> IConfig(myobj).get_config('key2')
+    'value2'
+
+If we set a configuration in the final object, it's available only for it::
+
+    >>> IConfig(myobj).set_config('key3', 'value3')
+    >>> IConfig(folder1).get_config('key3')
+
+    >>> IConfig(folder2).get_config('key3')
+
+    >>> IConfig(myobj).get_config('key3')
+    'value3'
+
+We can override the config of the upper folder::
+
+    >>> IConfig(myobj).set_config('key', 'myvalue')
+    >>> IConfig(folder1).get_config('key')
+    'value'
+    >>> IConfig(folder2).get_config('key')
+    'value'
+    >>> IConfig(myobj).get_config('key')
+    'myvalue'
+
+A value of None is equivalent to a missing configuration::
+
+    >>> IConfig(myobj).set_config('key', None)
+    >>> IConfig(folder1).get_config('key')
+    'value'
+    >>> IConfig(folder2).get_config('key')
+    'value'
+    >>> IConfig(myobj).get_config('key')
+    'value'
+
+
+
+
+Cleanup the deleted config
+--------------------------
+
+
+
+
+

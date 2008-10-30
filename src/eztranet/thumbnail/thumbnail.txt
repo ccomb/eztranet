@@ -1,0 +1,322 @@
+This package allows to compute thumbnails for objects, and to store them
+in the annotations as blob.
+
+======================
+Thumbnail of an object
+======================
+First some imports::
+
+    >>> from eztranet.thumbnail.interfaces import IThumbnailed, IThumbnail, IThumbnailer
+    >>> from eztranet.thumbnail.thumbnail import Thumbnail, ImageThumbnailer, VideoThumbnailer
+    >>> from zope.interface import alsoProvides, Interface, implements
+    >>> from zope.component import adapts, adapter, provideAdapter
+    >>> import eztranet.thumbnail
+    >>> from os.path import dirname, join
+    >>> from zope.file.interfaces import IFile
+    >>> from zope.file.file import File
+    >>> import os
+
+
+Any object can store a thumbnail in its annotations.
+We create a generic interface, class and an instance::
+
+    >>> class IMyObject(Interface):
+    ...     pass
+    >>> class MyObject(object):
+    ...   implements(IMyObject)
+    >>> myobj = MyObject()
+    
+We first register the thumbnail adapter (normally done via zcml)::
+
+    >>> provideAdapter(Thumbnail, (IThumbnailed,), IThumbnail)
+
+We just tell that the object can have a thumbnail (also done via zcml)::
+
+    >>> alsoProvides(myobj, IThumbnailed)
+    >>> IThumbnailed.providedBy(myobj)
+    True
+
+Now we can lookup the Thumbnail adapter for our object::
+
+    >>> thumb = IThumbnail(myobj)
+    >>> thumb
+    <eztranet.thumbnail.thumbnail.Thumbnail object at ...>
+
+Now, the thumbnail object can give the thumbnail image itself,
+but it is still empty for now::
+
+    >>> thumb.image is None
+    True
+
+The thumbnail adapter has a method to compute the thumbnail image::
+
+    >>> thumb.compute_thumbnail()
+
+It does nothing by default because we don't know how to compute the thumbnail.
+We have to provide a "thumbnailer" for our object.
+A thumbnailer is just a callable adapter that returns the content of an image,
+given the object from which to compute the thumbnail::
+
+We create a dummy thumbnailer, and we register it as an adapter::
+
+    >>> class DummyThumbnailer(object):
+    ...     adapts(IMyObject)
+    ...     def __init__(self, context):
+    ...         self.context = context
+    ...     def __call__(self, size=120):
+    ...         return 'dummy content'
+    >>> provideAdapter(DummyThumbnailer, (IMyObject,), IThumbnailer)
+
+Now we are able to ask for a thumbnailer for our object::
+
+    >>> myobject_dummythumbnailer = IThumbnailer(myobj)
+    >>> myobject_dummythumbnailer()
+    'dummy content'
+
+So now if we compute the thumbnail image, we get it in the thumbnail object::
+
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image
+    <zope.file.file.File object at ...>
+    >>> thumb.image.open().read()
+    'dummy content'
+
+We can also remove the thumbnail::
+
+    >>> thumb.image = None
+    >>> thumb.image is None
+    True
+
+=================
+Image thumbnailer
+=================
+An image thumbnailer is provided by the package.
+It is registered as a named adapter to the blob-based zope.file.interfaces.IFile
+And the name is the major contentType 'image'.
+
+First we create a source blob-based image file,
+and we tell it can hold a thumbnail ::
+
+    >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> blobfile = File()
+    >>> fd = blobfile.open('w')
+    >>> fd.write(open(samplepath).read())
+    >>> fd.close()
+    >>> blobfile.size
+    3172
+    >>> alsoProvides(blobfile, IThumbnailed)
+
+We initialize the content type, but this should be done during upload::
+
+    >>> blobfile.mimeType = 'image/png'
+
+Then we register the image thumbnailer (done via zcml)::
+
+    >>> provideAdapter(ImageThumbnailer, (IFile,), IThumbnailer, 'image')
+
+Now we can directly call the thumbnail adapter and compute the thumbnail::
+
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.image is None
+    True
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image
+    <zope.file.file.File object at ...>
+    >>> 1000 < thumb.image.size < 2000
+    True
+
+Try to compute again the thumbnail::
+
+    >>> thumb.compute_thumbnail()
+    >>> 1000 < thumb.image.size < 2000
+    True
+   
+
+If the thumbnail can not be computed, we get a default one::
+
+    >>> fd = blobfile.open('w')
+    >>> fd.write('bad content')
+    >>> fd.close()
+    >>> blobfile.size
+    11
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image is None
+    True
+
+=================
+Video thumbnailer
+=================
+A video thumbnailer is provided by the package.
+It is registered as a named adapter to the blob-based zope.file.interfaces.IFile
+And the name is the major contentType 'video'.
+
+We keep the same file as before but we fill it with a ogg video::
+
+    >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
+    >>> fd = blobfile.open('w')
+    >>> fd.write(open(samplepath).read())
+    >>> fd.close()
+    >>> blobfile.size
+    180511
+
+We initialize the content type, but this should be done during upload::
+
+    >>> blobfile.mimeType = 'video/ogg'
+
+Then we register the video thumbnailer (done via zcml)::
+
+    >>> provideAdapter(VideoThumbnailer, (IFile,), IThumbnailer, 'video')
+
+Now we can directly call the thumbnail adapter and compute the thumbnail::
+
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.image is None
+    True
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image
+    <zope.file.file.File object at ...>
+    >>> 10000 < thumb.image.size < 20000
+    True
+
+
+If the thumbnail can not be computed, we get None::
+
+    >>> fd = blobfile.open('w')
+    >>> fd.write('bad content')
+    >>> fd.close()
+    >>> blobfile.size
+    11
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image is None
+    True
+
+=================
+Default thumbnail
+=================
+
+If we don't have a correct mimeType, we get None::
+
+    >>> blobfile.mimeType = 'unknown type'
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.image is None
+    True
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image is None
+    True
+
+==============
+thumbnail view
+==============
+
+We recreate the blobfile and its thumbnail::
+
+    >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> fd = blobfile.open('w')
+    >>> fd.write(open(samplepath).read())
+    >>> fd.close()
+    >>> blobfile.mimeType = 'image/png'
+    >>> blobfile.size
+    3172
+    >>> thumb.compute_thumbnail()
+    >>> 1000 < thumb.image.size < 2000
+    True
+
+We put the blob in the database
+
+    >>> from ZODB.MappingStorage import MappingStorage
+    >>> from ZODB.blob import BlobStorage
+    >>> from ZODB.DB import DB
+    >>> import transaction
+    >>> import tempfile
+    >>> from tempfile import mkdtemp
+    >>> base_storage = MappingStorage("test")
+    >>> blob_dir = mkdtemp()
+    >>> blob_storage = BlobStorage(blob_dir, base_storage)
+    >>> database = DB(blob_storage)
+    >>> connection = database.open()
+    >>> root = connection.root()
+    >>> root['blobfile'] = blobfile
+    >>> transaction.commit()
+    
+Then we call the thumbnail view, that returns a DownloadResult
+with the content of the thumbnail::
+
+    >>> from zope.publisher.browser import TestRequest
+    >>> from eztranet.thumbnail.browser import ThumbnailImageView
+    >>> d = ThumbnailImageView(blobfile, TestRequest())()
+    >>> 1000 < len(iter(d).next()) < 2000
+    True
+
+If the thumbnail does not exist, we get a default one::
+
+    >>> blobfile.mimeType = 'unknown type'
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image is None
+    True
+    >>> d = ThumbnailImageView(blobfile, TestRequest())()
+    >>> len(d)
+    2541
+
+We can choose a different default thumbnail by setting
+a resource in a custom thumbnail adapter,
+and registering the corresponding resource::
+
+We first create and register the custom thumbnail adapter::
+
+    >>> class CustomThumbnail(Thumbnail):
+    ...     resource = 'default.png'
+    >>> provideAdapter(CustomThumbnail, (IThumbnailed,), IThumbnail)
+
+Then create and register the resource factory::
+
+    >>> from zope.app.publisher.browser.fileresource import FileResourceFactory
+    >>> from zope.security.checker import CheckerPublic
+    >>> resourcepath = join(dirname(__file__), 'sample.png')
+    >>> resourcefact = FileResourceFactory(resourcepath, CheckerPublic, 'default.png')
+    >>> provideAdapter(resourcefact, (Interface,), Interface, 'default.png')
+
+    >>> d = ThumbnailImageView(blobfile, TestRequest())()
+    >>> len(d)
+    3172
+
+
+We restore our previous thumbnails adapter and mimetype::
+
+    >>> blobfile.mimeType = 'image/png'
+    >>> provideAdapter(VideoThumbnailer, (IFile,), IThumbnailer, 'video')
+
+===========================
+configurable thumbnail size
+===========================
+We can set the thumbnail size in the persistent configuration of the object.
+Our object just have to be IConfigurable::
+
+    >>> from eztranet.config.interfaces import IConfigurable, IConfig
+    >>> alsoProvides(blobfile, IConfigurable)
+
+Now we can set the thumbnail size::
+
+    >>> IConfig(blobfile).set_config('eztranet.thumbnail.size', 100)
+    >>> IConfig(blobfile).get_config('eztranet.thumbnail.size')
+    100
+    >>> thumb = IThumbnail(blobfile)
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    1099
+    >>> IConfig(blobfile).set_config('eztranet.thumbnail.size', 200)
+    >>> thumb.compute_thumbnail()
+    >>> thumb.image.size
+    2585
+
+
+
+=======
+Cleanup
+=======
+We clean the temporary database::
+
+    >>> import shutil
+    >>> shutil.rmtree(blob_dir)
+    >>> database.close()
+

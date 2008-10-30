@@ -1,0 +1,25 @@
+<configure xmlns:zope="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           i18n_domain="eztranet">
+
+
+<zope:subscriber handler=".users.EztranetUserAdded" />
+<zope:subscriber handler=".users.EztranetUserModified" />
+
+<z3c:pagelet name="showpassword.html"
+             for="eztranet.users.interfaces.IEztranetUser"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             class=".users.ShowPassword"
+             permission="eztranet.manage" />
+<z3c:template template="showpassword.pt"
+              for=".users.ShowPassword"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:viewlet name="ShowPasswordMenuItem"
+                 permission="eztranet.manage"
+                 class=".browser.ShowPasswordMenuItem"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+
+</configure>

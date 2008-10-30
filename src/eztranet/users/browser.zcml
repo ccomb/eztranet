@@ -1,0 +1,143 @@
+<configure xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
+           xmlns:zope="http://namespaces.zope.org/zope"
+           i18n_domain="eztranet">
+
+<!-- login form -->
+<z3c:pagelet name="loginForm.html"
+             class=".browser.LoginForm"
+             for="*"
+             permission="zope.View"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:template template="loginform.pt"
+              for=".browser.LoginForm"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<!-- authentication page -->
+<z3c:pagelet class=".browser.HTTPAuthenticationLogin"
+             allowed_interface="zope.app.publisher.interfaces.http.ILogin"
+             for="*"
+             permission="zope.View"
+             name="login.html"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+<z3c:template template="login.pt"
+              for=".browser.HTTPAuthenticationLogin"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<!-- logout -->
+<z3c:pagelet name="logout.html"
+             class=".browser.HTTPAuthenticationLogout"
+             allowed_interface="zope.app.publisher.interfaces.http.ILogout"
+             for="*"
+             permission="zope.Public"
+             layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<z3c:template template="logout.pt"
+              for=".browser.HTTPAuthenticationLogout"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<zope:adapter name="login_logout"
+              factory=".browser.LoginLogout"
+              provides="zope.contentprovider.interfaces.IContentProvider"
+              permission="zope.Public" />
+
+<browser:viewlet name="logoutjs"
+                 class=".browser.LogoutHeader"
+                 for="*"
+                 view=".browser.HTTPAuthenticationLogout"
+                 manager="eztranet.skin.interfaces.IHeaders"
+                 permission="zope.Public"
+                 layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<!-- user list -->
+<browser:containerViews
+       for=".interfaces.IEztranetUsersContainer"
+       add="eztranet.manage" />
+<z3c:pagelet name="contents.html"
+             class=".browser.EztranetUsers"
+             for=".interfaces.IEztranetUsersContainer"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<z3c:template template="users.pt"
+              for=".browser.EztranetUsers"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:viewlet name="EztranetUsersMenuItem"
+                 class=".browser.EztranetUsersMenuItem"
+                 for=".interfaces.IEztranetUsersContainer"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+<zope:adapter name="AdminColumn"
+              factory=".browser.AdminColumn"
+              for=".interfaces.IEztranetUsersContainer
+                   zope.interface.Interface
+                   z3c.contents.interfaces.IContentsPage"
+              provides="z3c.table.interfaces.IColumn" />
+
+<!-- user views -->
+<z3c:pagelet name="add_user.html"
+             class=".browser.EztranetUserAdd"
+             for=".interfaces.IEztranetUsersContainer"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<z3c:template template="adduser.pt"
+              for=".browser.EztranetUserAdd"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:viewlet name="EztranetUserAddMenuItem"
+                 class=".browser.EztranetUserAddMenuItem"
+                 for=".interfaces.IEztranetUsersContainer"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+<z3c:pagelet name="edit_user.html"
+             class=".browser.EztranetUserEdit"
+             for=".interfaces.IEztranetUser"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<browser:viewlet name="EztranetUserEditMenuItem"
+                 class=".browser.EztranetUserEditMenuItem"
+                 for=".interfaces.IEztranetUser"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+<z3c:pagelet name="index.html"
+             class=".browser.EztranetUserView"
+             for=".interfaces.IEztranetUser"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<browser:viewlet name="EztranetUserViewMenuItem"
+                 class=".browser.EztranetUserViewMenuItem"
+                 for=".interfaces.IEztranetUser"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+
+<!-- local grants -->
+<z3c:pagelet name="permissions.html"
+             class=".browser.ProjectGranting"
+             for="eztranet.project.interfaces.IProject"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<z3c:template template="granting.pt"
+              for=".browser.ProjectGranting"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:viewlet name="ProjectGrantingMenuItem"
+                 class=".browser.ProjectGrantingMenuItem"
+                 for="eztranet.project.interfaces.IProject"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+
+<z3c:pagelet name="permissions.html"
+             class=".browser.ProjectGranting"
+             for="eztranet.project.interfaces.IProjectItem"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<browser:viewlet name="ProjectGrantingMenuItem"
+                 class=".browser.ProjectGrantingMenuItem"
+                 for="eztranet.project.interfaces.IProjectItem"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+
+</configure>

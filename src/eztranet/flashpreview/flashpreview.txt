@@ -1,0 +1,52 @@
+This package allows to create a flash video of any uploaded video file
+using ffmpeg as an external requirement. The encoded flash movie is stored
+as a blob in the annotations of the video file.
+It also offers a content provider with a flash movie player to display the movie.
+
+We create a blob file from a sample video file
+
+    >>> from zope.file.file import File
+    >>> from os.path import join, dirname, exists
+    >>> import eztranet.flashpreview
+
+    >>> blobfile = File()
+    >>> fd = blobfile.open('w')
+    >>> samplepath = join(dirname(eztranet.flashpreview.__file__), 'sample.ogg')
+    >>> samplefd = open(samplepath)
+    >>> fd.write(samplefd.read())
+    >>> samplefd.close()
+    >>> fd.close()
+    >>> blobfile.size
+    180511
+
+We have an adapter on any annotatable file that allows to encode the flash preview::
+
+    >>> from zope.annotation.interfaces import IAttributeAnnotatable
+    >>> from zope.interface import alsoProvides
+    >>> alsoProvides(blobfile, IAttributeAnnotatable)
+    >>> from eztranet.flashpreview.flashpreview import FlashPreview
+    >>> flashpreview = FlashPreview(blobfile)
+    >>> thread = flashpreview.encode()
+    >>> thread.join()
+
+Now the file has an annotation with an encoded flv file::
+
+    >>> from zope.annotation.interfaces import IAnnotations
+    >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> type(file)
+    <class 'zope.file.file.File'>
+
+
+If we encode a bad file, we get a FAILED string istead of a file::    
+
+    >>> fd = blobfile.open('w')
+    >>> fd.write('bad video content')
+    >>> fd.close()
+    >>> blobfile.size
+    17
+    >>> thread = flashpreview.encode()
+    >>> thread.join()
+    >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> file
+    'FAILED'
+

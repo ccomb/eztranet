@@ -1,0 +1,33 @@
+<i18n:block domain="eztranet">
+<div style="margin-top: 5%">
+
+<div style="width: 100%; text-align: right">
+<a href="http://gorfou.fr/site/eztranet.html"
+   style="color: yellow; font-weight: bold"
+   i18n:translate="">
+    (Back to Gorfou)
+</a>
+</div>
+
+<h2 i18n:translate="">
+  Eztranet demo
+</h2>
+
+<p i18n:translate="">
+You can try the Eztranet by clicking on "projects" (at the top), on
+"connection" (top-left corner), or on the icon below.
+</p>
+<ul>
+  <li><span i18n:translate="">Login: </span> admin</li>
+  <li><span i18n:translate="">Password: </span> eztranet</li>
+</ul>
+</div>
+<div class="item">
+ <a href="projects">
+   <img src="++resource++project_img/folder.png"
+        alt="projects" />
+</a>
+<a href="projects"
+   i18n:translate="">Projects</a>
+</div>
+</i18n:block>

@@ -1,0 +1,230 @@
+body {
+    font-family: Sans-serif;
+    background: #6C77AE;
+    color: #B8BEDF;
+    font-size: 90%;
+    background-image: url(/@@/images/fond.png);
+    background-repeat: repeat-x;
+}
+a {
+    text-decoration: none;
+    color: #D6DCF5;
+}
+a:hover {
+    color: #F9F9FC;
+}
+h1 {
+    font-size: 150%;
+    margin: 5px;
+    padding-left: 5px;
+}
+div#login_logout {
+    position: absolute;
+    top: 0;
+    left: -20%;
+}
+div#main {
+    position: absolute;
+    top: 28px;
+    margin-left: 22%;
+    padding-bottom: 10px;
+    width: 720px;
+    min-height: 700px;
+    background: #6C77AD url(/@@/images/fondmain.png) no-repeat;
+    border: solid 2px #586498;
+}
+div#breadcrumb {
+    font-size: 100%;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+div#navigationTree {
+    position: absolute;
+    background: #586498;
+    width: 400px;
+    top: 119px;
+    margin-left: 5%;
+    overflow: hidden;
+}
+ul#main_menu {
+    list-style-type: none;
+    margin-bottom: 7px;
+    margin-top: 65px;
+    margin-left: 230px;
+}
+ul#main_menu li {
+    display: inline;
+    padding: 10px;
+}
+ul#main_menu a {
+    font-weight: bold;
+}
+ul#tab_menu {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #B8BEDF;
+    border-top: solid 2px #B8BEDF;
+}
+ul#tab_menu a {
+    color: #3F486E;
+    margin-left: 5px;
+}
+ul#tab_menu li {
+    display: inline;
+}
+ul#tab_menu li a {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+ul#tab_menu li a.active-menu-item {
+    color: white;
+    background-color: #6C77AE;
+}
+ul li a.active-menu-item { font-weight: bold; }
+div#body {
+    margin-top: 0px;
+    padding: 0.5em;
+}
+/*  Styles for xmltree */
+#navtreecontents a { cursor: pointer; height: 20px; }
+#navtreecontents loading { display: block; padding-left: 31px; height: 18px; }
+#navtreecontents expand { background-repeat: no-repeat; padding-left: 10px; display: inline; cursor: pointer; }
+#navtreecontents icon { background-repeat: no-repeat; margin-left: 7px; padding-left: 3px; display: inline;  cursor: auto; }
+#navtreecontents collection { display: block; margin-left: 8px; height: auto; }
+#navtreecontents icon.selected a { padding-left: 3px; padding-right: 3px; background-color: #6C77AE; color: white; font-weight: bold;  }
+div#item_toolbar {
+    background: #6C77AE;
+    width: 100%;
+    padding: 5px;
+}
+div#item_toolbar a {
+    margin-right: 10px;
+    color: #c6cce7;
+    text-decoration: none;
+}
+div#item_toolbar a:hover {
+    color: #F9F9FC;
+}
+div.item {
+    float: left;
+    height: 13em;
+    text-align: center;
+    overflow: hidden;
+    min-width: 160px;
+    margin-left: 20px;
+    margin-bottom: 1em;
+}
+div.item a {
+    display: block;
+    font-weight: bold;
+}
+div#buttons {
+    margin-left: 60%;
+    right: 0;
+}
+div.listing {
+    margin-top: 25px;
+}
+a img {
+    border: none;
+}
+.itemcreated, .itemmodified, .itemsize {
+    font-size: 75%;
+}
+div#author {
+    position: absolute;
+    margin-top: 66px;
+    margin-left: 25%;
+    font-size: 60%;
+}
+div.page_error {
+    color: yellow;
+    margin: 5px;
+    font-weight: bold;
+}
+div#comments {
+    font-size: 85%;
+}
+div#comments div div {
+    color: white;
+    font-size: 150%;
+}
+div.comment {
+    margin: 0.7em;
+}
+div.nb_comments, div a.nb_comments {
+    margin: 5px;
+    color: yellow;
+}
+input, textarea {
+    border: inset 1px;
+    color: #4D4D4D;
+    background: #D2D6E7;
+    margin-bottom: 5px;
+}
+input[type=submit] {
+    border: outset 1px;
+}
+th { border: solid 5px #6C77AD; }
+p#description {
+    margin: 5px;
+}
+div#lang {
+    float:right;
+    margin: 5px;
+}
+div#lang select {
+    background: #6C77AE;
+    color: #B8BEDF;
+}
+div#viewspace {
+    margin-top: 10px;
+}
+#company-logo {
+        position: absolute;
+        width: 180px;
+        height: 55px;
+        margin-left: 520px;
+}
+form div.row, table.form-fields, div#actionsView {
+        margin-left: 10px;
+}
+#form-widgets-description {
+  width: 40em;
+  height: 15em;
+}
+#form-widgets-text {
+  width: 50em;
+  height: 30em;
+}
+tr.odd {
+    background: #707AB3;
+}
+tr.even {
+    background: #6973A8;
+}
+td { padding: 7px; }
+td a { font-size: 140%; font-weight: bold; }
+.error, .errors { color: yellow; }
+.fuProgress {
+    color:white;
+    background:#586498;
+}
+.fuProgressSuccess {
+    color:white;
+    background:#76ad6c !important;
+}
+.fuProgressFailure {
+    color:white;
+    background:#ad6c76 !important;
+}
+.fuNext {
+    margin-left: 275px;
+}
+
+#main_video, #main_image {
+    min-height: 500px;
+    margin-left: -0.5em;
+}

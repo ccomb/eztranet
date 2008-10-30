@@ -1,0 +1,21 @@
+<span tal:condition="python: not len(context)"
+      i18n:translate="">
+   You don't have any eztranet site yet.
+   Login as admin/istanbul to <a href="add_eztranet.html">add an eztranet</a>.
+</span>
+
+<ul tal:condition="python: len(context)">
+<tal:block i18n:translate="">
+  List of your eztranet sites:
+</tal:block>
+<li tal:repeat="site view/eztranet_sites">
+    <a href="#"
+       tal:attributes="href site" 
+       tal:content="site">
+        an eztranet site
+    </a>
+</li>
+<li tal:condition="python:False">another eztranet site</li>
+</ul>
+<a tal:condition="python: len(context) > 0"
+   href="add_eztranet.html">add an eztranet</a>

@@ -1,0 +1,31 @@
+<configure xmlns="http://namespaces.zope.org/browser"
+           xmlns:zope="http://namespaces.zope.org/zope">
+
+<zope:adapter name="eztranet.flashpreview.flashvideo"
+              factory=".flashpreview.FlashContentProvider"
+              permission="eztranet.flashpreview.view" />
+
+<page name="flv"
+      for="..interfaces.IFlashPreviewable"
+      class=".flashpreview.FlvView"
+      permission="eztranet.flashpreview.view"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<!-- flowplayer version 2.2.4 -->
+<resource name="flowplayer.swf"
+          file="FlowPlayerLight.swf"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<resource name="fullscreen.html"
+          file="fullscreen.html"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<resource name="fullscreen.js"
+          file="fullscreen.js"
+          permission="zope.Public"
+          layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+</configure>
+

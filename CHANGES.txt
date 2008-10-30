@@ -1,0 +1,28 @@
+1.3.0 (unreleased)
+------------------
+- Allow to configure the thumbnail size
+- use subprocess module for external processes
+- directly store the flv file after encoding
+- fixed some translation issues
+
+1.2.0 (2008-09-04)
+------------------
+- port user interface to z3c components
+- added an upload progress bar (gp.fileupload, thanks gawel!)
+
+1.1 (never released)
+--------------------
+- use blobs for uploaded files
+- allow uploading of several files
+- optimized memory during upload and browsing
+- graphical enhancements
+- antialiasing on thumbnails
+- improved left tree menu
+- automatic detection of uploaded files
+- internationalization (with en + fr)
+- new flash movie reader
+- move to buildout and zope3.4
+
+1.0 (2007-07-10)
+----------------
+- initial version for Purple Productions

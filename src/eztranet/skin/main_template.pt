@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xml:lang="en" lang="en"
+      i18n:domain="eztranet"
+      metal:define-macro="page">
+
+<head>
+  <title tal:content="provider:pagetitle">Eztranet (main skin template)</title>
+  <meta http-equiv="imagetoolbar" content="no"/>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+  <link rel="shortcut icon" type="image/png" href="++resource++images/icon.png" />
+  <link rel="stylesheet" type="text/css" href="++resource++main.css"/>
+  <script type="text/javascript" src="++resource++functions.js"></script>
+  <metal:block define-slot="headers" />
+  <metal:tree use-macro="macro:navigation_tree_js" />
+  <tal:block content="structure provider:headers" />
+</head>
+
+<body tal:attributes="onload body_onload | nothing">
+
+
+<!-- navigation tree -->
+<metal:tree use-macro="macro:navigation_tree_box" />
+
+<div id="main">
+
+<a href="http://gorfou.fr"
+   id="company-logo">
+&nbsp;
+</a>
+
+<!-- Main menu -->
+<ul id="main_menu">
+    <li tal:repeat="item provider:eztranet.main_menu">
+        <a href="#"
+           tal:attributes="href item/url"
+           tal:content="item/name">
+          action1
+        </a>
+    </li>
+    <li tal:condition="nothing"><a href="#">action2</a></li>
+</ul>
+
+<div id="login_logout" tal:content="structure provider:login_logout">
+  login or logout link
+</div>
+
+<div id="lang"
+     tal:content="structure provider:langchoice">
+  Lang choice form
+</div>
+
+<!-- breadcrumbs -->
+<div id="breadcrumb"
+     tal:define="breadcrumbs context/@@absolute_url/breadcrumbs"
+     tal:condition="python:len(breadcrumbs)>1">
+<tal:block repeat="breadcrumb breadcrumbs">
+    <a tal:attributes="href string:${breadcrumb/url}/"
+       tal:content="breadcrumb/name"
+       tal:condition="python:repeat['breadcrumb'].index()
+                      and '++etc++site' not in breadcrumb['url']">
+     item
+    </a>
+    <tal:block condition="python: repeat['breadcrumb'].index()
+                                and not repeat['breadcrumb'].end()
+                                and '++etc++site' not in breadcrumb['url']"
+               content="string: / "/>
+</tal:block>
+<span i18n:translate=""
+      tal:condition="python:'++etc++site' in 
+                            ' '.join([b['url'] for b in breadcrumbs])">
+  Users
+</span>
+</div>
+
+<!-- object title -->
+<h1>
+    <span tal:content="context/title | context/__name__ | nothing">
+        Item
+    </span>
+</h1>
+
+<!-- Tabbed menu -->
+<tal:block tal:replace="structure provider:tab_menu" />
+
+<div id="body"
+     tal:content="structure provider:pagelet">
+Here, the page content
+</div>
+
+</div><!-- main -->
+<div id="author">
+  v.<span tal:content="provider:version">v1.x</span>&nbsp;&nbsp;&nbsp;
+  <a href="http://gorfou.fr"
+     i18n:translate="">
+    Made to measure by Gorfou
+  </a>
+</div>
+
+<script type="text/javascript">
+tags = document.getElementsByTagName('input')
+for (elem in tags) {
+  if (tags[elem].type == 'text') {
+    tags[elem].focus()
+    break
+  }
+}
+</script>
+</body>
+
+</html>

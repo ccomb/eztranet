@@ -1,0 +1,47 @@
+<a class="nb_comments"
+   href="#"
+   tal:define="nb provider:nb_comments"
+   tal:condition="nb"
+   tal:attributes="href string:@@comments.html">
+  <span tal:replace="nb">N</span>
+  <span tal:condition="python:nb == 1"
+        i18n:translate="">
+    comment
+  </span>
+  <span tal:condition="python:nb > 1"
+        i18n:translate="">
+    comments
+  </span>
+</a>
+
+<p id="description"
+   tal:content="structure view/description">
+    brief description of the image
+</p>
+
+<div id="item_toolbar">
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
+    <a href="#"
+       tal:condition="python: view.originalWidth() > view.wantedWidth()"
+       onclick="toggle_image_size(800,1000)"
+       tal:attributes="onclick string:toggle_image_size(${view/wantedWidth}, ${view/originalWidth})">
+       zoom +/-
+    </a>
+    <a href="#"
+       tal:attributes="href string:${context/@@absolute_url}/@@download"
+       i18n:translate="">
+       download
+    </a>
+</div>
+
+<img id="main_image"
+     width="800"
+     src="#"
+     alt="image"
+     style="cursor: -moz-zoom-in"
+     tal:attributes="src string:${context/@@absolute_url}/@@display; 
+                     alt context/title;
+                     width view/wantedWidth;
+                     onclick string:toggle_image_size(${view/wantedWidth},
+                                                      ${view/originalWidth})"/>
+

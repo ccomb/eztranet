@@ -1,0 +1,115 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           i18n_domain="eztranet">
+
+<permission id="eztranet.project.view"
+            title="View the project" />
+<permission id="eztranet.project.edit"
+            title="Edit the project" />
+
+<role id="eztranet.project.Manager"
+      title="modify" />
+           
+<role id="eztranet.project.Member"
+      title="view" />
+
+<!-- Project Container -->
+<class class=".project.ProjectContainer">
+  <require permission="eztranet.view"
+           interface=" zope.app.container.interfaces.IReadContainer" />
+  <require permission="eztranet.project.edit"
+           interface=" zope.app.container.interfaces.IWriteContainer" />
+  <require permission="eztranet.view"
+           attributes="title" />
+  <require permission="eztranet.manage"
+           set_schema=".interfaces.IProjectContainer" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
+</class>
+
+<utility component=".project.ProjectContainerFactory"
+         name="eztranet.ProjectContainer" />
+
+<!-- Project -->
+<class class=".project.Project">
+  <require permission="eztranet.project.view"
+           attributes="title description" />
+  <require permission="eztranet.project.edit"
+           set_attributes="title description" />
+  <require permission="eztranet.project.view"
+           interface=" zope.app.container.interfaces.IReadContainer" />
+  <require permission="eztranet.project.edit"
+           interface=" zope.app.container.interfaces.IWriteContainer" />
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
+</class>
+
+<utility component=".project.ProjectFactory"
+         name="eztranet.Project" />
+<adapter factory=".project.ProjectNameChooser" />
+
+<!-- ProjectItem -->
+<class class=".project.ProjectItem">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
+  <require permission="eztranet.project.view"
+           interface="zope.file.interfaces.IFile" />
+  <require permission="eztranet.project.edit"
+           set_schema="zope.file.interfaces.IFile" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectItem" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectItem" />
+</class>
+
+<utility component=".project.ProjectItemFactory"
+         name="eztranet.ProjectItem" />
+<adapter factory=".project.ProjectItemNameChooser" />
+
+<!-- ProjectImage -->
+<class class=".project.ProjectImage">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectImage" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectImage" />
+</class>
+
+<adapter factory=".project.ProjectImageSized"
+         trusted="yes"
+         permission="eztranet.project.view" />
+
+<!-- ProjectVideo -->
+<class class=".project.ProjectVideo">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectVideo" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectVideo" />
+</class>
+
+
+<!-- ProjectText -->
+<class class=".project.ProjectText">
+  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
+  <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
+  <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <require permission="eztranet.project.view"
+           interface=".interfaces.IProjectText" />
+  <require permission="eztranet.project.edit"
+           set_schema=".interfaces.IProjectText" />
+</class>
+
+
+<include package=".browser" />
+
+
+</configure>

@@ -1,0 +1,24 @@
+<configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c">
+
+<adapter factory=".config.Config" />
+
+<z3c:pagelet name="config.html"
+             for=".interfaces.IConfigurable"
+             class=".browser.ConfigPage"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.manage" />
+<z3c:template template="config.pt"
+              for=".browser.ConfigPage"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+<browser:viewlet name="ConfigPageMenuItem"
+                 class=".browser.ConfigPageMenuItem"
+                 for=".interfaces.IConfigurable"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.manage" />
+
+
+
+</configure>

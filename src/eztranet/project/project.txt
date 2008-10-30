@@ -1,0 +1,136 @@
+
+    >>> from zope.component import getUtility
+    >>> from zope.interface import implements
+    >>> from zope.app.catalog.interfaces import ICatalog
+    >>> from zope.app.catalog.catalog import Catalog
+    >>> import zope.app.intid.interfaces
+    >>> from zope.app.testing import ztapi
+    >>> class DummyIntId(object):
+    ...     implements(zope.app.intid.interfaces.IIntIds)
+    ...     MARKER = '__dummy_int_id__'
+    ...     def __init__(self):
+    ...         self.counter = 0
+    ...         self.data = {}
+    ...     def register(self, obj):
+    ...         intid = getattr(obj, self.MARKER, None)
+    ...         if intid is None:
+    ...             setattr(obj, self.MARKER, self.counter)
+    ...             self.data[self.counter] = obj
+    ...             intid = self.counter
+    ...             self.counter += 1
+    ...         return intid
+    ...     def getObject(self, intid):
+    ...         return self.data[intid]
+    ...     def __iter__(self):
+    ...         return iter(self.data)
+    >>> intid = DummyIntId()
+    >>> ztapi.provideUtility(zope.app.intid.interfaces.IIntIds, intid)
+
+We create and register a catalog since we'll need it later.
+
+    >>> catalog = Catalog()
+    >>> ztapi.provideUtility(ICatalog, catalog)
+
+============================
+Project and ProjectContainer
+============================
+
+An eztranet project is just a container::
+
+    >>> from eztranet.project.project import Project
+    >>> from zope.app.container.interfaces import IContainer
+    >>> p = Project(title=u"projet")
+    >>> IContainer.providedBy(p)
+    True
+
+A project has a title and a description, empty by default::
+
+    >>> project = Project()
+    >>> project.title
+    u''
+    >>> project.description
+    u''
+    >>> project.title = u'project'
+    >>> project.description = u'description'
+    >>> project.title, project.description
+    (u'project', u'description')
+
+A project is also a container for projects, projectitems,
+projectvideos and projectimages::
+
+    >>> from zope.app.container.constraints import checkObject
+    >>> from eztranet.project.project import ProjectItem
+    >>> checkObject(project, u'ok', Project())
+    >>> checkObject(project, u'ok', ProjectItem())
+
+    >>> from zope.app.file.file import File
+    >>> checkObject(project, u'not ok', File())
+    Traceback (most recent call last):
+    InvalidItemType: ...
+    
+A project can only be added in a project or projectcontainer::
+
+    >>> from eztranet.project.project import ProjectContainer
+    >>> from zope.app.folder.folder import Folder
+    >>> checkObject(ProjectContainer(), u'ok', Project())
+    >>> checkObject(Project(), u'ok', Project())
+    >>> checkObject(Folder(), u'ok', Project())
+    Traceback (most recent call last):
+    InvalidContainerType: ...
+
+===========
+ProjectItem
+===========
+
+A project item is just a blob-based zope.file
+
+    >>> from zope.file.interfaces import IFile
+    >>> from eztranet.project.project import ProjectItem
+    
+    >>> item = ProjectItem()
+    >>> IFile.providedBy(item)
+    True
+
+============
+NameChoosers
+============
+
+The project and projectcontainer have a name chooser::
+
+    >>> from eztranet.project.project import ProjectItemNameChooser
+    >>> project = Project(title=u'my project')
+    >>> namechooser = ProjectItemNameChooser(project)
+    >>> namechooser.chooseName(u'', item)
+    u'ProjectItem'
+
+We try a unicode and a weird name::
+
+    >>> item.title = u'Şakir'
+    >>> namechooser.chooseName(u'', item)
+    u'\xe5\x9eakir'
+   
+    >>> item.title = u'  @+@ My project/ /O   '
+    >>> namechooser.chooseName(u'', item)
+    u'my-project---o'
+
+
+We put the item in the project, and try to add a second item
+with the same computed name.
+A number is automatically appended::
+
+    >>> project['my-project---o'] = item
+    >>> item2 = ProjectItem(title=u'  @+@ My project///O ')
+    >>> namechooser.chooseName(u'', item2)
+    u'my-project---o-2'
+    >>> del item, item2, project['my-project---o']
+
+
+========
+AddForms
+========
+
+    >>> from zope.publisher.browser import TestRequest
+    >>> from eztranet.project.browser.browser import ProjectAdd
+    >>> projects = ProjectContainer()
+
+    FIXME to finish

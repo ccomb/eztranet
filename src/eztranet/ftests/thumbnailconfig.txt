@@ -1,0 +1,178 @@
+============================================
+Functional tests for thumbnail configuration
+============================================
+
+    To see errors, add this just before the wanted line:
+    >> browser.handleErrors = False
+=======================
+Adding an Eztranet site
+=======================
+
+    >>> from zope.testbrowser.testing import Browser
+    >>> browser = Browser()
+    >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
+    >>> browser.addHeader('Accept-Language', 'en-US')
+    >>> browser.open('http://localhost/add_eztranet.html')
+    >>> browser.getControl(name='form.widgets.__name__').value = 'eztranet'
+    >>> browser.getControl(name='form.widgets.title').value = 'My Eztranet Site'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> del browser
+    >>> browser = Browser()
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.headers['status']
+    '200 Ok'
+
+==========================
+Adding Projects and videos
+==========================
+
+We add a project with 1 video, and a subproject with 2 videos::
+
+    >>> import eztranet.thumbnail
+    >>> from os.path import join, dirname
+    >>> videopath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
+    
+    >>> browser.open('http://localhost/eztranet/projects/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'project'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'subproject'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(videopath),
+    ...                                                       'video/ogg',
+    ...                                                       'sample.ogg')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(videopath),
+    ...                                                       'video/ogg',
+    ...                                                       'sample2.ogg')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(videopath),
+    ...                                                       'video/ogg',
+    ...                                                       'sample3.ogg')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+We wait for the compression to finish::
+
+    >>> import time
+    >>> for i in range(10):
+    ...     time.sleep(0.5)
+    ...     browser.open('http://localhost/eztranet/projects/project/subproject/sample3.ogg/')
+    ...     if 'compressing' not in browser.contents or i > 9:
+    ...         break
+
+==============
+thumbnail size
+==============
+
+    >>> root = getRootFolder()
+    >>> from eztranet.thumbnail.interfaces import IThumbnail
+    >>> from zope.size.interfaces import ISized
+    >>> def thumbsize_of(obj):
+    ...     return ISized(IThumbnail(obj).image).sizeForSorting()[1]
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    15256
+
+We change the thumbnail size of the sample3::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/sample3.ogg/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = '10'
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    264
+
+We change the toplevel configuration, but not sample3::
+
+
+    >>> browser.open('http://localhost/eztranet/projects/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = '50'
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    264
+
+We unset the config of sample3::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/sample3.ogg/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = ''
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    3766
+
+We change the config of sample3 without recomputing,
+then we recompute from the middle project without changing its config::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/sample3.ogg/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = '35'
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['false']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    3766
+    >>> browser.open('http://localhost/eztranet/projects/project/config.html')
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    3766
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    2010
+
+We unset the toplevel config::
+
+    >>> browser.open('http://localhost/eztranet/projects/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = ''
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    2010
+
+Then we unset the sample3 config::
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/config.html')
+    >>> browser.getControl(name='form.widgets.size').value = ''
+    >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    15256
+    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    2010
+
+

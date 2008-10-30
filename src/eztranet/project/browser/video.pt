@@ -1,0 +1,41 @@
+<a class="nb_comments"
+   href="#"
+   tal:define="nb provider:nb_comments"
+   tal:condition="nb"
+   i18n:domain="eztranet"
+   tal:attributes="href string:@@comments.html">
+  <span tal:replace="nb">N</span>
+  <span tal:condition="python:nb == 1"
+        i18n:translate="">
+    comment
+  </span>
+  <span tal:condition="python:nb > 1"
+        i18n:translate="">
+    comments
+  </span>
+</a>
+
+<p id="description"
+   tal:content="structure view/description">
+    brief description of the video
+</p>
+
+<div id="item_toolbar" i18n:domain="eztranet">
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
+    <a href="#"
+       tal:attributes="href string:${context/@@absolute_url}/@@download"
+       i18n:translate="">
+     download
+    </a>
+</div>
+
+<div id="main_video"
+     tal:content="structure provider:eztranet.flashpreview.flashvideo">
+    flash preview
+</div>
+<div i18n:domain="eztranet"
+     i18n:translate=""
+     style="font-size: 90%; padding-top: 5px;">
+  This video is just an online preview. You can download the original video by clicking on the
+"download" link.
+</div>

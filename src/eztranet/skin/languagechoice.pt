@@ -1,0 +1,25 @@
+<form action=""
+      method="POST">
+  <span i18n:domain="eztranet"
+        i18n:translate="">
+    Language:
+  </span>
+  <select name="langchoice"
+          onchange="this.parentNode.submit()">
+    <option value="auto"
+            label="auto">
+      auto
+    </option>
+    <option tal:repeat="lang python:view.langs.items()"
+            tal:attributes="value python:lang[0];
+                            label python:lang[1];
+                            selected python:view.lang==lang[0] or nothing"
+            tal:content="python:lang[1]">
+      language name
+    </option>
+  </select>
+  <input type="submit"
+         name="lang.submit"
+         value="ok"
+         style="display: None" />
+</form>

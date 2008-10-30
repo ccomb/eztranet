@@ -1,0 +1,33 @@
+<a class="nb_comments"
+   href="#"
+   tal:define="nb provider:nb_comments"
+   tal:condition="nb"
+   tal:attributes="href string:@@comments.html">
+  <span tal:replace="nb">N</span>
+  <span tal:condition="python:nb == 1"
+        i18n:translate="">
+    comment
+  </span>
+  <span tal:condition="python:nb > 1"
+        i18n:translate="">
+    comments
+  </span>
+</a>
+
+<p id="description"
+   tal:content="structure view/description">
+    brief description of the video
+</p>
+
+<div id="item_toolbar">
+<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>
+<i18n:block translate="">
+This item has no preview but you can download the file:
+</i18n:block>
+<br/><br/>
+    <a href="#"
+       tal:attributes="href string:${context/@@absolute_url}/@@download"
+       i18n:translate="">
+     download
+    </a>
+</div>

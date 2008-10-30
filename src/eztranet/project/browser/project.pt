@@ -1,0 +1,12 @@
+<p id="description" tal:content="structure view/description">description of the view</p>
+<div metal:use-macro="macro:form">
+<metal:block fill-slot="info" />
+  <div metal:fill-slot="main">
+    <tal:block replace="structure view/renderTable">table</tal:block>
+    <tal:block define="batch view/renderBatch">
+    <div class="batch" tal:condition="batch">
+      <tal:block replace="structure batch">table</tal:block>
+    </div>
+    </tal:block>
+  </div>
+</div>
