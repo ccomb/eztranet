@@ -26,8 +26,7 @@ class EztranetUsersContainer(PrincipalFolder):
     title = u'Users'
 
 class EztranetUser(InternalPrincipal):
-    """
-    an eztranet user, ie a basic Principal that can be assigned an admin role
+    """an eztranet user, ie a basic Principal that can be assigned an admin role
     """
     implements(IEztranetUser)
     passwordManagerName = 'MD5'
@@ -49,8 +48,7 @@ EztranetUserFactory=Factory(EztranetUser)
 
 @adapter(IEztranetUser, IObjectAddedEvent)
 def EztranetUserAdded(user, event):
-    """
-    a subscriber that does the necessary after a user has been added
+    """a subscriber that does the necessary after a user has been added
     """
     srm = IPrincipalRoleManager(getSite()) # The rolemanager of the site
     srm.assignRoleToPrincipal('eztranet.Member', user.login)
@@ -68,8 +66,8 @@ def recursively_unsetrole(obj, userlogin):
 
 @adapter(IEztranetUser, IObjectRemovedEvent)
 def EztranetUserRemoved(user, event):
-    """
-    A subscriber that does the necessary after a user has been removed
+    """A subscriber that does the necessary after a user has been removed
+
     We loop on every project and remove role assignment.
     """
     site = getSite()
@@ -109,8 +107,7 @@ def initial_setup(site):
     users[admin.login] = admin
 
 class UserNameChooser(NameChooser):
-    """
-    adapter that allows to choose the __name__ of a user
+    """adapter that allows to choose the __name__ of a user
     """
     implements(INameChooser)
     adapts(IEztranetUser)

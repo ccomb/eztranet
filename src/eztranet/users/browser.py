@@ -35,7 +35,8 @@ class LoginForm(BrowserPagelet):
 
 
 class HTTPAuthenticationLogin(BrowserPagelet):
-    """view class for the login"""
+    """view class for the login
+    """
     implements(ILogin)
     def login(self, nextURL=None):
         "see ILogin"
@@ -60,8 +61,8 @@ class HTTPAuthenticationLogin(BrowserPagelet):
 
 
 class HTTPAuthenticationLogout(BrowserPagelet):
-    """logout view"""
-
+    """logout view
+    """
     implements(ILogout)
 
     def logout(self, nextURL=None):
@@ -172,16 +173,17 @@ class ProjectGranting(Granting):
 
 
 class ProjectGrantingMenuItem(SimpleMenuItem):
-    title = _('Permissions')
+    title = _(u'Permissions')
     url = 'permissions.html'
     weight = 150
 
 
 class EztranetUserAdd(AddForm):
-    """The view class for adding a user"""
-
+    """The view class for adding a user
+    """
     fields = Fields(IEztranetUser).select('login','password','IsAdmin')
     label = _(u'New user')
+
     def createAndAdd(self, data):
         user=EztranetUser("","","")
         applyChanges(self, user, data)
@@ -193,7 +195,7 @@ class EztranetUserAdd(AddForm):
 
 
 class EztranetUserAddMenuItem(SimpleMenuItem):
-    title = _('New user')
+    title = _(u'New user')
     url = 'add_user.html'
 
 
@@ -204,24 +206,24 @@ class EztranetUserView(DisplayForm):
 
 
 class EztranetUserViewMenuItem(SimpleMenuItem):
-    title = _('View user')
+    title = _(u'View user')
     url = 'index.html'
 
 
 class EztranetUserEdit(EditForm):
-    """The view class for editing a user"""
-
+    """The view class for editing a user
+    """
     fields=Fields(IEztranetUser).select('password','IsAdmin')
 
 
 class EztranetUserEditMenuItem(SimpleMenuItem):
-    title = _('Edit user')
+    title = _(u'Edit user')
     url = 'edit_user.html'
 
 
 class EztranetUsers(Contents):
-    """The list of users"""
-
+    """The list of users
+    """
     startBatchingAt = 1000000
 
     def supportsRename(self):
@@ -238,7 +240,7 @@ class EztranetUsers(Contents):
 
 
 class EztranetUsersMenuItem(SimpleMenuItem):
-    title = _('List')
+    title = _(u'List')
     url = 'contents.html'
 
 

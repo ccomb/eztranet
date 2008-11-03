@@ -12,8 +12,7 @@ class IEztranetUsersContainer(IInternalPrincipalContainer, IAuthenticatorPlugin,
     title = Attribute(u'title of the users container')
 
 class IEztranetUser(IInternalPrincipal):
-    """
-    A user of the eztranet. This is an extended Principal
+    """A user of the eztranet. This is an extended Principal
     """
     containers(IEztranetUsersContainer)
     IsAdmin = Bool(_(u'Administrator'), default=False)
