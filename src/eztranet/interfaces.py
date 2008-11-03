@@ -9,7 +9,8 @@ _ = MessageFactory('eztranet')
 
 
 class IEztranetSite(IPossibleSite, IContainer, IContained):
-    """The interface of the main eztranet site container"""
+    """The interface of the main eztranet site container
+    """
     title = TextLine(title=_(u'Title (used for display)'),
                      description=_(u'The name of your Eztranet Site'))
 

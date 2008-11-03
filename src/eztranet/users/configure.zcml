@@ -36,6 +36,7 @@
               provides="zope.app.authentication.principalfolder.IInternalPrincipalContainer"
               permission="eztranet.manage" />
 
+<include file="permissions.zcml" />
 <include file="browser.zcml" />
 <!-- <include package=".insecure_addon" /> -->
 
