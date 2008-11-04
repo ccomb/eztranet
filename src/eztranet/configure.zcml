@@ -64,10 +64,10 @@
 </class>
 
 <include package=".skin" />
+<include package=".users" />
 <include package=".config" />
 <include package=".tinymce" />
 <include package=".project" />
-<include package=".users" />
 <include package=".thumbnail" />
 <include package=".comment" />
 <include package=".flashpreview" />
