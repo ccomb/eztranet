@@ -4,6 +4,8 @@ from z3c.formui.form import EditForm
 from z3c.form.field import Fields
 from interfaces import IConfigFormType
 from zope.component import getUtilitiesFor
+from zope.i18nmessageid import MessageFactory
+_ = MessageFactory('eztranet')
 
 class ConfigPage(EditForm, BrowserPagelet):
     """configuration page for everything configurable on the context"""
