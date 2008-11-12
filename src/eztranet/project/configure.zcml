@@ -74,6 +74,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectImage" />
   <require permission="eztranet.project.edit"
@@ -90,6 +91,7 @@
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.flashpreview.interfaces.IFlashPreviewable" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectVideo" />
   <require permission="eztranet.project.edit"
@@ -102,6 +104,7 @@
   <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
+  <implements interface="eztranet.config.interfaces.IConfigurable" />
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectText" />
   <require permission="eztranet.project.edit"
