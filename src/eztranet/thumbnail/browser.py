@@ -1,7 +1,7 @@
 from interfaces import IThumbnail
 from os.path import join, dirname
 from zope.component import queryAdapter, getAdapter
-from zope.file.download import Download
+from zope.file.download import Display
 from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 from zope.security.proxy import removeSecurityProxy
@@ -18,7 +18,7 @@ class ThumbnailImageView(BrowserView):
         thumbnail = removeSecurityProxy(IThumbnail(self.context))
         # if we have a thumbnail, return it
         if zope.file.interfaces.IFile.providedBy(thumbnail.image):
-            return Download(thumbnail.image, self.request)()
+            return Display(thumbnail.image, self.request)()
         if zope.app.file.interfaces.IImage.providedBy(thumbnail.image):
             return thumbnail.image.data
         # if we don't, return the default thumbnail
