@@ -100,6 +100,7 @@ Here, the page content
 </div>
 
 <script type="text/javascript">
+<!--
 tags = document.getElementsByTagName('input')
 for (elem in tags) {
   if (tags[elem].type == 'text') {
@@ -107,6 +108,7 @@ for (elem in tags) {
     break
   }
 }
+-->
 </script>
 </body>
 
