@@ -21,8 +21,8 @@ logger = logging.getLogger(__name__)
 
 
 class EztranetSiteManagerSetEvent(object):
-    """event received when the site manager is set"""
-    
+    """event received when the site manager is set
+    """
     implements(IEztranetSiteManagerSetEvent)
     def __init__(self, site):
         self.object=site
@@ -47,16 +47,15 @@ class EztranetSite(Folder, SiteManagerContainer):
 
 @adapter(IEztranetSite, IObjectAddedEvent)
 def newEztranetSiteAdded(site, event):
-    """a subscriber that do the necessary after the site is added"""
-
+    """a subscriber that do the necessary after the site is added
+    """
     site.setSiteManager(LocalSiteManager(site))
 
 
 @adapter(IEztranetSiteManagerSetEvent)
 def EztranetInitialSetup(event):
-    """create the initial objects required by the site"""
-
-    # do the necessary!
+    """create the initial objects required by the site
+    """
     site=event.object
     sm = site.getSiteManager()
     
@@ -85,8 +84,8 @@ def EztranetInitialSetup(event):
 
 
 class EztranetSiteAdd(AddForm):
-    """Form to add a new eztranet site"""
-    
+    """Form to add a new eztranet site
+    """   
     fields = Fields(IEztranetSite)
     fields['__name__'].field.title = _(u'Name (used in the URL)')
     fields['__name__'].field.description = _(u'Name used in the URL')
@@ -107,8 +106,8 @@ class EztranetSiteAdd(AddForm):
         
 
 class RootFolderView(BrowserPagelet):
-    """View of the zodb root object. Used when there is no eztranet"""
-
+    """View of the zodb root object. Used when there is no eztranet
+    """
     def eztranet_sites(self):
         return [eztranet[0] for eztranet in self.context.items()
                 if IEztranetSite.providedBy(eztranet[1])]
