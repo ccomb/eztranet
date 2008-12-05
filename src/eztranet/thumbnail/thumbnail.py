@@ -60,6 +60,7 @@ class Thumbnail(object):
             thumbnail_content = thumbnailer(size)
             if thumbnail_content is not None:
                 self.image = thumbnail_content
+                self.image.mimeType = 'image/jpeg'
 
 
 class BaseThumbnailer(object):
@@ -84,7 +85,7 @@ class ImageThumbnailer(BaseThumbnailer):
             fd = self.context.open()
             i = PIL.Image.open(fd)
             i.thumbnail((size, size), PIL.Image.ANTIALIAS)
-            i.save(tmp, "png")
+            i.save(tmp, "jpeg")
             fd.close()
             return tmp.getvalue()
         except IOError:
@@ -109,6 +110,7 @@ class VideoThumbnailer(BaseThumbnailer):
                       shell=True, stderr=PIPE, stdout=PIPE)
             thumbnail_content = p.stdout.read()
             err = p.stderr.read()
+        # TODO: convert to jpeg!!
         thumbfile = File()
         fd = thumbfile.open('w')
         fd.write(thumbnail_content)

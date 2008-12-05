@@ -9,6 +9,7 @@ from zope.traversing.browser.absoluteurl import absoluteURL
 import zope.app.file
 import zope.app.publisher
 import zope.file
+from rfc822 import formatdate, time
 
 class ThumbnailImageView(BrowserView):
     """The thumbnail view of an object"""
@@ -18,6 +19,10 @@ class ThumbnailImageView(BrowserView):
         thumbnail = removeSecurityProxy(IThumbnail(self.context))
         # if we have a thumbnail, return it
         if zope.file.interfaces.IFile.providedBy(thumbnail.image):
+            if not thumbnail.image.mimeType:                                # only for purple
+                removeSecurityProxy(thumbnail.image).mimeType = 'image/png' # only for purple
+            # expires next week
+            self.request.response.setHeader('Expires',formatdate(time.time() + 7 * 86400))
             return Display(thumbnail.image, self.request)()
         if zope.app.file.interfaces.IImage.providedBy(thumbnail.image):
             return thumbnail.image.data
@@ -41,7 +46,7 @@ class ThumbnailUrlView(BrowserView):
     def __call__(self):
         thumbnail = removeSecurityProxy(IThumbnail(self.context)) #TODO check this
         if thumbnail.image is not None:
-            return absoluteURL(self.context, self.request) + "/@@thumbnail_image"
+            return absoluteURL(self.context, self.request) + "/@@thumbnail_image.jpg"
         if thumbnail.resource is not None:
             return '/@@/%s' % thumbnail.resource
         return "/@@/default_thumbnail.png"

@@ -25,7 +25,7 @@
 <zope:adapter factory=".thumbnail.VideoThumbnailer"
               name="video" />
 
-<browser:view name="thumbnail_image"
+<browser:view name="thumbnail_image.jpg"
               for=".interfaces.IThumbnailed"
               class=".browser.ThumbnailImageView"
               layer="eztranet.skin.interfaces.IEztranetSkin"

@@ -185,7 +185,7 @@ class ThumbnailColumn(Column):
     weight = 11
     def renderCell(self, item):
         item_url = absoluteURL(item, self.request)
-        thumb_url = item_url + '/@@thumbnail_image'
+        thumb_url = item_url + '/@@thumbnail_image.jpg'
         return '<a href="%s"><img src="%s" class="table_thumbnail" /></a>' % (item_url, thumb_url)
 
 

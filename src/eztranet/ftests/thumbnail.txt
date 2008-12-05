@@ -84,35 +84,35 @@ We have a thumbnail for each item::
     >>> list(getRootFolder()['eztranet']['projects'][u'project'])
     [u'dummytext.txt', u'sample.ogg', u'sample.png', u'some-title']
 
-    >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3648
     >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_url')
     >>> browser.contents
     '/@@/folder.png'    
 
-    >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     2541
     >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_url')
     >>> browser.contents
     '/@@/default_thumbnail.png'
 
-    >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     15256
     >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_url')
     >>> browser.contents
-    'http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image'
+    'http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg'
 
-    >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     1443
     >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_url')
     >>> browser.contents
-    'http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image'
+    'http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg'
 
-    >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     1413
     >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_url')
@@ -144,19 +144,19 @@ We can upload a new thumbnail for every object::
 
 We check the thumbnail is used::
 
-    >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
 
@@ -196,19 +196,19 @@ If we submit the edit form without providing a file, the thumbnail is not modifi
 
 We check the thumbnail is used::
 
-    >>> browser.open('http://localhost/eztranet/projects/project2/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project2/dummy2/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project2/dummy2/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project2/oggsample2/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project2/oggsample2/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project2/pngsample2/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project2/pngsample2/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
-    >>> browser.open('http://localhost/eztranet/projects/project2/sometitle2/@@thumbnail_image')
+    >>> browser.open('http://localhost/eztranet/projects/project2/sometitle2/@@thumbnail_image.jpg')
     >>> len(browser.contents)
     3172
 
