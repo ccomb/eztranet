@@ -1,18 +1,12 @@
-  <div tal:condition="python:'nextURL' not in request">
-     <h1 i18n:translate="">Logout successful!</h1>
+<div>
+   <h1 i18n:translate="">Logout successful!</h1>
 
-     <p style="font-size: 200%" i18n:translate="">
-       You are now logged out.
-     </p>
+   <p style="font-size: 200%" i18n:translate="">
+     You are now logged out.
+   </p>
 
-     <a href="." i18n:translate="">Back to the main page.</a>
-  </div>
-  <div tal:condition="python:'nextURL' in request">
-     <h1 i18n:translate="">You are being redirected!</h1>
-
-     <p style="font-size: 150%">
-       <a tal:attributes="href request/nextURL" i18n:translate="">
-         If you see this screen for more than 5 seconds, click here.
-       </a>
-     </p>
-  </div>
+   <a tal:attributes="href request/nextURL | string:."
+      i18n:translate="">
+    Back to the main page.
+   </a>
+</div>

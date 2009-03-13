@@ -57,7 +57,7 @@ class HTTPAuthenticationLogin(BrowserPagelet):
             return self.login(self.request['nextURL'])
         else:
             return self.login()
-        
+
 
 
 class HTTPAuthenticationLogout(BrowserPagelet):
@@ -65,21 +65,11 @@ class HTTPAuthenticationLogout(BrowserPagelet):
     """
     implements(ILogout)
 
-    def logout(self, nextURL=None):
+    def update(self):
         "see ILogout"
         if not IUnauthenticatedPrincipal.providedBy(self.request.principal):
             auth = getUtility(IAuthentication)
             ILogout(auth).logout(self.request)
-        if nextURL is None:
-            return
-        return self.request.response.redirect(nextURL)
-
-    def update(self):
-        "update part of the content provider (the render part is inherited)"
-        if 'nextURL' in self.request:
-            return self.logout(self.request['nextURL'])
-        else:
-            return self.logout()
 
 
 class LoginLogout(ViewletBase):
@@ -87,7 +77,7 @@ class LoginLogout(ViewletBase):
 
     (same as zope.app.security LoginLogout view
     """
-    implements(IContentProvider)    
+    implements(IContentProvider)
     adapts(Interface, IEztranetSkin, Interface)
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
@@ -112,7 +102,7 @@ class LoginLogout(ViewletBase):
 
 class LogoutHeader(ViewletBase):
     """viewlet offering the part of header used for logout
-    
+
     inspired from zope.app.security logout.pt
     """
 
