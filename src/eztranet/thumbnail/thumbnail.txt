@@ -122,13 +122,13 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
-    >>> 1000 < thumb.image.size < 2000
+    >>> 500 < thumb.image.size < 2000
     True
 
 Try to compute again the thumbnail::
 
     >>> thumb.compute_thumbnail()
-    >>> 1000 < thumb.image.size < 2000
+    >>> 500 < thumb.image.size < 2000
     True
    
 
@@ -175,7 +175,7 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
-    >>> 10000 < thumb.image.size < 20000
+    >>> 1000 < thumb.image.size < 20000
     True
 
 
@@ -218,7 +218,7 @@ We recreate the blobfile and its thumbnail::
     >>> blobfile.size
     3172
     >>> thumb.compute_thumbnail()
-    >>> 1000 < thumb.image.size < 2000
+    >>> 500 < thumb.image.size < 2000
     True
 
 We put the blob in the database
@@ -244,7 +244,7 @@ with the content of the thumbnail::
     >>> from zope.publisher.browser import TestRequest
     >>> from eztranet.thumbnail.browser import ThumbnailImageView
     >>> d = ThumbnailImageView(blobfile, TestRequest())()
-    >>> 1000 < len(iter(d).next()) < 2000
+    >>> 500 < len(iter(d).next()) < 2000
     True
 
 If the thumbnail does not exist, we get a default one::
@@ -302,12 +302,12 @@ Now we can set the thumbnail size::
     100
     >>> thumb = IThumbnail(blobfile)
     >>> thumb.compute_thumbnail()
-    >>> thumb.image.size
-    1099
+    >>> 500 < thumb.image.size < 2000
+    True
     >>> IConfig(blobfile).set_config('eztranet.thumbnail.size', 200)
     >>> thumb.compute_thumbnail()
-    >>> thumb.image.size
-    2585
+    >>> 500 < thumb.image.size < 5000
+    True
 
 
 
