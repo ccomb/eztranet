@@ -15,8 +15,7 @@ class ThumbnailImageView(BrowserView):
     """The thumbnail view of an object"""
 
     def __call__(self):
-        #TODO check this
-        thumbnail = removeSecurityProxy(IThumbnail(self.context))
+        thumbnail = IThumbnail(removeSecurityProxy(self.context))
         # if we have a thumbnail, return it
         if zope.file.interfaces.IFile.providedBy(thumbnail.image):
             if not thumbnail.image.mimeType:                                # only for purple
@@ -44,7 +43,7 @@ class ThumbnailUrlView(BrowserView):
     """
 
     def __call__(self):
-        thumbnail = removeSecurityProxy(IThumbnail(self.context)) #TODO check this
+        thumbnail = IThumbnail(removeSecurityProxy(self.context))
         if thumbnail.image is not None:
             return absoluteURL(self.context, self.request) + "/@@thumbnail_image.jpg"
         if thumbnail.resource is not None:

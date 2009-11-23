@@ -100,14 +100,14 @@ We have a thumbnail for each item::
 
     >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg')
     >>> len(browser.contents)
-    15256
+    2655
     >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_url')
     >>> browser.contents
     'http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg'
 
     >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg')
     >>> len(browser.contents)
-    1443
+    893
     >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_url')
     >>> browser.contents
     'http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg'
@@ -142,7 +142,7 @@ We can upload a new thumbnail for every object::
     >>> browser.getControl(name='form.widgets.image').add_file(open(imagepath), 'image/png', 'a sample.png')
     >>> browser.getControl(name='form.buttons.apply').click()
 
-We check the thumbnail is used::
+We check the new thumbnail is used::
 
     >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image.jpg')
     >>> len(browser.contents)
