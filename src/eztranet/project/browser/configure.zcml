@@ -3,8 +3,7 @@
            xmlns:zope="http://namespaces.zope.org/zope"
            i18n_domain="eztranet">
 
-<zope:adapter factory=".browser.ProjectThumbnail"
-              trusted="yes" />
+<zope:adapter factory=".browser.ProjectThumbnail" />
 
 <!-- ProjectContainer views -->
 <z3c:pagelet name="index.html"

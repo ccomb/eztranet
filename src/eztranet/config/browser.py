@@ -8,10 +8,12 @@ from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 
 class ConfigPage(EditForm, BrowserPagelet):
-    """configuration page for everything configurable on the context"""
+    """configuration page for everything configurable on the context
+    """
     @property
     def fields(self):
-        """construct the fields from all the IConfigFormType interfaces"""
+        """construct the fields from all the IConfigFormType interfaces
+        """
         fields = Fields()
         for name,interface in getUtilitiesFor(IConfigFormType):
             fields += Fields(interface)

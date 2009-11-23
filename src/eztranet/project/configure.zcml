@@ -111,6 +111,8 @@
            set_schema=".interfaces.IProjectText" />
 </class>
 
+<adapter factory=".project.OrderConfig" />
+
 
 <include package=".browser" />
 

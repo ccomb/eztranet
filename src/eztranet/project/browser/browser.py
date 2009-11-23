@@ -51,7 +51,7 @@ class ProjectAdd(AddForm):
 
     fields = Fields(IProject).omit('__name__', '__parent__')
     label = _(u'Adding a project')
-    
+
     def createAndAdd(self, data):
         project=Project()
         applyChanges(self, project, data)
@@ -67,7 +67,7 @@ class ProjectAddMenuItem(SimpleMenuItem):
     title = _(u'New folder')
     url = 'add_project.html'
     weight = 50
-    
+
 
 class ProjectEdit(EditForm):
 
@@ -93,7 +93,7 @@ class ProjectEditMenuItem(SimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
     weight = 20
-    
+
 def project_sorting(p1, p2):
     """We put projects in the beginning, and order by date, most recent first"""
 
@@ -136,7 +136,7 @@ class ProjectView(Contents):
 
     @property
     def values(self):
-        values = [ item for item in super(ProjectView, self).values 
+        values = [ item for item in super(ProjectView, self).values
                    if canAccess(item, 'title') ]
         values.sort(project_sorting)
         return values
@@ -154,7 +154,7 @@ class ProjectContainerView(Contents):
     @property
     def values(self): # FIXME to have in the new z3c with permission filtering
         # turn the oobtree into a list, and filter against permissions
-        values = [ item for item in super(ProjectContainerView, self).values 
+        values = [ item for item in super(ProjectContainerView, self).values
                    if canAccess(item, 'title') ]
         values.sort(project_sorting)
         return values
@@ -178,7 +178,7 @@ class SizeColumn(Column):
 
 class ThumbnailColumn(Column):
     """column with thumbnail
-    
+
     for z3c.contents page of object that are thumbnailed (see zcml)
     """
     header = '<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>'
@@ -272,7 +272,7 @@ class BigFileUploadDataConverter(BaseDataConverter):
         """See interfaces.IDataConverter"""
         if value is None or value == '':
             return self.field.missing_value
-    
+
         if isinstance(value, zope.publisher.browser.FileUpload):
             self.widget.headers = value.headers
             self.widget.filename = value.filename
@@ -385,7 +385,7 @@ class ProjectVideoView(ProjectItemView):
 
 class ProjectThumbnail(Thumbnail):
     """adapter from a project to a thumbnail
-    
+
     This adapter provides a default static thumbnail,
     but allows to upload a custom one"""
     adapts(IProject)
@@ -436,7 +436,7 @@ class ProjectTextAdd(AddForm):
 
     fields=Fields(IProjectText).omit('__name__', '__parent__', 'description', 'data')
     label = _(u'Adding a text page')
-    
+
     def createAndAdd(self, data):
         page = ProjectText()
         applyChanges(self, page, data)
