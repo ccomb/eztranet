@@ -97,16 +97,16 @@ class VideoThumbnailer(BaseThumbnailer):
     This must be registered as a named adapter for IFile.
     The name corresponds to the major contentType: 'video'
     It converts the video to png, without audio, with only 1 frame,
-    at an offset of 3 seconds
+    at an offset of 3 seconds, then convert to jpeg
     """
     def __call__(self, size=120):
         blobpath = self.context._data._current_filename()
-        p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath,
+        p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo - | convert png:- jpg:-" % blobpath,
                   shell=True, stderr=PIPE, stdout=PIPE)
         thumbnail_content = p.stdout.read()
         err = p.stderr.read()
         if len(thumbnail_content) == 0: # maybe there is less than 3 seconds?
-            p = Popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobpath,
+            p = Popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo - | convert png:- jpg:-" % blobpath,
                       shell=True, stderr=PIPE, stdout=PIPE)
             thumbnail_content = p.stdout.read()
             err = p.stderr.read()
@@ -162,7 +162,7 @@ class ThumbnailConfig(object):
                 self.__recursive_recompute(obj[o])
         elif IThumbnailed.providedBy(obj):
             IThumbnail(obj).compute_thumbnail()
-            
+
 
     recompute = property(_get_recompute, _set_recompute)
 
