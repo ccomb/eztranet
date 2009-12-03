@@ -46,7 +46,7 @@ If we encode a bad file, we get a FAILED string istead of a file::
     17
     >>> thread = flashpreview.encode()
     >>> thread.join()
-    >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
-    >>> file
+    >>> f = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> f
     'FAILED'
 

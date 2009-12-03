@@ -49,7 +49,7 @@ We check the object exists, and we can see the page::
 Editing and renaming a textpage:
 ================================
 
-We can edit the text page again::
+We can edit the text page::
 
     >>> browser.open('http://localhost/eztranet/projects/project/text-page/edit.html')
     >>> 'another line' in browser.contents
@@ -79,12 +79,12 @@ unchanged::
     '200 Ok'
     >>> browser.url
     'http://localhost/eztranet/projects/project/new-title'
-    >>> root['eztranet']['projects']['project']['new-title'].title
-    ''
+    >>> root['eztranet']['projects']['project']['new-title'].title is None
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/new-title/edit.html')
     >>> browser.getControl(name='form.widgets.title').value = u''
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> root['eztranet']['projects']['project']['new-title'].title
-    ''
+    >>> root['eztranet']['projects']['project']['new-title'].title is None
+    True
     >>> root['eztranet']['projects']['project']['new-title'].__name__
-    ''
+    u'new-title'

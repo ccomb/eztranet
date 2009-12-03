@@ -85,36 +85,36 @@ We have a thumbnail for each item::
     [u'dummytext.txt', u'sample.ogg', u'sample.png', u'some-title']
 
     >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image.jpg')
-    >>> len(browser.contents)
-    3648
+    >>> 500 < len(browser.contents) < 5000
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_url')
     >>> browser.contents
     '/@@/folder.png'    
 
     >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_image.jpg')
-    >>> len(browser.contents)
-    2541
+    >>> 500 < len(browser.contents) < 5000
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_url')
     >>> browser.contents
     '/@@/default_thumbnail.png'
 
     >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg')
-    >>> len(browser.contents)
-    2655
+    >>> 500 < len(browser.contents) < 5000
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_url')
     >>> browser.contents
     'http://localhost/eztranet/projects/project/sample.ogg/@@thumbnail_image.jpg'
 
     >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg')
-    >>> len(browser.contents)
-    893
+    >>> 500 < len(browser.contents) < 5000
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/sample.png/@@thumbnail_url')
     >>> browser.contents
     'http://localhost/eztranet/projects/project/sample.png/@@thumbnail_image.jpg'
 
     >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_image.jpg')
-    >>> len(browser.contents)
-    1413
+    >>> 500 < len(browser.contents) < 5000
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/some-title/@@thumbnail_url')
     >>> browser.contents
     '/@@/text.png'

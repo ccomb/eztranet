@@ -33,7 +33,7 @@ Ok, we need to be authentified as main admin::
     >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
     >>> browser.addHeader('Accept-Language', 'en-US')
     >>> browser.getLink(url='add_eztranet.html').click()
-        
+
 We fill in the form::
 
     >>> browser.getControl(name='form.widgets.__name__').value = 'eztranet'
@@ -122,7 +122,7 @@ In each project we add a subproject
 
     >>> browser.getLink(url='..').click()
     >>> browser.getLink(url='..').click()
-    
+
     >>> browser.getLink(url='project-2').click()
     >>> browser.getLink(text='New folder').click()
     >>> browser.getControl(name='form.widgets.title').value = u'subproject'
@@ -487,14 +487,14 @@ unchanged::
     >>> 'system error' in browser.contents
     False
     >>> browser.url
-    'http://localhost/eztranet/projects/project-2/a-sample-2.png'
-    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].title
-    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.png/edit.html')
+    'http://localhost/eztranet/projects/project-2/a-sample.png'
+    >>> root['eztranet']['projects']['project-2']['a-sample.png'].title
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/edit.html')
     >>> browser.getControl(name='form.widgets.title').value = u''
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].title
-    >>> root['eztranet']['projects']['project-2']['a-sample-2.png'].__name__
-    u'a-sample-2.png'
+    >>> root['eztranet']['projects']['project-2']['a-sample.png'].title
+    >>> root['eztranet']['projects']['project-2']['a-sample.png'].__name__
+    u'a-sample.png'
 
 
 ================
@@ -789,7 +789,7 @@ We can also add a comment to a video::
 
 Or an image::
 
-    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.png/@@comments.html')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/@@comments.html')
     >>> browser.getControl(name='text').value = 'this is a comment'
     >>> browser.getControl(name='save').click()
     >>> 'this is a comment' in browser.contents
@@ -878,7 +878,7 @@ Now we delete the testuser
     >>> browser.getControl(name='login').value = 'testuser'
     >>> browser.getControl(name='password').value = 'testpass'
     >>> browser.getControl(name='SUBMIT').click()
-    
+
     >>> '<a href="Project">Project</a>' in  browser.contents
     False
     >>> browser.open('http://localhost/eztranet/projects/project')
@@ -934,8 +934,8 @@ Login as admin and browse the large list of projects::
 Removing items and projects
 ===========================
 
-    >>> list(root['eztranet']['projects']['project-2'])
-    [u'a-sample-2.png', u'a-sample.ogg', u'dummytext.txt', u'subproject']
+    >>> sorted(list(root['eztranet']['projects']['project-2']))
+    [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt', u'subproject']
     >>> list(root['eztranet']['projects']['project'])
     [u'dummytext.txt']
 
@@ -959,14 +959,10 @@ We remove the image and video::
     >>> browser.open('http://localhost/eztranet/projects/project-2/')
     >>> options = browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
     >>> options
-    ['a-sample-2.png', 'a-sample.ogg', 'dummytext.txt', 'subproject']
+    ['a-sample.ogg', 'a-sample.png', 'dummytext.txt', 'subproject']
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = options
     >>> browser.getControl(name="contents.buttons.delete").click()
     >>> list(root['eztranet']['projects']['project-2'])
     []
-
-
-
-
 
 

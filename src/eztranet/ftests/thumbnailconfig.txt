@@ -79,12 +79,13 @@ thumbnail size
     >>> from zope.size.interfaces import ISized
     >>> def thumbsize_of(obj):
     ...     return ISized(IThumbnail(obj).image).sizeForSorting()[1]
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    2655
+    >>> s1= thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    >>> 2000 < s1 < 3000
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 We change the thumbnail size of the sample3::
 
@@ -92,12 +93,12 @@ We change the thumbnail size of the sample3::
     >>> browser.getControl(name='form.widgets.size').value = '10'
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    683
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s1 > thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 We change the toplevel configuration, but not sample3::
 
@@ -106,12 +107,13 @@ We change the toplevel configuration, but not sample3::
     >>> browser.getControl(name='form.widgets.size').value = '50'
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    683
+    >>> s2 = thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    >>> 500 < s2 < 2000
+    True
+    >>> s2 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s2 > thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 We unset the config of sample3::
 
@@ -119,12 +121,13 @@ We unset the config of sample3::
     >>> browser.getControl(name='form.widgets.size').value = ''
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    1157
+    >>> s3 = thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    >>> 500 < s3 < 2000
+    True
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 We change the config of sample3 without recomputing,
 then we recompute from the middle project without changing its config::
@@ -133,21 +136,21 @@ then we recompute from the middle project without changing its config::
     >>> browser.getControl(name='form.widgets.size').value = '35'
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['false']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    1157
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    True
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
     >>> browser.open('http://localhost/eztranet/projects/project/config.html')
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    1157
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    928
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    True
+    >>> s3 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s3 > thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 We unset the toplevel config::
 
@@ -155,12 +158,12 @@ We unset the toplevel config::
     >>> browser.getControl(name='form.widgets.size').value = ''
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    928
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s1 > thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 Then we unset the sample3 config::
 
@@ -168,11 +171,11 @@ Then we unset the sample3 config::
     >>> browser.getControl(name='form.widgets.size').value = ''
     >>> browser.getControl(name='form.widgets.recompute:list').value = ['true']
     >>> browser.getControl(name='form.buttons.apply').click()
-    >>> thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
-    2655
-    >>> thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
-    2655
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['sample.ogg'])
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample2.ogg'])
+    True
+    >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
+    True
 
 

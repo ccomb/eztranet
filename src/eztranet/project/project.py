@@ -100,6 +100,8 @@ class ProjectItemNameChooser(NameChooser):
             newname = unicode.lower(rawname).strip(' @+').replace(' ','-').replace('/','-')
         if item is not None and not rawname and item.__name__:
             newname = item.__name__
+        if newname in self.context and item is self.context[newname]:
+            return newname
         return super(ProjectItemNameChooser, self).chooseName(newname, item)
 
 

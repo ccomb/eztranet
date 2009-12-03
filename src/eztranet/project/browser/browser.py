@@ -82,7 +82,7 @@ class ProjectEdit(EditForm):
             del data['image'] # don't overwrite the thumbnail
         super(ProjectEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
-        if oldtitle != self.context.title and self.context.title != '':
+        if oldtitle != self.context.title and self.context.title:
             newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
@@ -316,7 +316,7 @@ class ProjectItemEdit(EditForm):
             del data['image'] # don't overwrite the thumbnail
         super(ProjectItemEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
-        if oldtitle != self.context.title and self.context.title != u'':
+        if oldtitle != self.context.title and self.context.title:
             newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
@@ -462,7 +462,7 @@ class ProjectTextEdit(EditForm):
             del data['image'] # don't overwrite the thumbnail
         super(ProjectTextEdit, self).applyChanges(data)
         # then rename the object in the parent container and redirect to it
-        if oldtitle != self.context.title:
+        if oldtitle != self.context.title and self.context.title:
             newname = INameChooser(self.context.__parent__).chooseName(u"",self.context)
             renamer = ContainerItemRenamer(self.context.__parent__)
             renamer.renameItem(oldname, newname)
