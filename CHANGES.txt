@@ -1,6 +1,7 @@
 1.3.0 (unreleased)
 ------------------
 - Allow to configure the thumbnail size
+- Allow to upload custom thumbnails
 - use subprocess module for external processes
 - directly store the flv file after encoding
 - fixed some translation issues
