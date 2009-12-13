@@ -1,0 +1,86 @@
+This package offers ability to upload or download a project at one as a zip
+file. It should not eat the memory, and should warn about diskspace. Logic bombs
+should also be avoided (ie 1kB zip that inflates to 1TB)
+
+First some useful imports:
+
+    >>> from zope.interface import implements, Interface, alsoProvides
+    >>> from zope.component import getAdapter, getGlobalSiteManager
+    >>> from zope.schema import TextLine
+    >>> import os, tempfile
+
+===========
+Basic ideas
+===========
+
+We have interfaces that offer the export or import functionalities:
+
+    >>> from eztranet.importexport.interfaces import IImport, IExport
+
+Then we have marker interfaces to put on any object which is exportable or importable:
+
+    >>> from eztranet.importexport.interfaces import IImportable, IExportable
+
+Then we create a dummy object+interface to import and export:
+
+    >>> class IDummy(Interface):
+    ...     foo = TextLine(title=u"Foobar", description=u"Description")
+    ...     def bar():
+    ...         "a method"
+    >>> class Dummy(object):
+    ...     implements(IDummy)
+    ...     foo = None
+    ...     def bar(self):
+    ...         pass
+
+    >>> dummy = Dummy()
+    >>> dummy.foo = u"text c\xc3\xb4ntent with accent"
+
+Our object must be importable and exportable:
+
+    >>> alsoProvides(dummy, IExportable)
+
+We need to register our plugins
+
+    >>> from eztranet.importexport.ini import INIExport, INIImport
+    >>> getGlobalSiteManager().registerAdapter(INIExport, name='INI')
+    >>> getGlobalSiteManager().registerAdapter(INIImport, name='INI')
+
+Now our object should be able to provide IExport and IImport through
+named adapters. The name of the adapter is the export/import format.
+
+Thus we can export our object to a specific path:
+
+    >>> fd, filename = tempfile.mkstemp()
+    >>> dummy_export = getAdapter(dummy, IExport, name='INI')
+    >>> dummy_export.do_export(filename=filename)
+    >>> os.close(fd)
+    >>> open(filename).read()
+    '[IExportable]\n\n[IDummy]\nfoo = text c\xc3\x83\xc2\xb4ntent with accent\n\n'
+
+We can also import it to another object:
+
+    >>> dummy2 = Dummy()
+    >>> alsoProvides(dummy2, IImportable)
+    >>> dummy2.foo is None
+    True
+    >>> dummy2_import = getAdapter(dummy2, IImport, name='INI')
+    >>> dummy2_import.do_import(filename=filename)
+    >>> dummy2.foo
+    u'text c\xc3\xb4ntent with accent'
+
+
+
+
+
+============
+Zip download
+============
+
+Folders and files already have their export/import adapters
+We first create a hierarchy with folders and files.
+
+
+
+
+
