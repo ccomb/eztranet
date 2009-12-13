@@ -3,7 +3,7 @@
 
 
 <adapter factory=".importexport.INIExporter"
-         name="INI" />
+         name="ini" />
 
 
 </configure>

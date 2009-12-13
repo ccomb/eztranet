@@ -43,8 +43,8 @@ Our object must be importable and exportable:
 We need to register our plugins
 
     >>> from eztranet.importexport.ini import INIExport, INIImport
-    >>> getGlobalSiteManager().registerAdapter(INIExport, name='INI')
-    >>> getGlobalSiteManager().registerAdapter(INIImport, name='INI')
+    >>> getGlobalSiteManager().registerAdapter(INIExport, name='ini')
+    >>> getGlobalSiteManager().registerAdapter(INIImport, name='ini')
 
 Now our object should be able to provide IExport and IImport through
 named adapters. The name of the adapter is the export/import format.
@@ -52,7 +52,7 @@ named adapters. The name of the adapter is the export/import format.
 Thus we can export our object to a specific path:
 
     >>> fd, filename = tempfile.mkstemp()
-    >>> dummy_export = getAdapter(dummy, IExport, name='INI')
+    >>> dummy_export = getAdapter(dummy, IExport, name='ini')
     >>> dummy_export.do_export(filename=filename)
     >>> os.close(fd)
     >>> open(filename).read()
@@ -64,21 +64,144 @@ We can also import it to another object:
     >>> alsoProvides(dummy2, IImportable)
     >>> dummy2.foo is None
     True
-    >>> dummy2_import = getAdapter(dummy2, IImport, name='INI')
+    >>> dummy2_import = getAdapter(dummy2, IImport, name='ini')
     >>> dummy2_import.do_import(filename=filename)
     >>> dummy2.foo
     u'text c\xc3\xb4ntent with accent'
 
+=====================
+Zip import and export
+=====================
+
+zope.app.container and zope.file already have their export/import adapters.
+We will try to import a zipped hierarchy of files and folders,
+then reexport it.
+
+We first create a hierarchy of folders:
+
+    >>> folderpath = tempfile.mkdtemp()
+    >>> foldername = os.path.basename(folderpath)
+    >>> from os.path import join
+    >>> os.mkdir(join(folderpath, 'folder1'))
+    >>> os.mkdir(join(folderpath, 'folder1', 'folder11'))
+    >>> os.mkdir(join(folderpath, 'folder2'))
+    >>> os.mkdir(join(folderpath, 'folder2', 'folder22'))
+
+We create 4 files in this hierarchy:
+
+    >>> f = open(join(folderpath, 'file1'), 'w')
+    >>> f.write('filecontent1')
+    >>> f.close()
+    >>> f = open(join(folderpath, 'folder1', 'file11'), 'w')
+    >>> f.write('filecontent11')
+    >>> f.close()
+    >>> f = open(join(folderpath, 'folder1', 'folder11', 'file111'), 'w')
+    >>> f.write('filecontent111')
+    >>> f.close()
+    >>> f = open(join(folderpath, 'folder2', 'folder22', 'file222'), 'w')
+    >>> f.write('filecontent222')
+    >>> f.close()
+
+We zip and remove the hierarchy:
+
+    >>> import zipfile
+    >>> fd, zfilename = tempfile.mkstemp()
+    >>> zfilename += '.zip'
+    >>> os.close(fd)
+    >>> zfile = zipfile.ZipFile(zfilename, 'w')
+    >>> zfile.write(join(folderpath, 'file1'),
+    ...             join('file1'))
+    >>> zfile.write(join(folderpath, 'folder1', 'file11'),
+    ...             join('folder1', 'file11'))
+    >>> zfile.write(join(folderpath, 'folder1', 'folder11', 'file111'),
+    ...             join('folder1', 'folder11', 'file111'))
+    >>> zfile.write(join(folderpath, 'folder2', 'folder22', 'file222'),
+    ...             join('folder2', 'folder22', 'file222'))
+    >>> zfile.close()
+
+    >>> import shutil
+    >>> shutil.rmtree(folderpath)
+
+We register our export and import plugins:
+
+    >>> from eztranet.importexport.zip import ZipExport, ZipImport
+    >>> getGlobalSiteManager().registerAdapter(ZipExport, name='zip')
+    >>> getGlobalSiteManager().registerAdapter(ZipImport, name='zip')
+
+We also need to tell which kind of object to create in the ZODB.
+For now, we use standard zope content types:
+
+    >>> from zope.component import IFactory
+    >>> from zope.app.container.sample import SampleContainer
+    >>> getGlobalSiteManager().registerUtility(SampleContainer,
+    ...                                        IFactory,
+    ...                                        'eztranet.importexport.container')
+    >>> from zope.file.file import File
+    >>> getGlobalSiteManager().registerUtility(File,
+    ...                                        IFactory,
+    ...                                        'eztranet.importexport.file')
+    
 
 
 
+We create an importable container and import the zipfile into the container:
 
-============
-Zip download
-============
+    >>> from ZODB.MappingStorage import MappingStorage
+    >>> from ZODB.blob import BlobStorage
+    >>> from ZODB.DB import DB
+    >>> import transaction
+    >>> import tempfile
+    >>> from tempfile import mkdtemp
+    >>> base_storage = MappingStorage("test")
+    >>> blob_dir = mkdtemp()
+    >>> blob_storage = BlobStorage(blob_dir, base_storage)
+    >>> database = DB(blob_storage)
+    >>> connection = database.open()
+    >>> folder = connection.root()
+    >>> alsoProvides(folder, IImportable)
+    >>> zipimport = getAdapter(folder, IImport, 'zip')
+    >>> zipimport.do_import(filename=zfilename)
+    >>> transaction.commit()
 
-Folders and files already have their export/import adapters
-We first create a hierarchy with folders and files.
+Now we check we have all the subobjects:
+
+    >>> 'file1' in folder
+    True
+    >>> 'file11' in folder['folder1']
+    True
+    >>> 'file111' in folder['folder1']['folder11']
+    True
+    >>> 'file222' in folder['folder2']['folder22']
+    True
+
+And that files have the correct content:
+
+    >>> 'filecontent1' == folder['file1'].openDetached().read()
+    True
+    >>> 'filecontent11' == folder['folder1']['file11'].openDetached().read()
+    True
+    >>> 'filecontent111' == folder['folder1']['folder11']['file111'].openDetached().read()
+    True
+    >>> 'filecontent222' == folder['folder2']['folder22']['file222'].openDetached().read()
+    True
+
+Now we reexport this content:
+
+    >>> alsoProvides(folder, IExportable)
+    >>> fd, exported_path = tempfile.mkstemp()
+    >>> os.close(fd)
+    >>> zipexport = getAdapter(folder, IExport, 'zip')
+    >>> zipexport.do_export(exported_path)
+
+We check both files have the same content:
+
+    >>> open(exported_path).read() == open(zfilename).read()
+    True
+
+Now we can remove our temp files:
+
+    >>> os.remove(exported_path)
+    >>> os.remove(zfilename)
 
 
 
