@@ -1,6 +1,6 @@
 import zipfile, os
 from zope.interface import implements
-from zope.component import createObject, adapts
+from zope.component import createObject, adapts, getUtility, IFactory
 from interfaces import IImportable, IImport
 from interfaces import IExportable, IExport
 
@@ -22,10 +22,12 @@ class ZipImport(object):
                 if d is '': continue
                 if d not in current_object:
                     current_object[d] = createObject('eztranet.importexport.container')
+                    current_object[d].__name__ = d
                 current_object = current_object[d]
             objname = f.filename.split(os.path.sep)[-1]
             if objname not in current_object:
                 current_object[objname] = createObject('eztranet.importexport.file')
+                current_object[objname].__name__ = objname
                 # we assume the created object is a file-like object
                 newfile = current_object[objname].open('w')
                 newfile.write(zfile.read(f.filename))
@@ -41,9 +43,30 @@ class ZipExport(object):
 
     def __init__(self, context):
         self.context = context
+        # get the types that correspond to the file and folders
+        self.folder_type = getUtility(IFactory, name='eztranet.importexport.container')
+        self.file_type = getUtility(IFactory, name='eztranet.importexport.file')
+        self.zipfile = None
 
-    def do_export(self, filename):
-        raise NotImplementedError
+    def do_export(self, filename, obj=None, path=None):
+        """We recurse in the folder object and export each subobject"""
+        if obj is None:
+            # first call
+            obj = self.context
+            path = ''
+            self.zipfile = zipfile.ZipFile(filename, 'w')
+        else:
+            # we are recursing
+            if obj.__class__ is self.file_type:
+                #FIXME: we assume the obj is a zope.file blob
+                self.zipfile.write(obj._data._current_filename(),
+                                   path.encode('utf-8'))
+        if obj.__class__ is self.folder_type or obj is self.context:
+            for o in obj:
+                self.do_export(filename, obj=obj[o], path=path + '/' + o)
+        if obj is self.context:
+            # if we are at the end and at the highest level, we're done
+            self.zipfile.close()
 
 
 

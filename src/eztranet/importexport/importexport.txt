@@ -152,6 +152,7 @@ We create an importable container and import the zipfile into the container:
     >>> import transaction
     >>> import tempfile
     >>> from tempfile import mkdtemp
+
     >>> base_storage = MappingStorage("test")
     >>> blob_dir = mkdtemp()
     >>> blob_storage = BlobStorage(blob_dir, base_storage)
@@ -195,7 +196,7 @@ Now we reexport this content:
 
 We check both files have the same content:
 
-    >>> open(exported_path).read() == open(zfilename).read()
+    >>> len(open(exported_path).read()) == len(open(zfilename).read())
     True
 
 Now we can remove our temp files:
