@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Thu Dec  3 12:07:32 2009\n"
+"POT-Creation-Date: Mon Dec 28 23:15:24 2009\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Config."
 msgstr ""
 
-#: src/eztranet/configure.zcml:104
+#: src/eztranet/configure.zcml:105
 msgid "Eztranet Site"
 msgstr ""
 
@@ -142,6 +142,23 @@ msgstr ""
 
 #: src/eztranet/flashpreview/interfaces.py:26
 msgid "the flash movie blob, or compressed temporary filename"
+msgstr ""
+
+#: src/eztranet/importexport/browser.py:47
+msgid "Export"
+msgstr ""
+
+#: src/eztranet/importexport/export.pt:1
+msgid "Export as a zip file"
+msgstr ""
+
+#: src/eztranet/importexport/export.pt:11
+#. Default: "Export"
+msgid "export-button"
+msgstr ""
+
+#: src/eztranet/importexport/export.pt:3
+msgid "You can download the whole folder as a zip file by clicking on the button below. Beware that big projects can take a lot of time to compress and download!"
 msgstr ""
 
 #: src/eztranet/interfaces.py:14

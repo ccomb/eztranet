@@ -930,6 +930,40 @@ Login as admin and browse the large list of projects::
     >>> 'system error' in browser.contents
     False
 
+
+=================================
+Exporting a project as a zip file
+=================================
+
+We have a export.html page for a project:
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/export.html')
+    >>> 'download' in browser.contents
+    True
+
+We can click on the export button and get a zip file:
+
+    >>> browser.getControl(name='do_export').click()
+    >>> browser.contents
+    'PK...
+    >>> 100000 < len(browser.contents) < 200000
+    True
+
+The project root cannot be exported:
+
+    >>> browser.open('http://localhost/eztranet/projects/export.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 404: Not Found
+
+A project item cannot be exported (it can already be downloaded separately):
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/export.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 404: Not Found
+
+
 ===========================
 Removing items and projects
 ===========================

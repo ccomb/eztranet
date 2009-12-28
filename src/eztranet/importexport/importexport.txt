@@ -42,9 +42,9 @@ Our object must be importable and exportable:
 
 We need to register our plugins
 
-    >>> from eztranet.importexport.ini import INIExport, INIImport
-    >>> getGlobalSiteManager().registerAdapter(INIExport, name='ini')
-    >>> getGlobalSiteManager().registerAdapter(INIImport, name='ini')
+    >>> from eztranet.importexport.ini import IniExport, IniImport
+    >>> getGlobalSiteManager().registerAdapter(IniExport, name='ini')
+    >>> getGlobalSiteManager().registerAdapter(IniImport, name='ini')
 
 Now our object should be able to provide IExport and IImport through
 named adapters. The name of the adapter is the export/import format.

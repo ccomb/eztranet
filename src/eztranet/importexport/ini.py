@@ -6,7 +6,7 @@ from ConfigParser import ConfigParser
 
 logger = logging.getLogger(__name__)
 
-class INIExport(object):
+class IniExport(object):
     """serialize an object in INI file format,
     according to its interfaces
 
@@ -39,7 +39,7 @@ class INIExport(object):
         fd.close()
 
 
-class INIImport(object):
+class IniImport(object):
     """deserialize an object from an INI file
 
     This is currently only for test purposes

@@ -1,5 +1,6 @@
 1.3.0 (unreleased)
 ------------------
+- Allow to export a project as a zip file
 - Allow to configure the thumbnail size
 - Allow to upload custom thumbnails
 - use subprocess module for external processes

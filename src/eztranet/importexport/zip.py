@@ -57,11 +57,11 @@ class ZipExport(object):
             self.zipfile = zipfile.ZipFile(filename, 'w')
         else:
             # we are recursing
-            if obj.__class__ is self.file_type:
-                #FIXME: we assume the obj is a zope.file blob
+            if isinstance(obj, self.file_type):
+                #FIXME: here we assume the obj is a zope.file blob
                 self.zipfile.write(obj._data._current_filename(),
                                    path.encode('utf-8'))
-        if obj.__class__ is self.folder_type or obj is self.context:
+        if isinstance(obj, self.folder_type) or obj is self.context:
             for o in obj:
                 self.do_export(filename, obj=obj[o], path=path + '/' + o)
         if obj is self.context:

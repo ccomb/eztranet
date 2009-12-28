@@ -1,10 +1,44 @@
 <configure xmlns="http://namespaces.zope.org/zope"
+           xmlns:browser="http://namespaces.zope.org/browser"
+           xmlns:z3c="http://namespaces.zope.org/z3c"
            i18n_domain="eztranet">
 
+<!-- configure types we use -->
+<utility component="eztranet.project.project.ProjectItem"
+         provides="zope.component.interfaces.IFactory"
+         name="eztranet.importexport.file" />
+<utility component="eztranet.project.project.Project"
+         provides="zope.component.interfaces.IFactory"
+         name="eztranet.importexport.container" />
 
-<adapter factory=".importexport.INIExporter"
+<!-- register the available export plugins -->
+<adapter factory=".zip.ZipExport"
+         name="zip" />
+<adapter factory=".ini.IniExport"
          name="ini" />
 
 
+<z3c:pagelet name="export.html"
+             for=".interfaces.IExportable"
+             class=".browser.ExportPage"
+             layer="eztranet.skin.interfaces.IEztranetSkin"
+             permission="eztranet.project.view" />
+
+<z3c:template template="export.pt"
+              for=".browser.ExportPage"
+              layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<browser:view name="exportdownload"
+              for=".interfaces.IExportable"
+              class=".browser.ExportDownload"
+              layer="eztranet.skin.interfaces.IEztranetSkin"
+              permission="eztranet.project.view" />
+
+<browser:viewlet name="ExportPageMenuItem"
+                 class=".browser.ExportPageMenuItem"
+                 for=".interfaces.IExportable"
+                 manager="eztranet.skin.interfaces.ITabMenu"
+                 layer="eztranet.skin.interfaces.IEztranetSkin"
+                 permission="eztranet.project.view" />
 </configure>
 

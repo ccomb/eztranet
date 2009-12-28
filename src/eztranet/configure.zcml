@@ -72,8 +72,9 @@
 <include package=".comment" />
 <include package=".flashpreview" />
 <include package=".generations" />
+<include package=".importexport" />
 
-<i18n:registerTranslations directory="locales" /> 
+<i18n:registerTranslations directory="locales" />
 
 
 <subscriber handler=".eztranet.newEztranetSiteAdded" />
@@ -100,7 +101,7 @@
 <z3c:layout template="root_layout.pt"
             for=".eztranet.EztranetSiteAdd"
             layer="eztranet.skin.interfaces.IEztranetSkin" />
-              
+
 <browser:addMenuItem title="Eztranet Site"
                      class=".eztranet.EztranetSite"
                      permission="zope.ManageContent" />
