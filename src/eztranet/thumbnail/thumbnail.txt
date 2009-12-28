@@ -25,7 +25,7 @@ We create a generic interface, class and an instance::
     >>> class MyObject(object):
     ...   implements(IMyObject)
     >>> myobj = MyObject()
-    
+
 We first register the thumbnail adapter (normally done via zcml)::
 
     >>> provideAdapter(Thumbnail, (IThumbnailed,), IThumbnail)
@@ -78,8 +78,10 @@ So now if we compute the thumbnail image, we get it in the thumbnail object::
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
-    >>> thumb.image.open().read()
+    >>> thumbfile = thumb.image.open()
+    >>> thumbfile.read()
     'dummy content'
+    >>> thumbfile.close()
 
 We can also remove the thumbnail::
 
@@ -130,7 +132,7 @@ Try to compute again the thumbnail::
     >>> thumb.compute_thumbnail()
     >>> 500 < thumb.image.size < 2000
     True
-   
+
 
 If the thumbnail can not be computed, we get a default one::
 
@@ -211,8 +213,10 @@ thumbnail view
 We recreate the blobfile and its thumbnail::
 
     >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> samplefile = open(samplepath)
     >>> fd = blobfile.open('w')
-    >>> fd.write(open(samplepath).read())
+    >>> fd.write(samplefile.read())
+    >>> samplefile.close()
     >>> fd.close()
     >>> blobfile.mimeType = 'image/png'
     >>> blobfile.size
@@ -237,7 +241,7 @@ We put the blob in the database
     >>> root = connection.root()
     >>> root['blobfile'] = blobfile
     >>> transaction.commit()
-    
+
 Then we call the thumbnail view, that returns a DownloadResult
 with the content of the thumbnail::
 
@@ -316,6 +320,7 @@ Cleanup
 =======
 We clean the temporary database::
 
+    >>> transaction.commit()
     >>> import shutil
     >>> shutil.rmtree(blob_dir)
     >>> database.close()

@@ -12,6 +12,7 @@ from zope.interface import implements
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 from zope.security.proxy import removeSecurityProxy
 import PIL.Image
+import transaction
 
 CONFIG_KEY = 'eztranet.thumbnail'
 SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
@@ -35,6 +36,7 @@ class Thumbnail(object):
             file = blob.open('w')
             file.write(data)
             file.close()
+            transaction.savepoint()
         else:
             IAnnotations(self.context)[CONFIG_KEY] = None
 
