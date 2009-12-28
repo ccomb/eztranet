@@ -1,4 +1,5 @@
 from __future__ import with_statement
+from contextlib import contextmanager
 from interfaces import IExport
 from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
@@ -16,6 +17,12 @@ class ExportPage(BrowserPagelet):
     and transmitted via a POST argument.
     We first export only as a zip file.
     """
+
+@contextmanager
+def autoclean(somefile):
+    yield somefile
+    somefile.close()
+    os.remove(somefile.name)
 
 
 class ExportDownload(BrowserView):
@@ -38,7 +45,7 @@ class ExportDownload(BrowserView):
         self.request.response.setHeader('Content-length',
                                         filesize)
         self.request.response.setHeader('Content-Type', 'application/zip')
-        with open(self.filename) as zipfile:
+        with autoclean(open(self.filename)) as zipfile:
             return zipfile.read()
 
 
