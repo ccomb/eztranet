@@ -51,7 +51,7 @@ class FlashPreview(object):
 
 class FlashConverterThread(Thread):
     """The thread that runs ffmpeg and write the resulting video file"""
-    
+
     def __init__(self, sourcefile, target_tmp):
         self.sourcefile = sourcefile
         self.targetfd, self.targetpath = target_tmp
@@ -118,7 +118,7 @@ def FlashPreviewableModified(video, event):
 def FlashPreviewableRemoved(video, event):
     tmpfile = IFlashPreview(video).flash_movie
     if type(tmpfile) is str and tmpfile[0:4] == '/tmp':
-        for file in tmpfile, tmpfile+".OK", tmpfile+'.FAILED': 
+        for file in tmpfile, tmpfile+".OK", tmpfile+'.FAILED':
             if os.path.exists(file):
                 os.remove(file)
 

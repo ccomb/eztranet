@@ -37,7 +37,7 @@ Now the file has an annotation with an encoded flv file::
     <class 'zope.file.file.File'>
 
 
-If we encode a bad file, we get a FAILED string istead of a file::    
+If we encode a bad file, we get a FAILED string istead of a file::
 
     >>> fd = blobfile.open('w')
     >>> fd.write('bad video content')
@@ -46,7 +46,6 @@ If we encode a bad file, we get a FAILED string istead of a file::
     17
     >>> thread = flashpreview.encode()
     >>> thread.join()
-    >>> f = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
-    >>> f
+    >>> IAnnotations(blobfile)['eztranet.flashpreview']['preview']
     'FAILED'
 
