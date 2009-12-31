@@ -26,6 +26,7 @@ from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
 from zope.component import adapts, adapter, getAdapter
+from zope.component import createObject, ComponentLookupError
 from zope.copypastemove import ContainerItemRenamer
 from zope.dublincore.interfaces import IDCTimes
 from zope.i18n import translate
@@ -214,11 +215,10 @@ class ProjectItemAdd(AddForm):
                 print u'**Hachoir determination failed**'
                 mimetype = uploaded_file.headers['Content-Type']
             majormimetype = mimetype.split('/')[0]
-            if majormimetype == 'video':
-                item = ProjectVideo()
-            elif majormimetype == 'image':
-                item = ProjectImage()
-            else :
+            # create the new item with the looked-up factory, based on the name
+            try:
+                item = createObject(majormimetype)
+            except ComponentLookupError:
                 item = ProjectItem()
             item.title = basename(uploaded_file.filename).split('\\')[-1]
             contentName = INameChooser(self.context).chooseName(item.title,

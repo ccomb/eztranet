@@ -85,6 +85,8 @@
 <adapter factory=".project.ProjectImageSized"
          trusted="yes"
          permission="eztranet.project.view" />
+<utility component=".project.ProjectImageFactory"
+         name="image" />
 
 <!-- ProjectVideo -->
 <class class=".project.ProjectVideo">
@@ -98,6 +100,9 @@
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectVideo" />
 </class>
+
+<utility component=".project.ProjectVideoFactory"
+         name="video" />
 
 
 <!-- ProjectText -->
