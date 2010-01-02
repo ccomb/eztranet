@@ -21,6 +21,8 @@ class ZipImport(object):
         self.context = context
 
     def do_import(self, filename):
+        """FIXME : redundancy with createAndAdd from project.browser.browser.py
+        """
         zfile = zipfile.ZipFile(filename)
         for f in zfile.infolist():
             # we recreate the hierarchy to the object
@@ -62,10 +64,10 @@ class ZipImport(object):
                 item.mimeType = mimetype
                 item.parameters = parameters
 
-                current_object[objname] = item
 
                 # now we import the file into the object with an adapter
-                IImport(current_object[objname]).do_import(filename)
+                IImport(item).do_import(filename)
+                current_object[objname] = item
                 os.remove(filename)
 
                 # notify the file is added
