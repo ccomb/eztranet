@@ -44,6 +44,7 @@
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <implements interface="eztranet.config.interfaces.IConfigurable" />
   <implements interface="eztranet.importexport.interfaces.IExportable" />
+  <implements interface="eztranet.importexport.interfaces.IImportable" />
 </class>
 
 <utility component=".project.ProjectFactory"

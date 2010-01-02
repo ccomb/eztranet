@@ -30,6 +30,7 @@ class ZipImport(object):
                 if d not in current_object:
                     current_object[d] = createObject('folder')
                     current_object[d].__name__ = d
+                    current_object[d].title = d
                 current_object = current_object[d]
             objname = f.filename.split(os.path.sep)[-1]
             if objname not in current_object:
@@ -52,7 +53,7 @@ class ZipImport(object):
                 # whose name is the major mimetype
                 item = createObject(majormimetype)
 
-                item.title = basename(filename).split('\\')[-1]
+                item.title = item.__name__ = objname
                 # set some file attributes
                 major, minor, parameters = zope.publisher.contenttype.parse(
                                                                          mimetype)
@@ -64,7 +65,6 @@ class ZipImport(object):
                 current_object[objname] = item
 
                 # now we import the file into the object with an adapter
-                os.close(fd)
                 IImport(current_object[objname]).do_import(filename)
                 os.remove(filename)
 

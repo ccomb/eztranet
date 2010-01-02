@@ -5,6 +5,8 @@
 
 
 <!-- register the available export plugins -->
+<adapter factory=".zip.ZipImport"
+         name="zip" />
 <adapter factory=".zip.ZipExport"
          name="zip" />
 <adapter factory=".ini.IniExport"

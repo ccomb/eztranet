@@ -222,7 +222,7 @@ class ProjectItemAdd(AddForm):
 
             # if the file is a zip file, import it
             if mimetype == 'application/zip':
-                IImport(self.context).do_import(uploaded_file.name)
+                getAdapter(self.context, IImport, name=u'zip').do_import(uploaded_file.name)
             else:
                 # create the new item with the looked-up factory, based on the name
                 try:
