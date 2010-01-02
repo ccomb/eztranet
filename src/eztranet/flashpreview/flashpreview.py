@@ -99,14 +99,15 @@ class FlashConverterThread(Thread):
 
 @adapter(IFlashPreviewable, IObjectAddedEvent)
 def FlashPreviewableAdded(video, event):
-    """warning, here the object is NOT security proxied"""
-
+    """warning, here the object is NOT security proxied
+    """
     IFlashPreview(video).encode()
 
 
 @adapter(IFlashPreviewable, IObjectModifiedEvent)
 def FlashPreviewableModified(video, event):
-    """warning, here the object IS security proxied"""
+    """warning, here the object IS security proxied
+    """
     try:
         if 'data' in event.descriptions[0].attributes:
             # we compute the flash video only if we uploaded something

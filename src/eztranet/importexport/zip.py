@@ -9,6 +9,7 @@ from zope.interface import implements
 from zope.lifecycleevent import ObjectCreatedEvent
 import zipfile, os, tempfile
 import zope.event
+from zope.mimetype import typegetter
 import zope.publisher
 
 class ZipImport(object):
@@ -37,7 +38,7 @@ class ZipImport(object):
             objname = f.filename.split(os.path.sep)[-1]
             if objname not in current_object:
                 # we extract the archive member in a temporary file
-                fd, filename = tempfile.mkstemp()
+                fd, filename = tempfile.mkstemp(suffix=objname)
                 tmpfile = os.fdopen(fd, 'w')
                 tmpfile.write(zfile.read(f.filename))
                 tmpfile.close()
@@ -45,11 +46,12 @@ class ZipImport(object):
                 # we determine the file type
                 hachoir_parser = createParser(unicode(filename))
                 if hachoir_parser is None:
-                    mimetype = 'application/data'
-                    majormimetype = 'file'
+                    mimetype = typegetter.smartMimeTypeGuesser(name=unicode(filename))
+                    if mimetype is None:
+                        mimetype = 'file/octet-stream'
                 else:
                     mimetype = hachoir_parser.mime_type
-                    majormimetype = mimetype.split('/')[0]
+                majormimetype = mimetype.split('/')[0]
 
                 # we create the object with a registered factory
                 # whose name is the major mimetype
@@ -63,7 +65,6 @@ class ZipImport(object):
                     parameters['charset'] = parameters['charset'].lower()
                 item.mimeType = mimetype
                 item.parameters = parameters
-
 
                 # now we import the file into the object with an adapter
                 IImport(item).do_import(filename)

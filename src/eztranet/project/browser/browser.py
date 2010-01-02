@@ -3,10 +3,8 @@ from eztranet.project.interfaces import ILargeBytes
 from eztranet.project.interfaces import IOrderConfig
 from eztranet.project.interfaces import IProject, IProjectItem, IProjectText
 from eztranet.project.project import Project
-from eztranet.project.project import ProjectImage
 from eztranet.project.project import ProjectItem
 from eztranet.project.project import ProjectText
-from eztranet.project.project import ProjectVideo
 from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
 from eztranet.thumbnail.thumbnail import Thumbnail
