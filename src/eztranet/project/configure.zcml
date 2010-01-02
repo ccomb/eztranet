@@ -8,7 +8,7 @@
 
 <role id="eztranet.project.Manager"
       title="modify" />
-           
+
 <role id="eztranet.project.Member"
       title="view" />
 
@@ -47,7 +47,7 @@
 </class>
 
 <utility component=".project.ProjectFactory"
-         name="eztranet.Project" />
+         name="folder" />
 <adapter factory=".project.ProjectNameChooser" />
 
 <!-- ProjectItem -->
@@ -67,8 +67,11 @@
 </class>
 
 <utility component=".project.ProjectItemFactory"
-         name="eztranet.ProjectItem" />
+         name="file" />
 <adapter factory=".project.ProjectItemNameChooser" />
+
+<adapter factory=".project.ProjectItemImport" />
+<adapter factory=".project.ProjectItemExport" />
 
 <!-- ProjectImage -->
 <class class=".project.ProjectImage">

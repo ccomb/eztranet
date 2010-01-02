@@ -3,13 +3,6 @@
            xmlns:z3c="http://namespaces.zope.org/z3c"
            i18n_domain="eztranet">
 
-<!-- configure types we use -->
-<utility component="eztranet.project.project.ProjectItem"
-         provides="zope.component.interfaces.IFactory"
-         name="eztranet.importexport.file" />
-<utility component="eztranet.project.project.Project"
-         provides="zope.component.interfaces.IFactory"
-         name="eztranet.importexport.container" />
 
 <!-- register the available export plugins -->
 <adapter factory=".zip.ZipExport"

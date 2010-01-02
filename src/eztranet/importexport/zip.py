@@ -1,11 +1,18 @@
-import zipfile, os
-from zope.interface import implements
-from zope.component import createObject, adapts, getUtility, IFactory
-from interfaces import IImportable, IImport
+from hachoir_parser import createParser
 from interfaces import IExportable, IExport
+from interfaces import IImportable, IImport
+from os.path import basename
+from zope.app.container.interfaces import IContainer
+from zope.component import createObject, adapts
+from zope.file.interfaces import IFile
+from zope.interface import implements
+from zope.lifecycleevent import ObjectCreatedEvent
+import zipfile, os, tempfile
+import zope.event
+import zope.publisher
 
 class ZipImport(object):
-    """Import plugin that uncompress a zipfile into file and folder objects
+    """Import plugin that uncompresses a zipfile into file and folder objects
     """
     implements(IImport)
     adapts(IImportable)
@@ -21,17 +28,48 @@ class ZipImport(object):
             for d in f.filename.split(os.path.sep)[:-1]:
                 if d is '': continue
                 if d not in current_object:
-                    current_object[d] = createObject('eztranet.importexport.container')
+                    current_object[d] = createObject('folder')
                     current_object[d].__name__ = d
                 current_object = current_object[d]
             objname = f.filename.split(os.path.sep)[-1]
             if objname not in current_object:
-                current_object[objname] = createObject('eztranet.importexport.file')
-                current_object[objname].__name__ = objname
-                # we assume the created object is a file-like object
-                newfile = current_object[objname].open('w')
-                newfile.write(zfile.read(f.filename))
-                newfile.close()
+                # we extract the archive member in a temporary file
+                fd, filename = tempfile.mkstemp()
+                tmpfile = os.fdopen(fd, 'w')
+                tmpfile.write(zfile.read(f.filename))
+                tmpfile.close()
+
+                # we determine the file type
+                hachoir_parser = createParser(unicode(filename))
+                if hachoir_parser is None:
+                    mimetype = 'application/data'
+                    majormimetype = 'file'
+                else:
+                    mimetype = hachoir_parser.mime_type
+                    majormimetype = mimetype.split('/')[0]
+
+                # we create the object with a registered factory
+                # whose name is the major mimetype
+                item = createObject(majormimetype)
+
+                item.title = basename(filename).split('\\')[-1]
+                # set some file attributes
+                major, minor, parameters = zope.publisher.contenttype.parse(
+                                                                         mimetype)
+                if 'charset' in parameters:
+                    parameters['charset'] = parameters['charset'].lower()
+                item.mimeType = mimetype
+                item.parameters = parameters
+
+                current_object[objname] = item
+
+                # now we import the file into the object with an adapter
+                os.close(fd)
+                IImport(current_object[objname]).do_import(filename)
+                os.remove(filename)
+
+                # notify the file is added
+                zope.event.notify(ObjectCreatedEvent(current_object[objname]))
 
 
 
@@ -43,9 +81,6 @@ class ZipExport(object):
 
     def __init__(self, context):
         self.context = context
-        # get the types that correspond to the file and folders
-        self.folder_type = getUtility(IFactory, name='eztranet.importexport.container')
-        self.file_type = getUtility(IFactory, name='eztranet.importexport.file')
         self.zipfile = None
 
     def do_export(self, filename, obj=None, path=None):
@@ -57,11 +92,10 @@ class ZipExport(object):
             self.zipfile = zipfile.ZipFile(filename, 'w')
         else:
             # we are recursing
-            if isinstance(obj, self.file_type):
-                #FIXME: here we assume the obj is a zope.file blob
+            if IFile.providedBy(obj):
                 self.zipfile.write(obj._data._current_filename(),
                                    path.encode('utf-8'))
-        if isinstance(obj, self.folder_type) or obj is self.context:
+        if IContainer.providedBy(obj) or obj is self.context:
             for o in obj:
                 self.do_export(filename, obj=obj[o], path=path + '/' + o)
         if obj is self.context:

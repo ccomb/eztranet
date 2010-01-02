@@ -5,7 +5,7 @@ should also be avoided (ie 1kB zip that inflates to 1TB)
 First some useful imports:
 
     >>> from zope.interface import implements, Interface, alsoProvides
-    >>> from zope.component import getAdapter, getGlobalSiteManager
+    >>> from zope.component import getAdapter, getGlobalSiteManager, adapts
     >>> from zope.schema import TextLine
     >>> import os, tempfile
 
@@ -73,6 +73,98 @@ Remove the temp file:
 
     >>> os.remove(filename)
 
+
+========================
+Export/import is generic
+========================
+
+Exporting an object depends on its interfaces : we can export separately all
+the functionnalities of an object : IImage (which will export the image itself),
+ICommentable (which will export the comments) , IThumbnailed (which will export
+the thumbnails), IConfigurable (which will export the configuration), etc...
+
+The export and import implementations should be located in the package
+corresponding to the feature: ex the IExport plugin for IThumbnailed, should
+be in the thumbnail package.
+
+Maybe there should be a list of requirements for a feature,
+such as "beeing exportable", "being importable", "being configurable"?
+
+We then need something to aggregate all the exports.
+
+The role of the importexport package is just to do the lookups for the export or
+import plugins, display some export page, and aggregate the results from the
+different plugins.
+
+This package offers a set of generic export and import plugins, but third-party
+packages can offer more specific export or import plugins.
+
+Here we only test export and import for a dummy exportable and importable class.
+
+Our dummy class is exportable, and have a dummy feature by providing
+ISomeFeatureable, so that an adapter exists and provide ISomeFeature
+
+    >>> class ISomeFeatureable(Interface):
+    ...     pass
+    >>> class ISomeFeature(Interface):
+    ...     pass
+
+Our object must have the feature:
+
+    >>> alsoProvides(dummy, ISomeFeatureable)
+
+An adapter exists and offers the feature:
+
+    >>> class SomeFeature(object):
+    ...     adapts(ISomeFeatureable)
+    ...     implements(ISomeFeature)
+    ...
+    ...     def __init__(self, context):
+    ...         self.context = context
+    ...
+    ...     feature = 'foobar'
+    >>>
+    >>> getGlobalSiteManager().registerAdapter(SomeFeature)
+
+So we can use the feature with the object:
+
+    >>> ISomeFeature(dummy).feature
+    'foobar'
+
+Now we want to export the feature for the object. We must have an export plugin
+for the feature:
+
+    >>> class SomeFeatureExport(object):
+    ...     adapts(ISomeFeatureable)
+    ...     implements(IExport)
+    ...
+    ...     def __init__(self, context):
+    ...         self.context = context
+    ...
+    ...     def do_export(self, filename):
+    ...         exported_feature = ISomeFeature(self.context).feature
+    ...         exported_file = open(filename, 'w')
+    ...         exported_file.write(exported_feature)
+    ...         exported_file.close()
+    ...
+    >>> getGlobalSiteManager().registerAdapter(SomeFeatureExport)
+
+Now we can export our feature
+
+    >>> fd, filename = tempfile.mkstemp()
+    >>> os.close(fd)
+    >>> IExport(dummy).do_export(filename)
+
+We check the feature has been exported:
+
+    >>> f = open(filename)
+    >>> f.read()
+    'foobar'
+    >>> f.close()
+    >>> os.remove(filename)
+
+
+
 =====================
 Zip import and export
 =====================
@@ -109,10 +201,8 @@ We create 4 files in this hierarchy:
 We zip and remove the hierarchy:
 
     >>> import zipfile
-    >>> fd, zfilename = tempfile.mkstemp()
+    >>> fd, zfilename = tempfile.mkstemp(suffix='.zip')
     >>> os.close(fd)
-    >>> os.remove(zfilename)
-    >>> zfilename += '.zip'
     >>> zfile = zipfile.ZipFile(zfilename, 'w')
     >>> zfile.write(join(folderpath, 'file1'),
     ...             join('file1'))
@@ -133,19 +223,17 @@ We register our export and import plugins:
     >>> getGlobalSiteManager().registerAdapter(ZipExport, name='zip')
     >>> getGlobalSiteManager().registerAdapter(ZipImport, name='zip')
 
+    >>> from eztranet.project.project import ProjectItemExport, ProjectItemImport
+    >>> getGlobalSiteManager().registerAdapter(ProjectItemExport)
+    >>> getGlobalSiteManager().registerAdapter(ProjectItemImport)
+
 We also need to tell which kind of object to create in the ZODB.
-For now, we use standard zope content types:
 
     >>> from zope.component import IFactory
     >>> from zope.app.container.sample import SampleContainer
-    >>> getGlobalSiteManager().registerUtility(SampleContainer,
-    ...                                        IFactory,
-    ...                                        'eztranet.importexport.container')
-    >>> from zope.file.file import File
-    >>> getGlobalSiteManager().registerUtility(File,
-    ...                                        IFactory,
-    ...                                        'eztranet.importexport.file')
-    
+    >>> getGlobalSiteManager().registerUtility(SampleContainer, IFactory, 'folder')
+    >>> from eztranet.project.project import ProjectItem
+    >>> getGlobalSiteManager().registerUtility(ProjectItem, IFactory, 'file')
 
 
 
@@ -207,8 +295,4 @@ Now we can remove our temp files:
     >>> os.remove(exported_path)
     >>> os.remove(zfilename)
     >>> shutil.rmtree(blob_dir)
-
-
-
-
 

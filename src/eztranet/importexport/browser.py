@@ -15,6 +15,7 @@ class ExportPage(BrowserPagelet):
     This page should display a selection form to choose the export format.
     The export format would be generated from the registered export utilities,
     and transmitted via a POST argument.
+    It should also offer select boxes to choose the features to export
     We first export only as a zip file.
     """
 

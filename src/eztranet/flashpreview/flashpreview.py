@@ -90,6 +90,7 @@ class FlashConverterThread(Thread):
             while chunk:
                 openfile.write(chunk)
                 chunk = flvfile.read(CHUNKSIZE)
+            del chunk
             openfile.close()
             flvfile.close()
             transaction.commit()

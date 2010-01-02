@@ -1,4 +1,5 @@
 from persistent import Persistent
+from eztranet.importexport.interfaces import IImport, IExport
 from eztranet.project.interfaces import IOrderConfig
 from eztranet.config.interfaces import IConfigurable
 from eztranet.config.interfaces import IConfig
@@ -57,6 +58,49 @@ class ProjectItem(File):
 ProjectItemFactory = Factory(ProjectItem)
 
 
+class ProjectItemImport(object):
+    """import plugin for an item (image or video)
+    """
+    implements(IImport)
+    adapts(IProjectItem)
+    def __init__(self, context):
+        self.context = context
+
+    def do_import(self, newfile):
+        # write the file with chunks of 1MB
+        if type(newfile) in (str, unicode):
+            tmpfile = open(newfile)
+        else:
+            tmpfile = newfile
+        tmpfile.seek(0)
+        f = self.context.open('w')
+        chunk = tmpfile.read(1000000)
+        while chunk:
+            f.write(chunk)
+            chunk = tmpfile.read(1000000)
+        del chunk
+        if tmpfile is newfile:
+            # don't close but rewind
+            tmpfile.seek(0)
+        else:
+            tmpfile.close()
+        f.close()
+
+
+class ProjectItemExport(object):
+    """export plugin for an item (image or video)
+    """
+    implements(IExport)
+    adapts(IProjectItem)
+    def __init__(self, context):
+        self.context = context
+
+    def do_export(self, filename):
+        tmpfile = open(filename, 'w')
+        tmpfile.write(self.read())
+        tmpfile.close()
+
+
 class ProjectImage(ProjectItem):
     """a project image
     """
@@ -64,6 +108,8 @@ class ProjectImage(ProjectItem):
 
 
 ProjectImageFactory = Factory(ProjectImage)
+
+
 
 
 class ProjectVideo(ProjectItem):

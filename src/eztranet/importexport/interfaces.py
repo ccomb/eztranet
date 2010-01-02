@@ -12,7 +12,7 @@ class IExport(Interface):
 class IImport(Interface):
     """Interface offered by importable objects or adapters
     """
-    def do_import(filename):
+    def do_import(fd=None, filename=None):
         """Import the object from filename
         """
 
