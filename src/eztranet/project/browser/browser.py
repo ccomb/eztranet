@@ -196,8 +196,8 @@ class ProjectContainerViewMenuItem(SimpleMenuItem):
 
 
 class ProjectItemAdd(AddForm):
-    """The view class for adding a ProjectItem"""
-
+    """The view class for adding a ProjectItem
+    """
     fields = Fields(IProjectItem).omit('__name__', '__parent__', 'title')
     label = _(u'Adding a file')
     id = "addform"
@@ -218,40 +218,36 @@ class ProjectItemAdd(AddForm):
                 mimetype = uploaded_file.headers['Content-Type']
             majormimetype = mimetype.split('/')[0]
 
-            # if the file is a zip file, import it
-            if mimetype == 'application/zip':
-                getAdapter(self.context, IImport, name=u'zip').do_import(uploaded_file.name)
-            else:
-                # create the new item with the looked-up factory, based on the name
-                try:
-                    item = createObject(majormimetype)
-                except ComponentLookupError:
-                    item = ProjectItem()
-                item.title = basename(uploaded_file.filename).split('\\')[-1]
-                contentName = INameChooser(self.context).chooseName(item.title,
-                                                                    item)
-                # set some file attributes
-                major, minor, parameters = zope.publisher.contenttype.parse(
-                                                                         mimetype)
-                if 'charset' in parameters:
-                    parameters['charset'] = parameters['charset'].lower()
-                item.mimeType = mimetype
-                item.parameters = parameters
+            # create the new item with the looked-up factory, based on the name
+            try:
+                item = createObject(majormimetype)
+            except ComponentLookupError:
+                item = ProjectItem()
+            item.title = basename(uploaded_file.filename).split('\\')[-1]
+            contentName = INameChooser(self.context).chooseName(item.title,
+                                                                item)
+            # set some file attributes
+            major, minor, parameters = zope.publisher.contenttype.parse(
+                                                                     mimetype)
+            if 'charset' in parameters:
+                parameters['charset'] = parameters['charset'].lower()
+            item.mimeType = mimetype
+            item.parameters = parameters
 
-                # import the file into the created object
-                IImport(item).do_import(uploaded_file)
+            # import the file into the created object
+            IImport(item).do_import(uploaded_file)
 
-                # add the object in the parent
-                self.context[contentName] = item
+            # add the object in the parent
+            self.context[contentName] = item
 
-                # notify the file is added
-                zope.event.notify(ObjectCreatedEvent(item))
+            # notify the file is added
+            zope.event.notify(ObjectCreatedEvent(item))
 
-                # remove the 'data' field for the final applyChanges
-                data.pop('data')
-                # update all fields excepted the file fields removed in the previous loop
-                applyChanges(self, item, data) # applychanges except the data
-                # remove the uploaded file
+            # remove the 'data' field for the final applyChanges
+            data.pop('data')
+            # update all fields excepted the file fields removed in the previous loop
+            applyChanges(self, item, data) # applychanges except the data
+            # remove the uploaded file
 
         self.request.response.redirect(absoluteURL(self.context, self.request))
 

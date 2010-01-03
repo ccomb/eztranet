@@ -1,0 +1,38 @@
+<h2 i18n:translate="" >Export as a zip file</h2>
+
+<p i18n:translate="">
+You can download the whole folder as a zip file by clicking on the button below.
+Beware that big projects can take a lot of time to compress and download!
+</p>
+
+<form action="exportdownload" method="post">
+
+  <div class="controls">
+    <input type="submit"
+           name="do_export"
+           value="Export as zip"
+           i18n:attributes="value export-button"/>
+  </div>
+
+</form>
+
+<h2 i18n:translate="">Import a zip file</h2>
+<tal:block condition="view/import_allowed">
+  
+  <p i18n:translate="">
+  You can import a zip file into the current folder. The zip file will be
+  uncompressed and only non-existing files will be added.
+  </p>
+  
+  <span class="error" tal:condition="not:view/valid_zip">
+  The zip file could not be imported
+  </span>
+  
+  <metal:block use-macro="macro:form">
+    <metal:block fill-slot="info" />
+  </metal:block>
+</tal:block>
+<tal:block condition="not:view/import_allowed">
+You are not authorized to import a zip file
+</tal:block>
+

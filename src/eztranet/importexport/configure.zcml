@@ -13,14 +13,14 @@
          name="ini" />
 
 
-<z3c:pagelet name="export.html"
+<z3c:pagelet name="importexport.html"
              for=".interfaces.IExportable"
-             class=".browser.ExportPage"
+             class=".browser.ImportExportPage"
              layer="eztranet.skin.interfaces.IEztranetSkin"
              permission="eztranet.project.view" />
 
-<z3c:template template="export.pt"
-              for=".browser.ExportPage"
+<z3c:template template="importexport.pt"
+              for=".browser.ImportExportPage"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 <browser:view name="exportdownload"
@@ -35,5 +35,14 @@
                  manager="eztranet.skin.interfaces.ITabMenu"
                  layer="eztranet.skin.interfaces.IEztranetSkin"
                  permission="eztranet.project.view" />
+
+<browser:viewlet name="fileuploadjs"
+         class=".browser.FileUploadHeader"
+         for="*"
+         view=".browser.ImportExportPage"
+         manager="eztranet.skin.interfaces.IHeaders"
+         permission="zope.Public"
+         layer="eztranet.skin.interfaces.IEztranetSkin" />
+<adapter factory=".browser.BigFileValidator" />
 </configure>
 
