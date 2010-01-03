@@ -98,6 +98,15 @@ class ZipExport(object):
             if IFile.providedBy(obj):
                 self.zipfile.write(obj._data._current_filename(),
                                    path.encode('utf-8'))
+            if hasattr(obj, 'text'):
+                fd, fname = tempfile.mkstemp(suffix='.txt')
+                tmpfile = os.fdopen(fd, 'w')
+                tmpfile.write(obj.text)
+                tmpfile.close()
+                self.zipfile.write(fname,
+                                   path.encode('utf-8'))
+                os.remove(fname)
+
         if IContainer.providedBy(obj) or obj is self.context:
             for o in obj:
                 self.do_export(filename, obj=obj[o], path=path + '/' + o)

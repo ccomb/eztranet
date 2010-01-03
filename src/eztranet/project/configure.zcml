@@ -115,11 +115,17 @@
   <implements interface="eztranet.thumbnail.interfaces.IThumbnailed" />
   <implements interface="eztranet.comment.interfaces.IAttributeAnnotatableComments" />
   <implements interface="eztranet.config.interfaces.IConfigurable" />
+  <implements interface="eztranet.importexport.interfaces.IExportable" />
+  <implements interface="eztranet.importexport.interfaces.IImportable" />
   <require permission="eztranet.project.view"
            interface=".interfaces.IProjectText" />
   <require permission="eztranet.project.edit"
            set_schema=".interfaces.IProjectText" />
 </class>
+<adapter factory=".project.ProjectTextImport" />
+<adapter factory=".project.ProjectTextExport" />
+<utility component=".project.ProjectTextFactory"
+         name="text" />
 
 <adapter factory=".project.OrderConfig" />
 

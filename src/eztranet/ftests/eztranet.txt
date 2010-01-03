@@ -931,9 +931,9 @@ Login as admin and browse the large list of projects::
     False
 
 
-=================================
-Exporting a project as a zip file
-=================================
+===============================================
+Exporting and importing a project as a zip file
+===============================================
 
 We have a importexport.html page for a project:
 
@@ -946,8 +946,17 @@ We can click on the export button and get a zip file:
     >>> browser.getControl(name='do_export').click()
     >>> browser.contents
     'PK...
-    >>> 100000 < len(browser.contents) < 200000
+    >>> zipcontent = browser.contents
+    >>> 100000 < len(zipcontent) < 200000
     True
+
+We store the zip file in a tempfile:
+
+    >>> import os, tempfile
+    >>> fd, filename = tempfile.mkstemp(suffix='.zip')
+    >>> tmpfile = os.fdopen(fd, 'w')
+    >>> tmpfile.write(zipcontent)
+    >>> tmpfile.close()
 
 The project root cannot be exported:
 
@@ -962,6 +971,24 @@ A project item cannot be exported (it can already be downloaded separately):
     Traceback (most recent call last):
     ...
     httperror_seek_wrapper: HTTP Error 404: Not Found
+
+We can reimport this zip file into a new folder
+
+    >>> browser.open('http://localhost/eztranet/projects/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'testimport'
+    >>> browser.getControl(name='form.widgets.description').value = u'testimport'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> 'testimport' in root['eztranet']['projects']
+    True
+
+    >>> browser.open('http://localhost/eztranet/projects/testimport/importexport.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(filename), 'application/zip', 'zipfile.zip')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> list(root['eztranet']['projects']['testimport'])
+    [u'a-sample.ogg', u'a-sample.png', u'dummytext.txt']
+    
+    >>> os.remove(filename)
 
 
 ===========================
@@ -978,9 +1005,9 @@ We remove every project excepted the Project and project-2::
     >>> browser.open('http://localhost/eztranet/projects/')
     >>> options = sorted(browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options)
     >>> options
-    ['project', 'project-10', 'project-11',..., 'project-9']
+    ['project', 'project-10', 'project-11',..., 'project-9', 'testimport']
     >>> len(options)
-    32
+    33
     >>> options.remove('project')
     >>> options.remove('project-2')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = options

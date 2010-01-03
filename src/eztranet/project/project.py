@@ -101,6 +101,7 @@ class ProjectItemExport(object):
         tmpfile.close()
 
 
+
 class ProjectImage(ProjectItem):
     """a project image
     """
@@ -130,6 +131,41 @@ class ProjectText(Persistent):
 
 ProjectTextFactory = Factory(ProjectText)
 
+class ProjectTextImport(object):
+    """import plugin for an item (image or video)
+    """
+    implements(IImport)
+    adapts(IProjectText)
+    def __init__(self, context):
+        self.context = context
+
+    def do_import(self, newfile):
+        # write the file with chunks of 1MB
+        if type(newfile) in (str, unicode):
+            tmpfile = open(newfile)
+        else:
+            tmpfile = newfile
+        tmpfile.seek(0)
+        self.context.text = tmpfile.read()
+        if tmpfile is newfile:
+            # don't close but rewind
+            tmpfile.seek(0)
+        else:
+            tmpfile.close()
+
+
+class ProjectTextExport(object):
+    """export plugin for an item (image or video)
+    """
+    implements(IExport)
+    adapts(IProjectText)
+    def __init__(self, context):
+        self.context = context
+
+    def do_export(self, filename):
+        tmpfile = open(filename, 'w')
+        tmpfile.write(self.text)
+        tmpfile.close()
 
 class ProjectItemNameChooser(NameChooser):
     """adapter that allows to choose the __name__ of a projectitem
