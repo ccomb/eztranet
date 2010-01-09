@@ -25,9 +25,9 @@ Adding an Eztranet site
     >>> browser.headers['status']
     '200 Ok'
 
-==========================
-Adding Projects and videos
-==========================
+========================
+Adding Folders and files
+========================
 
 We add a project, a video, an image, a text, and an invalid item::
 
@@ -65,6 +65,13 @@ We add a project, a video, an image, a text, and an invalid item::
     >>> browser.getControl(name='form.buttons.add').click()   
     **Hachoir determination failed**
 
+    >>> browser.open('http://localhost/eztranet/projects/project/add_projectitem.html')
+    >>> from StringIO import StringIO
+    >>> browser.getControl(name='form.widgets.data').add_file(StringIO('dummytext'),
+    ...                                               'application/data',
+    ...                                               'dummy')
+    >>> browser.getControl(name='form.buttons.add').click()   
+    **Hachoir determination failed**
 
 We wait for the compression to finish::
 
@@ -82,7 +89,7 @@ automatic thumbnails
 We have a thumbnail for each item::
 
     >>> list(getRootFolder()['eztranet']['projects'][u'project'])
-    [u'dummytext.txt', u'sample.ogg', u'sample.png', u'some-title']
+    [u'dummy', u'dummytext.txt', u'sample.ogg', u'sample.png', u'some-title']
 
     >>> browser.open('http://localhost/eztranet/projects/project/@@thumbnail_image.jpg')
     >>> 500 < len(browser.contents) < 5000
@@ -95,6 +102,13 @@ We have a thumbnail for each item::
     >>> 500 < len(browser.contents) < 5000
     True
     >>> browser.open('http://localhost/eztranet/projects/project/dummytext.txt/@@thumbnail_url')
+    >>> browser.contents
+    '/@@/text.png'
+
+    >>> browser.open('http://localhost/eztranet/projects/project/dummy/@@thumbnail_image.jpg')
+    >>> 500 < len(browser.contents) < 5000
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/dummy/@@thumbnail_url')
     >>> browser.contents
     '/@@/default_thumbnail.png'
 

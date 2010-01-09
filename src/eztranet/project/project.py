@@ -167,6 +167,7 @@ class ProjectTextExport(object):
         tmpfile.write(self.text)
         tmpfile.close()
 
+
 class ProjectItemNameChooser(NameChooser):
     """adapter that allows to choose the __name__ of a projectitem
     """
