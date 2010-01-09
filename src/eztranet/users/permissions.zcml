@@ -109,6 +109,12 @@
 
 <grant role="eztranet.project.Manager"
        permission="eztranet.comment.add" />
+            
+<grant role="eztranet.project.Manager"
+       permission="eztranet.comment.edit" />
+
+<grant role="eztranet.project.Manager"
+       permission="eztranet.comment.delete" />
        
 <grant role="eztranet.project.Manager"
        permission="zope.app.dublincore.change" />
