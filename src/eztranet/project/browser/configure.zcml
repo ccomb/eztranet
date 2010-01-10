@@ -214,8 +214,7 @@
               for=".browser.ProjectTextView"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<zope:adapter factory=".browser.ProjectTextThumbnail"
-              trusted="yes"/>
+<zope:adapter factory=".browser.ProjectTextThumbnail" />
 
 <viewlet name="ProjectTextAddMenuItem"
          class=".browser.ProjectTextAddMenuItem"

@@ -1,6 +1,6 @@
-================
-Functional tests
-================
+=============================
+Functional tests for comments
+=============================
 
 .. contents::
 
@@ -8,8 +8,8 @@ To see errors, add this just before the wanted line:
     >> browser.handleErrors = False
 
 
-Adding an Eztranet site
-=======================
+Adding test contents
+====================
 
 We create the test browser and the Eztranet site:
 

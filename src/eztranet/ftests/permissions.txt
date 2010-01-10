@@ -1,0 +1,507 @@
+================================
+Functional tests for permissions
+================================
+
+.. contents::
+
+To see errors, add this just before the wanted line:
+    >> browser.handleErrors = False
+
+
+Adding test contents
+====================
+
+We create the test browser and the Eztranet site:
+
+    >>> from zope.testbrowser.testing import Browser
+    >>> browser = Browser()
+    >>> browser.addHeader('Authorization', 'Basic globalmgr:globalmgrpw')
+    >>> browser.addHeader('Accept-Language', 'en-US')
+    >>> browser.open('http://localhost/add_eztranet.html')
+    >>> browser.getControl(name='form.widgets.__name__').value = 'eztranet'
+    >>> browser.getControl(name='form.widgets.title').value = 'My Eztranet Site'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> del browser
+    >>> browser = Browser()
+
+    >>> browser.open('http://localhost/eztranet/projects/@@loginForm.html')
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+
+We add 2 projects
+
+    >>> browser.open('http://localhost/eztranet/projects/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'project'
+    >>> browser.getControl(name='form.widgets.description').value = u'project1 description'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'project2'
+    >>> browser.getControl(name='form.widgets.description').value = u'project2 description'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> '<a href="project">project</a>' in  browser.contents
+    True
+    >>> '<a href="project2">' in  browser.contents
+    True
+
+and a subproject:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'subproject'
+    >>> browser.getControl(name='form.widgets.description').value = u'subproject description'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project')
+    >>> '<a href="subproject">subproject</a>' in  browser.contents
+    True
+
+We add a video:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> import eztranet.thumbnail
+    >>> from os.path import join, dirname
+    >>> videopath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
+    >>> browser.getLink(text='New file').click()
+    >>> browser.getControl(name='form.widgets.data').add_file(open(videopath), 'video/ogg', 'a sample.ogg')
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> import time
+    >>> for i in range(10):
+    ...     time.sleep(0.2)
+    ...     browser.open('http://localhost/eztranet/projects/project/a-sample.ogg/')
+    ...     if 'compressing' not in browser.contents or i > 9:
+    ...         break
+
+We add an image in each project:
+
+    >>> imagepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
+    >>> browser.open('http://localhost/eztranet/projects/project/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(imagepath), 'image/png', 'a sample.png')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project2/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(open(imagepath), 'image/png', 'a sample.png')
+    >>> browser.getControl(name='form.buttons.add').click()
+
+We add a text:
+
+    >>> from StringIO import StringIO
+    >>> browser.open('http://localhost/eztranet/projects/project/add_page.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'text'
+    >>> browser.getControl(name='form.widgets.text').value = u'text content'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+We add a file:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/add_projectitem.html')
+    >>> browser.getControl(name='form.widgets.data').add_file(StringIO('dummy'),
+    ...                                               'application/data',
+    ...                                               'dummy')
+    >>> browser.getControl(name='form.buttons.add').click()
+    **Hachoir determination failed**
+
+
+Read permissions
+================
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+
+We create a new user 'testuser':
+
+    >>> browser.getLink(text='Users').click()
+    >>> browser.getLink(text='New user').click()
+    >>> browser.getControl(name='form.widgets.login').value = u'testuser'
+    >>> browser.getControl(name='form.widgets.password').value = u'testpass'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+
+We set the read permissions on the project to the user
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getLink(text='Permissions').click()
+    >>> browser.getControl(name='eztranet.project.Member').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+We logout, revisit the projects as the new user:
+
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+
+We only see the authorized project:
+
+    >>> '<a href="project">project</a>' in  browser.contents
+    True
+    >>> '<a href="project2">' in  browser.contents
+    False
+
+Trying to see the unauthorized pages leads to an error:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/@@edit.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+    >>> browser.open('http://localhost/eztranet/projects/project2')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@edit.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@comments.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@importexport.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@add_page.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@add_projectitem.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+
+We cannot delete any project:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['project']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project2']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+We cannot delete anything in the project:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
+
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['subproject']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.ogg']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.png']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['dummy']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['text']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+
+Write permissions
+=================
+
+We authorize testuser to modify the project:
+
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.open('http://localhost/eztranet/projects/project/@@permissions.html')
+    >>> browser.getControl(name='eztranet.project.Member').value = []
+    >>> browser.getControl(name='eztranet.project.Manager').value = ['testuser']
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+Then we visit the project as testuser:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = u'testuser'
+    >>> browser.getControl(name='password').value = u'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+
+We only see the authorized project:
+
+    >>> '<a href="project2">' in  browser.contents
+    False
+    >>> '<a href="project">' in  browser.contents
+    True
+
+Trying to see the unauthorized project and pages leads to an error:
+
+    >>> browser.open('http://localhost/eztranet/projects/project2')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/a-sample.png/')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@edit.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@comments.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@importexport.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@add_page.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project2/@@add_projectitem.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+But we can see all the views for the project we are manager of, excepted
+permissions:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@edit.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@comments.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@add_project.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@importexport.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@add_page.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> browser.open('http://localhost/eztranet/projects/project/@@add_projectitem.html')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project/@@permissions.html')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+We cannot delete any project:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['project']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project2']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+We can edit any file and subproject:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/@@edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'subproject description2'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'subproject description2' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/a-sample.ogg/@@edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'description2'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'description2' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/a-sample.ogg/@@edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'description2'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'description2' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/dummy/@@edit.html')
+    >>> browser.getControl(name='form.widgets.description').value = u'description2'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'description2' in browser.contents
+    True
+    >>> browser.open('http://localhost/eztranet/projects/project/text/@@edit.html')
+    >>> browser.getControl(name='form.widgets.text').value = u'description2'
+    >>> browser.getControl(name='form.buttons.apply').click()
+    >>> 'description2' in browser.contents
+    True
+
+We can delete the subproject and any file:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
+    >>> all(['href="'+i in browser.contents for i in ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']])
+    True
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> any(['href="'+i in browser.contents for i in ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']])
+    False
+
+
+
+Resetting permissions
+=====================
+
+We delete the project and add it again
+to check that testuser cannot access it after recreation:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+
+    >>> sorted(browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options)
+    ['project', 'project2']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    >>> sorted(browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options)
+    ['project2']
+
+    >>> browser.getLink(text='New folder').click()
+    >>> browser.getControl(name='form.widgets.title').value = u'project'
+    >>> browser.getControl(name='form.widgets.description').value = u'project description'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+We should not be able to view it as testuser:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> '<a href="project">project</a>' in  browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+
+We give access to project to testuser again,
+then we delete and add again testuser
+to check that the new testuser cannot access the project:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'admin'
+    >>> browser.getControl(name='password').value = 'eztranet'
+    >>> browser.getControl(name='SUBMIT').click()
+    >>> browser.getLink(text='project', index=1).click()
+    >>> browser.getLink(text='Permissions').click()
+    >>> browser.getControl(name='eztranet.project.Member').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+Before deleting the testuser, we first add a subproject in the project
+to check that the recursive deletion of permissions works:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/@@add_project.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'subproject'
+    >>> browser.getControl(name='form.widgets.description').value = u'subproject description'
+    >>> browser.getControl(name='form.buttons.add').click()
+
+    >>> browser.open('http://localhost/eztranet/projects/project/subproject/@@permissions.html')
+    >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='eztranet.project.Manager').value = []
+    >>> browser.getControl(name='GRANT_SUBMIT').click()
+
+Now we delete the testuser
+
+    >>> browser.getLink(text='Users').click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['admin', 'testuser']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['testuser']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['admin']
+
+    >>> browser.getLink(text='New user').click()
+    >>> browser.getControl(name='form.widgets.login').value = u'testuser'
+    >>> browser.getControl(name='form.widgets.password').value = u'testpass'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['admin', 'testuser']
+
+    >>> browser.getLink(text='Projects').click()
+    >>> browser.getLink(text='Logout').click()
+    >>> browser.getControl(name='login').value = 'testuser'
+    >>> browser.getControl(name='password').value = 'testpass'
+    >>> browser.getControl(name='SUBMIT').click()
+
+    >>> '<a href="project">project</a>' in  browser.contents
+    False
+    >>> browser.open('http://localhost/eztranet/projects/project')
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
