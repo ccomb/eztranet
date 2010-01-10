@@ -127,6 +127,7 @@ We set the read permissions on the project to the user
     >>> browser.getControl(name='eztranet.project.Member').options
     ['admin', 'testuser']
     >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='eztranet.project.Manager').value = []
     >>> browser.getControl(name='GRANT_SUBMIT').click()
 
 We logout, revisit the projects as the new user:
@@ -136,6 +137,8 @@ We logout, revisit the projects as the new user:
     >>> browser.getControl(name='login').value = 'testuser'
     >>> browser.getControl(name='password').value = 'testpass'
     >>> browser.getControl(name='SUBMIT').click()
+    >>> 'testuser' in browser.contents
+    True
 
 We only see the authorized project:
 
@@ -206,15 +209,6 @@ We cannot delete any project:
 We cannot delete anything in the project:
 
     >>> browser.open('http://localhost/eztranet/projects/project/')
-    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
-    ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
-
-    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['subproject']
-    >>> browser.getControl(name="contents.buttons.delete").click()
-    Traceback (most recent call last):
-    ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
-    >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.ogg']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
@@ -233,12 +227,48 @@ We cannot delete anything in the project:
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
+
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['subproject']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['subproject']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['text']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
 
+We also try with the full view name, because it would allow to delete an object
+without permissions:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/index.html')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.png']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    >>> browser.open('http://localhost/eztranet/projects/project/@@index.html')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.png']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+    Traceback (most recent call last):
+    ...
+    httperror_seek_wrapper: HTTP Error 403: Forbidden
+
+We still have everything:
+
+    >>> browser.open('http://localhost/eztranet/projects/project/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
 
 Write permissions
 =================
@@ -460,6 +490,7 @@ to check that the new testuser cannot access the project:
     >>> browser.getControl(name='eztranet.project.Member').options
     ['admin', 'testuser']
     >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='eztranet.project.Manager').value = []
     >>> browser.getControl(name='GRANT_SUBMIT').click()
 
 Before deleting the testuser, we first add a subproject in the project
@@ -472,6 +503,7 @@ to check that the recursive deletion of permissions works:
 
     >>> browser.open('http://localhost/eztranet/projects/project/subproject/@@permissions.html')
     >>> browser.getControl(name='eztranet.project.Member').value = ['testuser']
+    >>> browser.getControl(name='eztranet.project.Manager').value = []
     >>> browser.getControl(name='eztranet.project.Manager').value = []
     >>> browser.getControl(name='GRANT_SUBMIT').click()
 
