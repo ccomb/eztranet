@@ -1,3 +1,4 @@
+from zope.security.proxy import removeSecurityProxy
 from hachoir_parser import createParser
 from interfaces import IExportable, IExport
 from interfaces import IImportable, IImport
@@ -96,7 +97,8 @@ class ZipExport(object):
         else:
             # we are recursing
             if IFile.providedBy(obj):
-                self.zipfile.write(obj._data._current_filename(),
+                # XXX removeSecurityProxy but should check read permission
+                self.zipfile.write(removeSecurityProxy(obj)._data._current_filename(),
                                    path.encode('utf-8'))
             if hasattr(obj, 'text'):
                 fd, fname = tempfile.mkstemp(suffix='.txt')

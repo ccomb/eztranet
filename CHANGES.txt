@@ -6,6 +6,7 @@
 - use subprocess module for external processes
 - directly store the flv file after encoding
 - fixed some translation issues
+- added a wysiwyg editor (tinyMCE)
 
 1.2.0 (2008-09-04)
 ------------------
