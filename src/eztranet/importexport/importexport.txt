@@ -9,6 +9,26 @@ First some useful imports:
     >>> from zope.schema import TextLine
     >>> import os, tempfile
 
+
+1er adaptateur IImport sur le folder
+ensuite on détermine le type de fichier
+pour une image :
+    lookup d'une factory 'image'
+    on cree l'image
+    on importe les autres fonctionnalités
+
+pour un zip :
+    lookup d'une factory 'zip' qui est en fait un utility d'import
+
+
+target : IFolder, IImage, IVideo
+
+type de fichier : 'zip' 'image' 'video'
+
+
+1er adaptateur sur la target,
+puis
+
 ===========
 Basic ideas
 ===========

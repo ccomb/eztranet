@@ -36,7 +36,6 @@ class Thumbnail(object):
             file = blob.open('w')
             file.write(data)
             file.close()
-            transaction.savepoint()
         else:
             IAnnotations(self.context)[CONFIG_KEY] = None
 

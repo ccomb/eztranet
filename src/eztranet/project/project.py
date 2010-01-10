@@ -131,6 +131,7 @@ class ProjectText(Persistent):
 
 ProjectTextFactory = Factory(ProjectText)
 
+
 class ProjectTextImport(object):
     """import plugin for an item (image or video)
     """

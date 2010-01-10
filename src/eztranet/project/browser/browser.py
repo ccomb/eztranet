@@ -1,3 +1,4 @@
+from __future__ import with_statement
 from eztranet.importexport.interfaces import IImport
 from eztranet.project.interfaces import ILargeBytes
 from eztranet.project.interfaces import IOrderConfig
@@ -32,6 +33,8 @@ from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, implementer, Interface
 from zope.lifecycleevent import ObjectCreatedEvent
+from zope.location.interfaces import ILocation
+from zope.publisher.browser import BrowserView
 from zope.security.checker import canAccess
 from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
@@ -480,6 +483,7 @@ class ProjectTextView(BrowserPagelet):
         return self.context.text
         #return PlainTextToHTMLRenderer(escape(self.context.text), self.request).render()
 
+
 class ProjectTextAddMenuItem(SimpleMenuItem):
     title = _(u'New text')
     url = 'add_page.html'
@@ -487,8 +491,32 @@ class ProjectTextAddMenuItem(SimpleMenuItem):
 
 
 class ProjectTextThumbnail(Thumbnail):
-    """adapter from a project text to a thumbnail"""
+    """adapter from a project text to a thumbnail
+    """
     adapts(IProjectText)
     implements(IThumbnail)
     resource = 'text.png'
+
+
+class ProjectTextDisplay(BrowserView):
+    """The view that allows a direct display of the text
+    """
+    def __call__(self):
+        return self.context.text
+
+
+class ProjectTextDownload(BrowserView):
+    """The view that downloads the text as a file
+    this should probably be handled by the importexport package
+    """
+    def __call__(self):
+        filename = "filecontent"
+        if ILocation.providedBy(self.context):
+            filename = self.context.__name__
+        self.request.response.setHeader('Content-disposition',
+                      'attachment; filename="%s"' % filename.encode('utf-8'))
+        self.request.response.setHeader('Content-length',
+                                      len(self.context.text))
+        self.request.response.setHeader('Content-Type', 'text/html')
+        return self.context.text
 

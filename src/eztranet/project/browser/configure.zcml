@@ -131,18 +131,31 @@
          layer="eztranet.skin.interfaces.IEztranetSkin"
          permission="eztranet.project.view" />
 
+<!-- Direct download and display -->
 <configure package="zope.file">
-<view class="zope.file.download.Display"
-      permission="zope.View"
+<view name="display"
+      class="zope.file.download.Display"
       for="zope.file.interfaces.IFile"
-      name="display"
+      permission="zope.View"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
-<view class="zope.file.download.Download"
-      permission="zope.View"
+<view name="download"
+      class="zope.file.download.Download"
       for="zope.file.interfaces.IFile"
-      name="download"
+      permission="zope.View"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
 </configure>
+<view name="download"
+      class=".browser.ProjectTextDownload"
+      for="eztranet.project.interfaces.IProjectText"
+      permission="eztranet.project.view"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+<view name="display"
+      class=".browser.ProjectTextDisplay"
+      for="eztranet.project.interfaces.IProjectText"
+      permission="eztranet.project.view"
+      layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+
 
 <!-- ADDING PROJECT-->
 <z3c:pagelet name="add_project.html"
@@ -229,7 +242,7 @@
          manager="eztranet.skin.interfaces.ITabMenu"
          layer="eztranet.skin.interfaces.IEztranetSkin"
          permission="eztranet.project.edit" />
-         
+
 <z3c:pagelet name="edit.html"
              for="..interfaces.IProjectText"
              class=".browser.ProjectTextEdit"
