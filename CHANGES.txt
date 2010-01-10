@@ -1,3 +1,9 @@
+1.2.1 (2010-01-10)
+------------------
+- upgraded minor versions of many packages
+- upgraded z3c.layer.pagelet to fix a related security issue
+- spin package versions
+
 1.2.0 (2008-09-04)
 ------------------
 - port user interface to z3c components
