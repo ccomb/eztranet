@@ -138,7 +138,8 @@ class ThumbnailConfig(object):
     adapts(IConfigurable)
 
     def __init__(self, context):
-        self.context = context
+        # __parent__ is needed for trusted adapters
+        self.__parent__ = self.context = context
 
     def _get_size(self):
         return IConfig(self.context).get_config(SIZE_CONFIG_KEY)

@@ -203,7 +203,7 @@ class ProjectImageSized(object):
     implements(ISized)
 
     def __init__(self, context):
-        self.context = context
+        self.context = self.__parent__ = context
         image = PIL.Image.open(self.context._data._current_filename())
         self.width = image.size[0]
         self.height = image.size[1]

@@ -23,7 +23,7 @@ class FlashPreview(object):
     adapts(IFile)
 
     def __init__(self, file):
-        self.context = file
+        self.context = self.__parent__ = file
         annotations = IAnnotations(self.context)
         if 'eztranet.flashpreview' not in annotations:
             annotations['eztranet.flashpreview'] = PersistentDict()

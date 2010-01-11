@@ -4,7 +4,7 @@
 
 <zope:permission id="eztranet.thumbnail.view"
             title="View thumbnails" />
-                 
+
 <zope:permission id="eztranet.thumbnail.write"
             title="Write thumbnails" />
 
@@ -48,5 +48,13 @@
 <zope:interface interface=".interfaces.IThumbnailConfig"
                 type="eztranet.config.interfaces.IConfigFormType" />
 
-<zope:adapter factory=".thumbnail.ThumbnailConfig" />
+<zope:class class=".thumbnail.ThumbnailConfig">
+    <require permission="eztranet.thumbnail.view"
+             interface=".interfaces.IThumbnailConfig" />
+    <require permission="eztranet.thumbnail.write"
+             set_schema=".interfaces.IThumbnailConfig" />
+</zope:class>
+
+<zope:adapter factory=".thumbnail.ThumbnailConfig"
+              trusted="yes" />
 </configure>
