@@ -3,7 +3,15 @@
            xmlns:zope="http://namespaces.zope.org/zope"
            i18n_domain="eztranet">
 
-<zope:adapter factory=".browser.ProjectThumbnail" />
+<zope:adapter factory=".browser.ProjectThumbnail"
+              trusted="yes" />
+<zope:class class=".browser.ProjectThumbnail">
+    <require permission="eztranet.thumbnail.view"
+             interface="eztranet.thumbnail.interfaces.IThumbnail" />
+    <require permission="eztranet.thumbnail.write"
+             set_schema="eztranet.thumbnail.interfaces.IThumbnail" />
+</zope:class>
+
 
 <!-- ProjectContainer views -->
 <z3c:pagelet name="index.html"
@@ -227,7 +235,14 @@
               for=".browser.ProjectTextView"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<zope:adapter factory=".browser.ProjectTextThumbnail" />
+<zope:adapter factory=".browser.ProjectTextThumbnail"
+              trusted="yes" />
+<zope:class class=".browser.ProjectTextThumbnail">
+    <require permission="eztranet.thumbnail.view"
+             interface="eztranet.thumbnail.interfaces.IThumbnail" />
+    <require permission="eztranet.thumbnail.write"
+             set_schema="eztranet.thumbnail.interfaces.IThumbnail" />
+</zope:class>
 
 <viewlet name="ProjectTextAddMenuItem"
          class=".browser.ProjectTextAddMenuItem"

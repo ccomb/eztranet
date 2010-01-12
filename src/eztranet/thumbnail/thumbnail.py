@@ -24,6 +24,7 @@ class Thumbnail(object):
     implements(IThumbnail)
     adapts(IThumbnailed)
     resource = None
+
     def __init__(self, context):
         self.context = self.__parent__ = context
 

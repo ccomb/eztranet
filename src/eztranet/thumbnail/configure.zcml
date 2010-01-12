@@ -12,7 +12,7 @@
 <zope:class class=".thumbnail.Thumbnail">
     <require permission="eztranet.thumbnail.view"
              interface=".interfaces.IThumbnail" />
-    <require permission="eztranet.thumbnail.view"
+    <require permission="eztranet.thumbnail.write"
              set_schema=".interfaces.IThumbnail" />
 </zope:class>
 
