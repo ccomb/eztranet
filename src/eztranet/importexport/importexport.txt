@@ -1,3 +1,6 @@
+Import / Export
+===============
+
 This package offers ability to upload or download a project at one as a zip
 file. It should not eat the memory, and should warn about diskspace. Logic bombs
 should also be avoided (ie 1kB zip that inflates to 1TB)
@@ -200,8 +203,8 @@ We first create a hierarchy of folders:
     >>> from os.path import join
     >>> os.mkdir(join(folderpath, 'folder1'))
     >>> os.mkdir(join(folderpath, 'folder1', 'folder11'))
-    >>> os.mkdir(join(folderpath, 'folder2'))
-    >>> os.mkdir(join(folderpath, 'folder2', 'folder22'))
+    >>> os.mkdir(unicode(join(folderpath, u'folder2\xe9')))
+    >>> os.mkdir(unicode(join(folderpath, u'folder2\xe9', 'folder22')))
 
 We create 4 files in this hierarchy:
 
@@ -214,7 +217,7 @@ We create 4 files in this hierarchy:
     >>> f = open(join(folderpath, 'folder1', 'folder11', 'file111'), 'w')
     >>> f.write('filecontent111')
     >>> f.close()
-    >>> f = open(join(folderpath, 'folder2', 'folder22', 'file222'), 'w')
+    >>> f = open(join(folderpath, u'folder2\xe9', 'folder22', 'file222'), 'w')
     >>> f.write('filecontent222')
     >>> f.close()
 
@@ -230,8 +233,8 @@ We zip and remove the hierarchy:
     ...             join('folder1', 'file11'))
     >>> zfile.write(join(folderpath, 'folder1', 'folder11', 'file111'),
     ...             join('folder1', 'folder11', 'file111'))
-    >>> zfile.write(join(folderpath, 'folder2', 'folder22', 'file222'),
-    ...             join('folder2', 'folder22', 'file222'))
+    >>> zfile.write(join(folderpath, u'folder2\xe9', 'folder22', 'file222'),
+    ...             join(u'folder2\xe9', 'folder22', 'file222').encode('iso8859-1'))
     >>> zfile.close()
 
     >>> import shutil
@@ -283,7 +286,7 @@ Now we check we have all the subobjects:
     True
     >>> 'file111' in folder['folder1']['folder11']
     True
-    >>> 'file222' in folder['folder2']['folder22']
+    >>> 'file222' in folder[u'folder2\xe9']['folder22']
     True
 
 And that files have the correct content:
@@ -294,7 +297,7 @@ And that files have the correct content:
     True
     >>> 'filecontent111' == folder['folder1']['folder11']['file111'].openDetached().read()
     True
-    >>> 'filecontent222' == folder['folder2']['folder22']['file222'].openDetached().read()
+    >>> 'filecontent222' == folder[u'folder2\xe9']['folder22']['file222'].openDetached().read()
     True
 
 Now we reexport this content:

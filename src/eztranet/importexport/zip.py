@@ -29,14 +29,14 @@ class ZipImport(object):
         for f in zfile.infolist():
             # we recreate the hierarchy to the object
             current_object = self.context
-            for d in f.filename.split(os.path.sep)[:-1]:
-                if d is '': continue
+            for d in f.filename.decode('iso8859-1').split(os.path.sep)[:-1]:
+                if d == '': continue
                 if d not in current_object:
                     current_object[d] = createObject('folder')
                     current_object[d].__name__ = d
                     current_object[d].title = d
                 current_object = current_object[d]
-            objname = f.filename.split(os.path.sep)[-1]
+            objname = f.filename.decode('iso8859-1').split(os.path.sep)[-1]
             if objname not in current_object:
                 # we extract the archive member in a temporary file
                 fd, filename = tempfile.mkstemp(suffix=objname)
@@ -99,14 +99,14 @@ class ZipExport(object):
             if IFile.providedBy(obj):
                 # XXX removeSecurityProxy but should check read permission
                 self.zipfile.write(removeSecurityProxy(obj)._data._current_filename(),
-                                   path.encode('utf-8'))
+                                   path.encode('iso8859-1'))
             if hasattr(obj, 'text'):
                 fd, fname = tempfile.mkstemp(suffix='.txt')
                 tmpfile = os.fdopen(fd, 'w')
                 tmpfile.write(obj.text)
                 tmpfile.close()
                 self.zipfile.write(fname,
-                                   path.encode('utf-8'))
+                                   path.encode('iso8859-1'))
                 os.remove(fname)
 
         if IContainer.providedBy(obj) or obj is self.context:
