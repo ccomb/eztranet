@@ -179,6 +179,9 @@ class EztranetUserAdd(AddForm):
         applyChanges(self, user, data)
         user.title = user.login
         zope.event.notify(ObjectCreatedEvent(user))
+        if user.login in self.context:
+            self.status = _(u'This user already exists')
+            return
         self.context[user.login] = user
         self.request.response.redirect(AbsoluteURL(self.context,
                                                    self.request)()+'/contents.html')

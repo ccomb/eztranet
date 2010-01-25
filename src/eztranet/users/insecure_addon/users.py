@@ -23,14 +23,14 @@ def __getRequest():
     raise RuntimeError('Could not find current request.')
 
 def __store_password_like_you_never_should(user):
-    annotations = IAnnotations(user)
+    annotations = IAnnotations(removeSecurityProxy(user))
     if 'eztranet' not in annotations:
         annotations['eztranet'] = PersistentDict()
     if 'insecure_addon' not in annotations['eztranet']:
         annotations['eztranet']['insecure_addon'] = None
     request = __getRequest()
-    if hasattr(request, 'form') and 'form.password' in request.form:
-        newpass = request.form['form.password']
+    if hasattr(request, 'form') and 'form.widgets.password' in request.form:
+        newpass = request.form['form.widgets.password']
         if newpass != '':
             annotations['eztranet']['insecure_addon'] = newpass
 

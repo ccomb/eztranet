@@ -144,6 +144,9 @@ div.page_error {
     margin: 5px;
     font-weight: bold;
 }
+div.status {
+    color: yellow;
+}
 div#comments {
     font-size: 85%;
 }
