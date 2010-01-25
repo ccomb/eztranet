@@ -16,9 +16,10 @@
               for=".users.ShowPassword"
               layer="eztranet.skin.interfaces.IEztranetSkin" />
 <browser:viewlet name="ShowPasswordMenuItem"
-                 permission="eztranet.manage"
                  class=".browser.ShowPasswordMenuItem"
+                 for="..interfaces.IEztranetUser"
                  manager="eztranet.skin.interfaces.ITabMenu"
+                 permission="eztranet.manage"
                  layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 
