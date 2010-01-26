@@ -176,7 +176,7 @@ class ProjectItemNameChooser(NameChooser):
     implements(INameChooser)
 
     def chooseName(self, provided_name, item):
-        rawname = item.title
+        rawname = unicode(item.title)
         newname = u''
         if provided_name:
             newname = provided_name
