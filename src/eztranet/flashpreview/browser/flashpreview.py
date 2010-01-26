@@ -31,25 +31,14 @@ class FlashContentProvider(object):
                 return _(u'<br/><br/>Currently compressing... \
                           (<a href=".">click to reload</a>)')
         else:
-            return u"""
-<object id="flowplayer" type="application/x-shockwave-flash" data="++resource++flowplayer.swf" width="720" height="576">
-	<param name="allowScriptAccess" value="sameDomain" />
-	<param name="movie" value="++resource++flowplayer.swf" />
-	<param name="quality" value="high" />
-	<param name="scale" value="noScale" />
-	<param name="wmode" value="transparent" />
-    <param name="flashvars" value="config={ initialScale:'fit',
-                                            baseURL: '%s/',
-                                            videoFile: '@@flv',
-                                            loop: false,
-                                            backgroundColor: -1,
-                                            controlBarBackgroundColor: 0x6C77AE,
-                                            useNativeFullScreen: false,
-                                            autoRewind: true,
-                                            controlBarGloss: 'high',
-                                            menuItems: [ true, true, true, true, true, false, false ] }" />
-</object>
-""" % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
+            return u'''<a href="%s/@@flv" style="display:block;width:720px;height:576px" id="player">
+                       </a>
+                       <script>
+                         flowplayer("player", "/@@/flowplayer.swf", {
+                            plugins: { controls: {url: '/@@/flowplayer.controls.swf'} }
+                         });
+                       </script>
+                    ''' % AbsoluteURL(self.context, self.request)().encode('utf-8')
 
 
 class FlvView(zope.file.download.Download):
@@ -64,3 +53,11 @@ class FlvView(zope.file.download.Download):
         return zope.file.download.Download(self.flashpreview.flash_movie, self.request)()
 
 
+class FlowPlayerHeader(object):
+    """Content provider for the js header of the flowplayer"""
+
+    def update(self):
+        pass
+
+    def render(self):
+        return '<script type="text/javascript" src="/@@/flowplayer.js"></script>'

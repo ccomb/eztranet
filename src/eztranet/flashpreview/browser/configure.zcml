@@ -11,21 +11,27 @@
       permission="eztranet.flashpreview.view"
       layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<!-- flowplayer version 2.2.4 -->
 <resource name="flowplayer.swf"
-          file="FlowPlayerLight.swf"
+          file="flowplayer-3.1.5.swf"
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<resource name="fullscreen.html"
-          file="fullscreen.html"
+<resource name="flowplayer.controls.swf"
+          file="flowplayer.controls-3.1.5.swf"
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
 
-<resource name="fullscreen.js"
-          file="fullscreen.js"
+<resource name="flowplayer.js"
+          file="flowplayer-3.1.4.min.js"
           permission="zope.Public"
           layer="eztranet.skin.interfaces.IEztranetSkin" />
+
+<viewlet name="flowplayer.js"
+         class=".flashpreview.FlowPlayerHeader"
+         for="eztranet.project.interfaces.IProjectVideo"
+         manager="eztranet.skin.interfaces.IHeaders"
+         permission="zope.Public"
+         layer="eztranet.skin.interfaces.IEztranetSkin" />
 
 </configure>
 
