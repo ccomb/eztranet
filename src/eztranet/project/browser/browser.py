@@ -169,7 +169,12 @@ class TitleColumn(RenameColumn):
     def getSortKey(self, item):
         return item.title
     def renderCell(self, item):
-        return '<a href="%s">%s</a>' % (item.__name__, item.title)
+        description = item.description or ''
+        if len(description) > 100:
+            description = description[:100] + u'...'
+        return '<a href="%s">%s</a><br/>%s' % (item.__name__,
+                                        item.title,
+                                        description)
 
 
 class SizeColumn(Column):
