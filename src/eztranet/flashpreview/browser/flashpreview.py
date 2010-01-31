@@ -6,7 +6,6 @@ from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface, implements
 from zope.security.proxy import removeSecurityProxy
 from zope.traversing.browser.absoluteurl import AbsoluteURL
-import os
 import urllib
 import zope.file
 _ = MessageFactory('eztranet')
