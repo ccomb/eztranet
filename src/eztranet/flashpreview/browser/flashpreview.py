@@ -4,12 +4,9 @@ from zope.interface import Interface, implements
 from zope.component import adapts
 from z3c.layer.pagelet import IPageletBrowserLayer
 from zope.traversing.browser.absoluteurl import AbsoluteURL
-from zope.file.file import File
 from eztranet.flashpreview.interfaces import IFlashPreview
 from zope.security.proxy import removeSecurityProxy
-import urllib
 import zope.file
-import transaction
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory('eztranet')
 

@@ -1,4 +1,4 @@
-from zope.interface import Interface, Attribute
+from zope.interface import Interface
 from zope.interface.interfaces import IInterface
 from zope.annotation.interfaces import IAttributeAnnotatable
 

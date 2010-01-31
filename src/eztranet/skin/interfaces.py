@@ -4,8 +4,8 @@ from z3c.formui.interfaces import IDivFormLayer
 from z3c.form.interfaces import IFormLayer
 
 class IEztranetSkin(IDivFormLayer, IFormLayer, IPageletBrowserLayer):
-  """The main skin of the application
-  """
+    """The main skin of the application
+    """
 
 class IHeaders(IViewletManager):
     """Viewlet manager for headers (js, css, meta, etc.)

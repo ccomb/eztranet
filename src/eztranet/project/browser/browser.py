@@ -25,7 +25,7 @@ from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
-from zope.component import adapts, adapter, getAdapter
+from zope.component import adapts, adapter
 from zope.component import createObject, ComponentLookupError
 from zope.copypastemove import ContainerItemRenamer
 from zope.dublincore.interfaces import IDCTimes
