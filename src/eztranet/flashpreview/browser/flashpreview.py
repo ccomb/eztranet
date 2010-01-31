@@ -1,13 +1,14 @@
-import os
-from zope.contentprovider.interfaces import IContentProvider
-from zope.interface import Interface, implements
-from zope.component import adapts
-from z3c.layer.pagelet import IPageletBrowserLayer
-from zope.traversing.browser.absoluteurl import AbsoluteURL
 from eztranet.flashpreview.interfaces import IFlashPreview
-from zope.security.proxy import removeSecurityProxy
-import zope.file
+from z3c.layer.pagelet import IPageletBrowserLayer
+from zope.component import adapts
+from zope.contentprovider.interfaces import IContentProvider
 from zope.i18nmessageid import MessageFactory
+from zope.interface import Interface, implements
+from zope.security.proxy import removeSecurityProxy
+from zope.traversing.browser.absoluteurl import AbsoluteURL
+import os
+import urllib
+import zope.file
 _ = MessageFactory('eztranet')
 
 
@@ -35,7 +36,7 @@ class FlashContentProvider(object):
                             plugins: { controls: {url: '/@@/flowplayer.controls.swf'} }
                          });
                        </script>
-                    ''' % AbsoluteURL(self.context, self.request)().encode('utf-8')
+                    ''' % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
 
 
 class FlvView(zope.file.download.Download):
