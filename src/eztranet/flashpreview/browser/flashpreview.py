@@ -32,7 +32,8 @@ class FlashContentProvider(object):
                        </a>
                        <script>
                          flowplayer("player", "/@@/flowplayer.swf", {
-                            plugins: { controls: {url: '/@@/flowplayer.controls.swf'} }
+                            clip: { scaling: 'fit' },
+                            plugins: { controls: {url: '/@@/flowplayer.controls.swf'} },
                          });
                        </script>
                     ''' % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))

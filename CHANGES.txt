@@ -8,6 +8,7 @@
 - directly store the flv file after encoding
 - fixed some translation issues
 - added a wysiwyg editor (tinyMCE)
+- some cosmetic modifications
 
 1.2.1 (2010-01-10)
 ------------------
