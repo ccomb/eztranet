@@ -40,4 +40,9 @@
   <grantAll role="zope.Manager" />
   <grant role="zope.Manager"
          principal="zope.manager" />
+
+  <include package="zc.z3monitor" />
+  <include package="zc.async" file="basic_dispatcher_policy.zcml" />
+  
+
 </configure>

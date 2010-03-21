@@ -1,20 +1,17 @@
-from zope.security.proxy import removeSecurityProxy
-from zope.file.file import File
 from interfaces import IFlashPreview, IFlashPreviewable
 from persistent.dict import PersistentDict
 from tempfile import mkstemp
-from threading import Thread
+from zc.async.interfaces import IQueue
+from zc.async.job import Job
 from zope.annotation.interfaces import IAnnotations
 from zope.app.container.interfaces import IObjectRemovedEvent, IObjectAddedEvent
 from zope.component import adapts, adapter
 from zope.file.interfaces import IFile
+from zope.file.file import File
 from zope.interface import implements
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent
 import os
 import subprocess
-import transaction
-
-CHUNKSIZE = 1048576
 
 class FlashPreview(object):
     """Adapter that get or set the flash preview of a video file"""
@@ -32,13 +29,14 @@ class FlashPreview(object):
 
     def encode(self):
         """start encoding and return the thread"""
-
-        transaction.commit() # to be able to open the blob later
-        target_tmp = mkstemp()
-        thread = FlashConverterThread(self.context, target_tmp)
-        thread.start()
-        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = target_tmp[1]
-        return thread
+        # target path
+        target_fd, target_path = mkstemp('.flv')
+        os.close(target_fd)
+        # queue
+        queue = IQueue(self.context)
+        job = queue.put(Job(video_converter, self, target_path))
+        IAnnotations(self.context)['eztranet.flashpreview']['preview'] = job
+        return job
 
     def get_flash_movie(self):
         return IAnnotations(self.context)['eztranet.flashpreview']['preview']
@@ -49,52 +47,27 @@ class FlashPreview(object):
     flash_movie = property(get_flash_movie, set_flash_movie)
 
 
-class FlashConverterThread(Thread):
-    """The thread that runs ffmpeg and write the resulting video file"""
-
-    def __init__(self, sourcefile, target_tmp):
-        self.sourcefile = sourcefile
-        self.targetfd, self.targetpath = target_tmp
-        super(FlashConverterThread, self).__init__()
-
-    def run(self):
-        fd = self.sourcefile.open()
-        retcode = subprocess.call(['ffmpeg', '-i', fd.name, '-y',
-                                             '-ar', '22050',
-                                             '-b', '800k',
-                                             '-g', '240',
-                                             self.targetpath + '.flv'],
-                                  stderr=subprocess.PIPE,
-                                  stdout=subprocess.PIPE)
-        transaction.begin()
-        self.flashpreview = removeSecurityProxy(FlashPreview(self.sourcefile))
-        if retcode == 1:
-            # compression failed
-            fd.close()
-            os.close(self.targetfd)
-            os.remove(self.targetpath)
-            self.flashpreview.flash_movie = 'FAILED'
-            transaction.commit()
-            return
-        elif retcode == 0:
-            # compression succeeded
-            fd.close()
-            os.close(self.targetfd)
-            if os.path.exists(self.targetpath):
-                os.remove(self.targetpath)
-            flvname = self.targetpath + '.flv'
-            flvfile = open(flvname)
-            self.flashpreview.flash_movie = File()
-            openfile = self.flashpreview.flash_movie.open('w')
-            chunk = flvfile.read(CHUNKSIZE)
-            while chunk:
-                openfile.write(chunk)
-                chunk = flvfile.read(CHUNKSIZE)
-            del chunk
-            openfile.close()
-            flvfile.close()
-            transaction.commit()
-            os.remove(flvname)
+def video_converter(obj, target_path):
+    """The function that runs ffmpeg and write the resulting video file"""
+    # source
+    source_path = obj.context._data._current_filename()
+    retcode = subprocess.call(['ffmpeg', '-i', source_path, '-y',
+                                         '-ar', '22050',
+                                         '-b', '800k',
+                                         '-g', '240',
+                                         target_path],
+                              stderr=subprocess.PIPE,
+                              stdout=subprocess.PIPE)
+    if retcode == 1:
+        # compression failed
+        os.remove(target_path)
+        return False
+    elif retcode == 0:
+        # compression succeeded
+        if os.path.exists(target_path):
+            obj.flash_movie = File()
+            obj.flash_movie._data.consumeFile(target_path)
+        return True
 
 
 @adapter(IFlashPreviewable, IObjectAddedEvent)

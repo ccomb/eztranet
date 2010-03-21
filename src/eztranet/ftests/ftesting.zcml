@@ -49,4 +49,7 @@
   <grantAll role="zope.Manager" />
   <grant role="zope.Manager" principal="zope.globalmgr" />
 
+  <include package="zc.async" />
+  <adapter factory="zc.async.queue.getDefaultQueue" />
+
 </configure>

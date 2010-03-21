@@ -31,6 +31,9 @@ Adding Folders and files
 
 We add a project, a video, an image, a text, and an invalid item::
 
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
     >>> videopath = join(dirname(eztranet.thumbnail.__file__), 'sample.ogg')
@@ -227,3 +230,6 @@ We check the thumbnail is used::
     3172
 
 
+clean up:
+
+    >>> zc.async.ftesting.tearDown()

@@ -53,6 +53,9 @@ We set permissions on the project:
 
 We add a video:
 
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
@@ -231,3 +234,7 @@ If we are a project manager, we can delete a comment :
     False
     >>> 'this is a second comment' in browser.contents
     True
+
+clean up:
+
+    >>> zc.async.ftesting.tearDown()

@@ -55,6 +55,10 @@ We set permissions on the project:
 
 We add a video:
 
+
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
@@ -219,3 +223,7 @@ We remove the exported file:
 
     >>> os.remove(filename)
 
+
+clean up:
+
+    >>> zc.async.ftesting.tearDown()

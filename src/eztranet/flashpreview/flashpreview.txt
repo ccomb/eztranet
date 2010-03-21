@@ -3,13 +3,48 @@ using ffmpeg as an external requirement. The encoded flash movie is stored
 as a blob in the annotations of the video file.
 It also offers a content provider with a flash movie player to display the movie.
 
-We create a blob file from a sample video file
 
+We setup zc.async to be able to send jobs and encode videos:
+
+    >>> import transaction
+    >>> import BTrees
+    >>> import ZODB.FileStorage, ZODB.blob
+    >>> from ZODB.DB import DB
+    >>> import tempfile
+
+    >>> import zc.async.configure
+    >>> zc.async.configure.base()
+    >>> import zc.async.queue
+    >>> from zope.component import getGlobalSiteManager
+    >>> getGlobalSiteManager().registerAdapter(zc.async.queue.getDefaultQueue)
+    >>> blobdir = tempfile.mkdtemp()
+    >>> storage = ZODB.blob.BlobStorage(blobdir, ZODB.FileStorage.FileStorage(
+    ...     'zc_async.fs', create=True))
+    >>> db = DB(storage)
+    >>> conn = db.open()
+    >>> root = conn.root()
+    >>> PseudoZopeRoot = root['Application'] = BTrees.family32.OO.BTree()
+    >>> transaction.commit()
+    >>> def _getRootObject():
+    ...     return PseudoZopeRoot
+    ...
+    >>> globals()['getRootFolder'] = _getRootObject
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+    >>> transaction.commit()
+
+
+We create a blob file from a sample video file:
+
+    >>> t=transaction.begin()
     >>> from zope.file.file import File
     >>> from os.path import join, dirname, exists
     >>> import eztranet.flashpreview
 
     >>> blobfile = File()
+    >>> root['testfile'] = blobfile
+    >>> blobfile.__parent__ = root
+    >>> blobfile.__name__ = 'testfile'
     >>> fd = blobfile.open('w')
     >>> samplepath = join(dirname(eztranet.flashpreview.__file__), 'sample.ogg')
     >>> samplefd = open(samplepath)
@@ -19,17 +54,19 @@ We create a blob file from a sample video file
     >>> blobfile.size
     180511
 
-We have an adapter on any annotatable file that allows to encode the flash preview::
+We have an adapter on any annotatable file that allows to encode the flash preview:
 
     >>> from zope.annotation.interfaces import IAttributeAnnotatable
     >>> from zope.interface import alsoProvides
     >>> alsoProvides(blobfile, IAttributeAnnotatable)
     >>> from eztranet.flashpreview.flashpreview import FlashPreview
     >>> flashpreview = FlashPreview(blobfile)
-    >>> thread = flashpreview.encode()
-    >>> thread.join()
+    >>> job = flashpreview.encode()
+    >>> transaction.commit()
+    >>> zc.async.testing.wait_for_result(job)
+    True
 
-Now the file has an annotation with an encoded flv file::
+Now the file has an annotation with an encoded flv file:
 
     >>> from zope.annotation.interfaces import IAnnotations
     >>> file = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
@@ -37,15 +74,22 @@ Now the file has an annotation with an encoded flv file::
     <class 'zope.file.file.File'>
 
 
-If we encode a bad file, we get a FAILED string istead of a file::
+If we encode a bad file, we get a job with a False result instead of a file:
 
     >>> fd = blobfile.open('w')
     >>> fd.write('bad video content')
     >>> fd.close()
     >>> blobfile.size
     17
-    >>> thread = flashpreview.encode()
-    >>> thread.join()
-    >>> IAnnotations(blobfile)['eztranet.flashpreview']['preview']
-    'FAILED'
+    >>> job = flashpreview.encode()
+    >>> transaction.commit()
+    >>> zc.async.testing.wait_for_result(job)
+    False
+    >>> preview = IAnnotations(blobfile)['eztranet.flashpreview']['preview']
+    >>> type(preview)
+    <class 'zc.async.job.Job'>
+    >>> from zc.async.interfaces import COMPLETED
+    >>> preview.status == COMPLETED
+    True
+
 

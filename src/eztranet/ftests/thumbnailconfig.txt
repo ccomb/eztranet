@@ -29,6 +29,9 @@ Adding an Eztranet site
 Adding Projects and videos
 ==========================
 
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
 We add a project with 1 video, and a subproject with 2 videos::
 
     >>> import eztranet.thumbnail
@@ -179,3 +182,6 @@ Then we unset the sample3 config::
     True
 
 
+clean up:
+
+    >>> zc.async.ftesting.tearDown()

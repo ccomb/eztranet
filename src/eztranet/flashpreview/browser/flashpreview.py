@@ -6,6 +6,8 @@ from zope.i18nmessageid import MessageFactory
 from zope.interface import Interface, implements
 from zope.security.proxy import removeSecurityProxy
 from zope.traversing.browser.absoluteurl import AbsoluteURL
+from zc.async.interfaces import PENDING, COMPLETED, ACTIVE
+from zc.async.interfaces import IJob
 import urllib
 import zope.file
 _ = MessageFactory('eztranet')
@@ -20,13 +22,16 @@ class FlashContentProvider(object):
         self.flashpreview = removeSecurityProxy(IFlashPreview(self.context))
 
     def render(self):
-        if type(self.flashpreview.flash_movie) is str:
-            if self.flashpreview.flash_movie == 'FAILED':
-                return _(u'Flash compression failed.<br/>\
-                           However you can still download the original movie.')
-            elif self.flashpreview.flash_movie[0:4] == '/tmp':
+        if IJob.providedBy(self.flashpreview.flash_movie):
+            if self.flashpreview.flash_movie.status == PENDING:
+                return _(u'<br/><br/>Compression pending \
+                          (<a href=".">click to reload</a>)')
+            elif self.flashpreview.flash_movie.status == ACTIVE:
                 return _(u'<br/><br/>Currently compressing... \
                           (<a href=".">click to reload</a>)')
+            elif self.flashpreview.flash_movie.status == COMPLETED:
+                return _(u'Flash compression failed.<br/>\
+                           However you can still download the original movie.')
         else:
             return u'''<a href="%s/@@flv" style="display:block;width:720px;height:576px" id="player">
                        </a>

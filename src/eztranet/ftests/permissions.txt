@@ -60,6 +60,9 @@ and a subproject:
 
 We add a video:
 
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
@@ -537,3 +540,6 @@ Now we delete the testuser
     ...
     httperror_seek_wrapper: HTTP Error 403: Forbidden
 
+clean up:
+
+    >>> zc.async.ftesting.tearDown()
