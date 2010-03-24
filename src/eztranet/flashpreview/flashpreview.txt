@@ -93,3 +93,6 @@ If we encode a bad file, we get a job with a False result instead of a file:
     True
 
 
+clean up
+
+    >>> zc.async.ftesting.tearDown()
