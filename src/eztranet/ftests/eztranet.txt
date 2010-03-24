@@ -272,7 +272,7 @@ We add a video in the project-2:
     >>> '<a href="a-sample.ogg">a sample.ogg</a>' in browser.contents
     True
     >>> browser.getLink(url='a-sample.ogg').click()
-    >>> 'pending' in browser.contents or 'compressing' in browser.contents
+    >>> 'pending' in browser.contents or 'compressing' in browser.contents or 'flowplayer' in browser.contents
     True
     >>> '<span>a sample.ogg</span>' in browser.contents
     True
