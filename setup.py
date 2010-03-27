@@ -1,11 +1,11 @@
 from setuptools import setup, find_packages
 from os.path import join, dirname
 
-setup(name='eztranet',
+setup(name='Eztranet',
 
       # Fill in project info below
       version='1.3.0',
-      description="Simple extranet for videos",
+      description="An extranet for videos",
       long_description=(open(join(dirname(__file__), 'README.txt')).read()
                       + open(join(dirname(__file__), 'CHANGES.txt')).read()),
       keywords='eztranet extranet video photo',
