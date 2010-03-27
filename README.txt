@@ -30,7 +30,7 @@ BlueBream 1.0 is on the way. This application is currently tested only on Linux.
 Demo
 ====
 
-An online demo is avalaible here: http://eztranet.gorfou.fr
+An online demo is available here: http://eztranet.gorfou.fr
 You can login with an administrator account: admin / eztranet
 
 Installation and startup
@@ -47,7 +47,11 @@ $ ./bin/eztranet-ctl fg
 Contribute
 ==========
 
-A clone is hosted on bitbucket: http://bitbucket.org/ccomb/eztranet/
+Please report any issue to the author, or on the bitbucket tracker:
+http://bitbucket.org/ccomb/eztranet/issues/new/
+
+You can clone the repository with Mercurial from here: https://gorfou.fr/hg/eztranet/
+or from bitbucket: http://bitbucket.org/ccomb/eztranet/
 
 Commercial Support
 ==================
