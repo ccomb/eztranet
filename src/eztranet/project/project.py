@@ -1,17 +1,22 @@
-from persistent import Persistent
+from eztranet.config.interfaces import IConfig, IConfigurable
 from eztranet.importexport.interfaces import IImport, IExport
 from eztranet.project.interfaces import IOrderConfig
-from eztranet.config.interfaces import IConfigurable
-from eztranet.config.interfaces import IConfig
+from persistent import Persistent
 from zope.app.container.btree import BTreeContainer
 from zope.app.container.contained import NameChooser
 from zope.app.container.interfaces import INameChooser
 from zope.component import adapts
 from zope.component.factory import Factory
+from zope.copypastemove import ObjectCopier
+from zope.event import notify
 from zope.file.file import File
+from zope.file.interfaces import IFile
 from zope.interface import implements
+from zope.lifecycleevent import ObjectCopiedEvent
+from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
 import PIL.Image
+import os
 from interfaces import IProjectContainer, IProjectItem, IProject, \
                        IProjectImage, IProjectVideo, IProjectText
 from zope.i18nmessageid import MessageFactory
@@ -237,4 +242,26 @@ class OrderConfig(object):
         IConfig(self.context).set_config(ORDER_CONFIG_KEY, order)
 
     order = property(_get_order, _set_order)
+
+
+class BlobCopier(ObjectCopier):
+    """Allow to copy a blob.
+    The problem comes from the fact that ObjectCopier is always returned
+    because the context provides IContained in the first place.
+    """
+    def copyTo(self, target, new_name=None):
+        """Override this method to add blob copying abilities
+        """
+        new_name = super(BlobCopier, self).copyTo(target, new_name)
+        context = removeSecurityProxy(self.context)
+        if hasattr(context, '_data'):
+            # create a hard link to the blob, then consume it
+            source_blob_filename = context._data._current_filename()
+            blob_copy_path = source_blob_filename+'copy'
+            if os.path.exists(blob_copy_path): os.unlink(blob_copy_path)
+            os.link(source_blob_filename, blob_copy_path)
+            removeSecurityProxy(target[new_name])._data.consumeFile(source_blob_filename+'copy')
+            # notify, so the thumbnail (or other) is created
+            notify(ObjectCopiedEvent(target[new_name], context))
+        return new_name
 

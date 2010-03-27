@@ -4,4 +4,9 @@
 <browser:defaultSkin name="EztranetSkin" />
 <browser:defaultView name="index.html" />
 
+<zope:adapter factory=".project.project.BlobCopier"
+              permission="zope.ManageContent"
+              trusted="yes" />
+
+
 </configure>

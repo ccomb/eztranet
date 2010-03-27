@@ -1,38 +1,38 @@
 1.3.0 (unreleased)
 ------------------
+- Fixed copy/paste (except for folders)
 - Upgraded to FlowPlayer 3.1
-- Allow to import/export a project as a zip file
+- Allow to import/export a whole folder as a zip file
 - Allow to configure the thumbnail size
 - Allow to upload custom thumbnails
-- use subprocess module for external processes
-- directly store the flv file after encoding
-- fixed some translation issues
-- added a wysiwyg editor (tinyMCE)
-- some cosmetic modifications
+- Use better async solution for encoding (zc.async)
+- Fixed some translation issues
+- Added a wysiwyg editor (tinyMCE)
+- Some cosmetic modifications
 
 1.2.1 (2010-01-10)
 ------------------
-- upgraded minor versions of many packages
-- upgraded z3c.layer.pagelet to fix a related security issue
-- spin package versions
+- Upgraded minor versions of many packages
+- Upgraded z3c.layer.pagelet to fix a related security issue
+- Spin package versions
 
 1.2.0 (2008-09-04)
 ------------------
-- port user interface to z3c components
-- added an upload progress bar (gp.fileupload, thanks gawel!)
+- Port user interface to z3c components
+- Added an upload progress bar (gp.fileupload, thanks gawel!)
 
 1.1 (never released)
 --------------------
-- use blobs for uploaded files
-- allow uploading of several files
-- optimized memory during upload and browsing
-- graphical enhancements
-- antialiasing on thumbnails
-- improved left tree menu
-- automatic detection of uploaded files
-- internationalization (with en + fr)
-- new flash movie reader
-- move to buildout and zope3.4
+- Use blobs for uploaded files
+- Allow uploading of several files
+- Optimized memory during upload and browsing
+- Graphical enhancements
+- Antialiasing on thumbnails
+- Improved left tree menu
+- Automatic detection of uploaded files
+- Internationalization (with en + fr)
+- New flash movie reader
+- Move to buildout and zope3.4
 
 1.0 (2007-07-10)
 ----------------

@@ -615,6 +615,112 @@ unchanged:
     >>> root['eztranet']['projects']['project-2']['a-sample.png'].__name__
     u'a-sample.png'
 
+Restore the name
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample.png/edit.html')
+    >>> browser.getControl(name='form.widgets.title').value = u'A Sample.png'
+    >>> browser.getControl(name='form.buttons.apply').click()
+
+
+Copy-Paste, and Cut-Paste
+=========================
+
+We can copy-paste single objects:
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+    >>> everything = browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = everything
+    >>> browser.getControl(name="contents.buttons.copy").click()
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+    >>> browser.getControl(name="contents.buttons.paste").click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample-2.ogg', 'a-sample-2.png', 'a-sample.ogg', 'a-sample.png', 'dummy', 'dummy-2', 'dummytext', 'dummytext-2', 'sample-2.txt', 'sample.txt', 'subproject', 'subproject-2']
+
+We wait for the compression to finish (#TODO: recompression should not occur!):
+
+    >>> import time
+    >>> for i in range(200):
+    ...     time.sleep(0.2)
+    ...     browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.ogg/')
+    ...     if '@flv' in browser.contents or i >= 20:
+    ...         break
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+
+The flv preview is there:
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/a-sample-2.ogg/@@flv')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+
+We can also cut-paste single objects:
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+    >>> browser.getLink(text='New folder').click()
+    >>> browser.getControl(name='form.widgets.title').value = u'test-paste'
+    >>> browser.getControl(name='form.buttons.add').click()
+    >>> selected = ['a-sample-2.png', 'a-sample-2.ogg', 'dummy-2', 'dummytext-2', 'sample-2.txt', 'subproject-2']
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = selected
+    >>> browser.getControl(name="contents.buttons.cut").click()
+    >>> browser.open('http://localhost/eztranet/projects/project-2/test-paste/')
+    >>> browser.getControl(name="contents.buttons.paste").click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'dummytext', 'sample.txt', 'subproject']
+    >>> browser.open('http://localhost/eztranet/projects/project-2/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'dummytext', 'sample.txt', 'subproject', 'test-paste']
+
+We can cut and paste the whole folder:
+
+    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['test-paste']
+    >>> browser.getControl(name="contents.buttons.cut").click()
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name="contents.buttons.paste").click()
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['Project', 'project-2', 'test-paste']
+    >>> browser.open('http://localhost/eztranet/projects/project-2')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    ['a-sample.ogg', 'a-sample.png', 'dummy', 'dummytext', 'sample.txt', 'subproject']
+
+The flv preview is still there:
+
+    >>> browser.open('http://localhost/eztranet/projects/test-paste/a-sample.ogg/@@flv')
+    >>> browser.headers['status']
+    '200 Ok'
+    >>> 'system error' in browser.contents
+    False
+
+# TODO
+#We can copy-paste a full project recursively (sure we want):
+#
+#    >>> browser.open('http://localhost/eztranet/projects/')
+#    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['test-paste']
+#    >>> browser.getControl(name="contents.buttons.copy").click()
+#    >>> browser.getControl(name="contents.buttons.paste").click()
+#
+#The project is copied as well as all its contents:
+#
+#    >>> browser.open('http://localhost/eztranet/projects/')
+#    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+#    >>> browser.open('http://localhost/eztranet/projects/test-paste-2/a-sample.ogg/@@flv')
+#    >>> browser.headers['status']
+#    '200 Ok'
+#    >>> 'system error' in browser.contents
+#    False
+#
+#
+
+We remove the 'test-paste' folder:
+
+    >>> browser.open('http://localhost/eztranet/projects/')
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['test-paste']
+    >>> browser.getControl(name="contents.buttons.delete").click()
+
 
 Check the language choice
 =========================
