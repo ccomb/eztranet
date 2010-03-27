@@ -75,6 +75,7 @@ setup(name='eztranet',
                         'z3c.form',
                         'z3c.formui',
                         'zc.async[z3]',
+                        'PILwoTk',
                         ],
       entry_points = """
       [console_scripts]
