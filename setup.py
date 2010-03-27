@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from os.path import join, dirname
 
-setup(name='Eztranet',
+setup(name='eztranet',
 
       # Fill in project info below
       version='1.3.0',
