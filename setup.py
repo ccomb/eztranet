@@ -1,16 +1,18 @@
 from setuptools import setup, find_packages
+from os.path import join, dirname
 
 setup(name='eztranet',
 
       # Fill in project info below
-      version='1.3.0dev',
-      description="",
-      long_description="",
+      version='1.3.0',
+      description="Simple extranet for videos",
+      long_description=(open(join(dirname(__file__), 'README.txt')).read()
+                      + open(join(dirname(__file__), 'CHANGES.txt')).read()),
       keywords='eztranet extranet video photo',
       author='Christophe Combelles',
-      author_email='ccomb@free.fr',
+      author_email='ccomb@gorfou.fr',
       url='http://gorfou.fr/site/eztranet.html',
-      license='ZPL',
+      license='GPL',
       # Get more from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=['Programming Language :: Python',
                    'Environment :: Web Environment',
