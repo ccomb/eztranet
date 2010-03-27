@@ -39,6 +39,7 @@
 
 <zope:subscriber handler=".thumbnail.ThumbnailedModified" />
 <zope:subscriber handler=".thumbnail.ThumbnailedAdded" />
+<zope:subscriber handler=".thumbnail.ThumbnailedCopied" />
 
 <browser:resource name="default_thumbnail.png"
                   file="default_thumbnail.png"

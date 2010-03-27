@@ -9,7 +9,7 @@ from zope.component import adapts, adapter, queryAdapter
 from zope.file.file import File
 from zope.file.interfaces import IFile
 from zope.interface import implements
-from zope.lifecycleevent.interfaces import IObjectModifiedEvent
+from zope.lifecycleevent.interfaces import IObjectModifiedEvent, IObjectCopiedEvent
 from zope.security.proxy import removeSecurityProxy
 import PIL.Image
 import transaction
@@ -118,6 +118,7 @@ class VideoThumbnailer(BaseThumbnailer):
         fd.close()
         return ImageThumbnailer(thumbfile)(size)
 
+
 @adapter(IThumbnailed, IObjectModifiedEvent)
 def ThumbnailedModified(obj, event):
     if (event.descriptions
@@ -126,12 +127,19 @@ def ThumbnailedModified(obj, event):
        ):
         IThumbnail(obj).compute_thumbnail()
 
+
 @adapter(IThumbnailed, IObjectAddedEvent)
 def ThumbnailedAdded(video, event):
     """
     warning, here the object is NOT security proxied
     """
     IThumbnail(video).compute_thumbnail()
+
+
+@adapter(IThumbnailed, IObjectCopiedEvent)
+def ThumbnailedCopied(obj, event):
+    IThumbnail(obj).compute_thumbnail()
+
 
 class ThumbnailConfig(object):
     """adapter for the config form"""

@@ -666,7 +666,7 @@ We can also cut-paste single objects:
     >>> selected = ['a-sample-2.png', 'a-sample-2.ogg', 'dummy-2', 'dummytext-2', 'sample-2.txt', 'subproject-2']
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = selected
     >>> browser.getControl(name="contents.buttons.cut").click()
-    >>> browser.open('http://localhost/eztranet/projects/project-2/test-paste/')
+    >>> browser.open('http://localhost/eztranet/projects/project-2/test-paste/') # TODO remove
     >>> browser.getControl(name="contents.buttons.paste").click()
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
     ['a-sample.ogg', 'a-sample.png', 'dummy', 'dummytext', 'sample.txt', 'subproject']

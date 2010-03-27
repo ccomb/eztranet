@@ -229,6 +229,28 @@ We check the thumbnail is used::
     >>> len(browser.contents)
     3172
 
+We check that the thumbnails are still there after a copy-paste:
+#TODO thumbnails should not be recomputed! We should keep them
+
+    >>> browser.open('http://localhost/eztranet/projects/project2/')
+    >>> selected = browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
+    >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = selected
+    >>> browser.getControl(name="contents.buttons.copy").click()
+    >>> browser.open('http://localhost/eztranet/projects/project2/') #TODO remove
+    >>> browser.getControl(name="contents.buttons.paste").click()
+    >>> browser.open('http://localhost/eztranet/projects/project2/dummy2-2/@@thumbnail_image.jpg')
+    >>> len(browser.contents)
+    1413
+    >>> browser.open('http://localhost/eztranet/projects/project2/oggsample2-2/@@thumbnail_image.jpg')
+    >>> len(browser.contents)
+    2617
+    >>> browser.open('http://localhost/eztranet/projects/project2/pngsample2-2/@@thumbnail_image.jpg')
+    >>> len(browser.contents)
+    893
+    >>> browser.open('http://localhost/eztranet/projects/project2/sometitle2-2/@@thumbnail_image.jpg')
+    >>> len(browser.contents)
+    1413
+
 
 clean up:
 
