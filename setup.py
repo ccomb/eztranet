@@ -1,87 +1,76 @@
 from setuptools import setup, find_packages
-from os.path import join, dirname
+
 
 setup(name='eztranet',
-
-      # Fill in project info below
-      version='1.3.0',
-      description="An extranet for videos",
-      long_description=(open(join(dirname(__file__), 'README.txt')).read()
-                      + open(join(dirname(__file__), 'CHANGES.txt')).read()),
-      keywords='eztranet extranet video photo',
-      author='Christophe Combelles',
-      author_email='ccomb@gorfou.fr',
-      url='http://gorfou.fr/site/eztranet.html',
-      license='GPL',
-      # Get more from http://www.python.org/pypi?%3Aaction=list_classifiers
-      classifiers=['Programming Language :: Python',
-                   'Environment :: Web Environment',
-                   'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
-                   'Framework :: Zope3',
-                   'Intended Audience :: Information Technology',
-                   'License :: OSI Approved :: Zope Public License',
-                   'Topic :: Multimedia :: Video',
-                   ],
-
+      version='0.1',
+      description='',
+      long_description="""\
+""",
+      # Get strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      classifiers=[],
+      keywords='',
+      author='',
+      author_email='',
+      url='',
+      license='',
+      package_dir={'': 'src'},
       packages=find_packages('src'),
-      package_dir = {'': 'src'},
+
       include_package_data=True,
       zip_safe=False,
-      extras_require={'debug': ['repoze.profile', 'gprof2dot']},
       install_requires=['setuptools',
-                        'ZODB3',
-                        'ZConfig',
-                        'zdaemon',
-                        'zope.publisher',
-                        'zope.traversing',
-                        'zope.app.wsgi>=3.4.0',
-                        'zope.app.appsetup',
-                        'zope.app.zcmlfiles',
-                        # The following packages aren't needed from the
-                        # beginning, but end up being used in most apps
-                        'zope.annotation',
-                        'zope.copypastemove',
-                        'zope.i18n',
-                        'zope.app.authentication',
-                        'zope.app.session',
-                        'zope.app.intid',
-                        'zope.app.keyreference',
-                        'zope.app.catalog',
-                        # The following packages are needed for functional
-                        # tests only
-                        'zope.testing',
-                        'zope.app.testing',
-                        'zope.app.securitypolicy',
                         'zope.securitypolicy',
-                        'zope.contentprovider',
-                        'zope.app.file',
-                        'zope.app.container',
-                        'zope.dublincore',
+                        'zope.component',
+                        'zope.annotation',
+                        'zope.browserresource',
+                        'zope.app.dependable',
+                        'zope.app.appsetup',
+                        'zope.app.content',
+                        'zope.publisher',
+                        'zope.app.broken',
+                        'zope.app.component',
+                        'zope.app.generations',
+                        'zope.app.error',
+                        'zope.app.interface',
+                        'zope.app.publisher',
                         'zope.app.security',
-                        'zope.mimetype',
-                        'zope.file',
+                        'zope.app.i18n',
+                        'zope.app.locales',
+                        'zope.app.zopeappgenerations',
+                        'zope.app.principalannotation',
+                        'zope.app.basicskin',
+                        'zope.app.rotterdam',
+                        'zope.app.folder',
+                        'zope.app.wsgi',
+                        'zope.i18n',
+                        'zope.app.pagetemplate',
+                        'zope.app.schema',
+                        'zope.app.container',
+                        'zope.app.debug',
+                        'z3c.testsetup',
+                        'zope.app.testing',
                         'zope.testbrowser',
-                        'zope.viewlet',
-                        'z3c.layer.pagelet',
-                        'hachoir_core',
-                        'hachoir_parser',
-                        'zope.index',
+                        'zope.login',
+                        'zope.app.zcmlfiles',
+                        'zope.file',
+                        'zope.app.file',
                         'z3c.pagelet',
                         'z3c.layer.pagelet',
-                        'z3c.template',
-                        'z3c.macro',
-                        'z3c.contents',
                         'z3c.menu.simple',
+                        'zc.async',
+                        'hachoir_parser',
+                        'zope.index',
+                        'zope.contenttype',
+                        'zope.catalog',
                         'z3c.form',
                         'z3c.formui',
-                        'zc.async[z3]',
-                        'PILwoTk',
+                        'z3c.contents',
                         ],
       entry_points = """
-      [console_scripts]
-      eztranet-debug = eztranet.startup:interactive_debug_prompt
-      eztranet-ctl = eztranet.startup:zdaemon_controller
       [paste.app_factory]
       main = eztranet.startup:application_factory
-      """
+
+      [paste.global_paster_command]
+      shell = eztranet.debug:Shell
+      """,
       )

@@ -21,7 +21,7 @@ from zope.interface.common.mapping import IEnumerableMapping
 from zope.annotation.interfaces import IAnnotatable
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.lifecycleevent.interfaces import ISequence
-from zope.app.file.interfaces import IFile
+from zope.file.interfaces import IFile
 
 
 
@@ -38,7 +38,7 @@ class IReadComments(IEnumerableMapping):
 
 class IAnnotatableComments(IAnnotatable):
     """This interface marks components that should provide annotatable comments.
-    
+
     Components has to provide a annotations mechanismu."""
 
 
@@ -53,7 +53,7 @@ class IDeleteComments(Interface):
 
     def __delitem__(key):
         """x.__delitem__(key) <==> del x[key]
-        
+
         Declaring this interface does not specify whether __delitem__
         supports slice objects."""
 
@@ -89,5 +89,5 @@ class IComments(IReadComments, IAddComments, IEditComments, IDeleteComments):
 
 class ICommentSequence(ISequence) :
     """A modification descriptor for a sequence of comments."""
-    
+
     change = Attribute("Allowed change descriptions are 'add', 'edit', 'del'.")

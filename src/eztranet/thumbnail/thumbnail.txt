@@ -16,6 +16,20 @@ First some imports::
     >>> from zope.file.file import File
     >>> import os
 
+We create a database:
+
+    >>> from ZODB.MappingStorage import MappingStorage
+    >>> from ZODB.blob import BlobStorage
+    >>> from ZODB.DB import DB
+    >>> import transaction
+    >>> import tempfile
+    >>> from tempfile import mkdtemp
+    >>> base_storage = MappingStorage("test")
+    >>> blob_dir = mkdtemp()
+    >>> blob_storage = BlobStorage(blob_dir, base_storage)
+    >>> database = DB(blob_storage)
+    >>> connection = database.open()
+    >>> root = connection.root()
 
 Any object can store a thumbnail in its annotations.
 We create a generic interface, class and an instance::
@@ -97,10 +111,13 @@ It is registered as a named adapter to the blob-based zope.file.interfaces.IFile
 And the name is the major contentType 'image'.
 
 First we create a source blob-based image file,
+
 and we tell it can hold a thumbnail ::
 
     >>> samplepath = join(dirname(eztranet.thumbnail.__file__), 'sample.png')
     >>> blobfile = File()
+    >>> root['blobfile'] = blobfile
+    >>> transaction.commit()
     >>> fd = blobfile.open('w')
     >>> fd.write(open(samplepath).read())
     >>> fd.close()
@@ -148,6 +165,7 @@ If the thumbnail can not be computed, we get a default one::
 =================
 Video thumbnailer
 =================
+
 A video thumbnailer is provided by the package.
 It is registered as a named adapter to the blob-based zope.file.interfaces.IFile
 And the name is the major contentType 'video'.
@@ -174,6 +192,7 @@ Now we can directly call the thumbnail adapter and compute the thumbnail::
     >>> thumb = IThumbnail(blobfile)
     >>> thumb.image is None
     True
+    >>> transaction.commit()
     >>> thumb.compute_thumbnail()
     >>> thumb.image
     <zope.file.file.File object at ...>
@@ -188,6 +207,7 @@ If the thumbnail can not be computed, we get None::
     >>> fd.close()
     >>> blobfile.size
     11
+    >>> transaction.commit()
     >>> thumb.compute_thumbnail()
     >>> thumb.image is None
     True
@@ -225,28 +245,13 @@ We recreate the blobfile and its thumbnail::
     >>> 500 < thumb.image.size < 2000
     True
 
-We put the blob in the database
-
-    >>> from ZODB.MappingStorage import MappingStorage
-    >>> from ZODB.blob import BlobStorage
-    >>> from ZODB.DB import DB
-    >>> import transaction
-    >>> import tempfile
-    >>> from tempfile import mkdtemp
-    >>> base_storage = MappingStorage("test")
-    >>> blob_dir = mkdtemp()
-    >>> blob_storage = BlobStorage(blob_dir, base_storage)
-    >>> database = DB(blob_storage)
-    >>> connection = database.open()
-    >>> root = connection.root()
-    >>> root['blobfile'] = blobfile
-    >>> transaction.commit()
 
 Then we call the thumbnail view, that returns a DownloadResult
 with the content of the thumbnail::
 
     >>> from zope.publisher.browser import TestRequest
     >>> from eztranet.thumbnail.browser import ThumbnailImageView
+    >>> transaction.commit()
     >>> d = ThumbnailImageView(blobfile, TestRequest())()
     >>> 500 < len(iter(d).next()) < 2000
     True

@@ -1,12 +1,12 @@
 
     >>> from zope.component import getUtility
     >>> from zope.interface import implements
-    >>> from zope.app.catalog.interfaces import ICatalog
-    >>> from zope.app.catalog.catalog import Catalog
-    >>> import zope.app.intid.interfaces
+    >>> from zope.catalog.interfaces import ICatalog
+    >>> from zope.catalog.catalog import Catalog
+    >>> import zope.intid.interfaces
     >>> from zope.app.testing import ztapi
     >>> class DummyIntId(object):
-    ...     implements(zope.app.intid.interfaces.IIntIds)
+    ...     implements(zope.intid.interfaces.IIntIds)
     ...     MARKER = '__dummy_int_id__'
     ...     def __init__(self):
     ...         self.counter = 0
@@ -24,7 +24,7 @@
     ...     def __iter__(self):
     ...         return iter(self.data)
     >>> intid = DummyIntId()
-    >>> ztapi.provideUtility(zope.app.intid.interfaces.IIntIds, intid)
+    >>> ztapi.provideUtility(zope.intid.interfaces.IIntIds, intid)
 
 We create and register a catalog since we'll need it later.
 

@@ -39,23 +39,23 @@ commentsKey = 'eztranet.comment'
 class CommentSequence(Sequence) :
     """Special modification description that distinguishes between
        sequence additions or modifications.
-       
+
        XXX This distinction should probably go into
-       
+
        zope.lifecycleevent.Sequence
-       
+
        later on.
     """
-    
+
     implements(ICommentSequence)
-    
+
     changes = "add", "edit", "del"
 
     def __init__(self, key, change) :
         self.interface = IComments
         self.keys = (key,)
         self.change = change
-        
+
 
 def dottedName(klass):
     if klass is None:
@@ -77,7 +77,7 @@ class Comments(Location, Persistent):
     implements(IComments)
 
     __nextKey__ = 0
-    
+
     def __init__(self):
         self.comments = PersistentDict()
 
@@ -85,7 +85,7 @@ class Comments(Location, Persistent):
     def _get_nextKey(self):
         key = self.__nextKey__
         self.__nextKey__ = nextKey = key + 1
-        return nextKey 
+        return nextKey
 
     _nextKey = property(_get_nextKey)
 
@@ -148,9 +148,9 @@ class Comments(Location, Persistent):
 
         if changed:
             notify(ObjectModifiedEvent(comment, Attributes(IComment, *changed)))
-        
+
         return changed
-         
+
 
     def __delitem__(self, key):
         """See comment.IDeleteComments"""
@@ -170,10 +170,10 @@ class CommentsForAnnotatableComments(Location):
     # private methods
     def _get_comments(self):
         annotations = self.__dict__.get('_annotations')
-        
+
         if annotations is None:
             self.__dict__['_annotations']= annotations = IAnnotations(self.context)
-        
+
         return annotations.get(commentsKey, None)
 
     comments = property(_get_comments)

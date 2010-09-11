@@ -50,14 +50,14 @@ class FlashPreview(object):
 def video_converter(obj, target_path):
     """The function that runs ffmpeg and write the resulting video file"""
     # source
-    source_path = obj.context._data._current_filename()
-    retcode = subprocess.call(['ffmpeg', '-i', source_path, '-y',
-                                         '-ar', '22050',
-                                         '-b', '800k',
-                                         '-g', '240',
-                                         target_path],
-                              stderr=subprocess.PIPE,
-                              stdout=subprocess.PIPE)
+    with obj.context.openDetached() as sourcefile:
+        retcode = subprocess.call(['ffmpeg', '-i', sourcefile.name, '-y',
+                                   '-ar', '22050',
+                                   '-b', '800k',
+                                   '-g', '240',
+                                   target_path],
+                                   stderr=subprocess.PIPE,
+                                   stdout=subprocess.PIPE)
     if retcode == 1:
         # compression failed
         os.remove(target_path)

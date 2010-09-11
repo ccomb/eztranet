@@ -11,7 +11,7 @@ from zope.lifecycleevent import ObjectCreatedEvent
 import zipfile, os, tempfile
 import zope.event
 from zope.mimetype import typegetter
-import zope.publisher
+import zope.contenttype
 
 class ZipImport(object):
     """Import plugin that uncompresses a zipfile into file and folder objects
@@ -60,8 +60,7 @@ class ZipImport(object):
 
                 item.title = item.__name__ = objname
                 # set some file attributes
-                major, minor, parameters = zope.publisher.contenttype.parse(
-                                                                         mimetype)
+                major, minor, parameters = zope.contenttype.parse.parse(mimetype)
                 if 'charset' in parameters:
                     parameters['charset'] = parameters['charset'].lower()
                 item.mimeType = mimetype
@@ -98,15 +97,14 @@ class ZipExport(object):
             # we are recursing
             if IFile.providedBy(obj):
                 # XXX removeSecurityProxy but should check read permission
-                self.zipfile.write(removeSecurityProxy(obj)._data._current_filename(),
-                                   path.encode('iso8859-1'))
+                with removeSecurityProxy(obj).openDetached() as objfile:
+                    self.zipfile.write(objfile.name, path.encode('iso8859-1'))
             if hasattr(obj, 'text'):
                 fd, fname = tempfile.mkstemp(suffix='.txt')
                 tmpfile = os.fdopen(fd, 'w')
                 tmpfile.write(obj.text)
                 tmpfile.close()
-                self.zipfile.write(fname,
-                                   path.encode('iso8859-1'))
+                self.zipfile.write(fname, path.encode('iso8859-1'))
                 os.remove(fname)
 
         if IContainer.providedBy(obj) or obj is self.context:

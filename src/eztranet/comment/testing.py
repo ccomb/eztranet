@@ -21,7 +21,7 @@ import zope.component
 import zope.app.testing.placelesssetup
 
 def commentSetUp(test=None) :
-    
+
     # zope.annotations
     from zope.annotation.interfaces import IAnnotations
     from zope.annotation.interfaces import IAnnotatable
@@ -35,13 +35,13 @@ def commentSetUp(test=None) :
     from eztranet.comment.comments import CommentsForAnnotatableComments
     from eztranet.comment import IComments
     zope.component.provideAdapter(CommentsForAnnotatableComments, provides=IComments)
-    
+
     # make DublinCore work
-    
-    from zope.app.file import File
+
+    from zope.file.file import File
     from eztranet.comment.comments import Comment
     from eztranet.comment.interfaces import IAttributeAnnotatableComments
-    
+
     from zope.dublincore.interfaces import IZopeDublinCore
     from zope.dublincore.annotatableadapter import ZDCAnnotatableAdapter
 
@@ -49,21 +49,21 @@ def commentSetUp(test=None) :
     zope.interface.classImplements(File, IAnnotatable)
     zope.interface.classImplements(File, IAttributeAnnotatable)
     zope.interface.classImplements(File, IAttributeAnnotatableComments)
-    
+
     zope.interface.classImplements(Comment, IAnnotatable)
     zope.interface.classImplements(Comment, IAttributeAnnotatable)
-    
+
     zope.component.provideAdapter(ZDCAnnotatableAdapter,
-                                            [IAnnotatable], 
+                                            [IAnnotatable],
                                             IZopeDublinCore)
-        
+
 
 class PlacelessSetup(zope.app.testing.placelesssetup.PlacelessSetup):
 
     def setUp(self, doctesttest=None):
         super(PlacelessSetup, self).setUp(doctesttest)
         commentSetUp(doctesttest)
-        
+
 
     def tearDown(self, test=None):
         super(PlacelessSetup, self).tearDown()

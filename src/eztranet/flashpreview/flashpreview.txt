@@ -63,7 +63,7 @@ We have an adapter on any annotatable file that allows to encode the flash previ
     >>> flashpreview = FlashPreview(blobfile)
     >>> job = flashpreview.encode()
     >>> transaction.commit()
-    >>> zc.async.testing.wait_for_result(job)
+    >>> zc.async.testing.wait_for_result(job, 1000)
     True
 
 Now the file has an annotation with an encoded flv file:

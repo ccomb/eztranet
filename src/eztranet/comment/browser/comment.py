@@ -20,7 +20,6 @@ __docformat__ = 'restructuredtext'
 from zope.interface import implements, Interface
 from zope.component import adapts
 from zope.dublincore.interfaces import IZopeDublinCore
-from zope.app import zapi
 from zope.publisher.browser import BrowserView
 from z3c.pagelet.browser import BrowserPagelet
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
@@ -32,31 +31,33 @@ from z3c.layer.pagelet import IPageletBrowserLayer
 from z3c.menu.simple.menu import SimpleMenuItem
 from eztranet.comment import IComments, IAnnotatableComments
 from zope.i18nmessageid import MessageFactory
+from zope.authentication.interfaces import IAuthentication
+from zope.traversing.browser import absoluteURL
 
 _ = MessageFactory('eztranet')
 
 def getFullName(principal_id) :
     """ Returns the full name or title of a principal that can be used
         for better display.
-        
+
         Returns the id if the full name cannot be found.
     """
     try :
-        return zapi.principals().getPrincipal(principal_id).id
+        return getUtility(IAuthentication).getPrincipal(principal_id).id
     except (PrincipalLookupError, AttributeError) :
         return principal_id
-        
+
 
 class ListComments(BrowserPagelet) :
     """ A simple list view for comments.
-    
+
     >>> from eztranet.comment.browser.tests import buildTestFile
     >>> file = buildTestFile()
-    
+
     >>> from zope.publisher.browser import TestRequest
     >>> AddComment(file, TestRequest()).addComment("A comment")
     >>> AddComment(file, TestRequest()).addComment("Another comment")
-    
+
     >>> comments = ListComments(file, TestRequest())
     >>> print comments.render_comments()
     <div id="comments"><a name="comment1">
@@ -67,26 +68,26 @@ class ListComments(BrowserPagelet) :
     ...
     <div class="comment">Another comment</div>
     ...
-    
-   
-    
+
+
+
     """
 
     _comment = ViewPageTemplateFile("./templates/comment.pt")
-        
+
     def __init__(self, context, request) :
         super(ListComments, self).__init__(context, request)
         self.comments = IComments(self.context)
-        
+
     def render_comments(self) :
         delkey = None
         if 'del' in self.request.form: # removal of comments (disabled)
             for key, value in self.comments.items() :
                 if str(key) == self.request.form['del']:
                     del self.comments[key]
-            
+
         result = ['<div id="comments">']
-        
+
         comments = self.comments
         for key, value in comments.items() :
 
@@ -98,9 +99,9 @@ class ListComments(BrowserPagelet) :
             info['text'] = unicode(value.data, encoding="utf-8")
 
             result.append(self._comment())
-        
+
         result.append('</div>')
-        
+
         return "".join(result)
     def removable(self):
         try:
@@ -116,17 +117,17 @@ class ListCommentsMenuItem(SimpleMenuItem):
 class AddComment(BrowserView) :
     """ A simple add view for comments. Allows the user to type comments
         and submit them.
-        
+
     """
-        
+
     def nextURL(self) :
-        url = zapi.absoluteURL(self.context, self.request)
+        url = absoluteURL(self.context, self.request)
         return url + "/@@comments.html"
-        
+
     def addComment(self, text) :
         comments = IComments(self.context)
         comments.addComment(text)
-        
+
         self.request.response.redirect(self.nextURL())
 
 class NbComments(object):
@@ -135,7 +136,7 @@ class NbComments(object):
     """
     implements(IContentProvider)
     adapts(IAnnotatableComments, IPageletBrowserLayer, Interface)
-    
+
     def __init__(self, context, request, view):
         self.context, self.request, self.view = context, request, view
 

@@ -1,0 +1,7 @@
+
+      [paste.app_factory]
+      main = eztranet.startup:application_factory
+
+      [paste.global_paster_command]
+      shell = eztranet.debug:Shell
+      

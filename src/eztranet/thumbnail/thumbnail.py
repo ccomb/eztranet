@@ -12,7 +12,6 @@ from zope.interface import implements
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent, IObjectCopiedEvent
 from zope.security.proxy import removeSecurityProxy
 import PIL.Image
-import transaction
 
 CONFIG_KEY = 'eztranet.thumbnail'
 SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
@@ -102,16 +101,17 @@ class VideoThumbnailer(BaseThumbnailer):
     at an offset of 3 seconds, then convert to jpeg with the ImageThumbailer
     """
     def __call__(self, size=120):
-        blobpath = self.context._data._current_filename()
-        p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobpath,
+        blobfile = self.context.openDetached()
+        p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobfile.name,
                   shell=True, stderr=PIPE, stdout=PIPE)
         thumbnail_content = p.stdout.read()
         err = p.stderr.read()
         if len(thumbnail_content) == 0: # maybe there is less than 3 seconds?
-            p = Popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobpath,
+            p = Popen("ffmpeg -i %s -y -vcodec png -vframes 1 -an -f rawvideo -" % blobfile.name,
                       shell=True, stderr=PIPE, stdout=PIPE)
             thumbnail_content = p.stdout.read()
             err = p.stderr.read()
+        blobfile.close()
         thumbfile = File()
         fd = thumbfile.open('w')
         fd.write(thumbnail_content)

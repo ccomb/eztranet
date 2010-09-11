@@ -1,7 +1,5 @@
 import unittest
 from zope.testing import doctest, doctestunit
-from zope.app import zapi
-from zope.app.testing import ztapi
 from zope.app.testing.setup import placefulSetUp, placefulTearDown
 
 def setUp(test):
@@ -20,12 +18,10 @@ def tearDown(test):
 
 def test_suite( ):
     return unittest.TestSuite((
-        doctest.DocFileSuite('flashpreview.txt', 
-                             setUp=setUp, 
+        doctest.DocFileSuite('flashpreview.txt',
+                             setUp=setUp,
                              tearDown=tearDown,
-                             globs={'zapi': zapi,
-                                    'ztapi': ztapi,
-                                    'pprint': doctestunit.pprint},
+                             globs={'pprint': doctestunit.pprint},
                              optionflags=doctest.NORMALIZE_WHITESPACE+
                                          doctest.ELLIPSIS
                              ),

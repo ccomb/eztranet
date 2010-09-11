@@ -1,110 +1,24 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-           xmlns:browser="http://namespaces.zope.org/browser"
-           xmlns:z3c="http://namespaces.zope.org/z3c"
-           xmlns:i18n="http://namespaces.zope.org/i18n"
-           i18n_domain="eztranet">
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="eztranet">
 
-  <include package="zope.security" file="meta.zcml" />
-  <include package="zope.app.security" file="meta.zcml" />
-  <include package="zope.app.securitypolicy" file="meta.zcml" />
-  <include package="zope.app.zcmlfiles" file="meta.zcml" />
-  <include package="zope.mimetype" file="meta.zcml" />
-  <include package="zope.publisher" />
-  <include package="zope.traversing" />
-  <include package="zope.traversing.browser" />
-  <include package="zope.app.zcmlfiles" />
-  <include package="zope.app.security" />
+  <include file="securitypolicy.zcml" />
 
-  <!-- The following packages aren't needed from the beginning, but
-       end up being used in most applications -->
-  <include package="zope.i18n" file="meta.zcml" />
-  <include package="zope.annotation" />
-  <include package="zope.copypastemove" />
-  <include package="zope.i18n.locales" />
-  <include package="zope.app.authentication" />
-  <include package="zope.app.session" />
-  <include package="zope.app.intid" />
-  <include package="zope.app.keyreference" />
-  <include package="zope.app.securitypolicy" />
-  <include package="zope.contentprovider" />
-  <include package="zope.dublincore" />
-  <include package="zope.app.container" />
-  <include package="zope.app.file" />
-  <include package="zope.app.folder" />
-  <include package="zope.mimetype" />
-  <include package="zope.file" />
-  <include package="zope.viewlet" file="meta.zcml" />
-  <include package="zope.viewlet" />
-  <include package="z3c.macro" />
-  <include package="z3c.macro" file="meta.zcml" />
-  <include package="z3c.template" file="meta.zcml" />
-  <include package="z3c.pagelet" file="meta.zcml" />
-  <include package="z3c.layer.pagelet" />
-  <include package="z3c.pagelet" />
-  <include package="z3c.contents" />
-  <include package="z3c.form" file="meta.zcml" />
-  <include package="z3c.form" />
-  <include package="z3c.formui" />
-  <include package="zc.async" />
+  <!-- The following registration (defaultView) register 'index' as
+       the default view for a container.  The name of default view
+       can be changed to a different value, for example, 'index.html'.
+       More details about defaultView registration is available here:
+       http://bluebream.zope.org/doc/1.0/howto/defaultview.html
+       -->
 
-  <!-- Add your own component registrations here -->
+  <browser:defaultView
+     for="zope.container.interfaces.IContainer"
+     name="index"
+     />
 
-<class class=".eztranet.EztranetSite">
-  <factory id="eztranet.eztranet.EztranetSite"
-           title="Eztranet site"
-           description="An Eztranet application" />
-  <require permission="zope.View"
-           interface="zope.app.component.interfaces.IPossibleSite" />
-  <require permission="zope.ManageContent"
-           set_schema="zope.app.component.interfaces.IPossibleSite" />
-  <require permission="zope.View"
-           interface="zope.app.container.interfaces.IReadContainer" />
-  <require permission="zope.ManageContent"
-           interface="zope.app.container.interfaces.IWriteContainer" />
-  <implements interface="zope.annotation.interfaces.IAttributeAnnotatable" />
-</class>
-
-<include package=".skin" />
-<include package=".config" />
-<include package=".tinymce" />
-<include package=".project" />
-<include package=".users" />
-<include package=".thumbnail" />
-<include package=".comment" />
-<include package=".flashpreview" />
-<include package=".generations" />
-<include package=".importexport" />
-
-<i18n:registerTranslations directory="locales" />
-
-
-<subscriber handler=".eztranet.newEztranetSiteAdded" />
-<subscriber handler=".eztranet.EztranetInitialSetup" />
-
-<!-- view and layout of the root without any eztranet -->
-<z3c:pagelet name="index.html"
-             for="zope.app.folder.interfaces.IRootFolder"
-             class=".eztranet.RootFolderView"
-             permission="zope.Public"
-             layer="eztranet.skin.interfaces.IEztranetSkin" />
-<z3c:template template="rootfolder.pt"
-              for=".eztranet.RootFolderView"
-              layer="eztranet.skin.interfaces.IEztranetSkin" />
-<z3c:layout template="root_layout.pt"
-            for=".eztranet.RootFolderView"
-            layer="eztranet.skin.interfaces.IEztranetSkin" />
-
-<z3c:pagelet name="add_eztranet.html"
-             for="zope.app.folder.interfaces.IRootFolder"
-             class=".eztranet.EztranetSiteAdd"
-             layer="eztranet.skin.interfaces.IEztranetSkin"
-             permission="zope.ManageContent" />
-<z3c:layout template="root_layout.pt"
-            for=".eztranet.EztranetSiteAdd"
-            layer="eztranet.skin.interfaces.IEztranetSkin" />
-
-<browser:addMenuItem title="Eztranet Site"
-                     class=".eztranet.EztranetSite"
-                     permission="zope.ManageContent" />
+  <!-- To remove the sample application delete the following line
+       and remove the `welcome` folder from this directory.
+       -->
 
 </configure>
