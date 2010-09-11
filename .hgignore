@@ -1,0 +1,16 @@
+syntax: glob
+*.pyc
+Data.fs*
+bin/*
+dist/*
+relief.egg-info
+develop-eggs
+.installed.cfg
+log/*
+Paste-1.7.2-py2.5.egg/*
+var/*
+parts/*
+eztranet.egg-info/
+*.swp
+uuid.txt
+extends-cache/
