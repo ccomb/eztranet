@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import transaction
 from StringIO import StringIO
 from eztranet.config.interfaces import IConfig, IConfigurable
 from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
@@ -101,7 +102,7 @@ class VideoThumbnailer(BaseThumbnailer):
     at an offset of 3 seconds, then convert to jpeg with the ImageThumbailer
     """
     def __call__(self, size=120):
-        blobfile = self.context.openDetached()
+        blobfile = self.context.open()
         p = Popen("ffmpeg -i %s -y -vcodec png -ss 3 -vframes 1 -an -f rawvideo -" % blobfile.name,
                   shell=True, stderr=PIPE, stdout=PIPE)
         thumbnail_content = p.stdout.read()

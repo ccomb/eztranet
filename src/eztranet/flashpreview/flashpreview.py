@@ -50,7 +50,7 @@ class FlashPreview(object):
 def video_converter(obj, target_path):
     """The function that runs ffmpeg and write the resulting video file"""
     # source
-    with obj.context.openDetached() as sourcefile:
+    with obj.context.open() as sourcefile:
         retcode = subprocess.call(['ffmpeg', '-i', sourcefile.name, '-y',
                                    '-ar', '22050',
                                    '-b', '800k',

@@ -1,5 +1,6 @@
 setuptools
 zope.securitypolicy
+zope.app.securitypolicy
 zope.component
 zope.annotation
 zope.browserresource
@@ -37,7 +38,7 @@ zope.app.file
 z3c.pagelet
 z3c.layer.pagelet
 z3c.menu.simple
-zc.async
+zc.async[z3]
 hachoir_parser
 zope.index
 zope.contenttype
@@ -45,3 +46,5 @@ zope.catalog
 z3c.form
 z3c.formui
 z3c.contents
+Pillow
+zope.intid

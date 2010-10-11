@@ -8,5 +8,4 @@
               permission="zope.ManageContent"
               trusted="yes" />
 
-
 </configure>

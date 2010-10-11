@@ -31,6 +31,8 @@ src/eztranet/flashpreview/interfaces.py
 src/eztranet/flashpreview/tests.py
 src/eztranet/flashpreview/browser/__init__.py
 src/eztranet/flashpreview/browser/flashpreview.py
+src/eztranet/ftests/__init__.py
+src/eztranet/ftests/ftests.py
 src/eztranet/generations/__init__.py
 src/eztranet/generations/old.py
 src/eztranet/importexport/__init__.py

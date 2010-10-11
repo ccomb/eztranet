@@ -7,8 +7,8 @@ from zope.app.component.site import LocalSiteManager, SiteManagerContainer
 from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
 from zope.app.folder.folder import Folder
 from zope.app.generations.utility import findObjectsProviding
-from zope.app.intid import IntIds
-from zope.app.intid.interfaces import IIntIds
+from zope.intid import IntIds
+from zope.intid.interfaces import IIntIds
 from zope.component import adapter, getUtilitiesFor
 from zope.component import createObject
 from zope.event import notify
@@ -30,7 +30,7 @@ class EztranetSiteManagerSetEvent(object):
 
 class EztranetSite(Folder, SiteManagerContainer):
     """The main container object
-    
+
     We add an eztranet site, then we trigger a subscriber when adding it that
     will turn it into a site. Then another event is triggered that calls another
     subscriber which do the necessary to make the site work
@@ -58,23 +58,23 @@ def EztranetInitialSetup(event):
     """
     site=event.object
     sm = site.getSiteManager()
-    
+
     # create and register the intid utility
     intid = IntIds()
     sm['unique integer IDs']=intid
     sm.registerUtility(intid, IIntIds)
-    
+
     # then create the project folder
     event.object['projects'] = createObject('eztranet.ProjectContainer')
     event.object['projects'].title = _(u'Projects')
-    
+
     # this setup could be done in an event triggered when adding the eztranet
     # by saying that EztranetSite implements a marker interface such as IHaveUserManagement
     #By now, we just run all the utilities providing IInitialSetup
     for utility_name, utility in getUtilitiesFor(IInitialSetup):
         logger.info(u'Running initial setup from %s' % utility.__module__)
         utility(site)
-    
+
     #create an intid for all objects added in content space and site manager. (the intid is not yet active)"
     #KEEP THIS AT THE BOTTOM"
     for object in findObjectsProviding(site,Interface):
@@ -85,7 +85,7 @@ def EztranetInitialSetup(event):
 
 class EztranetSiteAdd(AddForm):
     """Form to add a new eztranet site
-    """   
+    """
     fields = Fields(IEztranetSite)
     fields['__name__'].field.title = _(u'Name (used in the URL)')
     fields['__name__'].field.description = _(u'Name used in the URL')
@@ -103,7 +103,7 @@ class EztranetSiteAdd(AddForm):
 
     def nextURL(self):
         return '/'
-        
+
 
 class RootFolderView(BrowserPagelet):
     """View of the zodb root object. Used when there is no eztranet

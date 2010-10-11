@@ -1,4 +1,4 @@
-from zope.app.component.interfaces import IPossibleSite
+from zope.component.interfaces import IPossibleSite
 from zope.app.container.interfaces import IContainer, IContained
 from zope.component.interfaces import IObjectEvent
 from zope.i18nmessageid import MessageFactory
@@ -16,10 +16,10 @@ class IEztranetSite(IPossibleSite, IContainer, IContained):
 
 class IEztranetSiteManagerSetEvent(IObjectEvent):
     """The event fired when a eztranet site is added.
-    
+
     The subscriber must create the objects and utilities required to running the site
     in particular the IntId, the catalog and indices, the trash, etc.
-    """ 
+    """
 
 class IConfigurator(Interface):
     """The interface of the root dummy configuration object"""

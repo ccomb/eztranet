@@ -209,11 +209,12 @@ class ProjectImageSized(object):
 
     def __init__(self, context):
         self.context = self.__parent__ = context
-        image = PIL.Image.open(self.context._data._current_filename())
-        self.width = image.size[0]
-        self.height = image.size[1]
-        self.size = self.context.size
-        image.fp.close()
+        with self.context.open() as blobfile:
+            image = PIL.Image.open(blobfile.name)
+            self.width = image.size[0]
+            self.height = image.size[1]
+            self.size = self.context.size
+            image.fp.close()
 
     def sizeForDisplay(self):
         """returns a size of the form '3125KB 640x480'

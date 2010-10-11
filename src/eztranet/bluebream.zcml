@@ -1,6 +1,4 @@
-<configure
-   xmlns="http://namespaces.zope.org/zope"
-   xmlns:browser="http://namespaces.zope.org/browser">
+<configure xmlns="http://namespaces.zope.org/zope">
 
   <include package="zope.component" file="meta.zcml" />
   <include package="zope.security" file="meta.zcml" />
@@ -16,12 +14,12 @@
   <include package="zope.app.container.browser" file="meta.zcml" />
   <include package="zope.app.pagetemplate" file="meta.zcml" />
   <include package="zope.app.publisher.xmlrpc" file="meta.zcml" />
-
   <include package="zope.browserresource" />
   <include package="zope.copypastemove" />
   <include package="zope.publisher" />
   <include package="zope.component" />
   <include package="zope.traversing" />
+  <include package="zope.location" />
   <include package="zope.site" />
   <include package="zope.annotation" />
   <include package="zope.principalregistry" />
@@ -47,8 +45,18 @@
   <include package="zope.app.pagetemplate" />
   <include package="zope.app.schema" />
   <include package="zope.app.http" />
+  <include package="zope.keyreference" />
+  <include package="zope.intid" />
+  <include package="zope.contentprovider" />
+  <include package="zope.i18n" />
 
-  <includeOverrides file="overrides.zcml" />
-  <include package="eztranet" />
+  <!-- enable the apidoc -->
+  <!-- enable this when apidoc works
+  <include zcml:condition="have devmode"
+           package="zope.app.apidoc" file="meta.zcml" />
+  <include zcml:condition="have devmode"
+           package="zope.app.apidoc" />
+  -->
 
 </configure>
+

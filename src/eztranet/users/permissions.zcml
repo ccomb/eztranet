@@ -30,7 +30,7 @@
        permission="zope.Security" />
 
 <grant role="eztranet.Administrator"
-       permission="zope.app.dublincore.change" />
+       permission="zope.dublincore.change" />
 
 <grant role="eztranet.Administrator"
        permission="zope.View" />
@@ -77,7 +77,7 @@
        permission="eztranet.view" />
 
 <grant role="eztranet.Member"
-       permission="zope.app.dublincore.view" />
+       permission="zope.dublincore.view" />
 
 <grant role="eztranet.Member"
        permission="eztranet.thumbnail.view" />
@@ -117,7 +117,7 @@
        permission="eztranet.comment.delete" />
        
 <grant role="eztranet.project.Manager"
-       permission="zope.app.dublincore.change" />
+       permission="zope.dublincore.change" />
 
 <grant role="eztranet.project.Manager"
        permission="eztranet.flashpreview.edit" />

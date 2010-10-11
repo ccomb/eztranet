@@ -1,4 +1,3 @@
-from __future__ import with_statement
 from eztranet.importexport.interfaces import IImport
 from eztranet.project.interfaces import ILargeBytes
 from eztranet.project.interfaces import IOrderConfig
@@ -40,6 +39,7 @@ from zope.security.proxy import removeSecurityProxy
 from zope.size.interfaces import ISized
 from zope.traversing.api import getPath
 from zope.traversing.browser.absoluteurl import absoluteURL
+import zope.contenttype
 import zope.event
 import zope.publisher
 import zope.publisher.interfaces
@@ -235,8 +235,7 @@ class ProjectItemAdd(AddForm):
             contentName = INameChooser(self.context).chooseName(item.title,
                                                                 item)
             # set some file attributes
-            major, minor, parameters = zope.publisher.contenttype.parse(
-                                                                     mimetype)
+            major, minor, parameters = zope.contenttype.parse.parse(mimetype)
             if 'charset' in parameters:
                 parameters['charset'] = parameters['charset'].lower()
             item.mimeType = mimetype

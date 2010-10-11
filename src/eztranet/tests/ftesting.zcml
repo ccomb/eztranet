@@ -2,52 +2,20 @@
    xmlns="http://namespaces.zope.org/zope"
    i18n_domain="eztranet">
 
-  <include package="zope.component" file="meta.zcml" />
-  <include package="zope.security" file="meta.zcml" />
-  <include package="zope.publisher" file="meta.zcml" />
-  <include package="zope.browserresource" file="meta.zcml" />
-  <include package="zope.browsermenu" file="meta.zcml" />
-  <include package="zope.browserpage" file="meta.zcml" />
-  <include package="zope.securitypolicy" file="meta.zcml" />
-  <include package="zope.principalregistry" file="meta.zcml" />
-  <include package="zope.app.publication" file="meta.zcml" />
-
-  <include package="zope.component" />
-  <include package="zope.traversing" />
-  <include package="zope.site" />
-  <include package="zope.annotation" />
-  <include package="zope.container" />
-  <include package="zope.componentvocabulary" />
-  <include package="zope.app.appsetup" />
-  <include package="zope.app.security" />
-  <include package="zope.app.publication" />
-  <include package="zope.principalregistry" />
-
-  <!-- Typical functional testing security setup -->
-  <securityPolicy
-      component="zope.securitypolicy.zopepolicy.ZopeSecurityPolicy"
-      />
-
-  <unauthenticatedPrincipal
-      id="zope.anybody"
-      title="Unauthenticated User"
-      />
-  <grant
-      permission="zope.View"
-      principal="zope.anybody"
-      />
-
-  <principal
-      id="zope.mgr"
-      title="Manager"
-      login="mgr"
-      password="mgrpw"
-      />
-
-  <role id="zope.Manager" title="Site Manager" />
-  <grantAll role="zope.Manager" />
-  <grant role="zope.Manager" principal="zope.mgr" />
+<!-- This file is mostly identical to site.zcml, except the manager password -->
 
   <include package="eztranet" />
 
+  <principal 
+      id="zope.manager"
+      title="Manager"
+      login="globalmgr"
+      password="globalmgrpw"
+      password_manager="Plain Text"
+      />
+  <grant role="zope.Manager"
+         principal="zope.manager" />
+
+
 </configure>
+
