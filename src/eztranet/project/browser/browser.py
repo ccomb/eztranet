@@ -314,6 +314,7 @@ class ProjectItemAddMenuItem(SimpleMenuItem):
 
 class ProjectItemEdit(EditForm):
     label = _(u'Modification')
+    # omit the IContained attributes, and the file upload attribute
     fields=Fields(IProjectItem, IThumbnail).omit('__name__', '__parent__', 'data')
 
     def applyChanges(self, data):
