@@ -21,4 +21,7 @@
      />
 
 
+<!-- this one corresponds to zc.async.ftesting.setUp in tests -->
+<include package="zc.async" file="basic_dispatcher_policy.zcml" />
+
 </configure>

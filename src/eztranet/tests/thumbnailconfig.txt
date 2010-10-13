@@ -32,7 +32,10 @@ Adding an Eztranet site
 Adding Projects and videos
 ==========================
 
-We add a project with 1 video, and a subproject with 2 videos::
+We add a project with 1 video, and a subproject with 2 videos:
+
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
 
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
@@ -181,4 +184,7 @@ Then we unset the sample3 config::
     >>> s1 == thumbsize_of(root['eztranet']['projects']['project']['subproject']['sample3.ogg'])
     True
 
+clean up:
+
+    >>> zc.async.ftesting.tearDown()
 

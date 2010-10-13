@@ -16,6 +16,7 @@
   <grant role="zope.Manager"
          principal="zope.manager" />
 
+<adapter factory="zc.async.queue.getDefaultQueue" />
 
 </configure>
 

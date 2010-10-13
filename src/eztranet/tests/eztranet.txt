@@ -258,6 +258,11 @@ We cannot submit an empty title for a project:
 Adding a Video
 ==============
 
+First setup zc.async:
+
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
 We add a video in the project-2:
 
     >>> browser.open('http://localhost/eztranet/projects/project-2/')
@@ -798,4 +803,7 @@ We remove the image and video:
     >>> list(root['eztranet']['projects']['project-2'])
     []
 
+clean up
+
+    >>> zc.async.ftesting.tearDown()
 

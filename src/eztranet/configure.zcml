@@ -26,10 +26,9 @@
 <include package="zope.file" />
 <include package="zc.async" />
 <include package="zc.z3monitor" />
-<include package="zc.async" file="basic_dispatcher_policy.zcml" />
 
 
-<!-- eztranet packages -->
+<!-- Eztranet packages -->
 <include package=".skin" />
 <include package=".config" />
 <include package=".tinymce" />
