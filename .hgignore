@@ -3,7 +3,7 @@ syntax: glob
 Data.fs*
 bin/*
 dist/*
-relief.egg-info
+src/eztranet.egg-info
 develop-eggs
 .installed.cfg
 log/*
