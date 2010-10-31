@@ -158,40 +158,40 @@ Trying to see the unauthorized pages leads to an error:
     >>> browser.open('http://localhost/eztranet/projects/project/@@permissions.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/@@edit.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
     >>> browser.open('http://localhost/eztranet/projects/project2')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@edit.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@comments.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@importexport.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@add_page.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@add_projectitem.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 
 We cannot delete any project:
@@ -203,14 +203,14 @@ We cannot delete any project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
     >>> browser.open('http://localhost/eztranet/projects/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project2']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 We cannot delete anything in the project:
 
@@ -219,19 +219,19 @@ We cannot delete anything in the project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.png']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['dummy']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').options
     ['a-sample.ogg', 'a-sample.png', 'dummy', 'subproject', 'text']
@@ -240,19 +240,19 @@ We cannot delete anything in the project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['subproject']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['text']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 We also try with the full view name, because it would allow to delete an object
 without permissions:
@@ -262,13 +262,13 @@ without permissions:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project/@@index.html')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['a-sample.png']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 We still have everything:
 
@@ -310,35 +310,35 @@ Trying to see the unauthorized project and pages leads to an error:
     >>> browser.open('http://localhost/eztranet/projects/project2')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/a-sample.png/')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@permissions.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@edit.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@comments.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@importexport.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@add_page.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/project2/@@add_projectitem.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 But we can see all the views for the project we are manager of, excepted
 permissions:
@@ -379,7 +379,7 @@ permissions:
     >>> browser.open('http://localhost/eztranet/projects/project/@@permissions.html')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 We cannot delete any project:
 
@@ -390,13 +390,13 @@ We cannot delete any project:
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
     >>> browser.open('http://localhost/eztranet/projects/')
     >>> browser.getControl(name='contents-checkBoxColumn-0-selectedItems').value = ['project2']
     >>> browser.getControl(name="contents.buttons.delete").click()
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 We can edit any file and subproject:
 
@@ -479,7 +479,7 @@ We should not be able to view it as testuser:
     >>> browser.open('http://localhost/eztranet/projects/project')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 
 We give access to project to testuser again,
@@ -541,7 +541,7 @@ Now we delete the testuser
     >>> browser.open('http://localhost/eztranet/projects/project')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 clean up:
 
