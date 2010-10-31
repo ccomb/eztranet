@@ -1,0 +1,47 @@
+Changelog
+=========
+
+1.99 (2010-10-31)
+-----------------
+
+- port to BlueBream 1.0b4 and ZTK 1.0
+
+1.3.0 (2010-03-27)
+------------------
+- Fixed copy/paste (except for folders)
+- Upgraded to FlowPlayer 3.1
+- Allow to import/export a whole folder as a zip file
+- Allow to configure the thumbnail size
+- Allow to upload custom thumbnails
+- Use better async solution for encoding (zc.async)
+- Fixed some translation issues
+- Added a wysiwyg editor (tinyMCE)
+- Some cosmetic modifications
+
+1.2.1 (2010-01-10)
+------------------
+- Upgraded minor versions of many packages
+- Upgraded z3c.layer.pagelet to fix a related security issue
+- Spin package versions
+
+1.2.0 (2008-09-04)
+------------------
+- Port user interface to z3c components
+- Added an upload progress bar (gp.fileupload, thanks gawel!)
+
+1.1 (never released)
+--------------------
+- Use blobs for uploaded files
+- Allow uploading of several files
+- Optimized memory during upload and browsing
+- Graphical enhancements
+- Antialiasing on thumbnails
+- Improved left tree menu
+- Automatic detection of uploaded files
+- Internationalization (with en + fr)
+- New flash movie reader
+- Move to buildout and zope3.4
+
+1.0 (2007-07-10)
+----------------
+- initial version for Purple Productions
