@@ -262,6 +262,7 @@ class ProjectItemAdd(AddForm):
 class BigFileWidget(FileWidget):
     adapts(ILargeBytes, IEztranetSkin)
 
+
 @adapter(ILargeBytes, IEztranetSkin)
 @implementer(IFieldWidget)
 def BigFileFieldWidget(field, request):
@@ -298,7 +299,7 @@ class BigFileValidator(SimpleFieldValidator):
     zope.component.adapts(
         Interface,
         Interface,
-        ProjectItemAdd,
+        Interface,
         ILargeBytes,
         Interface)
 

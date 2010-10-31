@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-import transaction
 from StringIO import StringIO
-from eztranet.config.interfaces import IConfig, IConfigurable
-from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
 from subprocess import Popen, PIPE
 from zope.annotation.interfaces import IAnnotations
 from zope.app.container.interfaces import IObjectAddedEvent, IContainer
@@ -11,8 +8,13 @@ from zope.file.file import File
 from zope.file.interfaces import IFile
 from zope.interface import implements
 from zope.lifecycleevent.interfaces import IObjectModifiedEvent, IObjectCopiedEvent
+from zope.publisher.browser import FileUpload
 from zope.security.proxy import removeSecurityProxy
 import PIL.Image
+import transaction
+
+from eztranet.config.interfaces import IConfig, IConfigurable
+from interfaces import IThumbnail, IThumbnailed, IThumbnailer, IThumbnailConfig
 
 CONFIG_KEY = 'eztranet.thumbnail'
 SIZE_CONFIG_KEY = 'eztranet.thumbnail.size'
@@ -34,9 +36,14 @@ class Thumbnail(object):
     def _set_image(self, data):
         if data is not None:
             blob = IAnnotations(self.context)[CONFIG_KEY] = File()
-            file = blob.open('w')
-            file.write(data)
-            file.close()
+            if type(data) is str:
+                file = blob.open('w')
+                file.write(data)
+                file.close()
+            elif type(data) is FileUpload:
+                blob._data.consumeFile(data.name)
+            else:
+                raise TypeError('bad image data')
         else:
             IAnnotations(self.context)[CONFIG_KEY] = None
 
