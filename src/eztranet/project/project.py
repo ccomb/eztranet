@@ -211,10 +211,10 @@ class ProjectImageSized(object):
         self.context = self.__parent__ = context
         with self.context.open() as blobfile:
             image = PIL.Image.open(blobfile.name)
-            self.width = image.size[0]
-            self.height = image.size[1]
-            self.size = self.context.size
-            image.fp.close()
+        self.width = image.size[0]
+        self.height = image.size[1]
+        self.size = self.context.size
+        image.fp.close()
 
     def sizeForDisplay(self):
         """returns a size of the form '3125KB 640x480'
@@ -257,7 +257,8 @@ class BlobCopier(ObjectCopier):
         context = removeSecurityProxy(self.context)
         if hasattr(context, '_data'):
             # create a hard link to the blob, then consume it
-            source_blob_filename = context._data._current_filename()
+            with context.open() as blobfile:
+                source_blob_filename = blobfile.name
             blob_copy_path = source_blob_filename+'copy'
             if os.path.exists(blob_copy_path): os.unlink(blob_copy_path)
             os.link(source_blob_filename, blob_copy_path)
