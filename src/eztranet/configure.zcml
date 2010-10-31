@@ -26,6 +26,8 @@
 <include package="zope.file" />
 <include package="zc.async" />
 <include package="zc.z3monitor" />
+<include package="zope.principalannotation" />
+<include package="zope.app.principalannotation" />
 
 
 <!-- Eztranet packages -->
