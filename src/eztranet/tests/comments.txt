@@ -56,6 +56,9 @@ We set permissions on the project:
 
 We add a video:
 
+    >>> import zc.async.ftesting
+    >>> zc.async.ftesting.setUp()
+
     >>> browser.open('http://localhost/eztranet/projects/project/')
     >>> import eztranet.thumbnail
     >>> from os.path import join, dirname
@@ -64,10 +67,10 @@ We add a video:
     >>> browser.getControl(name='form.widgets.data').add_file(open(videopath), 'video/ogg', 'a sample.ogg')
     >>> browser.getControl(name='form.buttons.add').click()
     >>> import time
-    >>> for i in range(10):
+    >>> for i in range(200):
     ...     time.sleep(0.2)
     ...     browser.open('http://localhost/eztranet/projects/project/a-sample.ogg/')
-    ...     if 'compressing' not in browser.contents or i > 9:
+    ...     if 'compressing' not in browser.contents or i >= 50:
     ...         break
 
 We add an image:
@@ -126,7 +129,7 @@ We cannot delete a comment as simple user:
     >>> browser.open('http://localhost/eztranet/projects/project/@@comments.html?del=1')
     Traceback (most recent call last):
     ...
-    httperror_seek_wrapper: HTTP Error 403: Forbidden
+    HTTPError: HTTP Error 403: Forbidden
 
 However we can login as admin and delete the first comment:
 
@@ -235,3 +238,6 @@ If we are a project manager, we can delete a comment :
     >>> 'this is a second comment' in browser.contents
     True
 
+clean up
+
+    >>> zc.async.ftesting.tearDown()

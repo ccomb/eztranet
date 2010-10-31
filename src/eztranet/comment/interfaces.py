@@ -21,7 +21,7 @@ from zope.interface.common.mapping import IEnumerableMapping
 from zope.annotation.interfaces import IAnnotatable
 from zope.annotation.interfaces import IAttributeAnnotatable
 from zope.lifecycleevent.interfaces import ISequence
-from zope.file.interfaces import IFile
+from zope.app.file.interfaces import IFile
 
 
 

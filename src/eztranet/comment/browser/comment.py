@@ -17,21 +17,21 @@ $Id: comment.py 38895 2005-10-07 15:09:36Z dominikhuber $
 """
 __docformat__ = 'restructuredtext'
 
-from zope.interface import implements, Interface
-from zope.component import adapts
-from zope.dublincore.interfaces import IZopeDublinCore
-from zope.publisher.browser import BrowserView
+from eztranet.comment import IComments, IAnnotatableComments
+from z3c.layer.pagelet import IPageletBrowserLayer
+from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
+from zope.authentication.interfaces import IAuthentication
+from zope.component import adapts, getUtility
+from zope.contentprovider.interfaces import IContentProvider
+from zope.dublincore.interfaces import IZopeDublinCore
+from zope.i18nmessageid import MessageFactory
+from zope.interface import implements, Interface
+from zope.publisher.browser import BrowserView
 from zope.security.checker import canAccess
 from zope.security.interfaces import ForbiddenAttribute
-from zope.contentprovider.interfaces import IContentProvider
-from z3c.layer.pagelet import IPageletBrowserLayer
-from z3c.menu.simple.menu import SimpleMenuItem
-from eztranet.comment import IComments, IAnnotatableComments
-from zope.i18nmessageid import MessageFactory
-from zope.authentication.interfaces import IAuthentication
 from zope.traversing.browser import absoluteURL
 
 _ = MessageFactory('eztranet')
