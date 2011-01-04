@@ -1,7 +1,7 @@
 <span tal:condition="python: not len(context)"
       i18n:translate="">
    You don't have any eztranet site yet.
-   Login as admin/istanbul to <a href="add_eztranet.html">add an eztranet</a>.
+   Login as admin/admin to <a href="add_eztranet.html">add an eztranet</a>.
 </span>
 
 <ul tal:condition="python: len(context)">

@@ -91,6 +91,7 @@ class ImageThumbnailer(BaseThumbnailer):
     def __call__(self, size=120):
         tmp=StringIO()
         try:
+            # XXX PIL.Image.frombuffer !!
             fd = self.context.open()
             i = PIL.Image.open(fd)
             i.thumbnail((size, size), PIL.Image.ANTIALIAS)
