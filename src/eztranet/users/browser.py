@@ -1,8 +1,9 @@
+from eztranet.eztranet import EztranetSimpleMenuItem
 from z3c.contents.browser import Contents
 from z3c.form.field import Fields
 from z3c.form.form import applyChanges
 from z3c.formui.form import EditForm, AddForm, DisplayForm
-from z3c.menu.simple.menu import SimpleMenuItem
+#from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.authentication.interfaces import IAuthenticatorPlugin
@@ -162,10 +163,11 @@ class ProjectGranting(Granting):
             return False
 
 
-class ProjectGrantingMenuItem(SimpleMenuItem):
+class ProjectGrantingMenuItem(EztranetSimpleMenuItem):
     title = _(u'Permissions')
     url = 'permissions.html'
     weight = 150
+    icon = '/@@/images/permission.png'
 
 
 class EztranetUserAdd(AddForm):
@@ -187,9 +189,10 @@ class EztranetUserAdd(AddForm):
                                                    self.request)()+'/contents.html')
 
 
-class EztranetUserAddMenuItem(SimpleMenuItem):
+class EztranetUserAddMenuItem(EztranetSimpleMenuItem):
     title = _(u'New user')
     url = 'add_user.html'
+    icon = '/@@/images/add_user.png'
 
 
 class EztranetUserView(DisplayForm):
@@ -198,7 +201,7 @@ class EztranetUserView(DisplayForm):
     fields = Fields(IEztranetUser).select('login','IsAdmin')
 
 
-class EztranetUserViewMenuItem(SimpleMenuItem):
+class EztranetUserViewMenuItem(EztranetSimpleMenuItem):
     title = _(u'View user')
     url = 'index.html'
 
@@ -209,7 +212,7 @@ class EztranetUserEdit(EditForm):
     fields=Fields(IEztranetUser).select('password','IsAdmin')
 
 
-class EztranetUserEditMenuItem(SimpleMenuItem):
+class EztranetUserEditMenuItem(EztranetSimpleMenuItem):
     title = _(u'Edit user')
     url = 'edit_user.html'
 
@@ -232,9 +235,10 @@ class EztranetUsers(Contents):
         super(EztranetUsers, self).removeObjects()
 
 
-class EztranetUsersMenuItem(SimpleMenuItem):
+class EztranetUsersMenuItem(EztranetSimpleMenuItem):
     title = _(u'List')
     url = 'contents.html'
+    icon = '/@@/images/list.png'
 
 
 class AdminColumn(Column):

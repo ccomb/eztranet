@@ -3,6 +3,8 @@ from z3c.form.field import Fields
 from z3c.form.form import applyChanges
 from z3c.formui.form import AddForm
 from z3c.pagelet.browser import BrowserPagelet
+from z3c.menu.simple.menu import SimpleMenuItem
+from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.component.site import LocalSiteManager, SiteManagerContainer
 from zope.app.container.interfaces import IObjectAddedEvent, INameChooser
 from zope.app.folder.folder import Folder
@@ -15,6 +17,7 @@ from zope.event import notify
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements, Interface
 import logging
+
 
 _ = MessageFactory('eztranet')
 logger = logging.getLogger(__name__)
@@ -112,5 +115,11 @@ class RootFolderView(BrowserPagelet):
         return [eztranet[0] for eztranet in self.context.items()
                 if IEztranetSite.providedBy(eztranet[1])]
 
+class EztranetSimpleMenuItem(SimpleMenuItem):
+    """Selectable menu item."""
 
+    template = ViewPageTemplateFile('menu_item.pt')
 
+    @property
+    def icon(self):
+        return u''

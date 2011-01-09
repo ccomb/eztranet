@@ -8,6 +8,7 @@ from eztranet.project.project import ProjectText
 from eztranet.skin.interfaces import IEztranetSkin
 from eztranet.thumbnail.interfaces import IThumbnail
 from eztranet.thumbnail.thumbnail import Thumbnail
+from eztranet.eztranet import EztranetSimpleMenuItem
 from hachoir_parser import createParser
 from os.path import basename
 from z3c.contents.browser import Contents
@@ -20,7 +21,7 @@ from z3c.form.interfaces import IFieldWidget, IValidator
 from z3c.form.validator import SimpleFieldValidator
 from z3c.form.widget import FieldWidget
 from z3c.formui.form import EditForm, AddForm
-from z3c.menu.simple.menu import SimpleMenuItem
+#from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from z3c.table.column import Column
 from zope.app.container.interfaces import INameChooser
@@ -66,10 +67,11 @@ class ProjectAdd(AddForm):
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
 
-class ProjectAddMenuItem(SimpleMenuItem):
+class ProjectAddMenuItem(EztranetSimpleMenuItem):
     title = _(u'New folder')
     url = 'add_project.html'
     weight = 50
+    icon = '/@@/images/add_folder.png'
 
 
 class ProjectEdit(EditForm):
@@ -92,10 +94,11 @@ class ProjectEdit(EditForm):
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
 
-class ProjectEditMenuItem(SimpleMenuItem):
+class ProjectEditMenuItem(EztranetSimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
     weight = 20
+    icon = '/@@/images/edit.png'
 
 def project_sorting(p1, p2):
     """We put projects in the beginning, and order by date, most recent first"""
@@ -197,10 +200,11 @@ class ThumbnailColumn(Column):
         return '<a href="%s"><img src="%s" class="table_thumbnail" /></a>' % (item_url, thumb_url)
 
 
-class ProjectContainerViewMenuItem(SimpleMenuItem):
+class ProjectContainerViewMenuItem(EztranetSimpleMenuItem):
     title = _(u'List')
     url = 'index.html'
     weight = 10
+    icon = '/@@/images/list.png'
 
 
 class ProjectItemAdd(AddForm):
@@ -307,10 +311,11 @@ class BigFileValidator(SimpleFieldValidator):
         return type(data) is zope.publisher.browser.FileUpload
 
 
-class ProjectItemAddMenuItem(SimpleMenuItem):
+class ProjectItemAddMenuItem(EztranetSimpleMenuItem):
     title = _(u'New file')
     url = 'add_projectitem.html'
     weight = 50
+    icon = '/@@/images/add_file.png'
 
 
 class ProjectItemEdit(EditForm):
@@ -333,10 +338,11 @@ class ProjectItemEdit(EditForm):
         self.request.response.redirect(absoluteURL(self.context, self.request))
 
 
-class ProjectItemEditMenuItem(SimpleMenuItem):
+class ProjectItemEditMenuItem(EztranetSimpleMenuItem):
     title = _(u'Modify')
     url = 'edit.html'
     weight = 20
+    icon = '/@@/images/edit.png'
 
 
 class ProjectItemView(BrowserPagelet):
@@ -350,7 +356,7 @@ class ProjectItemView(BrowserPagelet):
         #return PlainTextToHTMLRenderer(escape(self.context.description), self.request).render()
 
 
-class ProjectItemViewMenuItem(SimpleMenuItem):
+class ProjectItemViewMenuItem(EztranetSimpleMenuItem):
     title = _(u'View')
     url = 'index.html'
     weight = 10
@@ -403,10 +409,11 @@ class ProjectThumbnail(Thumbnail):
     resource = 'folder.png'
 
 
-class CommentMenuItem(SimpleMenuItem):
+class CommentMenuItem(EztranetSimpleMenuItem):
     title = _(u'Comments')
     url = "comments.html"
     weight = 90
+    icon = '/@@/images/add_comment.png'
 
 
 class FileUploadHeader(object):
@@ -490,10 +497,11 @@ class ProjectTextView(BrowserPagelet):
         #return PlainTextToHTMLRenderer(escape(self.context.text), self.request).render()
 
 
-class ProjectTextAddMenuItem(SimpleMenuItem):
+class ProjectTextAddMenuItem(EztranetSimpleMenuItem):
     title = _(u'New text')
     url = 'add_page.html'
     weight = 60
+    icon = '/@@/images/add_text.png'
 
 
 class ProjectTextThumbnail(Thumbnail):

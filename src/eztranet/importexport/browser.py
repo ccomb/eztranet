@@ -1,5 +1,6 @@
 from __future__ import with_statement
 from contextlib import contextmanager
+from eztranet.eztranet import EztranetSimpleMenuItem
 from eztranet.project.interfaces import ILargeBytes
 from eztranet.project.interfaces import IProjectItem
 from interfaces import IExport, IImport
@@ -7,7 +8,7 @@ from z3c.form.field import Fields
 from z3c.form.interfaces import IValidator
 from z3c.form.validator import SimpleFieldValidator
 from z3c.formui.form import AddForm
-from z3c.menu.simple.menu import SimpleMenuItem
+#from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from zope.component import getAdapter, adapts
 from zope.i18n import translate
@@ -87,10 +88,11 @@ class ExportDownload(BrowserView):
 
 
 
-class ExportPageMenuItem(SimpleMenuItem):
+class ExportPageMenuItem(EztranetSimpleMenuItem):
     title = _(u'Imp/exp')
     url = 'importexport.html'
     weight = 900
+    icon = '/@@/images/import_export.png'
 
 
 class FileUploadHeader(object):

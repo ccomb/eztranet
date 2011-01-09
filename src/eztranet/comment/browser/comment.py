@@ -18,8 +18,9 @@ $Id: comment.py 38895 2005-10-07 15:09:36Z dominikhuber $
 __docformat__ = 'restructuredtext'
 
 from eztranet.comment import IComments, IAnnotatableComments
+from eztranet.eztranet import EztranetSimpleMenuItem
 from z3c.layer.pagelet import IPageletBrowserLayer
-from z3c.menu.simple.menu import SimpleMenuItem
+#from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
 from zope.app.pagetemplate.viewpagetemplatefile import ViewPageTemplateFile
 from zope.app.security.interfaces import PrincipalLookupError
@@ -110,9 +111,11 @@ class ListComments(BrowserPagelet) :
         except ForbiddenAttribute:
             return False
 
-class ListCommentsMenuItem(SimpleMenuItem):
+class ListCommentsMenuItem(EztranetSimpleMenuItem):
     url = 'comments.html'
     title = _(u'Comments')
+    icon = '/@@/images/list.png'
+
 
 class AddComment(BrowserView) :
     """ A simple add view for comments. Allows the user to type comments

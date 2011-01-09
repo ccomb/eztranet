@@ -1,5 +1,6 @@
+from eztranet.eztranet import EztranetSimpleMenuItem
 from z3c.pagelet.browser import BrowserPagelet
-from z3c.menu.simple.menu import SimpleMenuItem
+#from z3c.menu.simple.menu import SimpleMenuItem
 from z3c.formui.form import EditForm
 from z3c.form.field import Fields
 from interfaces import IConfigFormType
@@ -20,7 +21,8 @@ class ConfigPage(EditForm, BrowserPagelet):
         return fields
 
 
-class ConfigPageMenuItem(SimpleMenuItem):
+class ConfigPageMenuItem(EztranetSimpleMenuItem):
     title = _(u'Config.')
     url = 'config.html'
     weight = 1000
+    icon = '/@@/images/config.png'

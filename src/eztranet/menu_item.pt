@@ -1,0 +1,8 @@
+<a href="#" class="active-menu-item or inactive-menu-item"
+   tal:attributes="href view/url;
+	                 class view/css">
+   <img tal:attributes="src view/icon;"/>
+   <br>
+   <span tal:content="view/title"
+	 i18n:translate="">
+		Menu item</span></a>

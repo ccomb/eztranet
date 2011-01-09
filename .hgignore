@@ -1,6 +1,7 @@
 syntax: glob
 *.pyc
 Data.fs*
+*~
 bin/*
 dist/*
 src/eztranet.egg-info
@@ -14,3 +15,6 @@ eztranet.egg-info/
 *.swp
 uuid.txt
 extends-cache/
+.DS_Store
+.project
+.pydevproject
