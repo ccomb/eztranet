@@ -192,12 +192,18 @@ class ThumbnailColumn(Column):
 
     for z3c.contents page of object that are thumbnailed (see zcml)
     """
-    header = '<a href=".."><img src="++resource++project_img/up.png" alt="up" /></a>'
     weight = 11
     def renderCell(self, item):
         item_url = absoluteURL(item, self.request)
         thumb_url = item_url + '/@@thumbnail_image.jpg'
         return '<a href="%s"><img src="%s" class="table_thumbnail" /></a>' % (item_url, thumb_url)
+
+
+class ParentFolderMenuItem(EztranetSimpleMenuItem):
+    title = _(u'Parent folder')
+    url = '..'
+    weight = 5
+    icon = '/@@/project_img/up.png'
 
 
 class ProjectContainerViewMenuItem(EztranetSimpleMenuItem):

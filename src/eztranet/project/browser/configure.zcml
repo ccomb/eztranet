@@ -12,6 +12,12 @@
              set_schema="eztranet.thumbnail.interfaces.IThumbnail" />
 </zope:class>
 
+<viewlet name="ParentFolderMenuItem"
+         class=".browser.ParentFolderMenuItem"
+         for="..interfaces.IProject"
+         manager="eztranet.skin.interfaces.ITabMenu"
+         layer="eztranet.skin.interfaces.IEztranetSkin"
+         permission="eztranet.view" />
 
 <!-- ProjectContainer views -->
 <z3c:pagelet name="index.html"
