@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# Copyright (c) 2003-2004 Zope Foundation and Contributors.
 # All Rights Reserved.
 #
 # This software is subject to the provisions of the Zope Public License,
@@ -14,25 +14,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Mon Jan 25 22:05:50 2010\n"
+"POT-Creation-Date: Tue Jan  4 18:49:49 2011\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"Language-Team: Zope 3 Developers <zope-dev@zope.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: zope/app/locales/extract.py\n"
 
-#: site.zcml:38
-msgid "Site Manager"
+#: /home/ccomb/buildout-eggs/zope.app.principalannotation-3.7.0-py2.6.egg/zope/app/principalannotation/browser.zcml:6
+msgid "Stores Annotations for Principals"
 msgstr ""
 
-#: site.zcml:39
-msgid "Site Member"
+#: /home/ccomb/buildout-eggs/zope.app.principalannotation-3.7.0-py2.6.egg/zope/app/principalannotation/browser.zcml:6
+msgid "Principal Annotation Utility"
 msgstr ""
 
-#: src/eztranet/comment/browser/comment.py:114
-#: src/eztranet/project/browser/browser.py:401
+#: src/eztranet/comment/browser/comment.py:115
+#: src/eztranet/project/browser/browser.py:407
 msgid "Comments"
 msgstr ""
 
@@ -77,16 +77,16 @@ msgstr ""
 msgid "Config."
 msgstr ""
 
-#: src/eztranet/configure.zcml:105
-msgid "Eztranet Site"
-msgstr ""
-
-#: src/eztranet/configure.zcml:52
+#: src/eztranet/configure.zcml:46
 msgid "Eztranet site"
 msgstr ""
 
-#: src/eztranet/configure.zcml:52
+#: src/eztranet/configure.zcml:46
 msgid "An Eztranet application"
+msgstr ""
+
+#: src/eztranet/configure.zcml:96
+msgid "Eztranet Site"
 msgstr ""
 
 #: src/eztranet/eztranet.py:69
@@ -106,12 +106,16 @@ msgstr ""
 msgid "Adding an Eztranet Site"
 msgstr ""
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:28
-msgid "Flash compression failed.<br/>                           However you can still download the original movie."
+#: src/eztranet/flashpreview/browser/flashpreview.py:27
+msgid "<br/><br/>Compression pending                           (<a href=\".\">click to reload</a>)"
 msgstr ""
 
-#: src/eztranet/flashpreview/browser/flashpreview.py:31
+#: src/eztranet/flashpreview/browser/flashpreview.py:30
 msgid "<br/><br/>Currently compressing...                           (<a href=\".\">click to reload</a>)"
+msgstr ""
+
+#: src/eztranet/flashpreview/browser/flashpreview.py:33
+msgid "Flash compression failed.<br/>                           However you can still download the original movie."
 msgstr ""
 
 #: src/eztranet/flashpreview/configure.zcml:4
@@ -145,12 +149,12 @@ msgid "the flash movie blob, or compressed temporary filename"
 msgstr ""
 
 #: src/eztranet/importexport/browser.py:103
-#: src/eztranet/project/browser/browser.py:413
+#: src/eztranet/project/browser/browser.py:419
 msgid "Send files..."
 msgstr ""
 
 #: src/eztranet/importexport/browser.py:104
-#: src/eztranet/project/browser/browser.py:414
+#: src/eztranet/project/browser/browser.py:420
 msgid "Add more files..."
 msgstr ""
 
@@ -199,57 +203,57 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:176
+#: src/eztranet/project/browser/browser.py:181
 msgid "Size"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:196
+#: src/eztranet/project/browser/browser.py:201
 #: src/eztranet/users/browser.py:236
 msgid "List"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:205
+#: src/eztranet/project/browser/browser.py:210
 msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:306
+#: src/eztranet/project/browser/browser.py:311
 msgid "New file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:312
+#: src/eztranet/project/browser/browser.py:317
 msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:338
+#: src/eztranet/project/browser/browser.py:344
 #: src/eztranet/project/interfaces.py:51
 msgid "File"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:348
+#: src/eztranet/project/browser/browser.py:354
 msgid "View"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:355
+#: src/eztranet/project/browser/browser.py:361
 msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:377
+#: src/eztranet/project/browser/browser.py:383
 msgid "Video"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:442
+#: src/eztranet/project/browser/browser.py:448
 msgid "Adding a text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:459
+#: src/eztranet/project/browser/browser.py:465
 msgid "Editing a text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:478
+#: src/eztranet/project/browser/browser.py:484
 msgid "Text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:488
+#: src/eztranet/project/browser/browser.py:494
 msgid "New text"
 msgstr ""
 
@@ -266,7 +270,7 @@ msgid "Project details"
 msgstr ""
 
 #: src/eztranet/project/browser/browser.py:96
-#: src/eztranet/project/browser/browser.py:331
+#: src/eztranet/project/browser/browser.py:337
 msgid "Modify"
 msgstr ""
 
@@ -375,20 +379,32 @@ msgstr ""
 msgid "A number allowing to order the items"
 msgstr ""
 
-#: src/eztranet/project/project.py:216
+#: src/eztranet/project/project.py:222
 msgid "%sKB %sx%s"
 msgstr ""
 
-#: src/eztranet/project/project.py:219
+#: src/eztranet/project/project.py:225
 msgid "KB"
 msgstr ""
 
 #: src/eztranet/rootfolder.pt:1
-msgid "You don't have any eztranet site yet. Login as admin/istanbul to <a href=\"add_eztranet.html\">add an eztranet</a>."
+msgid "You don't have any eztranet site yet. Login as admin/admin to <a href=\"add_eztranet.html\">add an eztranet</a>."
 msgstr ""
 
 #: src/eztranet/rootfolder.pt:8
 msgid "List of your eztranet sites:"
+msgstr ""
+
+#: src/eztranet/securitypolicy.zcml:28
+msgid "Everybody"
+msgstr ""
+
+#: src/eztranet/securitypolicy.zcml:28
+msgid "All users have this role implicitly"
+msgstr ""
+
+#: src/eztranet/securitypolicy.zcml:32
+msgid "Site Manager"
 msgstr ""
 
 #: src/eztranet/skin/browser.py:39
@@ -451,27 +467,27 @@ msgstr ""
 msgid "Write thumbnails"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:16
+#: src/eztranet/thumbnail/interfaces.py:18
 msgid "Thumbnail"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:17
+#: src/eztranet/thumbnail/interfaces.py:19
 msgid "The Image object corresponding to the thumbnail"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:31
+#: src/eztranet/thumbnail/interfaces.py:33
 msgid "Thumbnail size"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:32
+#: src/eztranet/thumbnail/interfaces.py:34
 msgid "The size of the thumbnail"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:37
+#: src/eztranet/thumbnail/interfaces.py:39
 msgid "Recompute thumbnails?"
 msgstr ""
 
-#: src/eztranet/thumbnail/interfaces.py:38
+#: src/eztranet/thumbnail/interfaces.py:40
 msgid "Allows to recompute all thumbnails in the current folder"
 msgstr ""
 
