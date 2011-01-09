@@ -92,7 +92,7 @@ class LoginLogout(ViewletBase):
                 translate(_('[Login]'), context=self.request,
                           default='[Login]'))
         elif ILogoutSupported(self.request, None) is not None:
-            return u'<b>%s</b><br/><br/><a href="@@logout.html?nextURL=%s">%s</a>' % (
+            return u'<b>%s</b> <a href="@@logout.html?nextURL=%s">%s</a>' % (
                 self.request.principal.id,
                 urllib.quote(self.request.getURL()),
                 translate(_('[Logout]'), context=self.request,
