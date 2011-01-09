@@ -1,10 +1,9 @@
 body {
     font-family: 'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;
-    background: #F1F1F1;/*#D9D4D2*/
+    background: #F1F1F1;
     color: #666666;
     font-size: 13px;
 }
-
 a {
     text-decoration: none;
     color: #888888;
@@ -12,44 +11,49 @@ a {
 a:hover {
     color: #000000;
 }
+#back-gorfou{
+	color: #0066CC;
+	font-weight: bold;
+}
 h1 {
     font-size: 150%;
     margin: 5px;
     padding-left: 5px;
 }
-div#login_logout {
-    position: absolute;
-    text-align: center;
-    top: 0;
-    left: -23%;
+#object-title{
+	display:none;
+}
+#header{
+	height:88px;
+}
+#personal-actions {
+	text-align: right;
+	margin:10px 0;
+}
+#main-wrapper{
+	margin:0 auto;
+	width: 960px;
 }
 div#main {
-    position: absolute;
-    top: 28px;
-    margin-left: 22%;
     padding-bottom: 10px;
-    width: 720px;
-    min-height: 700px;
-    background: #FFFFFF url(/@@/images/fondmain.png) no-repeat;
+    background-color: #FFFFFF;
 }
 div#breadcrumb {
     font-size: 100%;
     padding: 5px;
 }
 div#navigationTree {
-    position: absolute;
     background: #FFFFFF;
     width: 200px;
-    top: 119px;
-    margin-left: 5%;
-    overflow: hidden;
-    padding: 4px;
+    float: left;
+    margin: 4px;
+}
+#navtreecontents{
+	border: 1px solid #DDDDDD;
+	padding:10px 5px;
 }
 ul#main_menu {
     list-style-type: none;
-    margin-bottom: 7px;
-    margin-top: 65px;
-    margin-left: 230px;
 }
 ul#main_menu li {
     display: inline;
@@ -59,6 +63,9 @@ ul#main_menu a {
     font-weight: bold;
 }
 
+#content{
+	margin-left: 210px;
+}
 .menu-item{
 	float:left;
     text-align: center;
@@ -66,8 +73,9 @@ ul#main_menu a {
 }
 
 #tab_menu {
+	height: 59px;
     margin: 0 1px;
-    padding: 10px 0;
+    padding: 10px 0 0;
     background-color: #000000;
 }
 #tab_menu a {
@@ -128,9 +136,6 @@ a img {
     font-size: 75%;
 }
 div#author {
-    position: absolute;
-    margin-top: 66px;
-    margin-left: 25%;
     font-size: 60%;
 }
 div.page_error {
@@ -161,20 +166,23 @@ p#description {
 }
 div#lang {
     float:right;
-    margin: 5px;
-}
-div#lang select {
-    background: #DDDDDD;
-    color: #000000;
+	font-weight:bolder;
 }
 div#viewspace {
     margin-top: 10px;
 }
 #company-logo {
-        position: absolute;
-        width: 180px;
-        height: 55px;
-        margin-left: 520px;
+    float:right;
+	width: 150px;
+    height: 55px;
+    margin: 14px;
+	background:transparent url("/@@/images/gorfou.png") no-repeat;
+}
+#eztranet-logo{
+    text-align: center;
+    width: 220px;
+	float:left;
+	margin:21px;
 }
 form div.row, table.form-fields, div#actionsView {
         margin-left: 10px;
@@ -230,4 +238,10 @@ margin:2px 0px;}
 
 .clear{
 	clear:both;
+}
+
+#nav-header{
+	padding:10px;
+	background:#000000;
+	color:#FFFFFF;
 }

@@ -2,8 +2,7 @@
 <div style="margin-top: 5%">
 
 <div style="width: 100%; text-align: right">
-<a href="http://gorfou.fr/site/eztranet.html"
-   style="color: yellow; font-weight: bold"
+<a id="back-gordou" href="http://gorfou.fr/site/eztranet.html"
    i18n:translate="">
     (Back to Gorfou)
 </a>
