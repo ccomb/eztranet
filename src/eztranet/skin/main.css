@@ -32,13 +32,13 @@ h1 {
 }
 #main-wrapper{
 	margin:0 5%;
-  -moz-box-shadow: 2px 2px 5px #737373;
-  -webkit-box-shadow: 2px 2px 5px #737373;
 
 }
 div#main {
     padding-bottom: 10px;
     background-color: #FFFFFF;
+    -moz-box-shadow: 2px 2px 5px #737373;
+    -webkit-box-shadow: 2px 2px 5px #737373;
 }
 div#breadcrumb {
     font-size: 100%;
