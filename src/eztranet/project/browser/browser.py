@@ -366,6 +366,7 @@ class ProjectItemViewMenuItem(EztranetSimpleMenuItem):
     title = _(u'View')
     url = 'index.html'
     weight = 10
+    icon = '/@@/images/view.png'
 
 
 class ProjectImageView(ProjectItemView):

@@ -215,6 +215,7 @@ class EztranetUserEdit(EditForm):
 class EztranetUserEditMenuItem(EztranetSimpleMenuItem):
     title = _(u'Edit user')
     url = 'edit_user.html'
+    icon = '/@@/images/edit_user.png'
 
 
 class EztranetUsers(Contents):

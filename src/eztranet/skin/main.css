@@ -1,6 +1,6 @@
 body {
     font-family: 'Lucida Grande','Lucida Sans Unicode','Geneva','Verdana',sans-serif;
-    background: #F1F1F1;
+    background: #F7F7F7;
     color: #666666;
     font-size: 13px;
 }
@@ -24,7 +24,8 @@ h1 {
 	display:none;
 }
 #header{
-	height:88px;
+	height:82px;
+	background-color:#F4f4F4;
 }
 #personal-actions {
 	text-align: right;
@@ -35,6 +36,7 @@ h1 {
 
 }
 div#main {
+	min-height:340px;
     padding-bottom: 10px;
     background-color: #FFFFFF;
     -moz-box-shadow: 2px 2px 5px #737373;
@@ -49,6 +51,8 @@ div#navigationTree {
     width: 17%;
     float: left;
     margin: 4px;
+	position:relative;
+	top: 30px;
 }
 #navtreecontents{
 	border: 1px solid #DDDDDD;
@@ -173,7 +177,7 @@ p#description {
 div#lang {
     float:right;
     font-weight:bolder;
-    padding-top: 3px;
+    padding-top: 5px;
     margin-right: 0.5em;
 }
 div#viewspace {
@@ -190,7 +194,7 @@ div#viewspace {
     text-align: center;
     width: 220px;
 	float:left;
-	margin:21px;
+	margin:18px 0 0 21px;
 }
 form div.row, table.form-fields, div#actionsView {
         margin-left: 10px;
@@ -218,11 +222,12 @@ td a { font-size: 120%; font-weight: bold; }
 }
 .fuProgressSuccess {
     color:white;
-    background:#76ad6c !important;
+    padding: 2px 1px;
+    background:#B6E22D !important;
 }
 .fuProgressFailure {
     color:white;
-    background:#ad6c76 !important;
+    background:#E36D00 !important;
 }
 .fuNext {
     margin-left: 275px;
