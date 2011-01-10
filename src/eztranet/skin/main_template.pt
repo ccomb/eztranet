@@ -17,10 +17,10 @@
 	</head>
 	<body tal:attributes="onload body_onload | nothing">
 	<div id="main-wrapper">
-	  <div id="personal-actions">
 	  	<div id="lang" tal:content="structure provider:langchoice">
 	      Lang choice form
 	    </div>
+	  <div id="personal-actions">
 	    <!-- Main menu -->
 	    <ul id="main_menu">
 	   	  <li id="login_logout" tal:content="structure provider:login_logout">
