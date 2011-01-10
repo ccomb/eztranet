@@ -209,7 +209,7 @@ tr.odd {
 tr.even {
     background: #FFFFFF;
 }
-td { padding: 7px; }
+td { padding: 2px; }
 td a { font-size: 120%; font-weight: bold; }
 .error, .errors { color: red; }
 .fuProgress {
