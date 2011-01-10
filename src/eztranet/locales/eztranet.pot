@@ -14,7 +14,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Development/Unknown\n"
-"POT-Creation-Date: Tue Jan  4 18:49:49 2011\n"
+"POT-Creation-Date: Mon Jan 10 02:23:29 2011\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Zope 3 Developers <zope-dev@zope.org>\n"
@@ -31,8 +31,8 @@ msgstr ""
 msgid "Principal Annotation Utility"
 msgstr ""
 
-#: src/eztranet/comment/browser/comment.py:115
-#: src/eztranet/project/browser/browser.py:407
+#: src/eztranet/comment/browser/comment.py:116
+#: src/eztranet/project/browser/browser.py:420
 msgid "Comments"
 msgstr ""
 
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Edit comments"
 msgstr ""
 
-#: src/eztranet/config/browser.py:24
+#: src/eztranet/config/browser.py:25
 msgid "Config."
 msgstr ""
 
@@ -89,20 +89,20 @@ msgstr ""
 msgid "Eztranet Site"
 msgstr ""
 
-#: src/eztranet/eztranet.py:69
-#: src/eztranet/skin/home.pt:30
+#: src/eztranet/eztranet.py:72
+#: src/eztranet/skin/home.pt:29
 msgid "Projects"
 msgstr ""
 
-#: src/eztranet/eztranet.py:90
+#: src/eztranet/eztranet.py:93
 msgid "Name (used in the URL)"
 msgstr ""
 
-#: src/eztranet/eztranet.py:91
+#: src/eztranet/eztranet.py:94
 msgid "Name used in the URL"
 msgstr ""
 
-#: src/eztranet/eztranet.py:92
+#: src/eztranet/eztranet.py:95
 msgid "Adding an Eztranet Site"
 msgstr ""
 
@@ -148,21 +148,21 @@ msgstr ""
 msgid "the flash movie blob, or compressed temporary filename"
 msgstr ""
 
-#: src/eztranet/importexport/browser.py:103
-#: src/eztranet/project/browser/browser.py:419
+#: src/eztranet/importexport/browser.py:105
+#: src/eztranet/project/browser/browser.py:433
 msgid "Send files..."
 msgstr ""
 
-#: src/eztranet/importexport/browser.py:104
-#: src/eztranet/project/browser/browser.py:420
+#: src/eztranet/importexport/browser.py:106
+#: src/eztranet/project/browser/browser.py:434
 msgid "Add more files..."
 msgstr ""
 
-#: src/eztranet/importexport/browser.py:36
+#: src/eztranet/importexport/browser.py:37
 msgid "Import zip"
 msgstr ""
 
-#: src/eztranet/importexport/browser.py:91
+#: src/eztranet/importexport/browser.py:92
 msgid "Imp/exp"
 msgstr ""
 
@@ -195,95 +195,103 @@ msgstr ""
 msgid "The name of your Eztranet Site"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:152
+#: src/eztranet/menu_item.pt:6
+msgid "${DYNAMIC_CONTENT}"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:155
 msgid "Here is the list of your projects"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:167
+#: src/eztranet/project/browser/browser.py:170
 msgid "Name"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:181
+#: src/eztranet/project/browser/browser.py:184
 msgid "Size"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:201
-#: src/eztranet/users/browser.py:236
-msgid "List"
+#: src/eztranet/project/browser/browser.py:203
+msgid "Parent folder"
 msgstr ""
 
 #: src/eztranet/project/browser/browser.py:210
+#: src/eztranet/users/browser.py:241
+msgid "List"
+msgstr ""
+
+#: src/eztranet/project/browser/browser.py:220
 msgid "Adding a file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:311
+#: src/eztranet/project/browser/browser.py:321
 msgid "New file"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:317
+#: src/eztranet/project/browser/browser.py:328
 msgid "Modification"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:344
+#: src/eztranet/project/browser/browser.py:356
 #: src/eztranet/project/interfaces.py:51
 msgid "File"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:354
+#: src/eztranet/project/browser/browser.py:366
 msgid "View"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:361
+#: src/eztranet/project/browser/browser.py:374
 msgid "Image"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:383
+#: src/eztranet/project/browser/browser.py:396
 msgid "Video"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:448
+#: src/eztranet/project/browser/browser.py:462
 msgid "Adding a text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:465
+#: src/eztranet/project/browser/browser.py:479
 msgid "Editing a text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:484
+#: src/eztranet/project/browser/browser.py:498
 msgid "Text page"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:494
+#: src/eztranet/project/browser/browser.py:508
 msgid "New text"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:56
+#: src/eztranet/project/browser/browser.py:57
 msgid "Adding a project"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:70
+#: src/eztranet/project/browser/browser.py:71
 msgid "New folder"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:77
+#: src/eztranet/project/browser/browser.py:79
 msgid "Project details"
 msgstr ""
 
-#: src/eztranet/project/browser/browser.py:96
-#: src/eztranet/project/browser/browser.py:337
+#: src/eztranet/project/browser/browser.py:98
+#: src/eztranet/project/browser/browser.py:348
 msgid "Modify"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:284
-#: src/eztranet/project/browser/configure.zcml:295
+#: src/eztranet/project/browser/configure.zcml:290
+#: src/eztranet/project/browser/configure.zcml:301
 msgid "edit"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:288
+#: src/eztranet/project/browser/configure.zcml:294
 msgid "Contents"
 msgstr ""
 
-#: src/eztranet/project/browser/configure.zcml:323
+#: src/eztranet/project/browser/configure.zcml:329
 msgid "Eztranet text page"
 msgstr ""
 
@@ -413,23 +421,23 @@ msgstr ""
 
 #: src/eztranet/skin/browser.py:41
 #: src/eztranet/skin/browser.py:90
-#: src/eztranet/skin/main_template.pt:71
+#: src/eztranet/skin/main_template.pt:89
 msgid "Users"
 msgstr ""
 
-#: src/eztranet/skin/home.pt:12
+#: src/eztranet/skin/home.pt:11
 msgid "Eztranet demo"
 msgstr ""
 
-#: src/eztranet/skin/home.pt:16
+#: src/eztranet/skin/home.pt:15
 msgid "You can try the Eztranet by clicking on \"projects\" (at the top), on \"connection\" (top-left corner), or on the icon below."
 msgstr ""
 
-#: src/eztranet/skin/home.pt:21
+#: src/eztranet/skin/home.pt:20
 msgid "Login:"
 msgstr ""
 
-#: src/eztranet/skin/home.pt:22
+#: src/eztranet/skin/home.pt:21
 msgid "Password:"
 msgstr ""
 
@@ -441,7 +449,7 @@ msgstr ""
 msgid "Language:"
 msgstr ""
 
-#: src/eztranet/skin/main_template.pt:96
+#: src/eztranet/skin/main_template.pt:49
 msgid "Made to measure by Gorfou"
 msgstr ""
 
@@ -455,7 +463,7 @@ msgid "Contains $${num} item(s)"
 msgstr ""
 
 #: src/eztranet/skin/rotterdamtree/xmlobject.py:33
-#: src/eztranet/skin/rotterdamtree/rotterdamtree.pt:32
+#: src/eztranet/skin/rotterdamtree/rotterdamtree.pt:36
 msgid "Loading..."
 msgstr ""
 
@@ -491,37 +499,37 @@ msgstr ""
 msgid "Allows to recompute all thumbnails in the current folder"
 msgstr ""
 
-#: src/eztranet/users/browser.py:160
+#: src/eztranet/users/browser.py:161
 msgid "Permissions modified"
 msgstr ""
 
-#: src/eztranet/users/browser.py:166
-#: src/eztranet/project/browser/configure.zcml:286
+#: src/eztranet/users/browser.py:167
+#: src/eztranet/project/browser/configure.zcml:292
 msgid "Permissions"
 msgstr ""
 
-#: src/eztranet/users/browser.py:175
-#: src/eztranet/users/browser.py:191
+#: src/eztranet/users/browser.py:177
+#: src/eztranet/users/browser.py:193
 msgid "New user"
 msgstr ""
 
-#: src/eztranet/users/browser.py:183
+#: src/eztranet/users/browser.py:185
 msgid "This user already exists"
 msgstr ""
 
-#: src/eztranet/users/browser.py:202
+#: src/eztranet/users/browser.py:205
 msgid "View user"
 msgstr ""
 
-#: src/eztranet/users/browser.py:213
+#: src/eztranet/users/browser.py:217
 msgid "Edit user"
 msgstr ""
 
-#: src/eztranet/users/browser.py:91
+#: src/eztranet/users/browser.py:92
 msgid "[Login]"
 msgstr ""
 
-#: src/eztranet/users/browser.py:97
+#: src/eztranet/users/browser.py:98
 msgid "[Logout]"
 msgstr ""
 
@@ -530,7 +538,7 @@ msgstr ""
 msgid "grant-submit"
 msgstr ""
 
-#: src/eztranet/users/insecure_addon/browser.py:6
+#: src/eztranet/users/insecure_addon/browser.py:7
 msgid "Show password"
 msgstr ""
 
