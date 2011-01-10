@@ -7,13 +7,14 @@
   <!-- Java scripts for the navigation tree -->
 
   <metal:tree define-macro="navigation_tree_js">
-    <!-- Ugly is better than lobotomized. -->
+    
+	<!-- Ugly is better than lobotomized. -->
     <script type="text/javascript" src="xmltree.js"
             tal:attributes="src string:${context/++resource++xmltree.js}" >
     </script>
 
     <tal:var condition="not: body_onload | nothing" >
-    <tal:block define="global body_onload string:" />
+    	<tal:block define="global body_onload string:" />
     </tal:var>
       
     <tal:var define="rooturl     request/getApplicationURL;
@@ -22,13 +23,14 @@
               global body_onload python: loadtreejs + ';; ' + body_onload" />
 
   </metal:tree>
-
+  
   <!-- Box containing the actual navigation tree-->
 
   <metal:tree define-macro="navigation_tree_box">
   	
     <!-- Ugly is better than lobotomized. -->
       <div class="box" id="navigationTree">
+      	
       	<div id="nav-header">Navigation</div>
 
         <div xmlns="http://www.zope.org/zope3xmltree"
@@ -38,5 +40,6 @@
              i18n:translate="">Loading...</div>
       </div>
   </metal:tree>
+  
 </body>
 </html>
