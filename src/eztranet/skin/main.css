@@ -51,8 +51,6 @@ div#navigationTree {
     width: 17%;
     float: left;
     margin: 4px;
-	position:relative;
-	top: 30px;
 }
 #navtreecontents{
 	border: 1px solid #DDDDDD;
@@ -81,7 +79,7 @@ ul#main_menu a {
 }
 
 #tab_menu {
-    margin: 0 1px;
+    margin: 3px 1px;
     padding: 10px 0;
     background-color: #000000;
 }

@@ -62,8 +62,17 @@
 		<metal:tree use-macro="macro:navigation_tree_box" />
 	    
 		<div id="content">
-			<!-- breadcrumbs -->
-		    <h1 id="breadcrumb" tal:define="breadcrumbs context/@@absolute_url/breadcrumbs" 
+			
+			
+	      <!-- object title -->
+		  <h1 id="object-title">
+	        <span tal:content="context/title | context/__name__ | nothing">Item</span>
+	      </h1>
+		  
+	      <!-- Tabbed menu -->
+		  <tal:block tal:replace="structure provider:tab_menu" />
+		  <!-- breadcrumbs -->
+		  <h1 id="breadcrumb" tal:define="breadcrumbs context/@@absolute_url/breadcrumbs" 
 				 tal:condition="python:len(breadcrumbs)>1">
 		      <tal:block repeat="breadcrumb breadcrumbs">
 		        <a tal:attributes="href string:${breadcrumb/url}/" 
@@ -77,16 +86,8 @@
 										and '++etc++site' not in breadcrumb['url']"
 										content="string: › "/>
 		        </tal:block>
-				<span i18n:translate="" 
-				tal:condition="python:'++etc++site' in ' '.join([b['url']  for b in breadcrumbs])"> Users</span>
-		    </h1>
-			
-	      <!-- object title -->
-		  <h1 id="object-title">
-	        <span tal:content="context/title | context/__name__ | nothing">Item</span>
-	      </h1>
-		  
-	      <!-- Tabbed menu --><tal:block tal:replace="structure provider:tab_menu" />
+				<span i18n:translate="" tal:condition="python:'++etc++site' in ' '.join([b['url']  for b in breadcrumbs])"> Users</span>
+		  </h1>
 	      <div id="body" tal:content="structure provider:pagelet">
 	        Here, the page content
 	      </div>
