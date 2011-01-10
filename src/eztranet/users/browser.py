@@ -204,6 +204,7 @@ class EztranetUserView(DisplayForm):
 class EztranetUserViewMenuItem(EztranetSimpleMenuItem):
     title = _(u'View user')
     url = 'index.html'
+    icon = '/@@/images/view_user.png'
 
 
 class EztranetUserEdit(EditForm):
