@@ -37,7 +37,7 @@ body {
 	  var regex = new RegExp(regexS);
 	  var tmpURL = window.location.href;
 	  var config = regex.exec(tmpURL)[1];
-	  var fo = new SWFObject("/@@/flowplayer.swf", "FlowPlayer", "100%", "100%", "7", "#ffffff", true);
+	  var fo = new SWFObject("/++resource++flowplayer.swf", "FlowPlayer", "100%", "100%", "7", "#ffffff", true);
       fo.addParam("AllowScriptAccess", "always");
       fo.addVariable("config", config);
       fo.write("player");

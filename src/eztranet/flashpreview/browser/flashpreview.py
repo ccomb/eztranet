@@ -34,15 +34,16 @@ class FlashContentProvider(object):
                            However you can still download the original movie.')
             else : return self.flashpreview.flash_movie.status
         else:
+            rooturl = self.request.getApplicationURL()
             return u'''<a href="%s/@@flv" style="display:block;width:720px;height:576px" id="player">
                        </a>
                        <script>
-                         flowplayer("player", "/@@/flowplayer.swf", {
+                         flowplayer("player", "%s/%%2B%%2Bresource%%2B%%2Bflowplayer.swf", {
                             clip: { scaling: 'fit' },
-                            plugins: { controls: {url: '/@@/flowplayer.controls.swf'} },
+                            plugins: { controls: {url: '%s/%%2B%%2Bresource%%2B%%2Bflowplayer.controls.swf'} },
                          });
                        </script>
-                    ''' % urllib.quote(AbsoluteURL(self.context, self.request)().encode('utf-8'))
+                    ''' % (AbsoluteURL(self.context, self.request)().encode('utf-8'), rooturl, rooturl)
 
 
 class FlvView(zope.file.download.Download):
@@ -64,4 +65,4 @@ class FlowPlayerHeader(object):
         pass
 
     def render(self):
-        return '<script type="text/javascript" src="/@@/flowplayer.js"></script>'
+        return '<script type="text/javascript" src="/++resource++flowplayer.js"></script>'
